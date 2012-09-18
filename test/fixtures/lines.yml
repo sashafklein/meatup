@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  units: 1
+  notes: MyString
+  order: 
+
+two:
+  units: 1
+  notes: MyString
+  order: 
