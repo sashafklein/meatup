@@ -1,0 +1,33 @@
+<%= form_for(@cut) do |f| %>
+  <% if @cut.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@cut.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @cut.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Cut Name" %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label "Price per LB" %><br />
+    <%= f.text_field :price %>
+  </div>
+   <div class="field">
+    <%= f.label "LBs per Package" %><br />
+    <%= f.text_field :package %>
+  </div>
+   <div class="field">
+    <%= f.label "Percent of Live Animal" %><br />
+    <%= f.text_field :percent %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

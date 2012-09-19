@@ -1,5 +1,13 @@
 Meatup2::Application.routes.draw do
  
+  get "packages/index"
+
+  get "packages/show"
+
+  get "packages/new"
+
+  get "packages/edit"
+
  root to: 'static_pages#welcome'
 
   match '/about', to: 'static_pages#about'
@@ -9,6 +17,8 @@ Meatup2::Application.routes.draw do
   match '/contact', to: 'static_pages#contact'
 
   resources :users
+  resources :cuts
+  resources :packages
 
   resources :orders do
     resources :lines

@@ -11,7 +11,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120917204910) do
+ActiveRecord::Schema.define(:version => 20120919043105) do
+
+  create_table "cuts", :force => true do |t|
+    t.string   "name"
+    t.float    "price"
+    t.float    "percent"
+    t.float    "package"
+    t.integer  "line_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "cuts", ["line_id"], :name => "index_cuts_on_line_id"
+
+  create_table "kine", :force => true do |t|
+    t.string   "name"
+    t.string   "farm"
+    t.string   "host"
+    t.integer  "weight"
+    t.string   "breed"
+    t.string   "photo"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "lines", :force => true do |t|
     t.integer  "units"
@@ -29,6 +52,14 @@ ActiveRecord::Schema.define(:version => 20120917204910) do
   end
 
   add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
+
+  create_table "packages", :force => true do |t|
+    t.integer  "cow_id"
+    t.integer  "cut_id"
+    t.integer  "number"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

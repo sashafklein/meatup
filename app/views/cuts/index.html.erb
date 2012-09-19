@@ -1,0 +1,27 @@
+<h1>Cut List</h1>
+
+<table>
+  <tr>
+    <th>Cut Name</th>
+    <th>Price Per LB</th>
+    <th>LBs Per Package</th>
+    <th>Percentage of Live Weight</th>
+    <th></th>
+  </tr>
+
+<% @cuts.each do |cut| %>
+  <tr>
+    <td><%= cut.name %></td>
+    <td><%= cut.price %></td>
+    <td><%= cut.package %></td>
+    <td><%= cut.percent %></td>
+    <td><%= link_to 'Show', cut %></td>
+    <td><%= link_to 'Edit', edit_cut_path(cut) %></td>
+    <td><%= link_to 'Destroy', cut, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cut', new_cut_path %>
