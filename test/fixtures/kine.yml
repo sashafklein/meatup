@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  farm: MyString
+  host: MyString
+  weight: 1
+  breed: MyString
+  photo: MyString
+
+two:
+  name: MyString
+  farm: MyString
+  host: MyString
+  weight: 1
+  breed: MyString
+  photo: MyString
