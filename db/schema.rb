@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120919043105) do
+ActiveRecord::Schema.define(:version => 20120919061218) do
+
+  create_table "cows", :force => true do |t|
+    t.string   "name"
+    t.string   "farm"
+    t.string   "host"
+    t.integer  "weight"
+    t.string   "breed"
+    t.string   "photo"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "cuts", :force => true do |t|
     t.string   "name"
@@ -24,17 +35,6 @@ ActiveRecord::Schema.define(:version => 20120919043105) do
   end
 
   add_index "cuts", ["line_id"], :name => "index_cuts_on_line_id"
-
-  create_table "kine", :force => true do |t|
-    t.string   "name"
-    t.string   "farm"
-    t.string   "host"
-    t.integer  "weight"
-    t.string   "breed"
-    t.string   "photo"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
   create_table "lines", :force => true do |t|
     t.integer  "units"

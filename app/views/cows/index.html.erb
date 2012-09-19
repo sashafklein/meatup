@@ -1,0 +1,30 @@
+<h1>Cow List</h1>
+
+<table>
+  <tr>
+    <th>Cow Name</th>
+    <th>Live Weight</th>
+    <th>Breed</th>
+    <th>Photo</th>
+    <th>Farm</th>
+    <th>Host Info</th>
+  </tr>
+
+<% @cows.each do |cow| %>
+  <tr>
+    <td><%= cow.name %></td>
+    <td><%= cow.weight %></td>
+    <td><%= cow.breed %></td>
+    <td><%= cow.photo %></td>
+    <td><%= cow.farm %></td>
+    <td><%= cow.host %></td>
+    <td><%= link_to 'Show', cow %></td>
+    <td><%= link_to 'Edit', edit_cow_path(cow) %></td>
+    <td><%= link_to 'Destroy', cow, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cow', new_cow_path %>

@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Cow Name</b>
+  <%= @cow.name %>
+  <b>Breed</b>
+  <%= @cow.breed %>
+  <b>Live Weight</b>
+  <%= @cow.weight %>
+  <b>Photo URL</b>
+  <%= @cow.photo %>
+  <b>Farm</b>
+  <%= @cow.farm %>
+  <b>Host Info</b>
+  <%= @cow.host %>
+</p>
+
+
+<%= link_to 'Edit', edit_cow_path(@cow) %> |
+<%= link_to 'Back', cows_path %>
