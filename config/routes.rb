@@ -19,13 +19,12 @@ Meatup2::Application.routes.draw do
   resources :users
   resources :cuts
   resources :packages
-  resources :cows
+  resources :animals
 
   resources :orders do
     resources :lines
   end
 
-  match '/cows/create', to: 'cows#show'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

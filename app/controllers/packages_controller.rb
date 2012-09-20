@@ -22,16 +22,30 @@ class PackagesController < ApplicationController
   # POST /packages
   def create
   	@package = Package.new(params[:package])
+
+    if @package.save
+      redirect_to @package, notice: 'Package was successfully created'
+    else
+      render action: "new"
+    end
   end
 
   # PUT /packages/1
   def update
     @package = Package.find(params[:id])
+
+    if @package.update_attributes(params[:package])
+        redirect_to @package, notice: "Package was successfully updated."
+      else
+        render action: "edit"
+      end
   end
 
   # DELETE /packages/1
   def destroy
     @package = Package.find(params[:id])
     @package.destroy
+
+    redirect_to packages_url
   end
 end
