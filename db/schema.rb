@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920190029) do
+ActiveRecord::Schema.define(:version => 20120920231613) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -42,8 +42,9 @@ ActiveRecord::Schema.define(:version => 20120920190029) do
     t.float    "percent"
     t.float    "package"
     t.integer  "line_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "animal_type"
   end
 
   add_index "cuts", ["line_id"], :name => "index_cuts_on_line_id"

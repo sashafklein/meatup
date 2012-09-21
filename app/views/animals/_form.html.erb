@@ -13,7 +13,7 @@
 
    <div class="field">
     <%= f.label "Type of Animal" %><br />
-    <%= f.text_field :animal_type %>
+    <%= f.select :animal_type, [["Cow", "Cow"],["Pig","Pig"],["Lamb","Lamb"],["Goat","Goat"]] %>
   </div>
   <div class="field">
     <%= f.label "Name" %><br />

@@ -29,5 +29,8 @@
   <%= @animal.photo %>
 </p>
 
+<h2>Associated Cuts</h2>
+<%= render 'cutlist' %>
+
 <%= link_to 'Edit', edit_animal_path(@animal) %> |
 <%= link_to 'Back', animals_path %>

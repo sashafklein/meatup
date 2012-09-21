@@ -1,4 +1,3 @@
 class Cut < ActiveRecord::Base
-  belongs_to :line
-  attr_accessible :name, :package, :percent, :price
+  attr_accessible :name, :package, :percent, :price, :animal_type
 end

@@ -11,6 +11,10 @@
     </div>
   <% end %>
 
+   <div class="field">
+    <%= f.label "Associated Animal Type" %><br />
+    <%= f.select :animal_type, [["Cow", "Cow"],["Pig","Pig"],["Lamb","Lamb"],["Goat","Goat"]] %>
+  </div>
   <div class="field">
     <%= f.label "Cut Name" %><br />
     <%= f.text_field :name %>

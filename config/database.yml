@@ -18,8 +18,8 @@ development:
   database: meatup2_development
   pool: 5
   host: localhost
-  username: sashafklein
-  password:
+  username: postgres
+  password: pgpass
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -45,7 +45,7 @@ test:
   database: meatup2_test
   pool: 5
   username: sashafklein
-  password:
+  password: pgpass
 
 production:
   adapter: postgresql
@@ -53,4 +53,4 @@ production:
   database: meatup2_production
   pool: 5
   username: sashafklein
-  password:
+  password: pgpass
