@@ -1,0 +1,27 @@
+<% @cutlist = Cut.where(:animal_type => :Cow) %>
+<br>
+<h2>Line Attributes</h2>
+<table class="table">
+  
+  <tr>
+    <th>Cut</th>
+    <th>Package Weight</th>
+    <th>Price/lb</th>
+    <th>Units</th>
+    <th>Notes</th>
+  </tr>
+
+  <% @cutlist.each do |c| %>
+    
+    <%= @f.fields_for :lines do |l| %>
+      <tr>
+        <td><%= c.name %></td>
+        <td><%= c.package_weight %> lb</td>
+        <td>$<%= c.price %></td>
+        <td><%= l.select :units, [[0,0],[1,1],[2,2],[3,3],[4,4],[5,5]] %></td>
+        <td><%= l.text_field :notes %></td>
+      </tr>
+    <% end %>
+
+  <%end%>
+</table>

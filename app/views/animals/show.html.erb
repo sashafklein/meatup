@@ -1,36 +1,57 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Type of Animal</b>
-  <%= @animal.animal_type %>
-</p>
-<p>
-  <b>Name</b>
-  <%= @animal.name %>
-</p>
-<p>
-  <b>Breed</b>
-  <%= @animal.breed %>
-</p>
-<p>
-  <b>Live Weight</b>
-  <%= @animal.weight %>
-</p>
-<p>
-  <b>Farm</b>
-  <%= @animal.farm %>
-</p>
-<p>
-  <b>Host</b>
-  <%= @animal.host %>
-</p>
-<p>
-  <b>Photo</b>
-  <%= @animal.photo %>
-</p>
+<div class="pull-left"> 
+  <h2><span style="font-size:80%"> Animal Name: </span><%= @animal.name %></h2>
+</div>
+
+<br>
+<table class="table">
+  <tr>
+    <th>Type of Animal</th>
+    <th>Live Weight</th>
+    <th>Breed</th>
+    <th>Farm</th>
+    <th>Host</th>
+    <th>Photo</th>
+  </tr>
+  <tr>
+    <td><%= @animal.animal_type %></td>
+    <td><%= @animal.weight %></td>
+    <td><%= @animal.breed %></td>
+    <td><%= @animal.farm %></td>
+    <td><%= @animal.host %></td>
+    <td><%= @animal.photo %></td>
+  </tr>
+</table>
 
 <h2>Associated Cuts</h2>
-<%= render 'cutlist' %>
+<table class="table">
+  <tr>
+    <th>Cut Name</th>
+    <th>Cut Price</th>
+    <th>Lbs/Package</th>
+  </tr>
+  <%= render 'cutlist' %>
+</table>
+
+<br>
+
+<h2>Associated Orders</h2>
+<table class="table">
+  <tr>
+    <th>Order Number</th>
+    <th>Order Status</th>
+    <th>Line Item</th>
+    <th>Number of Units</th>
+    <th>Cut Notes</th>
+    <th>Package Weight</th>
+    <th>Price</th>
+    <th>Line Total</th>
+  <tr>
+  <%= render 'orderlist' %>
+</table>
+
+<br>
 
 <%= link_to 'Edit', edit_animal_path(@animal) %> |
 <%= link_to 'Back', animals_path %>

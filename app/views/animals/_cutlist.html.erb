@@ -1,3 +1,7 @@
 <% @animal.cutfind.each do |cut| %>
-  <p><%= cut %></p>
+  <tr>
+  	<td><%= cut.name %></td>
+  	<td><%= cut.price %></td>
+  	<td><%= cut.package_weight %></td>
+  </tr>
 <%end%>

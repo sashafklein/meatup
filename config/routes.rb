@@ -8,7 +8,7 @@ Meatup2::Application.routes.draw do
 
   get "packages/edit"
 
- root to: 'static_pages#welcome'
+  root to: 'static_pages#welcome'
 
   match '/about', to: 'static_pages#about'
 
@@ -21,9 +21,9 @@ Meatup2::Application.routes.draw do
   resources :packages
   resources :animals
 
-  resources :orders do
-    resources :lines
-  end
+  resources :orders 
+  resources :lines
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

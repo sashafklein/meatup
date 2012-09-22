@@ -1,0 +1,39 @@
+<% @animal.orders.each do |o| %>
+	<tr class="info">
+		<td><%= o.id %></td>
+		<td><%= o.status %></td>
+		<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+	</tr>
+	<% @total = 0 %>
+	<% o.lines.each do |l| %>
+	<tr>
+		<td></td>
+		<td></td>
+		<% @c = l.cut %>
+	    	<td><%= l.cut %></td>
+	    	<td><%= l.units %></td>
+	    	<td><%= l.notes %></td>
+	    	<td><%= @c %></td>
+	    	<td><%= @c %></td>
+	    	<td></td>
+    </tr>
+    
+	<%end%>
+
+	<tr>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td>Order Total:</td>
+    	<td><%= @total %></td>
+    </tr>
+
+<%end%>

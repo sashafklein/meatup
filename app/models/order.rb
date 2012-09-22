@@ -1,8 +1,11 @@
 class Order < ActiveRecord::Base
   belongs_to :user
-  attr_accessible :status, :lines_attributes
+  belongs_to :animal
+  attr_accessible :status, :lines_attributes, :animal_id
 
   has_many :lines
+  has_many :cuts
 
   accepts_nested_attributes_for :lines
+  accepts_nested_attributes_for :cuts
 end

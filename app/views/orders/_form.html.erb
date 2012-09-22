@@ -16,15 +16,17 @@
 
   <div class="text-align:center">
 
-    <h2>Order Status</h2>
-    <%= f.text_field :status %>
-    <%= f.fields_for :lines do |l| %>
-      <h2>Your Order</h2>
-      <%= l.label "Cut" %>
-      <%= l.text_field :notes %>
-      <%= l.label :units %>
-      <%= l.select :units, [[1,1],[2,2],[3,3],[4,4]] %>
-    <% end %>
+    <h2>Order Attributes</h2>
+    <%= f.label :status %>
+    <%= f.select :status, [["Complete",1],["Incomplete",2],["Deposited",3],["Other",4]] %><br>
+    <%= f.label :animal_id %>
+    <%= f.select :animal_id, [[1,1],[2,2],[3,3],[4,4]] %>
+
+    <% @f = f %>
+    
+    <br>
+    <%= render :partial => "cut_table", :object => @f %>
+    
     <br>
     <div class="btn-large">
         <%= f.submit %> 
