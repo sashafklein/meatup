@@ -6,6 +6,7 @@
     <th>Price Per LB</th>
     <th>LBs Per Package</th>
     <th>Percentage of Live Weight</th>
+    <th>Cut ID</th>
     <th></th>
   </tr>
 
@@ -15,6 +16,7 @@
     <td><%= cut.price %></td>
     <td><%= cut.package_weight %></td>
     <td><%= cut.percent %></td>
+    <td><%= cut.id %></td>
     <td><%= link_to 'Show', cut %></td>
     <td><%= link_to 'Edit', edit_cut_path(cut) %></td>
     <td><%= link_to 'Destroy', cut, method: :delete, data: { confirm: 'Are you sure?' } %></td>

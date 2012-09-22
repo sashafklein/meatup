@@ -1,4 +1,3 @@
-<% @cutlist = Cut.where(:animal_type => :Cow) %>
 <br>
 <h2>Line Attributes</h2>
 <table class="table">
@@ -10,6 +9,8 @@
     <th>Units</th>
     <th>Notes</th>
   </tr>
+
+  <% @cutlist = Cut.where(:animal_type => :Cow) %>
 
   <% @cutlist.each do |c| %>
     
