@@ -16,6 +16,7 @@
     
     <%= @f.fields_for :lines do |l| %>
       <tr>
+        <%= l.hidden_field :cut_id, value: c.id %>
         <td><%= c.name %></td>
         <td><%= c.package_weight %> lb</td>
         <td>$<%= c.price %></td>

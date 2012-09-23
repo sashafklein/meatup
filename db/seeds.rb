@@ -102,27 +102,32 @@
 	Line.create(
 		:units => 3,
 		:notes => "Bone-in",
-		:order_id => 1
+		:order_id => 1,
+		:cut_id => 3
 	)
 	Line.create(
 		:units => 1,
 		:notes => "Whole",
-		:order_id => 1
+		:order_id => 1,
+		:cut_id => 4
 	)
 	Line.create(
 		:units => 10,
 		:notes => "10% Fat",
-		:order_id => 1
+		:order_id => 1,
+		:cut_id => 1
 	)
 	Line.create(
 		:units => 3,
 		:notes => "Lean",
-		:order_id => 2
+		:order_id => 2,
+		:cut_id => 2
 	)
 	Line.create(
 		:units => 10,
 		:notes => "Hickory Smoked",
-		:order_id => 3
+		:order_id => 3,
+		:cut_id => 5 
 	)
 
 
