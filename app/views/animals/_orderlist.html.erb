@@ -1,7 +1,8 @@
 <% @animal.orders.each do |o| %>
 	<tr class="info">
 		<td><%= o.id %></td>
-		<td><%= o.status %></td>
+			<% status_array = ["Incomplete", "Complete", "Deposited", "Unpaid"] %>
+		<td><%= status_array[o.status] %></td>
 		<td></td>
     	<td></td>
     	<td></td>
@@ -18,11 +19,12 @@
 	    	<td><%= @c.name %></td>
 	    	<td><%= l.units %></td>
 	    	<td><%= l.notes %></td>
-	    	<td><%= @c.package_weight %></td>
+	    	<td><%= @c.package_weight %> lb</td>
 	    	<td><%= @c.price %></td>
-	    	<td></td>
+	    		<% @line_total = @c.price * @c.package_weight * l.units %>
+	    	<td><%= number_to_currency(@line_total) %></td>
     </tr>
-    
+    <% @total += @line_total %>
 	<%end%>
 
 	<tr>
@@ -33,7 +35,7 @@
     	<td></td>
     	<td></td>
     	<td>Order Total:</td>
-    	<td><%= @total %></td>
+    	<th><%= number_to_currency(@total) %></th>
     </tr>
 
 <%end%>
