@@ -1,0 +1,17 @@
+<% provide(:title, 'Goat') %>
+<h1>Dig In!</h1>
+
+	<div class="center hero-unit">
+		<h1 style="text-align:center">Order below:</h1>
+		<br>
+			<% @meat = "Goat" %>
+			<%= render :partial => "form", :object => @meat %>
+
+		<br>
+		<div style="text-align:center">
+			
+		</div>
+		<br>
+	</div>
+
+<%= link_to 'Back', orders_path %>

@@ -1,7 +1,7 @@
 <% @animal.orders.each do |o| %>
 	<tr class="info">
 		<td><%= o.id %></td>
-			<% status_array = ["Incomplete", "Complete", "Deposited", "Unpaid"] %>
+			<% status_array = ["Incomplete", "Complete", "Deposited", "Other"] %>
 		<td><%= status_array[o.status] %></td>
 		<td></td>
     	<td></td>

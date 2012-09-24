@@ -23,7 +23,37 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   # GET /orders/new.json
-  def new
+  def cow_order
+    @order = Order.new
+    @order.lines.build
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @order }
+    end
+  end
+
+  def pig_order
+    @order = Order.new
+    @order.lines.build
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @order }
+    end
+  end
+
+  def lamb_order
+    @order = Order.new
+    @order.lines.build
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @order }
+    end
+  end
+
+  def goat_order
     @order = Order.new
     @order.lines.build
 

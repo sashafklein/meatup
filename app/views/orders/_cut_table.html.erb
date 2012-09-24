@@ -10,7 +10,7 @@
     <th>Notes</th>
   </tr>
 
-  <% @cutlist = Cut.where(:animal_type => :Cow) %>
+  <% @cutlist = Cut.where(:animal_type => @meat) %>
 
   <% @cutlist.each do |c| %>
     

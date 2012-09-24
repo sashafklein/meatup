@@ -8,4 +8,5 @@ class Order < ActiveRecord::Base
 
   accepts_nested_attributes_for :lines
   accepts_nested_attributes_for :cuts
+
 end

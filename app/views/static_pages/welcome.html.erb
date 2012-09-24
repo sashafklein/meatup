@@ -11,12 +11,15 @@
 	<div style="text-align:center">
 		<div class="btn-group">
 			<ul>
-			    <li class="btn btn-large btn-primary disabled" style="margin:10px"><%= link_to "MOO", orders_path %></li>
-			    <li class="btn btn-large btn-primary disabled" style="margin:10px"><%= link_to "OINK", orders_path %></li>
-			    <li class="btn btn-large btn-primary disabled" style="margin:10px"><%= link_to "BAH", orders_path %></li>
+			    <li class="btn btn-large btn-primary disabled" style="margin:10px"><%= link_to "BEEF", 'orders/cow' %></li>
+			    <li class="btn btn-large btn-primary disabled" style="margin:10px"><%= link_to "PORK", 'orders/pig' %></li>
+			    <li class="btn btn-large btn-primary disabled" style="margin:10px"><%= link_to "LAMB", 'orders/lamb' %></li>
+			    <li class="btn btn-large btn-primary disabled" style="margin:10px"><%= link_to "GOAT", 'orders/goat' %></li>
 			<ul>
 	    </div>
 	</div>
+<br>
+<h3 style="text-align:center">Or update another model:</h3>
 <br>
 	<div style="text-align:center">
 		<div class="btn-group">
@@ -25,3 +28,5 @@
 				<li class="btn" style="margin:10px"><%= link_to "Packages", packages_path %></li>
 				<li class="btn" style="margin:10px"><%= link_to "Cuts", cuts_path %></li>
 				<li class="btn" style="margin:10px"><%= link_to "Users", users_path %></li>
+		</div>
+	</div>

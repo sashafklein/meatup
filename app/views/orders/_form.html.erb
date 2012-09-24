@@ -18,9 +18,9 @@
 
     <h2>Order Attributes</h2>
     <%= f.label :status %>
-    <%= f.select :status, [["Complete",1],["Incomplete",2],["Deposited",3],["Other",4]] %><br>
+    <%= f.select :status, [["Incomplete",0],["Complete",1],["Deposited",2],["Other",3]] %><br>
     <%= f.label :animal_id %>
-    <%= f.select :animal_id, [[1,1],[2,2],[3,3],[4,4]] %>
+    <%= collection_select(f, :animal_id, Animal.where(:animal_type => @meat), :id, :name) %>
 
     <% @f = f %>
     
