@@ -9,4 +9,8 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :lines
   accepts_nested_attributes_for :cuts
 
+  def animalfind
+  	Animal.find(self.animal_id)
+  end
+
 end

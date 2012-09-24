@@ -1,29 +1,18 @@
 <% provide(:title, 'Cuts') %>
 <h1>Cut List</h1>
 
-<table>
-  <tr>
-    <th>Cut Name</th>
-    <th>Price Per LB</th>
-    <th>LBs Per Package</th>
-    <th>Percentage of Live Weight</th>
-    <th>Cut ID</th>
-    <th></th>
-  </tr>
-
-<% @cuts.each do |cut| %>
-  <tr>
-    <td><%= cut.name %></td>
-    <td><%= cut.price %></td>
-    <td><%= cut.package_weight %></td>
-    <td><%= cut.percent %></td>
-    <td><%= cut.id %></td>
-    <td><%= link_to 'Show', cut %></td>
-    <td><%= link_to 'Edit', edit_cut_path(cut) %></td>
-    <td><%= link_to 'Destroy', cut, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+<h2 class="pull-left">Cow Cuts</h2>
+    <% @type = "Cow" %>
+    <%= render :partial => "cut_list", :object => @type %><br>
+<h2 class="pull-left">Pig Cuts</h2>
+    <% @type = "Pig" %>
+    <%= render :partial => "cut_list", :object => @type %><br>
+<h2 class="pull-left">Lamb Cuts</h2>
+    <% @type = "Lamb" %>
+    <%= render :partial => "cut_list", :object => @type %><br>
+<h2 class="pull-left">Goat Cuts</h2>
+    <% @type = "Goat" %>
+    <%= render :partial => "cut_list", :object => @type %><br>
 
 <br />
 

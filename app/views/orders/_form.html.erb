@@ -15,20 +15,19 @@
   <% end %>
 
   <div class="text-align:center">
-
-    <h2>Order Attributes</h2>
-    <%= f.label :status %>
-    <%= f.select :status, [["Incomplete",0],["Complete",1],["Deposited",2],["Other",3]] %><br>
+    
     <%= f.label :animal_id %>
-    <%= collection_select(f, :animal_id, Animal.where(:animal_type => @meat), :id, :name) %>
+    <%= collection_select(f, :animal_id, Animal.where(:animal_type => @meat), :id, :name) %><br>
+    
 
     <% @f = f %>
-    
-    <br>
     <%= render :partial => "cut_table", :object => @f %>
     
     <% f = @f %>
-    <br>
+
+    <%= f.label :status %>
+    <%= f.select :status, [["Incomplete",0],["Complete",1],["Deposited",2],["Other",3]] %>
+    
     <div class="btn-large">
         <%= f.submit %> 
     </div>
