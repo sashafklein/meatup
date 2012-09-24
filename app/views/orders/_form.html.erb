@@ -17,7 +17,7 @@
   <div class="text-align:center">
     
     <%= f.label :animal_id %>
-    <%= collection_select(f, :animal_id, Animal.where(:animal_type => @meat), :id, :name) %><br>
+    <%= f.collection_select(:animal_id, Animal.where(:animal_type => @meat), :id, :name) %><br>
     
 
     <% @f = f %>

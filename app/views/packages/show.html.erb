@@ -1,10 +1,25 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Number of Packages</b>
-  <%= @package.number %>
+  <b>Animal Name / Type</b>
+  <% @a = Animal.find(@package.animal_id) %>
+  <%= "#{@a.name} -- #{@a.type}" %>
+</p>
+<p>
+  <b>Cut</b>
+  <%= @package.original %>
 </p>
 
+<p>
+  <b>Estimated Packages</b>
+  <% @c = Cut.find(@package.cut_id) %>
+  <%= @c.name %>
+</p>
+
+<p>
+  <b>Packages Remaining</b>
+  <%= @package.left %>
+</p>
 
 <%= link_to 'Edit', edit_package_path(@package) %> |
 <%= link_to 'Back', packages_path %>

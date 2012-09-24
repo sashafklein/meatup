@@ -20,7 +20,17 @@
         <td><%= c.name %></td>
         <td><%= c.package_weight %> lb</td>
         <td>$<%= c.price %></td>
-        <td><%= l.select :units, [[0,0],[1,1],[2,2],[3,3],[4,4],[5,5]] %></td>
+          <% @pset = Package.find_by_cut_id_and_animal_id(c.id, @f.animal_id) %>
+          <% @p = @pset[0] %>
+          <% @p_range = (0..@p.left %>)
+          <% @p_string = "["
+          <% @p_range.each do |number| %>
+            <% @p_string += "[#{number},#{number}]" %>
+            <% if number != @p.left - 1 %>
+              <% @p_string += "," %>
+            <% end %>
+          <% end %>
+            <td><%= l.select :units, [[number, number]] %></td>
         <td><%= l.text_field :notes %></td>
       </tr>
     <% end %>

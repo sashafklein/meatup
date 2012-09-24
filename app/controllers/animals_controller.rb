@@ -23,6 +23,11 @@ class AnimalsController < ApplicationController
   def create
   	@animal = Animal.new(params[:animal])
 
+    @animal.cutfind.each do |c|
+      Package.create!(:animal_id => @animal.id, :cut_id => c.id, 
+        :original => (@animal.weight * (c.percent)/100) / c.package_weight, :left => :original)
+    end
+
     if @animal.save
       redirect_to @animal, notice: 'Animal was successfully created'
     else
