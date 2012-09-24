@@ -1,5 +1,6 @@
 <% provide(:title, 'Cuts') %>
 <h1>Cut List</h1>
+<p style="text-align:center">(<%= link_to 'Add New', new_cut_path %>)</p>
 
 <h2 class="pull-left">Cow Cuts</h2>
     <% @type = "Cow" %>
@@ -15,5 +16,3 @@
     <%= render :partial => "cut_list", :object => @type %><br>
 
 <br />
-
-<%= link_to 'New Cut', new_cut_path %>
