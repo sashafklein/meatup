@@ -12,15 +12,16 @@
 
   <% @cutlist = Cut.where(:animal_type => @meat) %>
 
+
   <% @cutlist.each do |c| %>
-    
+
     <%= @f.fields_for :lines do |l| %>
       <tr>
         <%= l.hidden_field :cut_id, value: c.id %>
         <td><%= c.name %></td>
         <td><%= c.package_weight %> lb</td>
         <td>$<%= c.price %></td>
-        <td><%= l.select :units, [[1, 1],[2, 2],[2, 2],[2, 2],[2, 2]] %></td>
+        <td><%= l.select :units, [[1, 1],[2, 2],[3, 3],[4, 4],[5, 5]] %></td>
         <td><%= l.text_field :notes %></td>
       </tr>
     <% end %>
