@@ -3,6 +3,9 @@
 /* mixins, variables, etc. */
 
 $grayMediumLight: #eaeaea;
+$skyBlue: #3D5C99;
+$lightNavy: #0029A3;
+$navy: #001452;
 
 /* universal */
 
@@ -20,6 +23,11 @@ section {
 
 textarea {
   resize: vertical;
+}
+
+.float-over {
+  color: $grayMediumLight;
+  opacity: 0.6;
 }
 
 .center {
@@ -75,11 +83,15 @@ p {
   }
 }
 
+.brand {
+  margin-bottom: 20px;
+}
+
 /* footer */
 
 footer {
   margin-top: 45px;
-  padding-top: 5px;
+  padding-top: 0px;
   border-top: 1px solid $grayMediumLight;
   color: $grayLight;
   a {
@@ -90,6 +102,8 @@ footer {
   }  
   small { 
     float: left; 
+    margin-top: 10px;
+    margin-left: 4px;
   }
   ul {
     float: right;
@@ -109,12 +123,29 @@ footer {
 
 .butcher {
   background-image:url('butcher.jpg');
-  box-shadow: 0px 0px 12px #000;
+  -moz-box-shadow: 0px 0px 25px #000;
+  -webkit-box-shadow: 0px 0px 25px #000;
+  box-shadow: 0px 0px 25px #000;
+  margin-bottom: 120px;
+  margin-top: 40px;
   h1 {
     color:black;
   }
   h2 {
     color: black;
+  }
+}
+
+/* Table Hover */
+
+.table {
+  tr {
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+  p {
+    color: #000000;
   }
 }
 

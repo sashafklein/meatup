@@ -4,7 +4,7 @@
 		:name => 'Paul Ryan',
 	  	:animal_type => "Cow",
 	  	:breed => "Black Angus",
-	  	:weight => 1200,
+	  	:weight => 1000,
 	  	:farm => "Miller Ranch",
 	  	:host => "The Kleins",
 	  	:photo => "NA"
@@ -82,6 +82,52 @@
 	  	:percent => 3
   	)
 
+# Packages
+ 	Package.delete_all
+ 	Package.create(
+ 		:original => 90,
+ 		:left => 90,
+ 		:cut_id => 1,
+ 		:animal_id => 1
+ 	)
+ 	Package.create(
+ 		:original => 25,
+ 		:left => 25,
+ 		:cut_id => 2,
+ 		:animal_id => 1
+ 	)
+ 	Package.create(
+ 		:original => 10,
+ 		:left => 10,
+ 		:cut_id => 3,
+ 		:animal_id => 1
+ 	)
+ 	Package.create(
+ 		:original => 1,
+ 		:left => 1,
+ 		:cut_id => 4,
+ 		:animal_id => 1
+ 	)
+ 	Package.create(
+ 		:original => 24,
+ 		:left => 24,
+ 		:cut_id => 5,
+ 		:animal_id => 2
+ 	)
+ 	Package.create(
+ 		:original => 20,
+ 		:left => 20,
+ 		:cut_id => 6,
+ 		:animal_id => 2
+ 	)
+ 	Package.create(
+ 		:original => 3,
+ 		:left => 3,
+ 		:cut_id => 7,
+ 		:animal_id => 3
+ 	)
+ 	
+
 # Orders
 	Order.delete_all
 	Order.create(
@@ -129,3 +175,5 @@
 		:order_id => 3,
 		:cut_id => 5 
 	)
+
+# Packages
