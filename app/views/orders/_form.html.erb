@@ -24,9 +24,9 @@
     <%= render :partial => "cut_table", :object => @f %>
     
     <% f = @f %>
-
-    <%= f.label :status %>
-    <%= f.select :status, [["Incomplete",0],["Complete",1],["Deposited",2],["Other",3]] %>
+    
+      <%= f.label :status %>
+      <%= f.select :status, [["Incomplete",0],["Complete",1],["Deposited",2],["Other",3]] %>
     
     <div class="btn-large">
         <%= f.submit %> 
