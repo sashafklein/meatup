@@ -1,10 +1,9 @@
-<% @animal.cutfind.each do |cut| %>
+<% @animal.cut_find.each do |cut| %>
   <tr>
   	<td><%= cut.name %></td>
   	<td><%= number_to_currency(cut.price) %></td>
   	<td><%= cut.package_weight %> lb</td>
-  	<% @pset = Package.find_all_by_cut_id_and_animal_id(cut.id, @animal.id) %>
-  	<% @p = @pset[0] %>
+  	<% @p = Package.find_by_cut_id_and_animal_id(cut.id, @animal.id) %>
 	  	<td><%= @p.original %></td>
 	  	<td><%= @p.left %></td>
   </tr>

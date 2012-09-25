@@ -24,7 +24,7 @@
 		:name => 'Mitt Romney',
 	  	:animal_type => "Goat",
 	  	:breed => "Mountain",
-	  	:weight => 120,
+	  	:weight => 200,
 	  	:farm => "Mt. Diablo",
 	  	:host => "The Kleins",
 	  	:photo => "NA"
@@ -50,14 +50,14 @@
 		:animal_type => "Cow",
 		:name => "Ribeye",
 	  	:price => 14.5,
-	  	:package_weight => 1.5,
-	  	:percent => 1.7
+	  	:package_weight => 2,
+	  	:percent => 2
   	)
   	Cut.create(
 		:animal_type => "Cow",
 		:name => "Tenderloin",
 	  	:price => 27,
-	  	:package_weight => 3,
+	  	:package_weight => 5,
 	  	:percent => 0.5
   	)
   	Cut.create(
@@ -129,5 +129,3 @@
 		:order_id => 3,
 		:cut_id => 5 
 	)
-
-

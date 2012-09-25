@@ -102,7 +102,21 @@ footer {
 }
 
 /* Background */
-body {
+.grass {
   background-image:url('grass.jpg');
   background-color:#cccccc;
 }
+
+.butcher {
+  background-image:url('butcher.jpg');
+  box-shadow: 0px 0px 12px #000;
+  h1 {
+    color:black;
+  }
+  h2 {
+    color: black;
+  }
+}
+
+
+
