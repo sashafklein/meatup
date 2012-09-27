@@ -1,12 +1,4 @@
 Meatup2::Application.routes.draw do
- 
-  get "packages/index"
-
-  get "packages/show"
-
-  get "packages/new"
-
-  get "packages/edit"
 
   root to: 'static_pages#welcome'
 
@@ -16,17 +8,18 @@ Meatup2::Application.routes.draw do
 
   match '/contact', to: 'static_pages#contact'
 
-  match '/signup', to: "users#new"
+  match '/signup',  to: 'users#new'
+  match '/signin',  to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete
 
   match '/orders/cow', to: "orders#cow_order"
   match '/orders/pig', to: "orders#pig_order"
   match '/orders/lamb', to: "orders#lamb_order"
   match '/orders/goat', to: "orders#goat_order"
 
-
+  resources :sessions, only: [:new, :create, :destroy]
   resources :users
   resources :cuts
-  resources :packages
   resources :animals
 
   resources :orders 
