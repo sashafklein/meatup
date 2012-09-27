@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: orders
+#
+#  id         :integer          not null, primary key
+#  status     :integer
+#  user_id    :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  animal_id  :integer
+#
+
 class Order < ActiveRecord::Base
   belongs_to :user
   belongs_to :animal

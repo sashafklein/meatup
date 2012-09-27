@@ -16,6 +16,8 @@ Meatup2::Application.routes.draw do
 
   match '/contact', to: 'static_pages#contact'
 
+  match '/signup', to: "users#new"
+
   match '/orders/cow', to: "orders#cow_order"
   match '/orders/pig', to: "orders#pig_order"
   match '/orders/lamb', to: "orders#lamb_order"

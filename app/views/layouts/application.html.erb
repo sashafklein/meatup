@@ -10,10 +10,11 @@
   </head>
   <body class="grass">
     <%= render 'layouts/header' %>
-    <br>
+    <% flash.each do |key, value| %>
+        <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+    <% end %>
     <div class="container hero-unit butcher">
       <%= yield %>
-      <br><br>
       <%= render 'layouts/footer' %>
     </div>
   </body>
