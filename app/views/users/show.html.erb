@@ -2,20 +2,7 @@
 
 <h2><%= @user.name %></h2>
 <h2><%= @user.email %></h2>
-<h2>Recent Orders</h2>
-	<% if @user.orders.find_by_id(-1) %>	
-		<ul>
-				<% o = @user.orders.find_by_id(-1) %>
-				<li><%= "Animal: #{o.animal.name}, Order ID: #{o.id}, Date: #{o.timestamp}"%></li>
-			<% if @user.orders.find_by_id(-2) %>
-				<% o = @user.ordersfind_by_id(2) %>
-				<li><%= "Animal: #{o.animal.name}, Order ID: #{o.id}, Date: #{o.timestamp}"%></li>
-			<% end %>
-			<% if @user.orders.find_by_id(-3) %>
-				<% o = @user.ordersfind_by_id(-3) %>
-				<li><%= "Animal: #{o.animal.name}, Order ID: #{o.id}, Date: #{o.timestamp}"%></li>
-			<% end %>
-		<ul>
-	<% else %>
-		<h3>No Orders! <%= link_to "Get Started!", root_path %></h3>
-	<% end %>
+<% #if user has orders %>
+	<%= render 'orders' %>
+<% #end %>
+	
