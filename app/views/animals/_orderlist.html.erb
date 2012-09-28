@@ -11,21 +11,26 @@
     	<td></td>
 	</tr>
 	<% @total = 0 %>
+	<% @lb_total = 0 %>
 	<% o.lines.each do |l| %>
-	<tr>
-		<td></td>
-		<td></td>
-		<% @c = l.cut %>
-	    	<td><%= @c.name %></td>
-	    	<td><%= l.units %></td>
-	    	<td><%= l.notes %></td>
-	    	<td><%= @c.package_weight %> lb</td>
-	    	<td><%= @c.price %></td>
-	    		<% @line_total = @c.price * @c.package_weight * l.units %>
-	    	<td><%= number_to_currency(@line_total) %></td>
-    </tr>
-    <% @total += @line_total %>
-	<%end%>
+		<% if l.units != 0 %>
+			<tr>
+				<td></td>
+				<td></td>
+				<% @c = l.cut %>
+			    	<td><%= @c.name %></td>
+			    	<td><%= l.units %></td>
+			    	<td><%= l.notes %></td>
+			    	<td><%= @c.package_weight %> lb</td>
+			    	<td><%= number_to_currency(@c.price) %></td>
+			    		<% @lbs = l.units * @c.package_weight %>
+			    		<% @line_total = @c.price * @lbs %>
+			    	<td><%= number_to_currency(@line_total) %></td>
+		    </tr>
+		    <% @total += @line_total %>
+		    <% @lb_total += @lbs %>
+		<% end %>
+	<% end %>
 
 	<tr>
     	<td></td>
@@ -33,9 +38,19 @@
     	<td></td>
     	<td></td>
     	<td></td>
-    	<td></td>
-    	<td>Order Total:</td>
+    	<th>Order Total:</th>
+    	<th><%= "#{@lb_total.to_i}lbs" %></th>
     	<th><%= number_to_currency(@total) %></th>
     </tr>
 
-<%end%>
+<% end %>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td style="font-size:130%; font-weight:bold">Total Sales:</td>
+	<td style="font-size:130%; font-weight:bold"><%="#{@lbs_sold.to_i}lbs"%></td>
+	<td style="font-size:130%; font-weight:bold"><%= number_to_currency(@revenue) %></th>
+</tr>

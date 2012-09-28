@@ -1,4 +1,7 @@
 class CutsController < ApplicationController
+
+before_filter :admin_user
+
   # GET /cuts
   # GET /cuts.json
   def index
@@ -80,4 +83,16 @@ class CutsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+  
+    def admin_user
+      if signed_in? 
+        unless current_user.admin?
+          redirect_to root_path, notice: "Sign in as admin to access."
+        end
+      else
+        redirect_to root_path, notice: "Sign in as admin to access."
+      end
+    end
 end

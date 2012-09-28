@@ -5,6 +5,7 @@
   	<td><%= cut.package_weight %> lb</td>
   	<% @p = Package.find_by_cut_id_and_animal_id(cut.id, @animal.id) %>
 	  	<td><%= @p.original %></td>
+	  	<td><%= ((@p.original - @p.left) * @p.cut.package_weight).to_i %></td>
 	  	<td><%= @p.left %></td>
   </tr>
 <%end%>

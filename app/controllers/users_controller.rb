@@ -48,8 +48,6 @@ class UsersController < ApplicationController
 
   private
 
-    private
-
     def signed_in_user
       unless signed_in?
         store_location

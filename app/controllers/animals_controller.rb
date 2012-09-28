@@ -1,4 +1,7 @@
 class AnimalsController < ApplicationController
+
+before_filter :admin_user
+
    # GET /animals
   def index
   	@animals = Animal.all
@@ -36,9 +39,9 @@ class AnimalsController < ApplicationController
 
     if @animal.update_attributes(params[:animal])
         redirect_to @animal, notice: "Animal was successfully updated."
-      else
+    else
         render action: "edit"
-      end
+    end
   end
 
   # DELETE /animals/1
@@ -48,4 +51,16 @@ class AnimalsController < ApplicationController
 
     redirect_to animals_url
   end
+
+  private
+
+    def admin_user
+      if signed_in? 
+        unless current_user.admin?
+          redirect_to root_path, notice: "Sign in as admin to access."
+        end
+      else
+        redirect_to root_path, notice: "Sign in as admin to access."
+      end
+    end
 end

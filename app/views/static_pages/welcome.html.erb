@@ -7,24 +7,10 @@
 	
 	<br>
 	
-	<div style="text-align:center">
-		<div class="btn-group">
-			<ul>
-			    <li class="btn btn-large btn-primary disabled" style="margin:10px"><%= link_to "BEEF", 'orders/cow' %></li>
-			    <li class="btn btn-large btn-primary disabled" style="margin:10px"><%= link_to "PORK", 'orders/pig' %></li>
-			    <li class="btn btn-large btn-primary disabled" style="margin:10px"><%= link_to "LAMB", 'orders/lamb' %></li>
-			    <li class="btn btn-large btn-primary disabled" style="margin:10px"><%= link_to "GOAT", 'orders/goat' %></li>
-			<ul>
-	    </div>
+	<div class="animal-buttons">
+		<%= link_to image_tag("beef_button.png"), 'orders/cow' %>
+		<%= link_to image_tag("pork_button.png"), 'orders/pig' %>
+		<%= link_to "LAMB", 'orders/lamb' %>
+		<%= link_to image_tag("goat_button2.png"), 'orders/goat' %>
 	</div>
 <br>
-<h3 style="text-align:center">Or update another model:</h3>
-<br>
-	<div style="text-align:center">
-		<div class="btn-group">
-			<ul>
-				<li class="btn" style="margin-right:20px"><%= link_to "Animals", animals_path %></li>
-				<li class="btn"><%= link_to "Cuts", cuts_path %></li>
-			</ul>
-		</div>
-	</div>

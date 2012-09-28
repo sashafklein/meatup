@@ -16,9 +16,10 @@
 
   <div class="text-align:center">
     
-    <%= f.label :animal_id %>
-    <%= f.collection_select(:animal_id, Animal.where(:animal_type => @meat), :id, :name) %><br>
-    
+    <% @animal_list = Animal.where(:animal_type => @meat) %>
+    <% @order_animal = @animal_list.last %>
+    <h2><%= @order_animal.name %></h2>
+    <%= f.hidden_field  :animal_id, value: @order_animal.id %>
 
     <% @f = f %>
     <%= render :partial => "cut_table", :object => @f %>

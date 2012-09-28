@@ -1,59 +1,85 @@
 <% provide(:title, @animal.name) %>
 
 <p id="notice"><%= notice %></p>
+<% animal_calculator %>
 
-<div class="pull-left"> 
-  <h2><span style="font-size:80%"> Animal Name: </span><%= @animal.name %></h2>
-</div>
+  <div class="pull-left">
+    <h2><span style="font-size:100%; font-weight:bold"> Animal Name: </span>
+        <span style="font-size:120%; font-weight:bold"><%= @animal.name %></span></h2>
+  </div>
 
-<br>
-<table class="table">
-  <tr>
-    <th>Type of Animal</th>
-    <th>Live Weight</th>
-    <th>Breed</th>
-    <th>Farm</th>
-    <th>Host</th>
-    <th>Photo</th>
-  </tr>
-  <tr>
-    <td><%= @animal.animal_type %></td>
-    <td><%= @animal.weight %></td>
-    <td><%= @animal.breed %></td>
-    <td><%= @animal.farm %></td>
-    <td><%= @animal.host %></td>
-    <td><%= @animal.photo %></td>
-  </tr>
-</table>
+  <br>
+  <br>
 
-<h2>Associated Cuts</h2>
-<table class="table">
-  <tr>
-    <th>Cut Name</th>
-    <th>Cut Price</th>
-    <th>Lbs/Package</th>
-    <th>Estimated Packages</th>
-    <th>Packages Left</th>
-  </tr>
-  <%= render 'cutlist' %>
-</table>
+      <h2>Sales Data</h2>
+        <table class="table">
+          <tr>
+            <th>Hanging Weight (Est)</th>
+            <th>LBs Sold</th>
+            <th>LBs Left</th>
+            <th>Revenue Made</th>
+            <th>Expected Revenue</th>
+          </tr>
+          <tr>
+            <td><%= @lbs_meat.to_i %></td>
+            <td><%= @lbs_sold.to_i %></td>
+            <td><%= (@lbs_meat - @lbs_sold).to_i %></td>
+            <td><%= number_to_currency(@revenue) %></td>
+            <td><%= number_to_currency(@possible) %></td>
+          </tr>
+        </table>
+        
+        <br>
 
-<br>
+      <h2>Animal Info</h2>
+        <table class="table">
+          <tr>
+            <th>Type of Animal</th>
+            <th>Live Weight</th>
+            <th>Breed</th>
+            <th>Farm</th>
+            <th>Host</th>
+            <th>Photo</th>
+          </tr>
+          <tr>
+            <td><%= @animal.animal_type %></td>
+            <td><%= @animal.weight %></td>
+            <td><%= @animal.breed %></td>
+            <td><%= @animal.farm %></td>
+            <td><%= @animal.host %></td>
+            <td><%= @animal.photo %></td>
+          </tr>
+        </table>
 
-<h2>Associated Orders</h2>
-<table class="table">
-  <tr>
-    <th>Order Number</th>
-    <th>Order Status</th>
-    <th>Line Item</th>
-    <th>Number of Units</th>
-    <th>Cut Notes</th>
-    <th>Package Weight</th>
-    <th>Price</th>
-    <th>Line Total</th>
-  <tr>
-  <%= render 'orderlist' %>
-</table>
+      <h2>Associated Cuts</h2>
+        <table class="table">
+          <tr>
+            <th>Cut Name</th>
+            <th>Cut Price</th>
+            <th>Lbs/Package</th>
+            <th>Estimated Packages</th>
+            <th>Pounds Sold </th>
+            <th>Packages Left</th>
+          </tr>
+          <%= render 'cutlist' %>
+        </table>
+
+        <br>
+
+      <h2>Associated Orders</h2>
+        <table class="table">
+          <tr>
+            <th>Order Number</th>
+            <th>Order Status</th>
+            <th>Line Item</th>
+            <th>Number of Units</th>
+            <th>Cut Notes</th>
+            <th>Package Weight</th>
+            <th>Price</th>
+            <th>Line Total</th>
+          <tr>
+          <%= render 'orderlist' %>
+        </table>
 
 <br>
 

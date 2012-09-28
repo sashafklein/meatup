@@ -23,18 +23,20 @@
 	</tr>
 
 	<% @order.lines.each do |l| %>
-		<% @c = l.cut %>
-		<tr>	
-	
-		    	<td><%= @c.name %></td>
-		    	<td><%= l.units %></td>
-		    	<td><%= l.notes %></td>
-		    	<td><%= @c.package_weight %> lb</td>
-		    	<td><%= @c.price %></td>
-		    		<% @line_total = @c.price * @c.package_weight * l.units %>
-		    	<td><%= number_to_currency(@line_total) %></td>
-	    </tr>
-	    <% @total += @line_total %>
+		<% if l.units != 0 %>
+			<% @c = l.cut %>
+			<tr>	
+		
+			    	<td><%= @c.name %></td>
+			    	<td><%= l.units %></td>
+			    	<td><%= l.notes %></td>
+			    	<td><%= @c.package_weight %> lb</td>
+			    	<td><%= @c.price %></td>
+			    		<% @line_total = @c.price * @c.package_weight * l.units %>
+			    	<td><%= number_to_currency(@line_total) %></td>
+		    </tr>
+		    <% @total += @line_total %>
+		<% end %>
 	<%end%>
 	<tr>
 		<td></td>
@@ -46,5 +48,6 @@
 	</tr>
 </table>
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Edit', edit_order_path(@order) if current_user.admin? %>
+<% "|" if current_user.admin? %>
 <%= link_to 'Back', orders_path %>
