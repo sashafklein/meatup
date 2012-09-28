@@ -1,6 +1,6 @@
-<h1>Editing user</h1>
+<% provide(:title, "Edit user") %> 
+<h1>Update your information</h1>
 
-<%= render 'form' %>
+<% @string = "Save Changes" %>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+<%= render :partial => 'form', :object => @string %>

@@ -169,17 +169,33 @@ input, textarea, select, .uneditable-input {
   @extend .error;
  }
 
+ /* users index */
+
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-top: 1px solid $grayLighter;
+    &:last-child {
+      border-bottom: 1px solid $grayLighter;
+    }
+  }
+}
+
+
 /* Background */
 .grass {
-  background-image:url('grass.jpg');
-  background-color:#cccccc;
+  background-image:url('grass.jpg'); 
+  background-color:#6C8BB2; 
 }
 
 .butcher {
   background-image:url('butcher.jpg');
-  -moz-box-shadow: 0px 0px 20px #000;
-  -webkit-box-shadow: 0px 0px 20px #000;
-  box-shadow: 0px 0px 20px #000;
+  -moz-box-shadow: 0px 0px 10px #000;
+  -webkit-box-shadow: 0px 0px 10px #000;
+  box-shadow: 0px 0px 10px #000;
   margin-bottom: 120px;
   margin-top: 40px;
   h1 {
@@ -199,10 +215,10 @@ input, textarea, select, .uneditable-input {
 /* Change Footer and Header Color */
 
 .navbar-inner {
-  background-color: #003366;
+  background-color: #304866;
   background-image: none;
   background-repeat: no-repeat;
   filter: none;
-  opacity: .95; 
+  opacity: .95;
 }
 
