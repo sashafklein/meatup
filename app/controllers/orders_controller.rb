@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   
-before_filter :signed_in_user, only: [:show]
+before_filter :signed_in_user, only: [:show, :create, :new]
 before_filter :admin_user,     only: [:index, :edit, :update, :destroy]
 
   # GET /orders
