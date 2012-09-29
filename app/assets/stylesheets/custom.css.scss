@@ -240,10 +240,11 @@ input, textarea, select, .uneditable-input {
 .red {
     margin-left: 10px;
     margin-top: 10px;
-
+    color: #FF0000;
+    font-weight: bold;
+    text-align: center;
     td {
-      color: #FF0000;
-      font-weight: bold;
+      float: center;
     }
 }
 

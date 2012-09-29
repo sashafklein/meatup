@@ -8,10 +8,12 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  password_digest :string(255)
+#  remember_token  :string(255)
+#  admin           :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessible :name, :email, :password, :password_confirmation, :order_id
   has_many :orders
 
   has_secure_password
@@ -28,6 +30,12 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
 
   private
+
+    def toggle_admin
+      if @admin == true
+        self.toggle!(:admin)
+      end
+    end
 
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64

@@ -119,7 +119,13 @@ before_filter :admin_user,     only: [:index, :edit, :update, :destroy]
    private
 
     def admin_user
-      redirect_to(root_path) unless current_user.admin?
+      if signed_in? 
+        unless current_user.admin?
+          redirect_to root_path, notice: "Sign in as admin to access."
+        end
+      else
+        redirect_to root_path, notice: "Sign in as admin to access."
+      end
     end
 
     def signed_in_user

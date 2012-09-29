@@ -21,6 +21,15 @@
 	)
 	# . . .
 	Animal.create(
+		:name => 'Ilias Kasidiaris',
+	  	:animal_type => "Lamb",
+	  	:breed => "Greek",
+	  	:weight => 150,
+	  	:farm => "Mt. Tam",
+	  	:host => "The Kleins",
+	  	:photo => "NA"
+	)
+	Animal.create(
 		:name => 'Mitt Romney',
 	  	:animal_type => "Goat",
 	  	:breed => "Mountain",
@@ -29,7 +38,6 @@
 	  	:host => "The Kleins",
 	  	:photo => "NA"
 	)
-
 # Cuts
 	Cut.delete_all
 	Cut.create(
@@ -132,15 +140,18 @@
 	Order.delete_all
 	Order.create(
 		:status => "Complete",
-		:animal_id => 1
+		:animal_id => 1,
+		:user_id => 1
   	)
   	Order.create(
 		:status => "Incomplete",
-		:animal_id => 1
+		:animal_id => 1,
+		:user_id => 1
   	)
   	Order.create(
 		:status => "Incomplete",
-		:animal_id => 2
+		:animal_id => 2,
+		:user_id => 1
   	)
 
 # Lines
@@ -176,4 +187,11 @@
 		:cut_id => 5 
 	)
 
-# Packages
+# Users
+	User.delete_all
+	User.create(
+		:name => "Sasha",
+		:email => "sasha@test.com",
+		:password => "password",
+		:password_confirmation => "password"
+	)

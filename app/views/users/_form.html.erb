@@ -15,6 +15,13 @@
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation %>
 
+      <% if signed_in? %>
+        <% if current_user.admin? %>
+          <h3> Click to Switch On/Off Admin </h3> 
+          <%= @admin = check_box_tag(f, :admin) %>
+        <% end %>
+      <% end %>
+
       <%= f.submit @string, class: "btn btn-large btn-primary" %>
     <% end %>
   </div>

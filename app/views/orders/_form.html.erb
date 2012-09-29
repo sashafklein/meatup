@@ -20,14 +20,15 @@
     <% @order_animal = @animal_list.last %>
     <h2><%= @order_animal.name %></h2>
     <%= f.hidden_field  :animal_id, value: @order_animal.id %>
-
+    <% if signed_in? %>
+      <%= f.hidden_field  :user_id, value: current_user.id %>
+    <% end %>
     <% @f = f %>
     <%= render :partial => "cut_table", :object => @f %>
     
     <% f = @f %>
     
-      <%= f.label :status %>
-      <%= f.select :status, [["Incomplete",0],["Complete",1],["Deposited",2],["Other",3]] %>
+      <%= f.hidden_field :status, value: 0 %>
     
     <div class="btn-large">
         <%= f.submit %> 

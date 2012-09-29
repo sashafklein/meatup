@@ -22,12 +22,16 @@
         <td><%= c.package_weight %> lb</td>
         <td>$<%= c.price %></td>
           <% @p = Package.find_by_cut_id_and_animal_id(c.id, @order_animal.id) %>
-          <% @p_left = (0..@p.left).to_a %>
-          <% if @p.left == 0 %>
-            <div class="red"><td>SOLD OUT</td></div>
-            <%= l.hidden_field :units, value: 0 %>
+          <% if @p %>
+            <% @p_left = (0..@p.left).to_a %>
+            <% if @p.left == 0 %>
+              <td class="red">SOLD OUT</td>
+              <%= l.hidden_field :units, value: 0 %>
+            <% else %>
+              <td><%= l.select :units, @p_left %></td>
+            <% end %>
           <% else %>
-            <td><%= l.select :units, @p_left %></td>
+            <td>No Animal, No Packages</td>
           <% end %>
         
         <td><%= l.text_field :notes %></td>

@@ -1,16 +1,22 @@
-<% if @user.orders.find_by_id(-1) %>	
-	<ul>
-			<% o = @user.orders.find_by_id(-1) %>
-			<li><%= "Animal: #{o.animal.name}, Order ID: #{o.id}, Date: #{o.timestamp}"%></li>
-		<% if @user.orders.find_by_id(-2) %>
-			<% o = @user.ordersfind_by_id(2) %>
-			<li><%= "Animal: #{o.animal.name}, Order ID: #{o.id}, Date: #{o.timestamp}"%></li>
+<h2>Recent Orders</h2>
+<% if @user.orders %>
+	<table class="table">
+		<tr>
+			<th>Animal Name</th>
+			<th>Animal Type</th>
+			<th>Order ID</th>
+			<th>Date</th>
+		</tr>
+		
+		<% @user.orders.last(5).each do |o| %>	
+			<tr>
+				<td><%= o.animal.name %></td>
+				<td><%= o.animal.animal_type %></td>
+				<td><%= o.id %></td>
+				<td></td>
+			</tr>
 		<% end %>
-		<% if @user.orders.find_by_id(-3) %>
-			<% o = @user.ordersfind_by_id(-3) %>
-			<li><%= "Animal: #{o.animal.name}, Order ID: #{o.id}, Date: #{o.timestamp}"%></li>
-		<% end %>
-	<ul>
+	</table>
 <% else %>
-	<h3>No Orders! <%= link_to "Get Started!", root_path %></h3>
+	<h3>No orders? <%= link_to 'Get Started!', root_path %>
 <% end %>

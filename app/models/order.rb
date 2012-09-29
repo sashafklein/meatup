@@ -13,7 +13,7 @@
 class Order < ActiveRecord::Base
   belongs_to :user
   belongs_to :animal
-  attr_accessible :status, :lines_attributes, :animal_id
+  attr_accessible :status, :lines_attributes, :animal_id, :user_id
 
   has_many :lines
   has_many :cuts
