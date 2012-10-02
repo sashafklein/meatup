@@ -4,14 +4,14 @@
 		:name => 'Paul Ryan',
 	  	:animal_type => "Cow",
 	  	:breed => "Black Angus",
-	  	:weight => 1000,
+	  	:weight => 2000,
 	  	:farm => "Miller Ranch",
 	  	:host => "The Kleins",
 	  	:photo => "NA",
 	  	:ranch_id => 1,
-	  	:butcher_id => 1
+	  	:butcher_id => 1,
+	  	:multiplier => 1
 	)
-	# . . .
 	Animal.create(
 		:name => 'Donald Trump',
 	  	:animal_type => "Pig",
@@ -21,9 +21,9 @@
 	  	:host => "The Kleins",
 	  	:photo => "NA",
 	  	:ranch_id => 1,
-	  	:butcher_id => 1
+	  	:butcher_id => 1,
+	  	:multiplier => 1
 	)
-	# . . .
 	Animal.create(
 		:name => 'Ilias Kasidiaris',
 	  	:animal_type => "Lamb",
@@ -33,7 +33,8 @@
 	  	:host => "The Kleins",
 	  	:photo => "NA",
 	  	:ranch_id => 1,
-	  	:butcher_id => 1
+	  	:butcher_id => 1,
+	  	:multiplier => 1
 	)
 	Animal.create(
 		:name => 'Mitt Romney',
@@ -44,7 +45,8 @@
 	  	:host => "The Kleins",
 	  	:photo => "NA",
 	  	:ranch_id => 1,
-	  	:butcher_id => 1
+	  	:butcher_id => 1,
+	  	:multiplier => 1
 	)
 # Cuts
 	Cut.delete_all
@@ -223,7 +225,7 @@
 		:user_id => 1,
 		:ground => true,
 		:stew => true,
-		:boneless => false
+		:boneless => true
 	)
 
 # Ranches

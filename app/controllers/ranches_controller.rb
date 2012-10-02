@@ -23,8 +23,9 @@ class RanchesController < ApplicationController
   # POST /ranches
   def create
   	@ranch = Ranch.new(params[:ranch])
-
     if @ranch.save
+      @ranch.to_meat
+      @ranch.save
       redirect_to @ranch, notice: 'Ranch was successfully created'
     else
       render action: "new"
@@ -35,7 +36,9 @@ class RanchesController < ApplicationController
   def update
     @ranch = Ranch.find(params[:id])
 
-    if @ranch.update_attributes(params[:ranch])
+    if @ranch.update_attributes!(params[:ranch])
+        @ranch.to_meat
+        @ranch.save
         redirect_to @ranch, notice: "Ranch was successfully updated."
       else
         render action: "edit"

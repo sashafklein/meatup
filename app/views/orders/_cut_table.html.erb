@@ -8,6 +8,9 @@
     <th>Price/lb</th>
     <th>Packages</th>
     <% @b = @order_animal.butcher %>
+    <% if @b.ground || @b.stew || @b.boneless %>
+      <th>Normal<th>
+    <% end %>
     <% if @b.ground %>
       <th>Grind it?</th>
     <% end %>
@@ -33,7 +36,7 @@
           <% @p = Package.find_by_cut_id_and_animal_id(c.id, @order_animal.id) %>
           <% if @p %>
             <% @p_left = (0..@p.left).to_a %>
-            <% if @p.left == 0 %>
+            <% if @p.left <= 0 %>
               <td class="red">SOLD OUT</td>
               <%= l.hidden_field :units, value: 0 %>
             <% else %>
@@ -42,19 +45,27 @@
           <% else %>
             <td>No Animal, No Packages</td>
           <% end %>
-
-          <% if @b.ground && c.name != "Ground Beef" %>
-            <td><%= l.check_box :ground %></td>
+            <td style="text-align:center"><%= l.radio_button(:notes, "") %><td> 
+          <% if @b.ground && c.name != "Ground Beef"%>
+            <td style="text-align:center">
+              <%= l.radio_button(:notes, "Ground") %>
+            </td>
           <% elsif @b.ground %>
             <td></td>
           <% end %>
-          <% if @b.stew && c.name != "Beef Stew" %>
-            <td><%= l.check_box :stew %></td>
+          <% if @b.stew && c.name != "Ground Beef" && c.name != "Beef Stew" %>
+            <td style="text-align:center">
+              <%= l.radio_button(:notes, "Stew") %>
+            </td>
           <% elsif @b.stew %>
             <td></td>
           <% end %>
-          <% if @b.boneless %>
-            <td><%= l.check_box :boneless %></td>
+          <% if @b.boneless && c.name != "Ground Beef" && c.name != "Beef Stew"%>
+            <td style="text-align:center">
+              <%= l.radio_button(:notes, "Boneless") %>
+            </td>
+          <% elsif @b.boneless %>
+            <td></td>
           <% end %>
       </tr>
     <% end %>

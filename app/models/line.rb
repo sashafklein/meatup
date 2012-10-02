@@ -13,12 +13,10 @@
 
 class Line < ActiveRecord::Base
   belongs_to :order
-  attr_accessible :notes, :units, :order_id, :cut_id, :ground, :stew, :boneless, :dependent => :destroy
-  attr_accessor :ground, :stew, :boneless
+  attr_accessible :notes, :units, :order_id, :cut_id, :dependent => :destroy
   has_many :packages
+  before_save :note_taker
   after_create :decrement_packages
-
-  before_save :to_notes
 
   def decrement_packages
   	@p = Package.find_by_cut_id_and_animal_id(self.cut_id, self.order.animal_id)
@@ -30,13 +28,8 @@ class Line < ActiveRecord::Base
   	Cut.find(cut_id)
   end
 
-  def to_notes
-    if self.ground == 1
-      self.notes = "Ground"
-    elsif self.stew == 1
-      self.notes = "Stew"
-    elsif self.boneless == 1
-      self.notes = "Boneless"
-    end
+  def note_taker 
+    self.notes ||= ""
   end
+
 end

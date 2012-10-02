@@ -12,7 +12,7 @@
 #
 
 class Package < ActiveRecord::Base
-  attr_accessible :animal_id, :cut_id, :original, :left
+  attr_accessible :animal_id, :cut_id, :original, :left, :price
 
   belongs_to :animal
   belongs_to :cut

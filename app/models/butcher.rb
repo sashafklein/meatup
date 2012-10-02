@@ -29,9 +29,9 @@ class Butcher < ActiveRecord::Base
   	self.stew ||= false
   	self.boneless ||= false
   	self.hanging_price ||= 0
-  	self.final_price ||= 0
   	self.wrap_price ||= 0
   	self.vacuum_price ||= 0
+    self.final_price ||= 0
   	self.phone ||= "None"
   end
 

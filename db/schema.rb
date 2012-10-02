@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121002005335) do
+ActiveRecord::Schema.define(:version => 20121002192523) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -25,7 +25,10 @@ ActiveRecord::Schema.define(:version => 20121002005335) do
     t.datetime "updated_at",  :null => false
     t.integer  "ranch_id"
     t.integer  "butcher_id"
-    t.decimal  "multiplier"
+    t.decimal  "cow_mult"
+    t.decimal  "pig_mult"
+    t.decimal  "lamb_mult"
+    t.decimal  "goat_mult"
   end
 
   create_table "butchers", :force => true do |t|
@@ -83,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20121002005335) do
     t.datetime "updated_at", :null => false
     t.integer  "animal_id"
     t.integer  "left"
+    t.decimal  "price"
   end
 
   create_table "ranches", :force => true do |t|
@@ -98,10 +102,10 @@ ActiveRecord::Schema.define(:version => 20121002005335) do
     t.decimal  "pig_live"
     t.decimal  "goat_live"
     t.decimal  "lamb_live"
-    t.decimal  "cow_carcass"
-    t.decimal  "pig_carcass"
-    t.decimal  "lamb_carcass"
-    t.decimal  "goat_carcass"
+    t.decimal  "cow_meat"
+    t.decimal  "pig_meat"
+    t.decimal  "lamb_meat"
+    t.decimal  "goat_meat"
     t.decimal  "cow_hanging"
     t.decimal  "pig_hanging"
     t.decimal  "lamb_hanging"

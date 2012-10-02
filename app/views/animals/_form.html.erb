@@ -29,7 +29,11 @@
   </div>
   <div class="field">
     <%= f.label "Farm" %><br />
-    <%= f.text_field :farm %>
+    <%= f.collection_select(:ranch_id, Ranch.all, :id, :name) %>
+  </div>
+    <div class="field">
+    <%= f.label "Butcher" %><br />
+    <%= f.collection_select(:butcher_id, Butcher.all, :id, :name) %>
   </div>
   <div class="field">
     <%= f.label "Host" %><br />
