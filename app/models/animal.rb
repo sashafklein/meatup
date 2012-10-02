@@ -12,12 +12,16 @@
 #  photo       :string(255)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  ranch_id    :integer
+#  butcher_id  :integer
 #
 
 class Animal < ActiveRecord::Base
-  attr_accessible :breed, :farm, :host, :name, :photo, :animal_type, :weight
+  attr_accessible :breed, :farm, :host, :name, :photo, :animal_type, :weight, :ranch_id, :butcher_id
   has_many :orders
   has_many :packages
+  belongs_to :butcher
+  belongs_to :ranch
   after_create :create_packages
 
  public

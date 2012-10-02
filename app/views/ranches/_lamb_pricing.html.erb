@@ -1,0 +1,8 @@
+<% @ranches.each do |ranch| %>
+	<tr>
+		<td>ranch.name</td>
+		<td><%= ranch.lamb_live %></td>
+		<td><%= ranch.lamb_carcass %></td>
+		<td><%= ranch.lamb_hanging %></td>
+	</tr>
+<% end %>

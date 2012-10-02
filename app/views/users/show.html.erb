@@ -1,6 +1,9 @@
 <% provide(:title, @user.name) %>
 
-<h2><%= "#{@user.name}: Admin" %></h2>
+<h2><%= @user.name %></h2>
 <h2><%= @user.email %></h2>
+<% if @user.admin %>
+	<h2>User type: <strong>Admin</strong></h2>
+<% end %>
 <%= render 'orders' %>
 <%= link_to "Edit", edit_user_path(@user) %>

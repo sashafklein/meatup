@@ -1,0 +1,79 @@
+<% provide(:title, 'Ranches') %>
+
+<h1>Ranch List</h1>
+<p style="text-align:center">(<%= link_to 'Add New', new_ranch_path %>)</p><br>
+
+<h2> Basic Info </h2>
+<table class="table">	
+	<tr>
+		<th>Ranch Name</th>
+		<th>Address</th>
+		<th>Phone Number</th>
+		<th>Has Cows</th>
+		<th>Has Pigs</th>
+		<th>Has Lambs</th>
+		<th>Has Goats</th>
+	</tr>
+	<% @ranches.each do |ranch| %>
+		<tr>
+			<td>ranch.name</td>
+			<td>ranch.address</td>
+			<td>ranch.phone</td>
+			<td>ranch.cow</td>
+			<td>ranch.pig</td>
+			<td>ranch.lamb</td>
+			<td>ranch.goat</td>
+		</tr>
+	<% end %>
+
+</table>	
+
+<h2>Cow Pricing</h2>
+<table class="table">
+	<tr>
+		<th>Ranch Name</th>
+		<th>Live $/LB</th>
+		<th>Carcass $/LB</th>
+		<th>Hanging $/LB</th>
+	</tr>
+	<%= render 'cow_pricing'%>
+</table>		
+
+<h2>Pig Pricing</h2>
+<table class="table">
+	<tr>
+		<th>Ranch Name</th>
+		<th>Live $/LB</th>
+		<th>Carcass $/LB</th>
+		<th>Hanging $/LB</th>
+	</tr>
+	<%= render 'pig_pricing'%>
+</table>		
+
+<h2>Lamb Pricing</h2>
+<table class="table">
+	<tr>
+		<th>Ranch Name</th>
+		<th>Live $/LB</th>
+		<th>Carcass $/LB</th>
+		<th>Hanging $/LB</th>
+	</tr>
+	<%= render 'lamb_pricing'%>
+</table>	
+
+<h2>Goat Pricing</h2>
+<table class="table">
+	<tr>
+		<th>Ranch Name</th>
+		<th>Live $/LB</th>
+		<th>Carcass $/LB</th>
+		<th>Hanging $/LB</th>
+	</tr>
+	<%= render 'goat_pricing'%>
+</table>	
+
+
+
+<br />
+
+

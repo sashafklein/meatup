@@ -31,14 +31,14 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(params[:user])
-      flash[:success] = "Profile updated"
-      if current_user.admin?
-        redirect_to users_path
-      else
-        sign_in @user
+    if current_user.admin? && @user != current_user
+      if @user.update_attributes(params[:user], :as => :administrator)
+        flash[:success] = "Profile updated"
         redirect_to @user
       end
+    elsif @user.update_attributes(params[:user])
+      flash[:success] = "Profile updated"
+      redirect_to @user
     else
       render 'edit'
     end
@@ -72,9 +72,5 @@ class UsersController < ApplicationController
       else
         redirect_to root_path, notice: "Sign in as admin to access."
       end
-    end
-
-    def change_admin
-      user.toggle!(:admin)
     end
 end

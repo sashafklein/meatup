@@ -1,0 +1,69 @@
+<% provide(:title, @ranch.name) %>
+
+<p id="notice"><%= notice %></p>
+
+  <div class="pull-left">
+    <h2><span style="font-size:100%; font-weight:bold"> Ranch Name: </span>
+        <span style="font-size:120%; font-weight:bold"><%= @ranch.name %></span></h2>
+  </div>
+
+  <br>
+  <br>
+<h2> Basic Info </h2>
+<table class="table"> 
+  <tr>
+    <th>Address</th>
+    <th>Phone Number</th>
+    <th>Has Cows</th>
+    <th>Has Pigs</th>
+    <th>Has Lambs</th>
+    <th>Has Goats</th>
+    <th>Associated User </th>
+  </tr>
+  <tr>
+    <td><%= @ranch.address %></td>
+    <td><%= @ranch.phone %></td>
+    <td><%= @ranch.cow %></td>
+    <td><%= @ranch.pig %></td>
+    <td><%= @ranch.lamb %></td>
+    <td><%= @ranch.goat %></td>
+    <td><%= @ranch.user_id %></td>
+  </tr>
+</table>  
+
+<h2>Pricing</h2>
+<table class="table">
+  <tr>
+    <th>Animal Type</th>
+    <th>Live $/LB</th>
+    <th>Carcass $/LB</th>
+    <th>Hanging $/LB</th>
+  </tr>
+  <tr>
+    <th>Cow</th>
+    <td><%= @ranch.cow_live %></td>
+    <td><%= @ranch.cow_carcass %></td>
+    <td><%= @ranch.cow_hanging %></td>
+  </tr>
+  <tr>
+    <th>Pig</th>
+    <td><%= @ranch.pig_live %></td>
+    <td><%= @ranch.pig_carcass %></td>
+    <td><%= @ranch.pig_hanging %></td>
+  </tr>
+  <tr>
+    <th>Lamb</th>
+    <td><%= @ranch.lamb_live %></td>
+    <td><%= @ranch.lamb_carcass %></td>
+    <td><%= @ranch.lamb_hanging %></td>
+  </tr>
+  <tr>
+    <th>Goat</th>
+    <td><%= @ranch.goat_live %></td>
+    <td><%= @ranch.goat_carcass %></td>
+    <td><%= @ranch.goat_hanging %></td>
+  </tr>
+</table>    
+
+<%= link_to 'Edit', edit_ranch_path(@ranch) %> |
+<%= link_to 'Back', ranches_path %>

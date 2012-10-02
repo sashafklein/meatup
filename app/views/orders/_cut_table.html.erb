@@ -7,7 +7,16 @@
     <th>Package Weight</th>
     <th>Price/lb</th>
     <th>Packages</th>
-    <th>Notes</th>
+    <% @b = @order_animal.butcher %>
+    <% if @b.ground %>
+      <th>Grind it?</th>
+    <% end %>
+    <% if @b.stew %>
+      <th>Turn to stew?</th>
+    <% end %>
+    <% if @b.boneless %>
+      <th>Boneless?</th>
+    <% end %>
   </tr>
 
   <% @cutlist = Cut.where(:animal_type => @meat) %>
@@ -33,8 +42,20 @@
           <% else %>
             <td>No Animal, No Packages</td>
           <% end %>
-        
-        <td><%= l.text_field :notes %></td>
+
+          <% if @b.ground && c.name != "Ground Beef" %>
+            <td><%= l.check_box :ground %></td>
+          <% elsif @b.ground %>
+            <td></td>
+          <% end %>
+          <% if @b.stew && c.name != "Beef Stew" %>
+            <td><%= l.check_box :stew %></td>
+          <% elsif @b.stew %>
+            <td></td>
+          <% end %>
+          <% if @b.boneless %>
+            <td><%= l.check_box :boneless %></td>
+          <% end %>
       </tr>
     <% end %>
 

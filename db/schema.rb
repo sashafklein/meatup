@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120927230214) do
+ActiveRecord::Schema.define(:version => 20121002005335) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -23,6 +23,25 @@ ActiveRecord::Schema.define(:version => 20120927230214) do
     t.string   "photo"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "ranch_id"
+    t.integer  "butcher_id"
+    t.decimal  "multiplier"
+  end
+
+  create_table "butchers", :force => true do |t|
+    t.string   "name"
+    t.string   "address"
+    t.decimal  "hanging_price"
+    t.decimal  "final_price"
+    t.decimal  "vacuum_price"
+    t.decimal  "wrap_price"
+    t.string   "phone"
+    t.integer  "user_id"
+    t.boolean  "ground"
+    t.boolean  "stew"
+    t.boolean  "boneless"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "cuts", :force => true do |t|
@@ -64,6 +83,31 @@ ActiveRecord::Schema.define(:version => 20120927230214) do
     t.datetime "updated_at", :null => false
     t.integer  "animal_id"
     t.integer  "left"
+  end
+
+  create_table "ranches", :force => true do |t|
+    t.string   "name"
+    t.string   "address"
+    t.string   "phone"
+    t.integer  "user_id"
+    t.boolean  "cow"
+    t.boolean  "pig"
+    t.boolean  "lamb"
+    t.boolean  "goat"
+    t.decimal  "cow_live"
+    t.decimal  "pig_live"
+    t.decimal  "goat_live"
+    t.decimal  "lamb_live"
+    t.decimal  "cow_carcass"
+    t.decimal  "pig_carcass"
+    t.decimal  "lamb_carcass"
+    t.decimal  "goat_carcass"
+    t.decimal  "cow_hanging"
+    t.decimal  "pig_hanging"
+    t.decimal  "lamb_hanging"
+    t.decimal  "goat_hanging"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "users", :force => true do |t|

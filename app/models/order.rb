@@ -15,8 +15,8 @@ class Order < ActiveRecord::Base
   belongs_to :animal
   attr_accessible :status, :lines_attributes, :animal_id, :user_id
 
-  has_many :lines
   has_many :cuts
+  has_many :lines
 
   accepts_nested_attributes_for :lines
   accepts_nested_attributes_for :cuts
@@ -24,5 +24,6 @@ class Order < ActiveRecord::Base
   def animalfind
   	Animal.find(self.animal_id)
   end
+
 
 end

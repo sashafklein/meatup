@@ -14,6 +14,7 @@
 
 class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :order_id
+  attr_accessible :name, :email, :password, :password_confirmation, :order_id, :admin, :as => :administrator
   has_many :orders
 
   has_secure_password
@@ -30,12 +31,6 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
 
   private
-
-    def toggle_admin
-      if @admin == true
-        self.toggle!(:admin)
-      end
-    end
 
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64

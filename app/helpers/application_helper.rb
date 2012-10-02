@@ -9,5 +9,15 @@ module ApplicationHelper
       "#{base_title} | #{page_title}"
     end
   end
+
+  def nice_bool(answer)
+  	if answer == true
+  		"Yes"
+  	elsif answer == false
+  		"No"
+  	else
+  		"Error"
+  	end
+  end
   
 end

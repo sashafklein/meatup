@@ -1,0 +1,47 @@
+# == Schema Information
+#
+# Table name: butchers
+#
+#  id            :integer          not null, primary key
+#  name          :string(255)
+#  address       :string(255)
+#  hanging_price :decimal(, )
+#  final_price   :decimal(, )
+#  vacuum_price  :decimal(, )
+#  wrap_price    :decimal(, )
+#  phone         :string(255)
+#  user_id       :integer
+#  ground        :boolean
+#  stew          :boolean
+#  boneless      :boolean
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  address: MyString
+  hanging_price: 9.99
+  final_price: 9.99
+  vaccuum_price: 9.99
+  wrap_price: 9.99
+  phone: MyString
+  user_id: 1
+  ground: false
+  stew: false
+  boneless: false
+
+two:
+  name: MyString
+  address: MyString
+  hanging_price: 9.99
+  final_price: 9.99
+  vaccuum_price: 9.99
+  wrap_price: 9.99
+  phone: MyString
+  user_id: 1
+  ground: false
+  stew: false
+  boneless: false

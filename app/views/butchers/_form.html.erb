@@ -1,0 +1,63 @@
+<%= form_for(@butcher) do |f| %>
+  <% if @butcher.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@butcher.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @butcher.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h2>Basics</h2>
+    <div class="field">
+      <%= f.label "Butcher Name" %><br />
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label "Address" %><br />
+      <%= f.text_field :address %>
+    </div>
+       <div class="field">
+      <%= f.label "Phone Number" %><br />
+      <%= f.text_field :phone %>
+    </div>
+  
+  <h2>Prices</h2>
+    <div class="field">
+      <%= f.label "Hanging Price" %><br />
+      <%= f.text_field :hanging_price %>
+    </div>
+    <div class="field">
+      <%= f.label "Price / LB Final Meat" %><br />
+      <%= f.text_field :final_price %>
+    </div>
+    <div class="field">
+      <%= f.label "Paper Wrap Price" %><br />
+      <%= f.text_field :wrap_price %>
+    </div>
+    <div class="field">
+      <%= f.label "Vacuum Seal Price" %><br />
+      <%= f.text_field :vacuum_price %>
+    </div>
+  
+  <h2>Accepts requests to turn cut into:</h2>
+    <div class="field">
+      <%= f.label "Ground" %><br />
+      <%= f.check_box :ground %>
+    </div>
+    <div class="field">
+      <%= f.label "Stew" %><br />
+      <%= f.check_box :stew %>
+    </div>
+    <div class="field">
+      <%= f.label "Ground" %><br />
+      <%= f.check_box :boneless %>
+    </div>
+  
+    <div class="actions">
+    <%= f.submit %>
+    </div>
+<% end %>		

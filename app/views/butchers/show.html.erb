@@ -1,0 +1,36 @@
+<% provide(:title, @butcher.name) %>
+
+<p id="notice"><%= notice %></p>
+
+  <div class="pull-left">
+    <h2><span style="font-size:100%; font-weight:bold"> Butcher Name: </span>
+        <span style="font-size:120%; font-weight:bold"><%= @butcher.name %></span></h2>
+  </div>
+
+  <br>
+  <br>
+<table class="table"> 
+  <tr>
+    <th>Address</th>
+    <th>Phone Number</th>
+    <th>$/LB Meat</th>
+    <th>Wrap Price</th>
+    <th>Vacuum Price</th>
+    <th>Grind Requests</th>
+    <th>Stew Requests</th>
+    <th>Deboning</th>
+  </tr>
+  <tr>
+    <td><%= @butcher.address %></td>
+    <td><%= @butcher.phone %></td>
+    <td><%= @butcher.final_price %></td>
+    <td><%= @butcher.wrap_price %></td>
+    <td><%= @butcher.vacuum_price %></td>
+    <td><%= nice_bool(@butcher.ground) %></td>
+    <td><%= nice_bool(@butcher.stew) %></td>
+    <td><%= nice_bool(@butcher.boneless) %></td>
+  </tr>
+</table>  
+
+<%= link_to 'Edit', edit_butcher_path(@butcher) %> |
+<%= link_to 'Back', butchers_path %>

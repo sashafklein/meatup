@@ -7,7 +7,9 @@
 	  	:weight => 1000,
 	  	:farm => "Miller Ranch",
 	  	:host => "The Kleins",
-	  	:photo => "NA"
+	  	:photo => "NA",
+	  	:ranch_id => 1,
+	  	:butcher_id => 1
 	)
 	# . . .
 	Animal.create(
@@ -17,7 +19,9 @@
 	  	:weight => 800,
 	  	:farm => "The Piggie Farm",
 	  	:host => "The Kleins",
-	  	:photo => "NA"
+	  	:photo => "NA",
+	  	:ranch_id => 1,
+	  	:butcher_id => 1
 	)
 	# . . .
 	Animal.create(
@@ -27,7 +31,9 @@
 	  	:weight => 150,
 	  	:farm => "Mt. Tam",
 	  	:host => "The Kleins",
-	  	:photo => "NA"
+	  	:photo => "NA",
+	  	:ranch_id => 1,
+	  	:butcher_id => 1
 	)
 	Animal.create(
 		:name => 'Mitt Romney',
@@ -36,7 +42,9 @@
 	  	:weight => 200,
 	  	:farm => "Mt. Diablo",
 	  	:host => "The Kleins",
-	  	:photo => "NA"
+	  	:photo => "NA",
+	  	:ranch_id => 1,
+	  	:butcher_id => 1
 	)
 # Cuts
 	Cut.delete_all
@@ -190,8 +198,40 @@
 # Users
 	User.delete_all
 	User.create(
-		:name => "Sasha",
-		:email => "sasha@test.com",
+		:name => "One",
+		:email => "one@test.com",
 		:password => "password",
 		:password_confirmation => "password"
+	)
+	User.create(
+		:name => "Two",
+		:email => "two@test.com",
+		:password => "password",
+		:password_confirmation => "password"
+	)
+
+# Butchers
+	Butcher.delete_all
+	Butcher.create(
+		:name => "Sanders Meat Co",
+		:address => "Turlock",
+		:phone => "999-999-9999",
+		:hanging_price => 0,
+		:final_price => 0.60,
+		:wrap_price => 0,
+		:vacuum_price => 0.15,
+		:user_id => 1,
+		:ground => true,
+		:stew => true,
+		:boneless => false
+	)
+
+# Ranches
+	Ranch.delete_all
+	Ranch.create(
+		:name => "Miller Ranch",
+		:address => "Livermoor",
+		:phone => "999-999-9999",
+		:cow => true,
+		:cow_live => 2.25
 	)

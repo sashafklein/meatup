@@ -1,0 +1,32 @@
+<% provide(:title, 'Butchers') %>
+
+<h1>Butcher List</h1>
+<p style="text-align:center">(<%= link_to 'Add New', new_butcher_path %>)</p><br>
+
+<h2> Butcher Info </h2>
+<table class="table"> 
+  <tr>
+    <th>Address</th>
+    <th>Phone Number</th>
+    <th>$/LB Meat</th>
+    <th>Wrap Price</th>
+    <th>Vacuum Price</th>
+    <th>Grind Requests</th>
+    <th>Stew Requests</th>
+    <th>Deboning</th>
+  </tr>
+  <% @butchers.each do |b| %>
+  	<tr>
+		<td><%= b.address %></td>
+	    <td><%= b.phone %></td>
+	    <td><%= b.final_price %></td>
+	    <td><%= b.wrap_price %></td>
+	    <td><%= b.vacuum_price %></td>
+	    <td><%= nice_bool(b.ground) %></td>
+	    <td><%= nice_bool(b.stew) %></td>
+	    <td><%= nice_bool(b.boneless) %></td>
+	</tr>
+  <% end %>
+ </table>
+
+
