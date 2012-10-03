@@ -19,20 +19,7 @@
 #
 
 class Butcher < ActiveRecord::Base
-  attr_accessible :address, :boneless, :final_price, :ground, :hanging_price, :name, :phone, :stew, :user_id, :vacuum_price, :wrap_price
-  before_save :default_values
-
+  attr_accessible :address, :boneless, :final_price, :ground, :hanging_price, :name, :phone, :stew, :user_id, :vacuum_price, :wrap_price  
   has_many :animals
-
-  def default_values
-  	self.ground ||= false
-  	self.stew ||= false
-  	self.boneless ||= false
-  	self.hanging_price ||= 0
-  	self.wrap_price ||= 0
-  	self.vacuum_price ||= 0
-    self.final_price ||= 0
-  	self.phone ||= "None"
-  end
 
 end

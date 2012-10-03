@@ -10,6 +10,7 @@ module ApplicationHelper
     end
   end
 
+  # Formats bool answers to display as yes or no.
   def nice_bool(answer)
   	if answer == true
   		"Yes"

@@ -23,10 +23,10 @@
   <tr>
     <td><%= @ranch.address %></td>
     <td><%= @ranch.phone %></td>
-    <td><%= @ranch.cow %></td>
-    <td><%= @ranch.pig %></td>
-    <td><%= @ranch.lamb %></td>
-    <td><%= @ranch.goat %></td>
+    <td><%= nice_bool(@ranch.cow) %></td>
+    <td><%= nice_bool(@ranch.pig) %></td>
+    <td><%= nice_bool(@ranch.lamb) %></td>
+    <td><%= nice_bool(@ranch.goat) %></td>
     <td><%= @ranch.user_id %></td>
   </tr>
 </table>  

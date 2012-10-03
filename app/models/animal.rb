@@ -25,9 +25,6 @@ class Animal < ActiveRecord::Base
   belongs_to :butcher
   belongs_to :ranch
   after_create :create_packages
-  before_save :defaults
-
- public
  
   def create_packages
   	@cut_list = Cut.where(:animal_type => self.animal_type)
@@ -40,7 +37,7 @@ class Animal < ActiveRecord::Base
 		Package.create!(:animal_id => self.id, :cut_id => c.id, 
 			:original => (self.weight * (c.percent)/100) / c.package_weight, 
 			:left => (self.weight * (c.percent)/100) / c.package_weight, 
-      :price => (c.price + self.butcher.final_price + @wrapping) * multiplier(self.animal_type)) 
+      :price => c.price * multiplier(self.animal_type)) 
 	  end
   end
 
@@ -48,20 +45,23 @@ class Animal < ActiveRecord::Base
 	Cut.where(:animal_type => self.animal_type)
   end
 
-  def defaults
-    if self.butcher.vacuum_price > self.butcher.wrap_price
-      @wrapping = self.butcher.vacuum_price
+  def multiplier(string)
+
+    @r = self.ranch
+    @b = self.butcher
+
+    if @b.vacuum_price > @b.wrap_price
+      @wrapping = @b.vacuum_price
     else
-      @wrapping = self.butcher.wrap_price
+      @wrapping = @b.wrap_price
     end 
+
     # Mult is the total per pound meat price including butchery fees
-    self.cow_mult = ((self.ranch.cow_meat + self.butcher.final_price + @wrapping)/ 4.31)
+    self.cow_mult = (@r.cow_meat + (@b.hanging_price + @wrapping) / CMOH) / 4.401
     self.pig_mult = 1
     self.lamb_mult = 1
     self.goat_mult = 1
-  end
 
-  def multiplier(string)
     if string == "Cow"
       self.cow_mult
     elsif string == "Pig"
