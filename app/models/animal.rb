@@ -38,15 +38,18 @@ class Animal < ActiveRecord::Base
     else
       @wrapping = self.butcher.wrap_price
     end 
-  	Package.create!(:animal_id => self.id, :cut_id => c.id, 
-  			:original => (self.weight * (c.percent)/100) / c.package_weight, 
-  			:left => (self.weight * (c.percent)/100) / c.package_weight, 
-        :price => c.price * multiplier(self.animal_type)) 
-  	end
+    if c.package_weight != 0
+      n = ((self.weight * (c.percent)/100) / c.package_weight).to_i
+      n.times do 
+      	Package.create!(:animal_id => self.id, :cut_id => c.id, 
+            :price => c.price * multiplier(self.animal_type), :sold => false) 
+      	end
+      end
+    end
   end
 
   def cut_find
-	Cut.where(:animal_type => self.animal_type)
+	 Cut.where(:animal_type => self.animal_type)
   end
 
   def multiplier(string)

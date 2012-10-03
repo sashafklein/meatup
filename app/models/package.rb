@@ -4,18 +4,19 @@
 #
 #  id         :integer          not null, primary key
 #  cut_id     :integer
-#  original   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  animal_id  :integer
-#  left       :integer
 #  price      :decimal(, )
+#  line_id    :integer
+#  sold       :boolean
 #
 
 class Package < ActiveRecord::Base
-  attr_accessible :animal_id, :cut_id, :original, :left, :price, :line_id
+  attr_accessible :animal_id, :cut_id, :original, :left, :price, :line_id, :sold
 
   belongs_to :animal
   belongs_to :cut
+  belongs_to :line
 
 end

@@ -33,14 +33,15 @@
         <td><%= c.name %></td>
         <td><%= c.package_weight %> lb</td>
         <td>$<%= c.price %></td>
-          <% @p = Package.find_by_cut_id_and_animal_id(c.id, @order_animal.id) %>
-          <% if @p %>
-            <% @p_left = (0..@p.left).to_a %>
-            <% if @p.left <= 0 %>
+          <% p_directory = Package.find_by_cut_id_and_animal_id(c.id, @order_animal.id) %>
+          <% p_left = p_directory.where(:sold == false).length %>
+          <% if p_directory %>
+            <% dropdown = (0..p_left).to_a %>
+            <% if dropdown <= 0 %>
               <td class="red">SOLD OUT</td>
               <%= l.hidden_field :units, value: 0 %>
             <% else %>
-              <td><%= l.select :units, @p_left %></td>
+              <td><%= l.select :units, dropdown %></td>
             <% end %>
           <% else %>
             <td>No Animal, No Packages</td>

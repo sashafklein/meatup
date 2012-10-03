@@ -4,12 +4,12 @@
 #
 #  id         :integer          not null, primary key
 #  cut_id     :integer
-#  original   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  animal_id  :integer
-#  left       :integer
 #  price      :decimal(, )
+#  line_id    :integer
+#  sold       :boolean
 #
 
 require 'test_helper'

@@ -18,13 +18,17 @@
 				<td></td>
 				<td></td>
 				<% @c = l.cut %>
+				<% p_directory = Packages.find_by_cut_id_and_animal_id(@c.id, o.animal_id) %>
+				<% sold = p_directory.where(:sold == true).length %>
+				<% unsold = p_directory.where(:sold == false).length %>
+			    <% example = p_directory.first %>
 			    	<td><%= @c.name %></td>
 			    	<td><%= l.units %></td>
 			    	<td><%= l.notes %></td>
 			    	<td><%= @c.package_weight %> lb</td>
-			    	<td><%= number_to_currency(@c.price) %></td>
+			    	<td><%= number_to_currency(example.price) %></td>
 			    		<% @lbs = l.units * @c.package_weight %>
-			    		<% @line_total = @c.price * @lbs %>
+			    		<% @line_total = example.price * @lbs %>
 			    	<td><%= number_to_currency(@line_total) %></td>
 		    </tr>
 		    <% @total += @line_total %>

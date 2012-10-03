@@ -18,18 +18,22 @@ class Line < ActiveRecord::Base
   before_save :note_taker
   after_create :decrement_packages
 
-  def decrement_packages
-  	@p = Package.find_by_cut_id_and_animal_id(self.cut_id, self.order.animal_id)
-  	@p.left = @p.left - self.units
-  	@p.save!
-  end
-
   def cut
   	Cut.find(cut_id)
   end
 
   def note_taker 
     self.notes ||= ""
+  end
+
+  def decrement_packages
+    ps_left = self.cut.packages.where(:sold == false)
+    ps = p_left.first(self.units)
+    ps.each do |p|
+      p.line_id = self.line_id
+      p.sold = true
+      p.save
+    end
   end
 
 end

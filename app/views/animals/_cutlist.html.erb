@@ -1,13 +1,16 @@
 <% @animal.cut_find.each do |cut| %>
 	<% unless cut.percent == 0 %>
 	  <tr>
-	  <% @p = Package.find_by_cut_id_and_animal_id(cut.id, @animal.id) %>
+	  <% p_directory = Packages.find_by_cut_id_and_animal_id(cut.id, @animal.id) %>
+	  <% sold = p_directory.where(:sold == true).length %>
+	  <% unsold = p_directory.where(:sold == false).length %>
+	  <% example = p_directory.first %>
 	  	<td><%= cut.name %></td>
-	  	<td><%= number_to_currency(@p.price) %></td>
+	  	<td><%= number_to_currency(example.price) %></td>
 	  	<td><%= cut.package_weight %> lb</td>
-		  	<td><%= @p.original %></td>
-		  	<td><%= ((@p.original - @p.left) * @p.cut.package_weight).to_i %></td>
-		  	<td><%= @p.left %></td>
+		  	<td><%= p_directory %></td>
+		  	<td><%= (sold * cut.package_weight).to_i %></td>
+		  	<td><%= sold %></td>
 	  </tr>
 	<% end %>
 <%end%>
