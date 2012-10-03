@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #  animal_id  :integer
 #  left       :integer
+#  price      :decimal(, )
 #
 
 require 'test_helper'

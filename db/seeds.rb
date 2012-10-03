@@ -1,83 +1,217 @@
 # Animals
 	Animal.delete_all
-	Animal.create(
-		:name => 'Paul Ryan',
-	  	:animal_type => "Cow",
-	  	:breed => "Black Angus",
-	  	:weight => 2000,
-	  	:farm => "Miller Ranch",
-	  	:host => "The Kleins",
-	  	:photo => "NA",
-	  	:ranch_id => 1,
-	  	:butcher_id => 1,
-	  	:multiplier => 1
-	)
-	Animal.create(
-		:name => 'Donald Trump',
-	  	:animal_type => "Pig",
-	  	:breed => "Hungarian",
-	  	:weight => 800,
-	  	:farm => "The Piggie Farm",
-	  	:host => "The Kleins",
-	  	:photo => "NA",
-	  	:ranch_id => 1,
-	  	:butcher_id => 1,
-	  	:multiplier => 1
-	)
-	Animal.create(
-		:name => 'Ilias Kasidiaris',
-	  	:animal_type => "Lamb",
-	  	:breed => "Greek",
-	  	:weight => 150,
-	  	:farm => "Mt. Tam",
-	  	:host => "The Kleins",
-	  	:photo => "NA",
-	  	:ranch_id => 1,
-	  	:butcher_id => 1,
-	  	:multiplier => 1
-	)
-	Animal.create(
-		:name => 'Mitt Romney',
-	  	:animal_type => "Goat",
-	  	:breed => "Mountain",
-	  	:weight => 200,
-	  	:farm => "Mt. Diablo",
-	  	:host => "The Kleins",
-	  	:photo => "NA",
-	  	:ranch_id => 1,
-	  	:butcher_id => 1,
-	  	:multiplier => 1
-	)
+
 # Cuts
 	Cut.delete_all
+	# The Real Paul Ryan
+	Cut.create(
+		:animal_type => "Cow",
+		:name => "London Broil",
+	  	:price => 4,
+	  	:package_weight => 2,
+	  	:percent => 1.67
+  	)
 	Cut.create(
 		:animal_type => "Cow",
 		:name => "Ground Beef",
-	  	:price => 3,
+	  	:price => 2.63,
 	  	:package_weight => 1,
-	  	:percent => 9
+	  	:percent => 7.67
   	) 
   	Cut.create(
 		:animal_type => "Cow",
 		:name => "Beef Stew",
-	  	:price => 3.2,
+	  	:price => 2.78,
+	  	:package_weight => 2.22,
+	  	:percent => 4.25
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Brisket",
+	  	:price => 5.35,
+	  	:package_weight => 4,
+	  	:percent => 0.67
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Cross Rib",
+	  	:price => 4.5,
+	  	:package_weight => 3.38,
+	  	:percent => 2.25
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Rump Steak",
+	  	:price => 5.55,
+	  	:package_weight => 3.5,
+	  	:percent => 0.58
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Short Ribs",
+	  	:price => 5.55,
+	  	:package_weight => 3.33,
+	  	:percent => 1.67
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Eye of Round",
+	  	:price => 5.25,
+	  	:package_weight => 3.50,
+	  	:percent => 0.58
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Bottom Round",
+	  	:price => 6.55,
+	  	:package_weight => 4,
+	  	:percent => 0.67
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Tri Tip",
+	  	:price => 8.1,
 	  	:package_weight => 2,
-	  	:percent => 5
+	  	:percent => 0.67
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Flank",
+	  	:price => 5.55,
+	  	:package_weight => 1.5,
+	  	:percent => 0.25
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Chuck Roast",
+	  	:price => 7.6,
+	  	:package_weight => 3.9,
+	  	:percent => 3.25
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Hanger Steak",
+	  	:price => 7.8,
+	  	:package_weight => 0,
+	  	:percent => 0
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Flat Iron",
+	  	:price => 8.15,
+	  	:package_weight => 0,
+	  	:percent => 0
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Top Sirloin Steak",
+	  	:price => 10.9,
+	  	:package_weight => 1.56,
+	  	:percent => 1.17
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Skirt",
+	  	:price => 13.2,
+	  	:package_weight => 1.25,
+	  	:percent => 0.42
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Porterhouse",
+	  	:price => 13.05,
+	  	:package_weight => 2.6,
+	  	:percent => 1.08
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "T-Bone",
+	  	:price => 15.05,
+	  	:package_weight => 2,
+	  	:percent => 1.17
   	)
   	Cut.create(
 		:animal_type => "Cow",
 		:name => "Ribeye",
-	  	:price => 14.5,
+	  	:price => 15.75,
 	  	:package_weight => 2,
-	  	:percent => 2
+	  	:percent => 1.83
   	)
   	Cut.create(
 		:animal_type => "Cow",
-		:name => "Tenderloin",
-	  	:price => 27,
-	  	:package_weight => 5,
-	  	:percent => 0.5
+		:name => "NY Strip",
+	  	:price => 15.7,
+	  	:package_weight => 0,
+	  	:percent => 0
   	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Filet Mignon Tenderloin",
+	  	:price => 20,
+	  	:package_weight => 1.5,
+	  	:percent => 0.25
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Sirloin Tip",
+	  	:price => 8.1,
+	  	:package_weight => 1.1,
+	  	:percent => 0.25
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Shank",
+	  	:price => 3,
+	  	:package_weight => 2.64,
+	  	:percent => 2.42
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Knuckle Bones",
+	  	:price => 3,
+	  	:package_weight => 4.75,
+	  	:percent => 1.58
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Suet Fat",
+	  	:price => 3,
+	  	:package_weight => 1.8,
+	  	:percent => 0.75
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Kidney",
+	  	:price => 3,
+	  	:package_weight => 2,
+	  	:percent => 0.17
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Offal",
+	  	:price => 3,
+	  	:package_weight => 1.31,
+	  	:percent => 1.42
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Flap Meat",
+	  	:price => 3,
+	  	:package_weight => 1.5,
+	  	:percent => 0.50
+  	)
+  	Cut.create(
+		:animal_type => "Cow",
+		:name => "Neck",
+	  	:price => 3,
+	  	:package_weight => 4.75,
+	  	:percent => 1.58
+  	)
+
+
+
+  	# Other Cuts
+
   	Cut.create(
 		:animal_type => "Pig",
 		:name => "Bacon",
@@ -100,103 +234,6 @@
 	  	:percent => 3
   	)
 
-# Packages
- 	Package.delete_all
- 	Package.create(
- 		:original => 90,
- 		:left => 90,
- 		:cut_id => 1,
- 		:animal_id => 1
- 	)
- 	Package.create(
- 		:original => 25,
- 		:left => 25,
- 		:cut_id => 2,
- 		:animal_id => 1
- 	)
- 	Package.create(
- 		:original => 10,
- 		:left => 10,
- 		:cut_id => 3,
- 		:animal_id => 1
- 	)
- 	Package.create(
- 		:original => 1,
- 		:left => 1,
- 		:cut_id => 4,
- 		:animal_id => 1
- 	)
- 	Package.create(
- 		:original => 24,
- 		:left => 24,
- 		:cut_id => 5,
- 		:animal_id => 2
- 	)
- 	Package.create(
- 		:original => 20,
- 		:left => 20,
- 		:cut_id => 6,
- 		:animal_id => 2
- 	)
- 	Package.create(
- 		:original => 3,
- 		:left => 3,
- 		:cut_id => 7,
- 		:animal_id => 3
- 	)
- 	
-
-# Orders
-	Order.delete_all
-	Order.create(
-		:status => "Complete",
-		:animal_id => 1,
-		:user_id => 1
-  	)
-  	Order.create(
-		:status => "Incomplete",
-		:animal_id => 1,
-		:user_id => 1
-  	)
-  	Order.create(
-		:status => "Incomplete",
-		:animal_id => 2,
-		:user_id => 1
-  	)
-
-# Lines
-	Line.delete_all
-	Line.create(
-		:units => 3,
-		:notes => "Bone-in",
-		:order_id => 1,
-		:cut_id => 3
-	)
-	Line.create(
-		:units => 1,
-		:notes => "Whole",
-		:order_id => 1,
-		:cut_id => 4
-	)
-	Line.create(
-		:units => 10,
-		:notes => "10% Fat",
-		:order_id => 1,
-		:cut_id => 1
-	)
-	Line.create(
-		:units => 3,
-		:notes => "Lean",
-		:order_id => 2,
-		:cut_id => 2
-	)
-	Line.create(
-		:units => 10,
-		:notes => "Hickory Smoked",
-		:order_id => 3,
-		:cut_id => 5 
-	)
-
 # Users
 	User.delete_all
 	User.create(
@@ -218,10 +255,10 @@
 		:name => "Sanders Meat Co",
 		:address => "Turlock",
 		:phone => "999-999-9999",
-		:hanging_price => 0,
-		:final_price => 0.60,
+		:hanging_price => 0.55,
+		:final_price => 0,
 		:wrap_price => 0,
-		:vacuum_price => 0.15,
+		:vacuum_price => 0.00,
 		:user_id => 1,
 		:ground => true,
 		:stew => true,
@@ -235,5 +272,6 @@
 		:address => "Livermoor",
 		:phone => "999-999-9999",
 		:cow => true,
-		:cow_live => 2.25
+		:cow_live => 1.40,
+		:cow_meat => 3.62
 	)

@@ -14,6 +14,10 @@
 #  updated_at  :datetime         not null
 #  ranch_id    :integer
 #  butcher_id  :integer
+#  cow_mult    :decimal(, )
+#  pig_mult    :decimal(, )
+#  lamb_mult   :decimal(, )
+#  goat_mult   :decimal(, )
 #
 
 require 'test_helper'

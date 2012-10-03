@@ -9,11 +9,13 @@
 #  updated_at :datetime         not null
 #  animal_id  :integer
 #  left       :integer
+#  price      :decimal(, )
 #
 
 class Package < ActiveRecord::Base
-  attr_accessible :animal_id, :cut_id, :original, :left, :price
+  attr_accessible :animal_id, :cut_id, :original, :left, :price, :line_id
 
   belongs_to :animal
   belongs_to :cut
+
 end

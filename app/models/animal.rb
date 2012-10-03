@@ -14,6 +14,10 @@
 #  updated_at  :datetime         not null
 #  ranch_id    :integer
 #  butcher_id  :integer
+#  cow_mult    :decimal(, )
+#  pig_mult    :decimal(, )
+#  lamb_mult   :decimal(, )
+#  goat_mult   :decimal(, )
 #
 
 class Animal < ActiveRecord::Base
@@ -34,11 +38,11 @@ class Animal < ActiveRecord::Base
     else
       @wrapping = self.butcher.wrap_price
     end 
-		Package.create!(:animal_id => self.id, :cut_id => c.id, 
-			:original => (self.weight * (c.percent)/100) / c.package_weight, 
-			:left => (self.weight * (c.percent)/100) / c.package_weight, 
-      :price => c.price * multiplier(self.animal_type)) 
-	  end
+  	Package.create!(:animal_id => self.id, :cut_id => c.id, 
+  			:original => (self.weight * (c.percent)/100) / c.package_weight, 
+  			:left => (self.weight * (c.percent)/100) / c.package_weight, 
+        :price => c.price * multiplier(self.animal_type)) 
+  	end
   end
 
   def cut_find

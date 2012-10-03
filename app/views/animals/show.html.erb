@@ -19,6 +19,7 @@
             <th>LBs Left</th>
             <th>Revenue Made</th>
             <th>Expected Revenue</th>
+            <th>Expected Margins</th>
           </tr>
           <tr>
             <td><%= @lbs_meat.to_i %></td>
@@ -26,6 +27,7 @@
             <td><%= (@lbs_meat - @lbs_sold).to_i %></td>
             <td><%= number_to_currency(@revenue) %></td>
             <td><%= number_to_currency(@possible) %></td>
+            <td><%= number_to_currency(@margins) %></td>
           </tr>
         </table>
         
