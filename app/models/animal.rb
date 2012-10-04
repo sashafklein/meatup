@@ -31,19 +31,21 @@ class Animal < ActiveRecord::Base
   after_create :create_packages
  
   def create_packages
-  	@cut_list = Cut.where(:animal_type => self.animal_type)
-  	@cut_list.each do |c|
+    
     if self.butcher.vacuum_price > self.butcher.wrap_price
       @wrapping = self.butcher.vacuum_price
     else
       @wrapping = self.butcher.wrap_price
     end 
-    if c.package_weight != 0
-      n = ((self.weight * (c.percent)/100) / c.package_weight).to_i
-      n.times do 
-      	Package.create!(:animal_id => self.id, :cut_id => c.id, 
-            :price => c.price * multiplier(self.animal_type), :sold => false) 
-      	end
+
+  	@cut_list = Cut.where(:animal_type => self.animal_type)
+  	@cut_list.each do |c|
+      unless c.package_weight == 0
+        package_number = ((self.weight * (c.percent)/100) / c.package_weight).to_i
+        package_number.times do 
+        	Package.create!(:animal_id => self.id, :cut_id => c.id, 
+              :price => (c.price * multiplier(self.animal_type)), :sold => false) 
+        end
       end
     end
   end

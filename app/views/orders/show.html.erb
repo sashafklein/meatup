@@ -25,17 +25,18 @@
 	<% @order.lines.each do |l| %>
 		<% if l.units != 0 %>
 			<% @c = l.cut %>
-			<% p_directory = Packages.find_by_cut_id_and_animal_id(@c.id, @order.animal_id) %>
-			<% sold = p_directory.where(:sold == true).length %>
-	  		<% unsold = p_directory.where(:sold == false).length %>
-	  		<% example = p_directory.first %>
+			<% @a = @order.animal %>
+			<% cut_packages = @a.packages.where(:cut_id => @c.id) %>
+			<% sold = cut_packages.where(:sold => true).length %>
+	  		<% unsold = cut_packages.where(:sold => false).length %>
+	  		<% example = cut_packages.first %>
 			<tr>	
 		
 			    	<td><%= @c.name %></td>
 			    	<td><%= l.units %></td>
 			    	<td><%= l.notes %></td>
 			    	<td><%= @c.package_weight %> lb</td>
-			    	<td><%= example.price %></td>
+			    	<td><%= number_to_currency(example.price) %></td>
 			    		<% @line_total = example.price * @c.package_weight * l.units %>
 			    	<td><%= number_to_currency(@line_total) %></td>
 		    </tr>

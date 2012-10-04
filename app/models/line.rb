@@ -27,12 +27,13 @@ class Line < ActiveRecord::Base
   end
 
   def decrement_packages
-    ps_left = self.cut.packages.where(:sold == false)
-    ps = p_left.first(self.units)
-    ps.each do |p|
-      p.line_id = self.line_id
-      p.sold = true
-      p.save
+
+    a = self.order.animal
+    cut_packages = a.packages.where(:cut_id => self.cut_id)
+    unsold = cut_packages.where(:sold => false)
+    unsold.first(self.units).each do |p|
+      p.update_attribute(:line_id, self.id)
+      p.toggle!(:sold)
     end
   end
 

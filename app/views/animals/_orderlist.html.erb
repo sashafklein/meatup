@@ -18,10 +18,10 @@
 				<td></td>
 				<td></td>
 				<% @c = l.cut %>
-				<% p_directory = Packages.find_by_cut_id_and_animal_id(@c.id, o.animal_id) %>
-				<% sold = p_directory.where(:sold == true).length %>
-				<% unsold = p_directory.where(:sold == false).length %>
-			    <% example = p_directory.first %>
+				<% cut_packages = o.animal.packages.where(:cut_id => @c.id) %>
+				<% sold = cut_packages.where(:sold => true).length %>
+				<% unsold = cut_packages.where(:sold => false).length %>
+			    <% example = cut_packages.first %>
 			    	<td><%= @c.name %></td>
 			    	<td><%= l.units %></td>
 			    	<td><%= l.notes %></td>
