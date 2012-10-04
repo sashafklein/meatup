@@ -2,18 +2,19 @@
 	<% unless cut.percent == 0 %>
 	  <tr>
 
-	  <% all_ps = @animal.packages %>
-	  <% cut_packages = all_ps.where(:cut_id => cut.id) %>
-	  <% sold = cut_packages.where(:sold => true).length %>
-	  <% unsold = cut_packages.where(:sold => false).length %>
-	  <% example = cut_packages.first %>
+		<% all_ps = @animal.packages %>
+		<% cut_packages = all_ps.where(:cut_id => cut.id) %>
+		<% sold = cut_packages.where(:sold => true).length %>
+		<% unsold = cut_packages.where(:sold => false).length %>
+		<% example = cut_packages.first %>
 
 	  	<td><%= cut.name %></td>
 	  	<td><%= number_to_currency(example.price) %></td>
-	  	<td><%= cut.package_weight %> lb</td>
-		  	<td><%= cut_packages.length %></td>
-		  	<td><%= (sold * cut.package_weight).to_i %></td>
-		  	<td><%= cut_packages.length - sold %></td>
+		<td><%= cut_packages.length %></td>  	
+		<td><%= cut_packages.length - sold %></td>
+		<td><%= sold %></td>
+		<td><%= cut.package_weight %> lb</td>
+		<td><%= (sold * cut.package_weight).to_i %></td>
 	  </tr>
 	<% end %>
 <%end%>

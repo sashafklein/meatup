@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121003054958) do
+ActiveRecord::Schema.define(:version => 20121004171700) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20121003054958) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
     t.string   "animal_type"
+    t.float    "comp"
   end
 
   add_index "cuts", ["line_id"], :name => "index_cuts_on_line_id"

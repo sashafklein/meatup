@@ -16,7 +16,7 @@ module AnimalsHelper
 		@animal.orders.each do |o|
 			o.lines.each do |l|
 				if l.packages
-					p_list = l.packages.where(:sold => false)
+					p_list = l.packages.where(:sold => true)
 					p_list.each do |p|
 						@lbs_sold += l.cut.package_weight
 					end

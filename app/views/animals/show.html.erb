@@ -57,11 +57,12 @@
         <table class="table">
           <tr>
             <th>Cut Name</th>
-            <th>Cut Price</th>
+            <th>Price / lb</th>
+            <th>Orig #</th>
+            <th># Left</th>
+            <th># Sold</th>
             <th>Lbs/Package</th>
-            <th>Estimated Packages</th>
             <th>Pounds Sold</th>
-            <th>Packages Left</th>
           </tr>
           <%= render 'cutlist' %>
         </table>
@@ -71,10 +72,10 @@
       <h2>Associated Orders</h2>
         <table class="table">
           <tr>
-            <th>Order Number</th>
+            <th>Order #</th>
             <th>Order Status</th>
             <th>Line Item</th>
-            <th>Number of Units</th>
+            <th># Packages</th>
             <th>Cut Notes</th>
             <th>Package Weight</th>
             <th>Price</th>

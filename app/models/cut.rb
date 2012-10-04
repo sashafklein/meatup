@@ -11,8 +11,9 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  animal_type    :string(255)
+#  comp           :float
 #
 
 class Cut < ActiveRecord::Base
-  attr_accessible :name, :package_weight, :percent, :price, :animal_type
+  attr_accessible :name, :package_weight, :percent, :price, :animal_type, :comp
 end

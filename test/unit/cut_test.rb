@@ -11,6 +11,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  animal_type    :string(255)
+#  comp           :float
 #
 
 require 'test_helper'

@@ -6,20 +6,25 @@
     <th>Cut</th>
     <th>Package Weight</th>
     <th>Price/lb</th>
+    <th>Est Savings</th>
     <th>Packages</th>
     <% @b = @order_animal.butcher %>
-    <% if @b.ground || @b.stew || @b.boneless %>
-      <th>Normal<th>
-    <% end %>
-    <% if @b.ground %>
-      <th>Grind it?</th>
-    <% end %>
-    <% if @b.stew %>
-      <th>Turn to stew?</th>
-    <% end %>
-    <% if @b.boneless %>
-      <th>Boneless?</th>
-    <% end %>
+
+      <% if @b.ground || @b.stew || @b.boneless %>
+        <th>Normal<th>
+      <% end %>
+
+      <% if @b.ground %>
+        <th>Grind it?</th>
+      <% end %>
+      
+      <% if @b.stew %>
+        <th>Turn to stew?</th>
+      <% end %>
+      
+      <% if @b.boneless %>
+        <th>Boneless?</th>
+      <% end %>
   </tr>
 
   <% @cutlist = Cut.where(:animal_type => @meat) %>
@@ -28,53 +33,61 @@
   <% @cutlist.each do |c| %>
 
     <%= @f.fields_for :lines do |l| %>
-      <tr>
-        <%= l.hidden_field :cut_id, value: c.id %>
-        <td><%= c.name %></td>
-        <td><%= c.package_weight %> lb</td>
-        <td>$<%= c.price %></td>
 
-          <% all_ps = @order_animal.packages %>
-          <% cut_packages = all_ps.where(:cut_id => c.id) %>
-          <% sold = cut_packages.where(:sold => true).length %>
-          <% unsold = cut_packages.where(:sold => false).length %>
-          <% example = cut_packages.first %>
+      <% all_ps = @order_animal.packages %>  
+      <% cut_packages = all_ps.where(:cut_id => c.id) %>
+      <% sold = cut_packages.where(:sold => true).length %>
+      <% unsold = cut_packages.where(:sold => false).length %>
+      <% example = cut_packages.first %>
 
-          <% if cut_packages %>
-            <% dropdown = (0..unsold).to_a %>
-            <% if dropdown.length <= 0 %>
-              <td class="red">SOLD OUT</td>
-              <%= l.hidden_field :units, value: 0 %>
+      <% unless cut_packages.length == 0 %>
+        <tr>
+          <%= l.hidden_field :cut_id, value: c.id %>
+          <td><%= c.name %></td>
+          <td><%= c.package_weight %> lb</td>
+          <td><%= number_to_currency(example.price) %></td>
+          <% if ((c.comp - example.price) / c.comp) > 0.01 %>
+              <td><%= number_to_percentage(((c.comp - example.price) / c.comp), :precision => 2) %></td>
             <% else %>
-              <td><%= l.select :units, dropdown %></td>
+              <td><%= number_to_percentage(0, :precision => 2) %></td>
+          <% end %>
+              <% dropdown = (0..unsold).to_a %>
+              <% if dropdown.length <= 0 %>
+                <td class="red">SOLD OUT</td>
+                <%= l.hidden_field :units, value: 0 %>
+              <% else %>
+                <td><%= l.select :units, dropdown %></td>
+              <% end %>
+
+                <td style="text-align:center"><%= l.radio_button(:notes, "") %><td> 
+
+            <% if @b.ground && c.name != "Ground Beef"%>
+                <td style="text-align:center">
+                  <%= l.radio_button(:notes, "Ground") %>
+                </td>
+              <% elsif @b.ground %>
+                <td></td>
             <% end %>
-          <% else %>
-            <td>No Animal, No Packages</td>
-          <% end %>
-            <td style="text-align:center"><%= l.radio_button(:notes, "") %><td> 
-          <% if @b.ground && c.name != "Ground Beef"%>
-            <td style="text-align:center">
-              <%= l.radio_button(:notes, "Ground") %>
-            </td>
-          <% elsif @b.ground %>
-            <td></td>
-          <% end %>
-          <% if @b.stew && c.name != "Ground Beef" && c.name != "Beef Stew" %>
-            <td style="text-align:center">
-              <%= l.radio_button(:notes, "Stew") %>
-            </td>
-          <% elsif @b.stew %>
-            <td></td>
-          <% end %>
-          <% if @b.boneless && c.name != "Ground Beef" && c.name != "Beef Stew"%>
-            <td style="text-align:center">
-              <%= l.radio_button(:notes, "Boneless") %>
-            </td>
-          <% elsif @b.boneless %>
-            <td></td>
-          <% end %>
-      </tr>
+
+            <% if @b.stew && c.name != "Ground Beef" && c.name != "Beef Stew" %>
+                <td style="text-align:center">
+                  <%= l.radio_button(:notes, "Stew") %>
+                </td>
+              <% elsif @b.stew %>
+                <td></td>
+            <% end %>
+
+            <% if @b.boneless && c.name != "Ground Beef" && c.name != "Beef Stew"%>
+                <td style="text-align:center">
+                  <%= l.radio_button(:notes, "Boneless") %>
+                </td>
+              <% elsif @b.boneless %>
+                <td></td>
+            <% end %>
+        </tr>
+      <% end %>
+
     <% end %>
 
-  <%end%>
+  <% end %>
 </table>
