@@ -27,7 +27,8 @@
       <% end %>
   </tr>
 
-  <% @cutlist = Cut.where(:animal_type => @meat) %>
+  <% @unordered = Cut.where(:animal_type => @meat) %>
+  <% @cutlist = @unordered.find(:all, :order => 'savings DESC')%>
 
 
   <% @cutlist.each do |c| %>

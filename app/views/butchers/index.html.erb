@@ -14,6 +14,11 @@
     <th>Grind Requests</th>
     <th>Stew Requests</th>
     <th>Deboning</th>
+    <th></th>
+    <% if current_user.admin? %>  
+      <th></th>
+      <th></th>
+    <% end %>
   </tr>
   <% @butchers.each do |b| %>
   	<tr>
@@ -25,6 +30,11 @@
 	    <td><%= nice_bool(b.ground) %></td>
 	    <td><%= nice_bool(b.stew) %></td>
 	    <td><%= nice_bool(b.boneless) %></td>
+      <td><%= link_to 'Show', butcher %></td>
+      <% if current_user.admin? %>  
+        <td><%= link_to 'Edit', edit_butcher_path(butcher) %></td>
+        <td><%= link_to 'Destroy', butcher, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
 	</tr>
   <% end %>
  </table>

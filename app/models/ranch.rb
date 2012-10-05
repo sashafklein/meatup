@@ -30,6 +30,14 @@
 class Ranch < ActiveRecord::Base
   attr_accessible :address, :cow, :cow_meat, :cow_hanging, :cow_live, :goat, :goat_meat, :goat_hanging, :goat_live, :lamb, :lamb_meat, :lamb_hanging, :lamb_live, :name, :phone, :pig, :pig_meat, :pig_hanging, :pig_live, :user_id
   has_many :animals
+  after_save :defaults
+
+  def defaults
+    self.cow = false if self.cow != true
+    self.pig = false if self.pig != true
+    self.lamb = false if self.lamb != true
+    self.goat = false if self.goat != true
+  end
 
   def to_meat 
     if self.cow_meat == 0 || self.cow_meat == nil

@@ -1,13 +1,14 @@
-<% @animal.cut_find.each do |cut| %>
-	<% unless cut.percent == 0 %>
+<% cut_list = @animal.cut_find.find(:all, :order => 'percent DESC') %>
+<% cut_list.each do |cut| %>
+
+	<% all_ps = @animal.packages %>
+	<% cut_packages = all_ps.where(:cut_id => cut.id) %>
+	<% sold = cut_packages.where(:sold => true).length %>
+	<% unsold = cut_packages.where(:sold => false).length %>
+	<% example = cut_packages.first %>
+
+	<% unless cut_packages.length == 0 %>
 	  <tr>
-
-		<% all_ps = @animal.packages %>
-		<% cut_packages = all_ps.where(:cut_id => cut.id) %>
-		<% sold = cut_packages.where(:sold => true).length %>
-		<% unsold = cut_packages.where(:sold => false).length %>
-		<% example = cut_packages.first %>
-
 	  	<td><%= cut.name %></td>
 	  	<td><%= number_to_currency(example.price) %></td>
 		<td><%= cut_packages.length %></td>  	

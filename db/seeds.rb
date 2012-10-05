@@ -10,7 +10,8 @@
 	  	:price => 4,
 	  	:package_weight => 2,
 	  	:percent => 1.67,
-	  	:comp => 7.99
+	  	:comp => 7.99,
+	  	:savings => 50
   	)
 	Cut.create(
 		:animal_type => "Cow",
@@ -18,7 +19,8 @@
 	  	:price => 2.63,
 	  	:package_weight => 1,
 	  	:percent => 7.67,
-	  	:comp => 6.99
+	  	:comp => 6.99,
+	  	:savings => 62
   	) 
   	Cut.create(
 		:animal_type => "Cow",
@@ -26,7 +28,8 @@
 	  	:price => 2.78,
 	  	:package_weight => 2.22,
 	  	:percent => 4.25,
-	  	:comp => 7.99
+	  	:comp => 7.99,
+	  	:savings => 65
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -34,7 +37,8 @@
 	  	:price => 5.35,
 	  	:package_weight => 4,
 	  	:percent => 0.67,
-	  	:comp => 8.99
+	  	:comp => 8.99,
+	  	:savings => 40
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -42,7 +46,8 @@
 	  	:price => 4.5,
 	  	:package_weight => 3.38,
 	  	:percent => 2.25,
-	  	:comp => 7.99
+	  	:comp => 7.99,
+	  	:savings => 44
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -50,7 +55,8 @@
 	  	:price => 5.55,
 	  	:package_weight => 3.5,
 	  	:percent => 0.58,
-	  	:comp => 8.99
+	  	:comp => 8.99,
+	  	:savings => 38
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -58,7 +64,8 @@
 	  	:price => 5.55,
 	  	:package_weight => 3.33,
 	  	:percent => 1.67,
-	  	:comp => 8.99
+	  	:comp => 8.99,
+	  	:savings => 38
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -66,7 +73,8 @@
 	  	:price => 5.25,
 	  	:package_weight => 3.50,
 	  	:percent => 0.58,
-	  	:comp => 9.99
+	  	:comp => 9.99,
+	  	:savings => 47
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -74,7 +82,8 @@
 	  	:price => 6.55,
 	  	:package_weight => 4,
 	  	:percent => 0.67,
-	  	:comp => 8.99
+	  	:comp => 8.99,
+	  	:savings => 27
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -82,7 +91,8 @@
 	  	:price => 8.1,
 	  	:package_weight => 2,
 	  	:percent => 0.67,
-	  	:comp => 9.99
+	  	:comp => 9.99,
+	  	:savings => 19
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -90,7 +100,8 @@
 	  	:price => 5.55,
 	  	:package_weight => 1.5,
 	  	:percent => 0.25,
-	  	:comp => 11.99
+	  	:comp => 11.99,
+	  	:savings => 54
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -98,7 +109,8 @@
 	  	:price => 7.6,
 	  	:package_weight => 3.9,
 	  	:percent => 3.25,
-	  	:comp => 9.99
+	  	:comp => 9.99,
+	  	:savings => 24
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -106,7 +118,8 @@
 	  	:price => 7.8,
 	  	:package_weight => 0,
 	  	:percent => 0,
-	  	:comp => 10.99
+	  	:comp => 10.99,
+	  	:savings => 0
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -114,7 +127,8 @@
 	  	:price => 8.15,
 	  	:package_weight => 0,
 	  	:percent => 0,
-	  	:comp => 13.99
+	  	:comp => 13.99,
+	  	:savings => 0
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -122,7 +136,8 @@
 	  	:price => 10.9,
 	  	:package_weight => 1.56,
 	  	:percent => 1.17,
-	  	:comp => 11.99
+	  	:comp => 11.99,
+	  	:savings => 9
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -130,7 +145,8 @@
 	  	:price => 13.2,
 	  	:package_weight => 1.25,
 	  	:percent => 0.42,
-	  	:comp => 14.99
+	  	:comp => 14.99,
+	  	:savings => 12
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -138,7 +154,8 @@
 	  	:price => 13.05,
 	  	:package_weight => 2.6,
 	  	:percent => 1.08,
-	  	:comp => 17.99
+	  	:comp => 17.99,
+	  	:savings => 27
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -146,7 +163,8 @@
 	  	:price => 15.05,
 	  	:package_weight => 2,
 	  	:percent => 1.17,
-	  	:comp => 16.99
+	  	:comp => 16.99,
+	  	:savings => 11
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -154,7 +172,8 @@
 	  	:price => 15.75,
 	  	:package_weight => 2,
 	  	:percent => 1.83,
-	  	:comp => 20.99
+	  	:comp => 20.99,
+	  	:savings => 25
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -162,7 +181,8 @@
 	  	:price => 15.7,
 	  	:package_weight => 0,
 	  	:percent => 0,
-	  	:comp => 19.99
+	  	:comp => 19.99,
+	  	:savings => 0
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -170,7 +190,8 @@
 	  	:price => 20,
 	  	:package_weight => 1.5,
 	  	:percent => 0.25,
-	  	:comp => 29.99
+	  	:comp => 29.99,
+	  	:savings => 33
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -178,7 +199,8 @@
 	  	:price => 8.1,
 	  	:package_weight => 1.1,
 	  	:percent => 0.25,
-	  	:comp => 9.99
+	  	:comp => 9.99,
+	  	:savings => 19
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -186,7 +208,8 @@
 	  	:price => 3,
 	  	:package_weight => 2.64,
 	  	:percent => 2.42,
-	  	:comp => 3
+	  	:comp => 3,
+	  	:savings => 0
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -194,7 +217,8 @@
 	  	:price => 3,
 	  	:package_weight => 4.75,
 	  	:percent => 1.58,
-	  	:comp => 3
+	  	:comp => 3,
+	  	:savings => 0
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -202,7 +226,8 @@
 	  	:price => 3,
 	  	:package_weight => 1.8,
 	  	:percent => 0.75,
-	  	:comp => 3
+	  	:comp => 3,
+	  	:savings => 0
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -210,7 +235,8 @@
 	  	:price => 3,
 	  	:package_weight => 2,
 	  	:percent => 0.17,
-	  	:comp => 3
+	  	:comp => 3,
+	  	:savings => 0
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -218,7 +244,8 @@
 	  	:price => 3,
 	  	:package_weight => 1.31,
 	  	:percent => 1.42,
-	  	:comp => 3
+	  	:comp => 3,
+	  	:savings => 0
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -226,7 +253,8 @@
 	  	:price => 3,
 	  	:package_weight => 1.5,
 	  	:percent => 0.50,
-	  	:comp => 3
+	  	:comp => 3,
+	  	:savings => 0
   	)
   	Cut.create(
 		:animal_type => "Cow",
@@ -234,7 +262,8 @@
 	  	:price => 3,
 	  	:package_weight => 4.75,
 	  	:percent => 1.58,
-	  	:comp => 3
+	  	:comp => 3,
+	  	:savings => 0
   	)
 
 

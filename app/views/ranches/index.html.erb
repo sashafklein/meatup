@@ -13,6 +13,11 @@
 		<th>Has Pigs</th>
 		<th>Has Lambs</th>
 		<th>Has Goats</th>
+		<th></th>
+		<% if current_user.admin? %>	
+			<th></th>
+			<th></th>
+		<% end %>
 	</tr>
 	<% @ranches.each do |ranch| %>
 		<tr>
@@ -23,6 +28,11 @@
 			<td><%= nice_bool(ranch.pig) %></td>
 			<td><%= nice_bool(ranch.lamb) %></td>
 			<td><%= nice_bool(ranch.goat) %></td>
+			<td><%= link_to 'Show', ranch %></td>
+		    <% if current_user.admin? %>
+		    	<td><%= link_to 'Edit', edit_ranch_path(ranch) %></td>
+		    	<td><%= link_to 'Destroy', ranch, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		    <% end %>
 		</tr>
 	<% end %>
 
