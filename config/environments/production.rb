@@ -7,11 +7,9 @@ Meatup2::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
-    :domain               => "meatup.in",
     :user_name            => ENV["GMAIL_USERNAME"],
     :password             => ENV["GMAIL_PASSWORD"],
-    :authentication       => "plain",
-    :enable_starttls_auto => true
+    :authentication       => :login
   }
 
   # Code is not reloaded between requests
