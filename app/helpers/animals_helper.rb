@@ -51,13 +51,13 @@ module AnimalsHelper
 
 	    @total_cost = 0
 	    if @animal.animal_type == "Cow"
-			@total_cost = @r.cow_meat + (@b.hanging_price + @wrapping) / CMOH
+			@total_cost = (@animal.weight / CLOM) * (@r.cow_meat + (@b.hanging_price + @wrapping) / CMOH)
 		elsif @animal.animal_type == "Pig"
-			@total_cost = @r.pig_meat + (@b.hanging_price + @wrapping) / PMOH
+			@total_cost = (@animal.weight / PLOM) * (@r.pig_meat + (@b.hanging_price + @wrapping) / PMOH)
 		elsif @animal.animal_type == "Lamb"
-			@total_cost = @r.lamb_meat + (@b.hanging_price + @wrapping) / LMOH
+			@total_cost = (@animal.weight / LLOM) * (@r.lamb_meat + (@b.hanging_price + @wrapping) / LMOH)
 		elsif @animal.animal_type == "Goat"
-			@total_cost = @r.goat_meat + (@b.hanging_price + @wrapping) / GMOH
+			@total_cost = (@animal.weight / GLOM) * (@r.goat_meat + (@b.hanging_price + @wrapping) / GMOH)
 		end
 		
 		@margins = @possible - @total_cost

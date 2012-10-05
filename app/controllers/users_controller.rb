@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
+      UserMailer.welcome_email(@user).deliver
       sign_in @user
       flash[:success] = "Welcome to MeatUp!"
       redirect_to @user
@@ -31,7 +32,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if current_user.admin? && @user != current_user
+    if current_user.admin?
       if @user.update_attributes(params[:user], :as => :administrator)
         flash[:success] = "Profile updated"
         redirect_to @user

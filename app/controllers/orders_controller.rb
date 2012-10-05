@@ -79,6 +79,7 @@ before_filter :admin_user,     only: [:index, :edit, :update, :destroy]
 
     respond_to do |format|
       if @order.save
+        UserMailer.order_email(@order).deliver
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
         format.json { render json: @order, status: :created, location: @order }
       else

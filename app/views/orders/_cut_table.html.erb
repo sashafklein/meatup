@@ -8,6 +8,8 @@
     <th>Price/lb</th>
     <th>Est Savings</th>
     <th>Packages</th>
+
+    <!-- Produce relevant butchery options -->
     <% @b = @order_animal.butcher %>
 
       <% if @b.ground || @b.stew || @b.boneless %>
@@ -41,19 +43,23 @@
       <% unsold = cut_packages.where(:sold => false).length %>
       <% example = cut_packages.first %>
 
+      <!-- Only make a line if the cut exists (ex, no hanger) -->
       <% unless cut_packages.length == 0 %>
         <tr>
           <%= l.hidden_field :cut_id, value: c.id %>
           <td><%= c.name %></td>
           <td><%= c.package_weight %> lb</td>
           <td><%= number_to_currency(example.price) %></td>
+
+          <!-- Calculates the package-specific savings -->
           <% if ((c.comp - example.price) / c.comp) > 0.01 %>
               <td><%= number_to_percentage(((c.comp - example.price) / c.comp), :precision => 2) %></td>
             <% else %>
               <td><%= number_to_percentage(0, :precision => 2) %></td>
           <% end %>
+
               <% dropdown = (0..unsold).to_a %>
-              <% if dropdown.length <= 0 %>
+              <% if dropdown.length <= 1 %>
                 <td class="red">SOLD OUT</td>
                 <%= l.hidden_field :units, value: 0 %>
               <% else %>

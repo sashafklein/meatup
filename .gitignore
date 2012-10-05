@@ -16,3 +16,6 @@
 
 # Ignore the database.yml file.
 /config/database.yml
+
+# Ignore email config file
+/config/initializers/setup_mail.rb
