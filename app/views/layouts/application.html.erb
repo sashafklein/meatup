@@ -3,20 +3,23 @@
 <html>
   <head>
     <title><%= full_title(yield(:title)) %></title>
+    <link href='http://fonts.googleapis.com/css?family=Kreon' rel='stylesheet' type='text/css'>
     <%= stylesheet_link_tag    "application", media: "all" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %> 
   </head>
-  <body class="grass">
-    <%= render 'layouts/header' %>
+  <body class="butcher">
+      <%= render 'layouts/header' %>
     <div class="container">
-      <% flash.each do |key, value| %>
-          <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-      <% end %>
     </div>
-    <div class="container hero-unit butcher">
+    <div class="container transp01">
+      <div class="margin-it">
+          <% flash.each do |key, value| %>
+            <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+          <% end %>
       <%= yield %>
+      </div>
     </div>
     <%= render 'layouts/footer' %>
   </body>

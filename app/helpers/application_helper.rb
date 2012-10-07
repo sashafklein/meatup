@@ -14,10 +14,8 @@ module ApplicationHelper
   def nice_bool(answer)
   	if answer == true
   		"Yes"
-  	elsif answer == false
-  		"No"
   	else
-  		"Error"
+  		"No"
   	end
   end
   

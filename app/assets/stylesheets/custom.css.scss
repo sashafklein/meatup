@@ -20,7 +20,7 @@ html {
 }
 
 body {
-  padding-top: 60px;
+  padding-top: 17px;
 }
 
 section {
@@ -184,20 +184,26 @@ input, textarea, select, .uneditable-input {
   }
 }
 
-
 /* Background */
-.grass {
-  background-image:url('grass.jpg'); 
-  background-color:#6C8BB2; 
+.transp01 {
+border: 1px solid #75726C;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);
+    background-image:url('white.png');
+  background-color:#ffffff;
+  margin-bottom: 120px;
+  margin-top: 15px;
+}
+
+.margin-it {
+  margin: 40px;
 }
 
 .butcher {
-  background-image:url('butcher.jpg');
-  -moz-box-shadow: 0px 0px 10px #000;
-  -webkit-box-shadow: 0px 0px 10px #000;
-  box-shadow: 0px 0px 10px #000;
-  margin-bottom: 120px;
-  margin-top: 40px;
+  background-image:url('butcher2.jpg');
+  background-repeat:no-repeat;
+  background-size:100%;
+  background-attachment:fixed;
   h1 {
     color:black;
   }
@@ -214,12 +220,48 @@ input, textarea, select, .uneditable-input {
 
 /* Change Footer and Header Color */
 
-.navbar-inner {
-  background-color: #304866;
-  background-image: none;
-  background-repeat: no-repeat;
-  filter: none;
-  opacity: .95;
+.topbar {
+  background-color:#000000;
+  width:100%;
+  height:7px;
+}
+.topnav {
+    background-image:url('trans.png');
+    width: 950px;
+    margin: 0px auto;
+    filter: none;
+     nav {
+      a { color: #ffffff; 
+          font-size: 80%;
+          font-family: 'Trebuchet MS','Kreon','Adelle Basic Bold',Georgia,Times;
+          &:hover {
+            text-decoration: none;
+            background: none;
+          }
+        }
+      ul {
+        background-image:url('trans.png');
+        .dropdown-menu {
+          background-image:url('trans.png');
+        }
+
+        li {
+          .dr { 
+              a {
+                  color:#000000; 
+                  background: none;
+                  font-size: 80%;
+                }
+            }
+          background-image:url('trans.png');
+          display: inline-block;
+          color: #ffffff;
+          font-size: 150%;
+          font-family: helvetica;
+        }
+        
+      }
+    }
 }
 
 /* Animal Button Links */
@@ -248,3 +290,119 @@ input, textarea, select, .uneditable-input {
     }
 }
 
+// Easier Centering
+.center {
+  text-align: center;
+  float: center;
+}
+
+.big-pad {
+  margin-left: 30;
+  margin-right: 30;
+}
+
+/* Welcome stuff */
+
+.front_overview {
+  h2 { 
+    font-family: Calibri, Verdana;
+    text-align:left;
+    font-size: 150%; 
+    font-weight:none;
+    margin-bottom:15px;
+  }
+}
+
+.movie_demo {
+  margin-left:10px;
+  float:right;
+}
+
+.line_divider {
+  height:1px;
+  width:100%;
+  background-color:#999999;
+  margin-top:25px;
+  margin-bottom:25px;
+}
+
+/* New Header */
+
+.spaced {
+  margin-top: 45px;
+}
+
+.top_spaced {
+  a:link, a:visited, a:active { 
+    font-family: calibri, verdana;
+    color:#3a0000;
+    font-size:90%;  
+    font-weight:bold;
+  }
+  a:hover {
+    text-decoration:underline;
+  }
+  vertical-align:middle;
+  margin: 0px 45px;
+}
+
+/* Niko Footer */
+
+.base_footerA {
+  background-color:#b58467;
+  opacity:5%;
+  width:100%;
+  height:1px;
+}
+
+.base_footerB {
+  background-color:#191614;
+  width:100%;
+  height:35px;
+
+}
+
+.sky_footer {
+  background-color:#262220;
+  width:100%;
+  font-size:120%;
+  font-family:'Kreon',Calibri,Verdana;
+  color:#ffffff;
+  padding-top:20px;
+}
+
+
+
+/* Cool Image Buttons */
+
+.btn.image-button {
+  color:white;
+  font-family:calibri, verdana, 'trebuchet ms';
+  border: 1px solid #3C3932;
+  background-image: -webkit-linear-gradient(top, #9a393a, #8a3333);
+  background-image: -o-linear-gradient(top, #9a393a, #8a3333);
+  background-image: linear-gradient(top, #9a393a, #8a3333);
+  background-image: -moz-linear-gradient(top, #9a393a, #8a3333);
+  text-shadow: none;
+  margin: 10px 4px;
+  padding: 6px 12px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  font-size: 16px;
+  img { padding-right:10px;}
+ }
+
+.btn.image-button:hover, .btn.image-button.a:hover, .btn.image-button.input:hover {
+ background-color:#8a3333;
+ color:#fff4f7;
+}
+
+// .header.hidden-phone .container #login {
+//   float: right;
+//   margin-left: 50px;
+//   margin-right: -30px;
+//   margin-top: 0;
+//   padding: 8px 40px;
+//   font-family: "CarthoGothic",Helvetica,Arial,sans-serif;
+// }

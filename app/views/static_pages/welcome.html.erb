@@ -1,16 +1,32 @@
 <% provide(:title, 'Welcome!') %>
-
-	<div class="hero-unit float-over">
+    <div class="front_overview">
+	    <div class="movie_demo">
+	        <%= link_to image_tag("movie_demo.png"), root_path %>
+	    </div>
+    	<h2 style="font-size:200%;">
+    		<strong>Meat</strong>Up is bringing outside-the-box thinking to local meat CSAs.
+    	</h2>
+    	<h2>
+    		We connect sustainable ranchers, artisanal butchers, and savvy consumers in a transparent, low-cost, social marketplace to help drive local living economies and steward our environment.
+    	</h2>
+    	<h2>
+    		We believe that a more direct relationship between buyers and producers can make good food accessible, local farming viable, and safeguard our planet for future generations.
+    	</h2>
+    	<h2>
+    		Watch our video to learn more, or sign up and pilot today.
+       	</h2>
+    </div>
+    <br>&nbsp;<br>
+    <div class="line_divider">
+    </div>
+	<div class="float-over">
 		<h1 style="text-align:center">Welcome to MeatUp!</h1><br>
-		<h2 style="text-align:center">Choose your animal below:</h2>
+		<h2 style="text-align:center">Are you:</h2>
 	</div>
-	
-	<br>
-	
-	<div class="animal-buttons">
-		<%= link_to image_tag("beef_button.png"), 'orders/cow' %>
-		<%= link_to image_tag("pork_button.png"), 'orders/pig' %>
-		<%= link_to image_tag("lamb_button.png"), 'orders/lamb' %>
-		<%= link_to image_tag("goat_button2.png"), 'orders/goat' %>
+	<div class="center">
+		<%= link_to "A Consumer", order_path, :class => "btn btn-large center" %>
+		<%= link_to "A Rancher", rancher_path, :class => "btn btn-large center" %>
+		<%= link_to "A Butcher", butcher_path, :class => "btn btn-large center" %>
+		<%= link_to "Just Looking", how_path, :class => "btn btn-large center" %>
 	</div>
 <br>

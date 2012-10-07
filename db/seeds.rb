@@ -331,5 +331,8 @@
 		:phone => "999-999-9999",
 		:cow => true,
 		:cow_live => 1.40,
-		:cow_meat => 3.62
+		:cow_meat => 3.62,
+		:pig => false,
+		:lamb => false,
+		:goat => false
 	)

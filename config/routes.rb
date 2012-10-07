@@ -7,6 +7,9 @@ Meatup2::Application.routes.draw do
   match '/how', to: 'static_pages#how'
 
   match '/contact', to: 'static_pages#contact'
+  match '/order', to: 'static_pages#order'
+  match '/rancher', to: 'ranches#new'
+  match '/butcher', to: 'butchers#new'
 
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'

@@ -1,8 +1,9 @@
-<header class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
+<header class="topbar navbar-fixed-top">
+</header>
+  <div class="topnav">
       <nav>
-        <ul class="nav pull-left">
-           <li style="font-size:150%"><%= link_to "Home", root_path %></li>
+        <ul class="nav pull-left" style="margin:0px;">
+           <%= link_to image_tag("meatup_logo2.png"), root_path %>
         </ul>
       </nav>
       <nav>
@@ -10,32 +11,53 @@
           <% if signed_in? %>
 
               <% if current_user.admin? %>
-                <li><%= link_to current_user.name, edit_user_path(current_user) %></li>
-                <li id="fat-menu" class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        Admin <b class="caret"></b>
+
+                <li class="spaced">&nbsp;</li>
+                <li class="top_spaced"><%= link_to "My Dashboard", animals_path %></li>
+                <li class="dropdown">
+                      <a href="#" class="btn image-button" data-toggle="dropdown">
+                        <%= image_tag('icon-login.png') %> <%= current_user.name %> &nbsp; <b class="caret"></b>
                       </a>
                       
                       <ul class="dropdown-menu">
-                        <li><%= link_to "Animals", animals_path %></li>
-                        <li><%= link_to "Cuts", cuts_path %></li>
-                        <li><%= link_to "Users", users_path %></li>
-                        <li><%= link_to "Ranches", ranches_path %></li>
-                        <li><%= link_to "Butchers", butchers_path %></li>
-                        <li class="divider"></li>
-                        <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
+                        <li class="dr"><%= link_to "Animals", animals_path %></li>
+                        <li class="dr"><%= link_to "Cuts", cuts_path %></li>
+                        <li class="dr"><%= link_to "Users", users_path %></li>
+                        <li class="dr"><%= link_to "Ranches", ranches_path %></li>
+                        <li class="dr"><%= link_to "Butchers", butchers_path %></li>
+                        <li class="line_divider" style="margin-top:4px;margin-bottom:4px;"></li>
+                        <li class="dr"><%= link_to "Sign out", signout_path, method: "delete" %></li>
                       </ul>
 
                 </li>
+
               <% else %>
-                <li><%= link_to current_user.name, edit_user_path(current_user) %></li>
-                <li><%= link_to "Sign Out", signout_path, method: "delete" %>
+
+               <li class="spaced">&nbsp;</li>
+               <li class="top_spaced"><%= link_to "What's Cooking?", animals_path %></li>
+               <li class="dropdown">
+                      <a href="#" class="btn image-button" data-toggle="dropdown">
+                        <%= image_tag('icon-login.png') %> <%= current_user.name %> &nbsp; <b class="caret"></b>
+                      </a>
+
+                      <ul class="dropdown-menu">
+                        <li class="dr"><%= link_to "Edit Profile", edit_user_path(current_user) %></li>
+                        <li class="line_divider" style="margin-top:4px;margin-bottom:4px;"></li>
+                        <li class="dr"><%= link_to "Sign out", signout_path, method: "delete" %></li>
+                      </ul>
+
+                </li>
+
               <% end %>
 
           <% else %>
-            <li><%= link_to "Sign in", signin_path %></li>
+
+            <li class="spaced">&nbsp;</li>
+            <li class="top_spaced"><%= link_to "What's Cooking?", animals_path %></li>
+            <li class="spaced"><%= link_to image_tag('icon-login.png') + "Sign in", signin_path, :class => "btn image-button" %></li>
+
           <% end %>
+
         </ul>
       </nav>
   </div>
-</header>
