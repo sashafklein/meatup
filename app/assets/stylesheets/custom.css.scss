@@ -63,6 +63,15 @@ h2 {
   text-align: center;
   font-weight: normal;
   color: $grayLight;
+  a:link, a:visited {
+    color:#D25831;
+    text-decoration:none;
+  }
+  a:hover, a:active {
+    background-color:#ffffff;
+    color:#c24821;
+    text-decoration:underline;
+  }
 }
 
 p {
@@ -202,7 +211,7 @@ border: 1px solid #75726C;
 .butcher {
   background-image:url('butcher2.jpg');
   background-repeat:no-repeat;
-  background-size:100%;
+  background-size:cover;
   background-attachment:fixed;
   h1 {
     color:black;
@@ -369,9 +378,51 @@ border: 1px solid #75726C;
   font-family:'Kreon',Calibri,Verdana;
   color:#ffffff;
   padding-top:20px;
+  padding-bottom:150px;
+  background-image:url('grassy_knoll.gif');
+  background-position:center bottom;
+  background-repeat:repeat-x;
 }
 
+.footer_links {
+  color:#ffffff;
+  a:link, a:visited {
+    color:#c1c451;
+  }
+  a:hover {
+    color:#fec864;
+    background-color:#262220;
+  }
+  a:active{
+    color:#769034;
+  }
+}
 
+.footer_social {
+  color:#ffffff;
+  img {
+    vertical-align:middle;
+    margin-right:10px;
+    margin-top:1px;
+    margin-bottom:4px;
+  }
+  a:link, a:visited {
+    color:#ffffff;
+  }
+  a:hover {
+    color:#fec864;
+    background-color:#262220;
+  }
+  a:active{
+    color:#769034;
+  }
+}
+
+.table_main {
+ border:5px solid #191614;
+ background-color:#ffffff;
+ padding:15px;
+}
 
 /* Cool Image Buttons */
 
@@ -379,6 +430,7 @@ border: 1px solid #75726C;
   color:white;
   font-family:calibri, verdana, 'trebuchet ms';
   border: 1px solid #3C3932;
+  background-color:#9a393a;
   background-image: -webkit-linear-gradient(top, #9a393a, #8a3333);
   background-image: -o-linear-gradient(top, #9a393a, #8a3333);
   background-image: linear-gradient(top, #9a393a, #8a3333);

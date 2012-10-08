@@ -34,7 +34,7 @@
               <% else %>
 
                <li class="spaced">&nbsp;</li>
-               <li class="top_spaced"><%= link_to "What's Cooking?", animals_path %></li>
+               <li class="top_spaced"><%= link_to "What's Cooking?", how_path %></li>
                <li class="dropdown">
                       <a href="#" class="btn image-button" data-toggle="dropdown">
                         <%= image_tag('icon-login.png') %> <%= current_user.name %> &nbsp; <b class="caret"></b>
@@ -53,8 +53,12 @@
           <% else %>
 
             <li class="spaced">&nbsp;</li>
-            <li class="top_spaced"><%= link_to "What's Cooking?", animals_path %></li>
-            <li class="spaced"><%= link_to image_tag('icon-login.png') + "Sign in", signin_path, :class => "btn image-button" %></li>
+            <li class="top_spaced"><%= link_to "What's Cooking?", how_path %></li>
+            <li class="dropdown">
+              <a href="<%= signin_path %>" class="btn image-button" data-toggle="dropdown">
+                <%= image_tag('icon-login.png') %> Sign In</b>
+              </a>
+            </li>
 
           <% end %>
 

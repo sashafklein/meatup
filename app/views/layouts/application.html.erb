@@ -15,10 +15,11 @@
     </div>
     <div class="container transp01">
       <div class="margin-it">
-          <% flash.each do |key, value| %>
-            <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-          <% end %>
-      <%= yield %>
+        <% flash.each do |key, value| %>
+          <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+        <% end %>
+
+        <%= yield %>
       </div>
     </div>
     <%= render 'layouts/footer' %>
