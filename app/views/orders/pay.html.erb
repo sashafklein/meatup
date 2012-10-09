@@ -1,0 +1,58 @@
+<% provide(:title, 'Your Order') %>
+<p id="notice"><%= notice %></p>
+
+<% @a = @order.animalfind %>
+<% status_array = ["Incomplete", "Complete", "Deposited", "Other"] %>
+<% @total = 0 %>
+
+<h1><%= "Order \##{@order.id}"%></h1> 
+
+<h2><span style="font-size:80%"> Animal Name: </span><%= @a.name %></h2>
+<h2><span style="font-size:80%">Order Status: </span><%= status_array[@order.status] %></h2>
+
+<br>
+
+<table class="table">
+	<tr>
+		<th>Cut</th>
+		<th>Units</th>
+		<th>Notes</th>
+		<th>Package Weight</th>
+		<th>Price</th>
+		<th>Total</th>
+	</tr>
+
+	<% @order.lines.each do |l| %>
+		<% if l.units != 0 %>
+			<% @c = l.cut %>
+			<% @a = @order.animal %>
+			<% cut_packages = @a.packages.where(:cut_id => @c.id) %>
+			<% sold = cut_packages.where(:sold => true).length %>
+	  		<% unsold = cut_packages.where(:sold => false).length %>
+	  		<% example = cut_packages.first %>
+			<tr>	
+		
+			    	<td><%= @c.name %></td>
+			    	<td><%= l.units %></td>
+			    	<td><%= l.notes %></td>
+			    	<td><%= @c.package_weight %> lb</td>
+			    	<td><%= number_to_currency(example.price) %></td>
+			    		<% @line_total = example.price * @c.package_weight * l.units %>
+			    	<td><%= number_to_currency(@line_total) %></td>
+		    </tr>
+		    <% @total += @line_total %>
+		<% end %>
+	<%end%>
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><%= number_to_currency(@total) %></td>
+	</tr>
+</table>
+
+<%= link_to 'Edit', edit_order_path(@order) if current_user.admin? %>
+<% "|" if current_user.admin? %>
+<%= link_to 'Back', orders_path %>

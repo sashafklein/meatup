@@ -12,21 +12,7 @@
     <!-- Produce relevant butchery options -->
     <% @b = @order_animal.butcher %>
 
-      <% if @b.ground || @b.stew || @b.boneless %>
-        <th>Normal<th>
-      <% end %>
-
-      <% if @b.ground %>
-        <th>Grind it?</th>
-      <% end %>
-      
-      <% if @b.stew %>
-        <th>Turn to stew?</th>
-      <% end %>
-      
-      <% if @b.boneless %>
-        <th>Boneless?</th>
-      <% end %>
+    <th>Preparation<th>
   </tr>
 
   <% @unordered = Cut.where(:animal_type => @meat) %>
@@ -68,7 +54,7 @@
 
                 <td style="text-align:center"><%= l.radio_button(:notes, "") %><td> 
 
-            <% if @b.ground && c.name != "Ground Beef" && c.name != "Beef Stew" %>
+            <% if @b.ground && c.name != "Ground Beef" && c.name != "Beef Stew" && c.name != "Offal" && c.name != "Kidney"  %>
                 <td style="text-align:center">
                   <%= l.radio_button(:notes, "Ground") %>
                 </td>
