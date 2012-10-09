@@ -5,8 +5,9 @@
     <title><%= full_title(yield(:title)) %></title>
     <link href='http://fonts.googleapis.com/css?family=Kreon' rel='stylesheet' type='text/css'>
     <%= stylesheet_link_tag    "application", media: "all" %>
-    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "https://js.stripe.com/v1", "application" %>
     <%= csrf_meta_tags %>
+    <%= tag :meta, :name => "stripe-key", :content => STRIPE_PUBLIC_KEY %>
     <%= render 'layouts/shim' %> 
   </head>
   <body class="butcher">
