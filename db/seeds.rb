@@ -1,6 +1,3 @@
-# Animals
-	Animal.delete_all
-
 # Cuts
 	Cut.delete_all
 	# The Real Paul Ryan
@@ -266,8 +263,6 @@
 	  	:savings => 0
   	)
 
-
-
   	# Other Cuts
 
   	Cut.create(
@@ -294,22 +289,24 @@
 
 # Users
 	User.delete_all
-	User.create(
+	one = User.create(
 		:name => "One",
 		:email => "one@test.com",
 		:password => "password",
-		:password_confirmation => "password"
+		:password_confirmation => "password",
+		:zip => 94114
 	)
-	User.create(
+	two = User.create(
 		:name => "Two",
 		:email => "two@test.com",
 		:password => "password",
-		:password_confirmation => "password"
+		:password_confirmation => "password",
+		:zip => 94114
 	)
 
 # Butchers
 	Butcher.delete_all
-	Butcher.create(
+	sanders = Butcher.create(
 		:name => "Sanders Meat Co",
 		:address => "Turlock",
 		:phone => "999-999-9999",
@@ -317,7 +314,7 @@
 		:final_price => 0,
 		:wrap_price => 0,
 		:vacuum_price => 0.00,
-		:user_id => 1,
+		:user_id => one.id,
 		:ground => true,
 		:stew => true,
 		:boneless => true
@@ -325,14 +322,28 @@
 
 # Ranches
 	Ranch.delete_all
-	Ranch.create(
+	miller = Ranch.create(
 		:name => "Miller Ranch",
 		:address => "Livermoor",
 		:phone => "999-999-9999",
 		:cow => true,
 		:cow_live => 1.40,
 		:cow_meat => 3.62,
+		:user_id => two.id,
 		:pig => false,
 		:lamb => false,
 		:goat => false
+	)
+
+# Animals
+	Animal.delete_all
+	paul = Animal.create(
+		:breed => "Black Angus", 
+		:host => one.name, 
+		:name => "Paul Ryan", 
+		:photo => "Animals/PaulRyan.jpg", 
+		:animal_type => "Cow",  
+        :weight => 1216, 
+        :ranch_id => miller.id, 
+        :butcher_id => sanders.id
 	)

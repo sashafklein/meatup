@@ -7,7 +7,6 @@
 #  name        :string(255)
 #  breed       :string(255)
 #  weight      :integer
-#  farm        :string(255)
 #  host        :string(255)
 #  photo       :string(255)
 #  created_at  :datetime         not null
@@ -21,7 +20,7 @@
 #
 
 class Animal < ActiveRecord::Base
-  attr_accessible :breed, :farm, :host, :name, :photo, :animal_type,  
+  attr_accessible :breed, :host, :name, :photo, :animal_type,  
                   :weight, :ranch_id, :butcher_id, :cow_mult, :pig_mult,
                   :lamb_mult, :goat_mult
   has_many :orders

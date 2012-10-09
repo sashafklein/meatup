@@ -53,9 +53,9 @@
 
           <!-- Calculates the package-specific savings -->
           <% if ((c.comp - example.price) / c.comp) > 0.01 %>
-              <td><%= number_to_percentage(((c.comp - example.price) / c.comp), :precision => 2) %></td>
+              <td><%= number_to_percentage(100 * ((c.comp - example.price) / c.comp), :precision => 0) %></td>
             <% else %>
-              <td><%= number_to_percentage(0, :precision => 2) %></td>
+              <td><%= number_to_percentage(0, :precision => 0) %></td>
           <% end %>
 
               <% dropdown = (0..unsold).to_a %>
@@ -68,7 +68,7 @@
 
                 <td style="text-align:center"><%= l.radio_button(:notes, "") %><td> 
 
-            <% if @b.ground && c.name != "Ground Beef"%>
+            <% if @b.ground && c.name != "Ground Beef" && c.name != "Beef Stew" %>
                 <td style="text-align:center">
                   <%= l.radio_button(:notes, "Ground") %>
                 </td>
@@ -76,7 +76,7 @@
                 <td></td>
             <% end %>
 
-            <% if @b.stew && c.name != "Ground Beef" && c.name != "Beef Stew" %>
+            <% if @b.stew && c.name == "London Broil" || c.name == "Eye of Round" || c.name == "Cross Rib" || c.name == "Rump Steak" || c.name == "Bottom Round" || c.name == "Chuck Roast" || c.name == "Shank" || c.name == "Neck"%>
                 <td style="text-align:center">
                   <%= l.radio_button(:notes, "Stew") %>
                 </td>
@@ -84,7 +84,7 @@
                 <td></td>
             <% end %>
 
-            <% if @b.boneless && c.name != "Ground Beef" && c.name != "Beef Stew"%>
+            <% if @b.boneless && c.name == "Ribeye" || c.name == "Short Ribs"%>
                 <td style="text-align:center">
                   <%= l.radio_button(:notes, "Boneless") %>
                 </td>
