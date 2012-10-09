@@ -1,0 +1,8 @@
+<% provide(:title, "Edit #{@host.name}") %>
+
+<h1>Update <%= @host.name %></h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @host %> |
+<%= link_to 'Back', hosts_path %>

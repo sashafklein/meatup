@@ -1,0 +1,28 @@
+<% provide(:title, @host.name) %>
+
+<p id="notice"><%= notice %></p>
+
+  <div class="pull-left">
+    <h2><span style="font-size:100%; font-weight:bold"> Host Name: </span>
+        <span style="font-size:120%; font-weight:bold"><%= @host.name %></span></h2>
+  </div>
+
+  <br>
+  <br>
+<table class="table"> 
+  <tr>
+    <th>Address</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Phone Number</th>
+  </tr>
+  <tr>
+    <td><%= @host.address %></td>
+    <td><%= @host.city %></td>
+    <td><%= @host.state %></td>
+    <td><%= @host.phone %></td>
+  </tr>
+</table>  
+
+<%= link_to 'Edit', edit_host_path(@host) %> |
+<%= link_to 'Back', hosts_path %>

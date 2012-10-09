@@ -26,6 +26,7 @@ Meatup2::Application.routes.draw do
   resources :animals
   resources :ranches
   resources :butchers
+  resources :hosts
 
   resources :orders 
   resources :lines

@@ -10,11 +10,13 @@
 #  password_digest :string(255)
 #  remember_token  :string(255)
 #  admin           :boolean          default(FALSE)
+#  zip             :string(255)
+#  apology         :boolean
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation, :order_id
-  attr_accessible :name, :email, :password, :password_confirmation, :order_id, :admin, :as => :administrator
+  attr_accessible :name, :email, :password, :password_confirmation, :order_id, :zip, :apology
+  attr_accessible :name, :email, :password, :password_confirmation, :order_id, :zip, :admin, :apology, :as => :administrator
   has_many :orders
 
   has_secure_password
@@ -29,6 +31,7 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
+  validates :zip, presence: true, length: { minimum: 5 }
 
   private
 

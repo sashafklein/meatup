@@ -12,6 +12,7 @@
 #  updated_at     :datetime         not null
 #  animal_type    :string(255)
 #  comp           :float
+#  savings        :integer
 #
 
 class Cut < ActiveRecord::Base

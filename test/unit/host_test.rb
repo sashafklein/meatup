@@ -1,21 +1,19 @@
 # == Schema Information
 #
-# Table name: packages
+# Table name: hosts
 #
 #  id         :integer          not null, primary key
-#  cut_id     :integer
+#  address    :string(255)
+#  city       :string(255)
+#  state      :string(255)
+#  phone      :string(255)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  animal_id  :integer
-#  price      :decimal(, )
-#  line_id    :integer
-#  sold       :boolean
-#  savings    :integer
 #
 
 require 'test_helper'
 
-class PackageTest < ActiveSupport::TestCase
+class HostTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

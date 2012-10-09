@@ -10,6 +10,7 @@
 #  price      :decimal(, )
 #  line_id    :integer
 #  sold       :boolean
+#  savings    :integer
 #
 
 class Package < ActiveRecord::Base

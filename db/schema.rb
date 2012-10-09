@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121005011750) do
+ActiveRecord::Schema.define(:version => 20121008204447) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -61,6 +61,15 @@ ActiveRecord::Schema.define(:version => 20121005011750) do
   end
 
   add_index "cuts", ["line_id"], :name => "index_cuts_on_line_id"
+
+  create_table "hosts", :force => true do |t|
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "phone"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "lines", :force => true do |t|
     t.integer  "units"
@@ -125,6 +134,8 @@ ActiveRecord::Schema.define(:version => 20121005011750) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "admin",           :default => false
+    t.string   "zip"
+    t.boolean  "apology"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
