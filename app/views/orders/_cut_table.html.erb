@@ -1,18 +1,16 @@
 <br>
-<h2>Your Order</h2>
-<table class="table">
+<table class="table table-condensed order-table">
   
-  <tr>
+  <tr style="border:#fff;">
     <th>Cut</th>
-    <th>Package Weight</th>
-    <th>Price/lb</th>
-    <th>Est Savings</th>
-    <th>Packages</th>
-
     <!-- Produce relevant butchery options -->
     <% @b = @order_animal.butcher %>
-
-    <th>Preparation<th>
+    <th colspan=4>Notes</th>
+    <th>Packages</th>
+    <th>Price/lb</th>
+    <th>Lbs</th>
+    <th>Price</th>
+    <th>Savings</th>
   </tr>
 
   <% @unordered = Cut.where(:animal_type => @meat) %>
@@ -33,28 +31,13 @@
       <% unless cut_packages.length == 0 %>
         <tr>
           <%= l.hidden_field :cut_id, value: c.id %>
-          <td><%= c.name %></td>
-          <td><%= c.package_weight %> lb</td>
-          <td><%= number_to_currency(example.price) %></td>
+          <td><div id="cut_name"><%= c.name %></div></td>
 
-          <!-- Calculates the package-specific savings -->
-          <% if ((c.comp - example.price) / c.comp) > 0.01 %>
-              <td><%= number_to_percentage(100 * ((c.comp - example.price) / c.comp), :precision => 0) %></td>
-            <% else %>
-              <td><%= number_to_percentage(0, :precision => 0) %></td>
-          <% end %>
+      <!-- Crazy radio button nonsense -->
 
-              <% dropdown = (0..unsold).to_a %>
-              <% if dropdown.length <= 1 %>
-                <td class="red">SOLD OUT</td>
-                <%= l.hidden_field :units, value: 0 %>
-              <% else %>
-                <td><%= l.select :units, dropdown %></td>
-              <% end %>
+                <td style="text-align:center"><%= l.radio_button(:notes, "") %></td> 
 
-                <td style="text-align:center"><%= l.radio_button(:notes, "") %><td> 
-
-            <% if @b.ground && c.name != "Ground Beef" && c.name != "Beef Stew" && c.name != "Offal" && c.name != "Kidney"  %>
+            <% if @b.ground && c.name != "Ground Beef" && c.name != "Beef Stew" && c.name != "Offal" && c.name != "Kidney" %>
                 <td style="text-align:center">
                   <%= l.radio_button(:notes, "Ground") %>
                 </td>
@@ -77,6 +60,35 @@
               <% elsif @b.boneless %>
                 <td></td>
             <% end %>
+
+
+<!--          <td><%= c.package_weight %> lb</td> -->
+
+
+              <% dropdown = (0..unsold).to_a %>
+              <% if dropdown.length <= 1 %>
+                <td class="red">SOLD OUT</td>
+                <%= l.hidden_field :units, value: 0 %>
+              <% else %>
+                <td><%= l.select :units, dropdown, :class => "unit_select" %></td>
+              <% end %>
+
+          <td><%= number_to_currency(example.price) %></td>
+
+          <!-- Need to calculate Total lbs -->
+
+          <td></td>
+
+          <!-- Need to calculate Total (line) cost -->
+
+          <td></td>
+
+          <!-- Calculates the package-specific savings -->
+          <% if ((c.comp - example.price) / c.comp) > 0.01 %>
+              <td class="savings"><%= number_to_percentage(100 * ((c.comp - example.price) / c.comp), :precision => 0) %></td>
+            <% else %>
+              <td class="savings"><%= number_to_percentage(0, :precision => 0) %></td>
+          <% end %>
         </tr>
       <% end %>
 

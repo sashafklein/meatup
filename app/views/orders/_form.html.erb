@@ -22,7 +22,7 @@
     <% else %>
       <% @order_animal = @order.animal %>
     <% end %>
-    <h2><%= @order_animal.name %></h2>
+<!--    <h2>Make Your Order Below</h2> -->
     <%= f.hidden_field  :animal_id, value: @order_animal.id %>
     <% if signed_in? %>
       <%= f.hidden_field  :user_id, value: current_user.id %>
@@ -34,9 +34,8 @@
     
       <%= f.hidden_field :status, value: 0 %>
     
-    <div class="btn-large">
-        <%= f.submit %> 
-    </div>
+    
+        <%= link_to "Pay for Order", '#', :class => "btn image-button stripe"%> 
     
   </div>
 

@@ -52,7 +52,3 @@
 		<td><%= number_to_currency(@total) %></td>
 	</tr>
 </table>
-
-<%= link_to 'Edit', edit_order_path(@order) if current_user.admin? %>
-<% "|" if current_user.admin? %>
-<%= link_to 'Back', orders_path %>
