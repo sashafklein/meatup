@@ -40,7 +40,7 @@ textarea {
   text-align: center;
   h1 {
     margin-bottom: 10px;
-  }
+  } 
 }
 
 /* typography */
@@ -490,16 +490,35 @@ border: 1px solid #75726C;
     overflow:hidden;
     width:70px; 
     &:hover {
+      color:#ffffff;
       background-color:#8a3333;
       background-image: -webkit-linear-gradient(top, #9a393a, #8a3333);
       background-image: -o-linear-gradient(top, #9a393a, #8a3333);
       background-image: linear-gradient(top, #9a393a, #8a3333);
       background-image: -moz-linear-gradient(top, #9a393a, #8a3333);
-      color:#ffffff;
       }
     }
     vertical-align:middle;
   }
+}
+
+.order_title {
+  span:100%;
+  margin:0px;
+  padding:8px;
+  color:#000;
+  font-family:calibri, verdana, 'trebuchet ms';
+  border: 1px solid #ddd;
+  text-shadow: none;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  font-size: 16px;
+  background-color:#eee;
+  &:hover {
+   background-color:#ddd;
+   cursor:none;
+  }  
 }
 
 
