@@ -72,9 +72,13 @@
 
           <!-- Package-specific savings -->
           <% if ((c.comp - example.price) / c.comp) > 0.01 %>
-            <td class="savings"><%= number_to_percentage(100 * ((c.comp - example.price) / c.comp), :precision => 0) %></td>
+            <% cut_savings = ((c.comp - example.price) / c.comp) %>
+            <td class="savings" data-savings=<%= cut_savings %> >
+              <%= number_to_percentage((cut_savings * 100), :precision => 0) %></td>
           <% else %>
-            <td class="savings"><%= number_to_percentage(0, :precision => 0) %></td>
+            <td class="savings" data-savings=0>
+              <%= number_to_percentage(0, :precision => 0) %>
+            </td>
           <% end %>
         </tr>
       <% end %>
@@ -84,11 +88,11 @@
       <tr class="total">
         <td colspan=5>
         </td>
-        <td class="js-lb-total">
+        <td class="js-lb-total">Total Lbs
         </td>
-        <td class="js-price-total">
+        <td class="js-price-total">Total $
         </td>
-        <td>
+        <td class="js-savings-total"> Saved
         </td>
       </tr>
 
