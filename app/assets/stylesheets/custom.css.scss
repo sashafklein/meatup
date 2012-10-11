@@ -521,6 +521,24 @@ border: 1px solid #75726C;
   }  
 }
 
+.order_back {
+  float:left;
+  margin: 0px 0px 35px 0px;
+  padding: 6px 12px;
+  color:#000;
+  font-family:calibri, verdana, 'trebuchet ms';
+  border: 1px solid #ddd;
+  text-shadow: none;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  font-size: 16px;
+  background-color:#eee;
+  &:hover {
+   background-color:#ddd;
+  }  
+}
+
 
 // .header.hidden-phone .container #login {
 //   float: right;

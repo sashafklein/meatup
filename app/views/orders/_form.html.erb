@@ -22,7 +22,9 @@
     <% else %>
       <% @order_animal = @order.animal %>
     <% end %>
-    <div class="order_title"><%= current_user.name %>, Place Your Order for '<%= @order_animal.name %>' Below</div> 
+    <% if current_user %>
+     <div class="order_title"><%= current_user.name %>, Place Your Order for '<%= @order_animal.name %>' Below</div> 
+    <% end %>
     <%= f.hidden_field  :animal_id, value: @order_animal.id %>
     <% if signed_in? %>
       <%= f.hidden_field  :user_id, value: current_user.id %>
@@ -34,9 +36,9 @@
     
       <%= f.hidden_field :status, value: 0 %>
     
-        <%= link_to 'Back', orders_path, :class => "order_back" %>
+        <%= link_to 'Back', order_path, :class => "order_back" %>
 
-        <%= link_to "Pay for Order", '#', :class => "btn image-button stripe", :style => "float:right;" %> 
+        <%= link_to "Pay for Order", '#', :class => "btn image-button stripe", :style => "float:right;  margin: 0px 0px 35px 0px;" %> 
     
   </div>
 

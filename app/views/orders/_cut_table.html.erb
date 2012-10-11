@@ -3,10 +3,9 @@
   
   <tr style="border:#fff;">
     <th>Cut</th>
-    <!-- Produce relevant butchery options -->
-    <% @b = @order_animal.butcher %>
-    <th colspan=4>Notes</th>
+    <th>Prep Requests</th>
     <th>Packages</th>
+    <th>Package Weight</th>
     <th>Price/lb</th>
     <th>Lbs</th>
     <th>Price</th>
@@ -15,7 +14,7 @@
 
   <% @unordered = Cut.where(:animal_type => @meat) %>
   <% @cutlist = @unordered.find(:all, :order => 'savings DESC')%>
-
+  <% @b = @order_animal.butcher %>
 
   <% @cutlist.each do |c| %>
 
@@ -27,75 +26,63 @@
       <% unsold = cut_packages.where(:sold => false).length %>
       <% example = cut_packages.first %>
 
-      <!-- Only make a line if the cut exists (ex, no hanger) -->
+      <!-- ROW LINE - Only if the cut exists (ex, no hanger) -->
       <% unless cut_packages.length == 0 %>
-        <tr>
-          <%= l.hidden_field :cut_id, value: c.id %>
+
+        <tr> <%= l.hidden_field :cut_id, value: c.id %>
+
           <td><div id="cut_name"><%= c.name %></div></td>
 
-      <!-- Crazy radio button nonsense -->
+          <!-- Prep Requests -->
+          <% @prep_array = [["None"]] %>
+          <% prep_helper(c) %>
+          <% if @prep_array[0] != "" %>
+            <td><%= l.select :notes, @prep_array %></td>
+          <% else %>
+            <td></td>
+          <% end %>
+          
+          <!-- Package drop-down with sold-out special case -->
+          <% dropdown = (0..unsold).to_a %>
+          <% if dropdown.length <= 1 %>
+            <td class="red">
+              <span>
+                SOLD OUT
+              </span>
+            </td>
+          <%= l.hidden_field :units, value: 0 %>
+          <% else %>
+            <td>
+                <%= l.select :units, dropdown, {}, :class => "unit_select js-package" %>
+            </td>
+          <% end %>
 
-                <td style="text-align:center"><%= l.radio_button(:notes, "") %></td> 
+           <td><span class="js-weight" data-weight=<%= c.package_weight %>><%= c.package_weight %> lb</span></td>
 
-            <% if @b.ground && c.name != "Ground Beef" && c.name != "Beef Stew" && c.name != "Offal" && c.name != "Kidney" %>
-                <td style="text-align:center">
-                  <%= l.radio_button(:notes, "Ground") %>
-                </td>
-              <% elsif @b.ground %>
-                <td></td>
-            <% end %>
+          <!-- Price/LB with JS calc functionality -->
+          <td>
+            <span class="js-lb-price" data-lb-price=<%= example.price %>>
+              <%= number_to_currency(example.price) %>
+            </span>
+          </td>
 
-            <% if @b.stew && c.name == "London Broil" || c.name == "Eye of Round" || c.name == "Cross Rib" || c.name == "Rump Steak" || c.name == "Bottom Round" || c.name == "Chuck Roast" || c.name == "Shank" || c.name == "Neck"%>
-                <td style="text-align:center">
-                  <%= l.radio_button(:notes, "Stew") %>
-                </td>
-              <% elsif @b.stew %>
-                <td></td>
-            <% end %>
+          <!-- JS-Calculated Totals -->
+          <td class="js-lbs"></td>
+          <td class="js-price"></td>
 
-            <% if @b.boneless && c.name == "Ribeye" || c.name == "Short Ribs"%>
-                <td style="text-align:center">
-                  <%= l.radio_button(:notes, "Boneless") %>
-                </td>
-              <% elsif @b.boneless %>
-                <td></td>
-            <% end %>
-
-
-<!--          <td><%= c.package_weight %> lb</td> -->
-
-
-              <% dropdown = (0..unsold).to_a %>
-              <% if dropdown.length <= 1 %>
-                <td class="red">SOLD OUT</td>
-                <%= l.hidden_field :units, value: 0 %>
-              <% else %>
-                <td><%= l.select :units, dropdown, :class => "unit_select" %></td>
-              <% end %>
-
-          <td><%= number_to_currency(example.price) %></td>
-
-          <!-- Need to calculate Total lbs -->
-
-          <td></td>
-
-          <!-- Need to calculate Total (line) cost -->
-
-          <td></td>
-
-          <!-- Calculates the package-specific savings -->
+          <!-- Package-specific savings -->
           <% if ((c.comp - example.price) / c.comp) > 0.01 %>
-              <td class="savings"><%= number_to_percentage(100 * ((c.comp - example.price) / c.comp), :precision => 0) %></td>
-            <% else %>
-              <td class="savings"><%= number_to_percentage(0, :precision => 0) %></td>
+            <td class="savings"><%= number_to_percentage(100 * ((c.comp - example.price) / c.comp), :precision => 0) %></td>
+          <% else %>
+            <td class="savings"><%= number_to_percentage(0, :precision => 0) %></td>
           <% end %>
         </tr>
       <% end %>
-    <% end %>
 
-  <% end %>
+    <% end %> <!-- End of Cuts Block -->
+  <% end %> <!-- End of Lines Block -->
       <tr>
-        <td colspan=7>
+        <td colspan=5>
         </td>
         <td>LBS
         </td>
