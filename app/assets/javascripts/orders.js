@@ -15,6 +15,10 @@ $(document).ready(function(){
     		});
 	});
 
+    $('#sumtable').fixheadertable({
+            
+    });
+
    
     $(".js-package").change(function(){
     	var dol = "$"
@@ -33,7 +37,7 @@ $(document).ready(function(){
         var height = parseInt(table_rows.length);
         var lb_total = 0;      
         var money_total = 0;
-        var cell;	
+        var savings_total = 0;	
       	
         for (var i = 1, iLen = height - 1; i < iLen; i++) {
         	p_cell = table_rows[i].cells[5];
@@ -44,12 +48,12 @@ $(document).ready(function(){
             money_total += Number(m_value);
             s_cell = table_rows[i].cells[7];
             s_value = s_cell.textContent.replace(/[^0-9-.]/g, '');
-            savings_total = parseFloat(s_value);
+            savings_total += (parseFloat(s_value) / 100) * Number(m_value);
         }
        
 		$(parentTable).find(".js-lb-total").html(lb_total.toFixed(2) + lb);
 		$(parentTable).find(".js-price-total").html(dol + (money_total).toFixed(2));
-		$(parentTable).find(".js-savings-total").html(dol + (savings_total).toFixed(2));
+		$(parentTable).find(".js-savings-total").html("-" + dol + (savings_total).toFixed(2));
     });
 
 });

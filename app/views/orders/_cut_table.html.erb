@@ -1,16 +1,15 @@
 <br>
 <table class="table table-condensed order-table" id="sumtable">
-  
-  <tr style="border:#fff;">
-    <th>Cut</th>
-    <th>Prep Requests</th>
-    <th>Packages</th>
-    <th>Package Weight</th>
-    <th>Price/lb</th>
-    <th>Lbs</th>
-    <th>Price</th>
-    <th>Savings</th>
-  </tr>
+    <tr style="border:#fff;">
+      <th>Cut</th>
+      <th>Prep Requests</th>
+      <th>Packages</th>
+      <th>Package Weight</th>
+      <th>Price/lb</th>
+      <th>Lbs</th>
+      <th>Price</th>
+      <th>Savings</th>
+    </tr>
 
   <% @unordered = Cut.where(:animal_type => @meat) %>
   <% @cutlist = @unordered.find(:all, :order => 'savings DESC')%>
@@ -72,9 +71,9 @@
 
           <!-- Package-specific savings -->
           <% if ((c.comp - example.price) / c.comp) > 0.01 %>
-            <% cut_savings = ((c.comp - example.price) / c.comp) %>
+            <% cut_savings = (100 * (c.comp - example.price) / c.comp) %>
             <td class="savings" data-savings=<%= cut_savings %> >
-              <%= number_to_percentage((cut_savings * 100), :precision => 0) %></td>
+              <%= number_to_percentage((cut_savings), :precision => 0) %></td>
           <% else %>
             <td class="savings" data-savings=0>
               <%= number_to_percentage(0, :precision => 0) %>
@@ -86,14 +85,13 @@
     <% end %> <!-- End of Cuts Block -->
   <% end %> <!-- End of Lines Block -->
       <tr class="total">
-        <td colspan=5>
-        </td>
-        <td class="js-lb-total">Total Lbs
-        </td>
-        <td class="js-price-total">Total $
-        </td>
-        <td class="js-savings-total"> Saved
-        </td>
+        <th colspan=5>
+        </th>
+        <th class="js-lb-total">Total Lbs
+        </th>
+        <th class="js-price-total">Total $
+        </th>
+        <th class="js-savings-total"> Saved
+        </th>
       </tr>
-
 </table>
