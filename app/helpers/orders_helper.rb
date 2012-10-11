@@ -15,17 +15,17 @@ module OrdersHelper
 		counter = 0
 		if @order_animal.animal_type == "Cow"
 			if @b.ground && c.name == "Beef Stew" || c.name == "London Broil" || c.name == "Eye of Round" || c.name == "Cross Rib" || c.name == "Rump Steak" || c.name == "Bottom Round" || c.name == "Chuck Roast" || c.name == "Sirloin Tip" || c.name == "Top Sirloin" || c.name == "Shank" || c.name == "Flap Meat" || c.name == "Neck"
-				@prep_array << ["Grind It"]
+				@prep_array << ["Grind It", "Ground"]
 			else
 				counter += 1
 			end
 			if @b.stew && c.name == "London Broil" || c.name == "Eye of Round" || c.name == "Cross Rib" || c.name == "Rump Steak" || c.name == "Bottom Round" || c.name == "Chuck Roast" || c.name == "Shank" || c.name == "Neck"
-				@prep_array << ["Turn to Stew"]
+				@prep_array << ["Turn to Stew", "As Stew"]
 			else
 				counter += 1
 			end
 			if @b.boneless && c.name == "Ribeye" || c.name == "Short Ribs"
-				@prep_array << ["Debone It"]
+				@prep_array << ["Debone It", "Deboned"]
 			else
 				counter += 1
 			end

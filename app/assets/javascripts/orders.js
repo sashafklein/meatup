@@ -21,8 +21,11 @@ $(document).ready(function(){
       var parentTr = $(this).parents("tr");
       var weight = parseFloat($(parentTr).find(".js-weight").attr('data-weight'));
       var price = parseFloat($(parentTr).find(".js-lb-price").attr('data-lb-price'));
-      $(parentTr).find(".js-price").html(numOfPackages * weight * price);
-      $(parentTr).find(".js-lbs").html(numOfPackages * weight);
+      $(parentTr).find(".js-price").html(
+      	
+      	((numOfPackages * weight * price).toFixed(2))
+      	);
+      $(parentTr).find(".js-lbs").html((numOfPackages * weight).toFixed(2));
     });
      
 

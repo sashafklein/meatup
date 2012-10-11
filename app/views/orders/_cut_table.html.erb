@@ -34,7 +34,7 @@
           <td><div id="cut_name"><%= c.name %></div></td>
 
           <!-- Prep Requests -->
-          <% @prep_array = [["None"]] %>
+          <% @prep_array = [["None", ""]] %>
           <% prep_helper(c) %>
           <% if @prep_array[0] != "" %>
             <td><%= l.select :notes, @prep_array %></td>
