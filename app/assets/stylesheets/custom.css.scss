@@ -540,11 +540,10 @@ border: 1px solid #75726C;
 }
 
 
-// .header.hidden-phone .container #login {
-//   float: right;
-//   margin-left: 50px;
-//   margin-right: -30px;
-//   margin-top: 0;
-//   padding: 8px 40px;
-//   font-family: "CarthoGothic",Helvetica,Arial,sans-serif;
-// }
+// Floating Header
+
+.floatingHeader {
+  position: fixed;
+  top: 0;
+  visibility: hidden;
+}

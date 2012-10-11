@@ -1,6 +1,7 @@
 <br>
 <table class="table table-condensed order-table" id="sumtable">
-    <tr style="border:#fff;">
+  <div class="persist-area">
+    <tr class="persist-header" style="border:#fff;">
       <th>Cut</th>
       <th>Prep Requests</th>
       <th>Packages</th>
@@ -10,6 +11,7 @@
       <th>Price</th>
       <th>Savings</th>
     </tr>
+  </div>
 
   <% @unordered = Cut.where(:animal_type => @meat) %>
   <% @cutlist = @unordered.find(:all, :order => 'savings DESC')%>
