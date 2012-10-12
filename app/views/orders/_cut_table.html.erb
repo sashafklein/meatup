@@ -1,14 +1,14 @@
 <div class="persist-area">
 <table class="table table-condensed order-table" id="sumtable">
     <tr class="persist-header">
-      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Cut</th>
-      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Prep Requests</th>
-      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Packages</th>
-      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Package Weight</th>
-      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Price/lb</th>
-      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Lbs</th>
-      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Price</th>
-      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Savings</th>
+      <th>Cut</th>
+      <th>Prep Requests</th>
+      <th>Packages</th>
+      <th>Package Weight</th>
+      <th>Price/lb</th>
+      <th>Lbs</th>
+      <th>Price</th>
+      <th>Savings</th>
     </tr>
 
   <% @unordered = Cut.where(:animal_type => @meat) %>

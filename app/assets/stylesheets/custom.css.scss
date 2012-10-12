@@ -548,3 +548,22 @@ border: 1px solid #75726C;
   top: 0;
   visibility: hidden;
 }
+
+.persist-header {
+  th {
+    border-bottom: solid #ccc 3px;
+    padding-top:10px;
+    padding-bottom:10px; 
+    background-color:#eee;
+  }
+}
+
+
+// Easy alignment
+.right {
+  float: right;
+}
+
+.centered {
+  float: center;
+}

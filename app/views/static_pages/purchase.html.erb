@@ -1,0 +1,16 @@
+<% provide(:title, 'Pick Your Animal') %>
+
+	<div class="float-over">
+		<h1 style="text-align:center">Welcome to MeatUp!</h1><br>
+		<h2 style="text-align:center">Choose your animal below:</h2>
+	</div>
+	
+	<br>
+	
+	<div class="animal-buttons">
+		<%= link_to image_tag("beef_button.png"), '/orders/cow' %>
+		<%= link_to image_tag("pork_button.png"), '/orders/pig' %>
+		<%= link_to image_tag("lamb_button.png"), '/orders/lamb' %>
+		<%= link_to image_tag("goat_button2.png"), '/orders/goat' %>
+	</div>
+<br>

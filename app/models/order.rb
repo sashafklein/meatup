@@ -25,5 +25,15 @@ class Order < ActiveRecord::Base
   	Animal.find(self.animal_id)
   end
 
+  def roll_back
+    self.lines.each do |l|
+      l.packages each do |p|
+        p.update_attributes(:sold,  false)
+      end
+    end
+
+    self.destroy  
+  end  
+
 
 end
