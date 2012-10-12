@@ -1,7 +1,5 @@
 Meatup2::Application.routes.draw do
 
-  root to: 'static_pages#welcome'
-
   match '/about', to: 'static_pages#about'
 
   match '/how', to: 'static_pages#how'
@@ -31,6 +29,9 @@ Meatup2::Application.routes.draw do
 
   resources :orders 
   resources :lines
+
+  root to: 'static_pages#welcome'
+
   
 
   # The priority is based upon order of creation:
