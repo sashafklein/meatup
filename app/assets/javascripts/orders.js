@@ -53,7 +53,7 @@ $(document).ready(function(){
        	// Value assignment
 		$(parentTable).find(".js-lb-total").html(lb_total.toFixed(2) + lb);
 		$(parentTable).find(".js-price-total").html(dol + (money_total).toFixed(2));
-		$(parentTable).find(".js-savings-total").html("-" + dol + (savings_total).toFixed(2));
+		$(parentTable).find(".js-savings-total").html("[" + dol + (savings_total).toFixed(2) + "]");
     });
 
 });

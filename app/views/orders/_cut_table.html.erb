@@ -1,15 +1,14 @@
-<br>
 <div class="persist-area">
 <table class="table table-condensed order-table" id="sumtable">
-    <tr style="border:#fff;" class="persist-header">
-      <th>Cut</th>
-      <th>Prep Requests</th>
-      <th>Packages</th>
-      <th>Package Weight</th>
-      <th>Price/lb</th>
-      <th>Lbs</th>
-      <th>Price</th>
-      <th>Savings</th>
+    <tr class="persist-header">
+      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Cut</th>
+      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Prep Requests</th>
+      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Packages</th>
+      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Package Weight</th>
+      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Price/lb</th>
+      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Lbs</th>
+      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Price</th>
+      <th style="border-bottom: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">Savings</th>
     </tr>
 
   <% @unordered = Cut.where(:animal_type => @meat) %>
@@ -85,14 +84,14 @@
 
     <% end %> <!-- End of Cuts Block -->
   <% end %> <!-- End of Lines Block -->
-      <tr class="total">
-        <th colspan=5>
+      <tr class="total" style="border-top: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">
+        <th colspan=5 style="padding-top:10px;padding-bottom:10px; background-color:#eee;">
         </th>
-        <th class="js-lb-total">Total Lbs
+        <th class="js-lb-total" style="padding-top:10px;padding-bottom:10px; background-color:#eee; font-weight:normal;">Total Lbs
         </th>
-        <th class="js-price-total">Total $
+        <th class="js-price-total" style="padding-top:10px;padding-bottom:10px; background-color:#eee;">Total $
         </th>
-        <th class="js-savings-total"> Saved
+        <th class="js-savings-total" style="padding-top:10px;padding-bottom:10px; background-color:#eee; font-weight:normal; color: #339933;">[Saved]
         </th>
       </tr>
 </table>
