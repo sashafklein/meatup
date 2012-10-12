@@ -14,10 +14,3 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
-
-$(document).ready(function(){
- $(".alert").click(function(event){
-   event.preventDefault();
-   $(this).hide("slow");
- });
-}
