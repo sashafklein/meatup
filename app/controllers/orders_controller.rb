@@ -117,12 +117,6 @@ before_filter :admin_user,     only: [:index, :edit, :update, :destroy]
     end
   end
 
-  # GET /orders/pay/1
-  # GET /orders/pay/1.json
-  def pay
-    @order = Order.find(params[:id])
-  end
-
    private
 
     def admin_user

@@ -19,7 +19,6 @@ Meatup2::Application.routes.draw do
   match '/orders/pig', to: "orders#pig_order"
   match '/orders/lamb', to: "orders#lamb_order"
   match '/orders/goat', to: "orders#goat_order"
-  match '/orders/pay/:id', to: "orders#pay"
 
   resources :sessions, only: [:new, :create, :destroy]
   resources :users

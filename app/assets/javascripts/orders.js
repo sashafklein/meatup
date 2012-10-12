@@ -5,16 +5,6 @@ $(document).ready(function(){
 	    "#339933"
 	  ]
 	});
-
-   $(".stripe").click(function(e){ 	
-   		   e.preventDefault();
-
-		    // load the html file using ajax
-		    $.get("pay.html.erb", function(resp){
-		        var data = $('<div></div>').append(resp);
-    		});
-	});
-
    
     $(".js-package").change(function(){
     	var dol = "$"
