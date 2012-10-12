@@ -74,13 +74,11 @@ $(function() {
    var clonedHeaderRow;
 
    $(".persist-area").each(function() {
-   	console.log("persist-area");
-   	console.log($(this));
-       clonedHeaderRow = $(".persist-header", this);
-       clonedHeaderRow
-         .before(clonedHeaderRow.clone())
-         .css("width", clonedHeaderRow.width())
-         .addClass("floatingHeader");
+     clonedHeaderRow = $(".persist-header", this);
+     clonedHeaderRow
+       .before(clonedHeaderRow.clone())
+       .css("width", clonedHeaderRow.width())
+       .addClass("floatingHeader");
    });
    
    $(window)

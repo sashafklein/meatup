@@ -25,19 +25,14 @@
 	<% @order.lines.each do |l| %>
 		<% if l.units != 0 %>
 			<% @c = l.cut %>
-			<% @a = @order.animal %>
-			<% cut_packages = @a.packages.where(:cut_id => @c.id) %>
-			<% sold = cut_packages.where(:sold => true).length %>
-	  		<% unsold = cut_packages.where(:sold => false).length %>
-	  		<% example = cut_packages.first %>
+			<% show_helper %>
 			<tr>	
-		
 			    	<td><%= @c.name %></td>
 			    	<td><%= l.units %></td>
 			    	<td><%= l.notes %></td>
 			    	<td><%= @c.package_weight %> lb</td>
-			    	<td><%= number_to_currency(example.price) %></td>
-			    		<% @line_total = example.price * @c.package_weight * l.units %>
+			    	<td><%= number_to_currency(@example.price) %></td>
+			    		<% @line_total = @example.price * @c.package_weight * l.units %>
 			    	<td><%= number_to_currency(@line_total) %></td>
 		    </tr>
 		    <% @total += @line_total %>
@@ -53,9 +48,10 @@
 	</tr>
 </table>
 
-<div class="right">
-	<script src="https://button.stripe.com/v1/button.js" class="stripe-button"
-          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-          data-description=<%= "#{@order.animal.name}" %>
-          data-amount=<%= "#{@total * 100 }"></script>
-</div>
+<%= form_tag charges_path do %>
+  <script src="https://button.stripe.com/v1/button.js" 
+  		class="stripe-button"
+        data-key=<%="#{Rails.configuration.stripe[:publishable_key]}"%>
+        data-description=<%="#{@order.animal.name}"%>
+        data-amount=<%="#{@total * 100}"%></script>
+<% end %>
