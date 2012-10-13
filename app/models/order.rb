@@ -16,7 +16,9 @@ class Order < ActiveRecord::Base
   attr_accessible :status, :lines_attributes, :animal_id, :user_id
 
   has_many :cuts
-  has_many :lines
+  has_many :lines, :dependent => :destroy
+
+  before_destroy :roll_back
 
   accepts_nested_attributes_for :lines
   accepts_nested_attributes_for :cuts
@@ -31,9 +33,7 @@ class Order < ActiveRecord::Base
         p.update_attributes(:sold => false, :line_id => nil)
       end
     end
-
-    self.destroy  
-  end  
+  end
 
 
 end

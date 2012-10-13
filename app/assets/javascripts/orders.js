@@ -28,7 +28,7 @@ $(".js-package").change(function(){
     var savings_total = 0;	
   	
   	// Column Total Calculations (row by row)
-    for (var i = 1, iLen = height - 1; i < iLen; i++) {
+    for (var i = 2, iLen = height - 1; i < iLen; i++) {
     	p_cell = table_rows[i].cells[5];
     	p_value = p_cell.textContent.replace(/[^0-9-.]/g, '');
     	lb_total += Number(p_value);
