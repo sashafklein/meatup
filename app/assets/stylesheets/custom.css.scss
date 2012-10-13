@@ -546,14 +546,17 @@ border: 1px solid #75726C;
 .floatingHeader {
   position: fixed;
   top: 0;
+  float:auto;
   visibility: hidden;
 }
 
 .persist-header {
   th {
+    border: solid #fc0 1px;
     border-bottom: solid #ccc 3px;
-    padding-top:10px;
+    padding:10px;
     padding-bottom:10px; 
+    border-spacing:0px;
     background-color:#eee;
   }
 }
@@ -569,26 +572,26 @@ border: 1px solid #75726C;
 
 // Order cut-table (persistent)
 .cut {
-  width: 269px;
+  width: 30%; /* 269px;*/
 }
 .prep {
-  width: 83px;
+  width: 10%; /* 83px;*/
 }
 .ps {
-  width: 83px;
+  width: 10%; /* 83px;*/
 } 
 .p_weight {
-  width: 83px;
+  width: 10%; /* 83px;*/
 }
 .price {
-  width: 83px;
+  width: 10%; /* 83px;*/
 }
 .lbs {
-  width: 83px;
+  width: 10%; /* 83px;*/
 }
 .price_lb {
-  width: 83px;
+  width: 10%; /* 83px;*/
 }
 .save {
-  width: 83px;
+  width: 10%; /* 83px;*/
 }

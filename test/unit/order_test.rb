@@ -8,6 +8,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  animal_id  :integer
+#  total      :float
 #
 
 require 'test_helper'
