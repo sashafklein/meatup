@@ -15,7 +15,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation, :order_id, :zip, :apology
+  attr_accessible :name, :email, :password, :password_confirmation, :order_id, :zip
   attr_accessible :name, :email, :password, :password_confirmation, :order_id, :zip, :admin, :apology, :as => :administrator
   has_many :orders
 
