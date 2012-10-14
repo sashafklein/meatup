@@ -4,13 +4,15 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
+    <%= image_tag attachments['meatup_logo_on.png'].url %>
     <h1>Welcome to MeatUp, <%= @user.name %>!</h1>
     <p>
-      You have successfully signed up to MeatUp. Now you can order meat.<br/>
+      Sign up successful. Now you can see what's on the <%= link_to "butcher's block", @meat_url %>!<br/>
     </p>
     <p>
       To login to the site, just follow this link: <%= @url %>.
     </p>
     <p>Thanks for joining and have a great day!</p>
+    <%= image_tag attachments['grassy_knoll.gif'].url %>
   </body>
 </html>
