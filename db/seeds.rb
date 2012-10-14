@@ -317,15 +317,19 @@
 		:user_id => one.id,
 		:ground => true,
 		:stew => true,
-		:boneless => true
+		:boneless => true,
+		:state => "CA",
+		:zip => "94114"
 	)
 
 # Ranches
 	Ranch.delete_all
 	miller = Ranch.create(
 		:name => "Miller Ranch",
-		:address => "Livermoor",
+		:address => "Oakdale",
 		:phone => "999-999-9999",
+		:state => "CA",
+		:zip => "94114",
 		:cow => true,
 		:cow_live => 1.40,
 		:cow_meat => 3.62,
@@ -333,6 +337,16 @@
 		:pig => false,
 		:lamb => false,
 		:goat => false
+	)
+
+# Hosts
+	Host.delete_all
+	klein = Host.create(
+		:state => "CA",
+		:city => "San Francisco",
+		:zip => "94114",
+		:address => "3976 23rd St.",
+		:user_id => one.id
 	)
 
 # Animals

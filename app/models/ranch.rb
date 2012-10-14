@@ -25,11 +25,19 @@
 #  goat_hanging :decimal(, )
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  state        :string(255)
+#  zip          :string(255)
+#  city         :string(255)
 #
 
 class Ranch < ActiveRecord::Base
-  attr_accessible :address, :cow, :cow_meat, :cow_hanging, :cow_live, :goat, :goat_meat, :goat_hanging, :goat_live, :lamb, :lamb_meat, :lamb_hanging, :lamb_live, :name, :phone, :pig, :pig_meat, :pig_hanging, :pig_live, :user_id
+  attr_accessible :address, :city, :state, :zip, :cow, :cow_meat, :cow_hanging, :cow_live, :goat, :goat_meat, :goat_hanging, :goat_live, :lamb, :lamb_meat, :lamb_hanging, :lamb_live, :name, :phone, :pig, :pig_meat, :pig_hanging, :pig_live, :user_id
   has_many :animals
+
+  validates :zip, presence: true, length: {is: 5}
+  validates :address, presence: true
+  validates :state, presence: true
+  validates :city, presence: true
 
   def to_meat 
     if self.cow_meat == 0 || self.cow_meat == nil

@@ -11,9 +11,21 @@
     </div>
   <% end %>
 
-   <div class="field">
+  <div class="field">
     <%= f.label "Ranch Name" %><br />
     <%= f.text_field :name %>
+  </div>
+  <div class="field">
+      <%= f.label "State" %><br />
+      <%= f.select :state, us_states %>
+  </div>  
+  <div class="field">
+      <%= f.label :city %><br />
+      <%= f.text_field :city %>
+  </div>
+  <div class="field">
+      <%= f.label "Zip Code" %><br />
+      <%= f.text_field :zip %>
   </div>
   <div class="field">
     <%= f.label "Address" %><br />
