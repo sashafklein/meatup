@@ -1,5 +1,6 @@
 <div class="persist-area">
 <table class="table table-condensed order-table sumtable" id="sumtable">
+  <thead>
     <tr class="persist-header">
       <th class="cut">Cut</th>
       <th class="prep">Prep Requests</th>
@@ -8,8 +9,10 @@
       <th class="price_lb">Price/lb</th>
       <th class="lbs">Lbs</th>
       <th class="price">Price</th>
-      <th class="save">Savings</th>
+      <th class="save" style="text-align:center;">Savings</th>
     </tr>
+  </thead>
+  <tbody>
 
   <% @unordered = Cut.where(:animal_type => @meat) %>
   <% @cutlist = @unordered.find(:all, :order => 'savings DESC')%>
@@ -44,10 +47,8 @@
           <!-- Package drop-down with sold-out special case -->
           <% dropdown = (0..unsold).to_a %>
           <% if dropdown.length <= 1 %>
-            <td class="red">
-              <span>
-                SOLD OUT
-              </span>
+            <td>
+              <div class="sold_out_item">Sold Out</div>
             </td>
           <%= l.hidden_field :units, value: 0 %>
           <% else %>
@@ -72,11 +73,12 @@
           <!-- Package-specific savings -->
           <% if ((c.comp - example.price) / c.comp) > 0.01 %>
             <% cut_savings = (100 * (c.comp - example.price) / c.comp) %>
-            <td class="savings" data-savings=<%= cut_savings %> >
-              <%= number_to_percentage((cut_savings), :precision => 0) %></td>
+            <td class="savings sav_content" style="text-align:center;" data-savings="<%= cut_savings %>">
+                <%= number_to_percentage((cut_savings), :precision => 0) %>
+            </td>
           <% else %>
-            <td class="savings" data-savings=0>
-              <%= number_to_percentage(0, :precision => 0) %>
+            <td class="savings sav_content" style="text-align:center;" data-savings=0>
+                <%= number_to_percentage(0, :precision => 0) %>
             </td>
           <% end %>
         </tr>
@@ -84,15 +86,16 @@
 
     <% end %> <!-- End of Cuts Block -->
   <% end %> <!-- End of Lines Block -->
-      <tr class="total" style="border-top: solid #ccc 3px; padding-top:10px;padding-bottom:10px; background-color:#eee;">
-        <th colspan=5 style="padding-top:10px;padding-bottom:10px; background-color:#eee;">
+      <tr class="total order_table_footer">
+        <th colspan=5 class="order_table_footer">
         </th>
-        <th class="js-lb-total" style="padding-top:10px;padding-bottom:10px; background-color:#eee; font-weight:normal;">Total Lbs
+        <th class="js-lb-total order_table_footer">Total Lbs
         </th>
-        <th class="js-price-total" style="padding-top:10px;padding-bottom:10px; background-color:#eee;">Total $
+        <th class="js-price-total order_table_footer" style="font-weight:bold;">Total $
         </th>
-        <th class="js-savings-total" style="padding-top:10px;padding-bottom:10px; background-color:#eee; font-weight:normal; color: #339933;">[Saved]
+        <th class="js-savings-total order_table_footer" style="color: #339933; text-align:center;">[Saved]
         </th>
       </tr>
+    </tbody>
 </table>
 </div>

@@ -1,21 +1,32 @@
-<% provide(:title, 'Animals') %>
+<% provide(:title, 'Animal Dashboard') %>
 
-<h1>Animal List</h1>
-<p style="text-align:center">(<%= link_to 'Add New', new_animal_path %>)</p><br>
+<div id="page_title_float">Admin Animal Dashboard</div>
+<%= link_to 'Add New Animal', new_animal_path, :class => "btn image-button", :style => "float:right;" %><br>
 
-<h2 class="pull-left">Cows</h2>
-    <% @type = "Cow" %>
-    <%= render :partial => "animal_list", :object => @type %><br>
-<h2 class="pull-left">Pigs</h2>
-    <% @type = "Pig" %>
-    <%= render :partial => "animal_list", :object => @type %><br>
-<h2 class="pull-left">Lambs</h2>
-    <% @type = "Lamb" %>
-    <%= render :partial => "animal_list", :object => @type %><br>
-<h2 class="pull-left">Goats</h2>
-    <% @type = "Goat" %>
-    <%= render :partial => "animal_list", :object => @type %><br>
-
+<table class="animal_table">
+<thead>
+  <tr class="animal_table_header">
+    <th>Type</th>
+    <th>ID</th>
+    <th>Name of Animal</th>
+    <th>Breed</th>
+    <th>Live Weight</th>
+    <th>Farm / Ranch</th>
+    <th>Host</th>
+    <th colspan=3>Admin Controls</th>
+  </tr>
+</thead>
+<tbody>
+	<% @type = "Cow" %>
+	<%= render :partial => "animal_list", :object => @type %>
+	<% @type = "Pig" %>
+	<%= render :partial => "animal_list", :object => @type %>
+	<% @type = "Lamb" %>
+	<%= render :partial => "animal_list", :object => @type %>
+	<% @type = "Goat" %>
+	<%= render :partial => "animal_list", :object => @type %>
+</tbody>
+</table>
 
 <br />
 

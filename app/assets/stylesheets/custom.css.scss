@@ -221,11 +221,11 @@ border: 1px solid #75726C;
   }
 }
 
-/* Row Hover OverRide */
-.table tbody tr:hover td,
-.table tbody tr:hover th {
-    background-color: inherit;
-}
+// /* Row Hover OverRide */
+// .table tbody tr:hover td,
+// .table tbody tr:hover th {
+//     background-color: inherit;
+// }
 
 /* Change Footer and Header Color */
 
@@ -285,18 +285,6 @@ border: 1px solid #75726C;
     background: none;
     text-decoration: none;
   }    
-}
-
-/* Sold-Out Styling */
-.red {
-    margin-left: 10px;
-    margin-top: 10px;
-    color: #FF0000;
-    font-weight: bold;
-    text-align: center;
-    td {
-      float: center;
-    }
 }
 
 // Easier Centering
@@ -451,26 +439,46 @@ border: 1px solid #75726C;
 }
 
 #header_logo {
-  background:transparent url('meatup_logo.png') no-repeat;
-  width:319px;
-  height:103px;
+  background:transparent url('meatup_logo.png') no-repeat -389px 0;
+  width:323px;
+  height:104px;
   display:block;
+  &:hover {
+    background:transparent url('meatup_logo.png') no-repeat -4px 0;
+  }
 }
 
-#header_logo:hover {
-  background:transparent url('meatup_logo_on.png') no-repeat;
-  width:319px;
-  height:103px;
-  display:block;
+#title_signinup {
+  float:left;
+  vertical-align:middle;
+  text-align:center;
+  background-color: #eee;
+  width:45%;
+  height:500px;;
+}
+
+.user_signinup {
+  padding: 0 0 0 50%;
+  input {
+    &:focus {
+      background-color:#eee;
+      -moz-box-shadow:     0 0 0px #fff;
+      -webkit-box-shadow:  0 0 0px #fff;
+      box-shadow:          0 0 0px #fff;
+      border: solid #999 1px;
+    }
+  }
 }
 
 .savings {
-  text-align:center;
+  background-color:#fc0;
+}
+
+.sav_content {
   color:#fff;
   text-shadow:0 0 0.3em #000;
   padding:0px;
   margin:0px;
-  width:80px;
 }
 
 #cut_name {
@@ -502,6 +510,54 @@ border: 1px solid #75726C;
   }
 }
 
+.order_table_footer { 
+  th {
+    border-top: solid #ccc 3px; 
+    padding-top:10px;
+    padding-bottom:10px; 
+    background-color:#eee; 
+    font-weight:normal;
+  }  
+}
+
+.animal_table {
+  width:100%;
+  td, th {
+    text-align:left;
+    padding:15px;
+    border-bottom: solid #ddd 1px; 
+  }
+}
+.animal_table_header { 
+  th {
+    font-weight:bold;
+  }  
+}
+
+.animal_table_header2 { 
+  th {
+    font-weight:normal;
+  }  
+}
+
+.sold_out_item {
+    margin:0px 5px; 
+    padding:2px; 
+    width:66px; 
+    color:#ffffff;
+    font-size:90%;
+    text-align:center;
+    background-color:#8a3333;
+    background-image: -webkit-linear-gradient(top, #9a393a, #8a3333);
+    background-image: -o-linear-gradient(top, #9a393a, #8a3333);
+    background-image: linear-gradient(top, #9a393a, #8a3333);
+    background-image: -moz-linear-gradient(top, #9a393a, #8a3333);
+    &:hover {
+      background-image:none;
+      background-color:#B64343;
+    }
+}
+
 .order_title {
   span:100%;
   text-align:center;
@@ -520,6 +576,15 @@ border: 1px solid #75726C;
    background-color:#ddd;
    cursor:none;
   }  
+}
+
+#page_title_float {
+  float:left;
+  margin-top:15px;
+  margin-bottom:35px;
+  font-family:calibri, verdana;
+  font-size:150%;
+  font-weight:bold;
 }
 
 .order_back {
@@ -546,19 +611,118 @@ border: 1px solid #75726C;
 .floatingHeader {
   position: fixed;
   top: 0;
-  float:auto;
   visibility: hidden;
 }
 
 .persist-header {
   th {
-    border: solid #fc0 1px;
     border-bottom: solid #ccc 3px;
     padding:10px;
-    padding-bottom:10px; 
     border-spacing:0px;
     background-color:#eee;
   }
+}
+
+.receipt_and_pay {
+  padding:0px;
+  margin:0px;
+  border:0px;
+}
+
+.receipt_display {
+  position:relative;
+  z-index:1;
+  width:100%;
+  color:#040400;
+  -moz-box-shadow:    inset 0 0 10px #f8e8c7;
+  -webkit-box-shadow: inset 0 0 10px #f8e8c7;
+  box-shadow:         inset 0 0 10px #f8e8c7;
+  background-color:#f4eee3;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  font-family:calibri;
+  u {
+    text-decoration:none;
+    border-bottom: 1px dotted #968b6f;
+  }
+  th.header {
+    padding:25px;
+    font-size:120%;
+    line-height:140%;
+    color:#2c3230;
+    border-bottom: 1px solid #e7b7a1;
+  }
+  td.divider2 {
+    padding:1px;
+    border-bottom: 1px solid #ded8be; /* 4a6075 */    
+  }
+  th.details {
+    padding: 6px 0px 6px 25px;
+    border-bottom: 1px solid #6f797a; /* 4a6075 */    
+    font-size:100%;
+    color:#2c3230;
+    text-align:left;
+  }
+  td.divider {
+    padding:1px;
+    border-bottom: 1px solid #e7b7a1;    
+  }
+  td.spacer {
+    padding:25px 25px 0px 0px;
+    border:0px;
+  }
+  td {
+    color:#2c3230;
+    font-size:100%;
+    padding: 6px 25px 6px 25px;
+    border-bottom: 1px solid #ded8be; /* 4a6075 */
+  }
+}
+
+#purveyor_of {
+  margin-top:15px;
+  text-transform:uppercase;
+  letter-spacing:3px;
+  font-size:80%;
+  b {
+    letter-spacing:0px;
+    text-transform:none;
+    font-size:180%;
+    font-family:garamond,palatino;
+    color:#2d2d25;
+  }
+}
+
+.receipt_stamp {
+  z-index:99;
+  position:absolute;
+  top: 25px;
+  right: 25px;
+  border: 2px solid #b6cec0;
+  line-height:110%;
+  font-size:100%;
+  font-weight:normal;
+  color:#b6cec0;
+  padding:5px;
+ }
+
+.receipt_notes {
+  padding: 25px 25px 0px 25px;
+  text-align:left;
+  font-size:90%;
+  font-family:calibri;
+}
+
+.receipt_pay {
+  float:right;
+  // border: solid 1px #aadbbd;
+  // padding:1px;
+  // margin:0px;
+  // color:#7ebda0;
+  // -moz-box-shadow:     0 0 2px #f8e8c7;
+  // -webkit-box-shadow:  0 0 2px #f8e8c7;
+  // box-shadow:          0 0 2px #f8e8c7;
 }
 
 // Easy alignment
