@@ -17,6 +17,7 @@ def create
 rescue Stripe::CardError => e
   flash[:error] = e.message
   redirect_to charges_path
+    UserMailer.order_email(@order).deliver
 end
 
 end

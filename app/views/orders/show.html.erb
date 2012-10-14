@@ -4,22 +4,71 @@
 <% @a = @order.animalfind %>
 <% status_array = ["Incomplete", "Complete", "Deposited", "Other"] %>
 <% @total = 0 %>
+<% @total_weight = 0 %>
 
-<h1><%= "Order \##{@order.id}"%></h1> 
+<!-- Calcs -->
 
-<h2><span style="font-size:80%"> Animal Name: </span><%= @a.name %></h2>
-<h2><span style="font-size:80%">Order Status: </span><%= status_array[@order.status] %></h2>
+<% @order.lines.each do |l| %>
+	<% if l.units != 0 %>
+		<% @c = l.cut %>
+		<% show_helper %>
+		<% @line_total = @example.price * @c.package_weight * l.units %>
+	    <% @total += @line_total %>
+	    <% @total_weight += @c.package_weight * l.units %>
+	<% end %>
+<%end%>
+<% @order.total = @total %>
 
-<br>
-
-<table class="table">
+<table class="receipt_display">
+<thead>
 	<tr>
-		<th>Cut</th>
-		<th>Units</th>
-		<th>Notes</th>
-		<th>Package Weight</th>
-		<th>Price</th>
-		<th>Total</th>
+		<th colspan=5 class="header">
+			<div class="receipt_stamp">
+				ORDER<br>REVIEW
+			</div>
+			<%= @a.ranch.address %>, STATE, <u>&nbsp;<%= localize(@order.created_at, :format => ("on %d, %B, %Y")) %>&nbsp;</u><br>
+			<strong style="font-size:150%; font-weight:normal">Pay to order of <u style="font-weight:bold;">&nbsp;<%= @a.ranch.name %>&nbsp;,</u> c/o MeatUp</strong><br>
+<!-- 			<u>&nbsp;<%= @order.user.name %>&nbsp;,</u> <%= "Order \##{@order.id}"%><br>
+ -->			<div id="purveyor_of">
+				Purveyor of<br><b>High Class Viandes, Game and Forcemeats</b>
+			</div>
+		</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td colspan=4 class="divider">
+		</td>
+	</tr>
+	<tr>
+		<td colspan=4>
+			Customer Name: <%= @order.user.name %>
+		</td>
+	</tr>
+	<tr>
+		<td colspan=4>
+			Animal Name: <%= @a.name %>
+		</td>
+	</tr>
+	<tr>
+		<td colspan=4>
+			Order Status: 
+			<% if status_array[@order.status] == "Incomplete" || "Unpaid" %>
+			<b style="font-weight:normal;color:#f60;"><%= status_array[@order.status] %></b>
+			<% else %>
+			<%= status_array[@order.status] %>
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td colspan=4 class="divider2">
+		</td>
+	</tr>
+	<tr>
+		<th class="details">Cut</th>
+		<th class="details">Notes</th>
+		<th class="details" width=15%>Total Lbs</th>
+		<th class="details" width=15%>Price</th>
 	</tr>
 
 	<% @order.lines.each do |l| %>
@@ -28,11 +77,9 @@
 			<% show_helper %>
 			<tr>	
 			    	<td><%= @c.name %></td>
-			    	<td><%= l.units %></td>
 			    	<td><%= l.notes %></td>
-			    	<td><%= @c.package_weight %> lb</td>
-			    	<td><%= number_to_currency(@example.price) %></td>
-			    		<% @line_total = @example.price * @c.package_weight * l.units %>
+			    	<td><%= @c.package_weight * l.units %> lb</td>
+			    	<% @line_total = @example.price * @c.package_weight * l.units %>
 			    	<td><%= number_to_currency(@line_total) %></td>
 		    </tr>
 		    <% @total += @line_total %>
@@ -43,16 +90,23 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
-		<td></td>
-		<td><%= number_to_currency(@total) %></td>
+		<td><b><%= number_to_currency(@total) %><b></td>
 	</tr>
+	<tr>
+		<td colspan=4 class="spacer">
+			<div class="receipt_pay">
+				<%= form_tag charges_path do %>
+				  <script src="https://button.stripe.com/v1/button.js" 
+				  		class="stripe-button"
+				        data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+				        data-description="<%= @order.animal.name %>"
+				        data-amount="<%= @order.total * 100 %>"></script>
+				<% end %>
+			</div>
+		</td>
+	</tr>
+	</tbody>
 </table>
-
-<%= form_tag charges_path do %>
-  <script src="https://button.stripe.com/v1/button.js" 
-  		class="stripe-button"
-        data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-        data-description="<%= @order.animal.name %>"
-        data-amount="<%= @order.total * 100 %>"></script>
-<% end %>
+<div class="receipt_notes">
+	This order represents a hold of estimate size (<%= @total_weight %> lbs), placed on <%= @a.name %>, a <%= @a.breed %> <%= @a.animal_type %>, raised sustainably on <%= @a.ranch.name %>, in <%= @a.ranch.address %> WRONG ADDRESS, STATE, weighing approximately <%= @a.weight %> lbs.  MeatUp and <%= @a.ranch.name %> reserve the right to automatically adjust the final poundage of your order to match final weight and availability, within a variance of EXPECTED VARIANCE.  As part of this order, you agree to be charged or refunded the difference between this estimate and the final poundage at the price-per-pound of this order.  Once confirmed and delivered, this order will be available at HOST LOCATION for pickup over a period of no more than 24 hours.  As a customer, you are responsible for organizing a timely pick-up of your order, and if you are not personally able to retrieve your order during the pickup window, please contact your host (HOST NAME) to make special arrangements.  Neither MeatUp, nor <%= @a.ranch.name %>, nor HOST NAME is responsible for any damage that may occur to the contents of your order if it is retrieved outside of the established pickup window.
+</div>
