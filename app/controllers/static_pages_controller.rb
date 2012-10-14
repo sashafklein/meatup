@@ -10,4 +10,11 @@ class StaticPagesController < ApplicationController
 
   def contact
   end
+
+  def welcome_email
+  end
+
+  def order_email
+  	@order = Order.first
+  end
 end

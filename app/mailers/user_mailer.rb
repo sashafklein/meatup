@@ -5,8 +5,8 @@ class UserMailer < ActionMailer::Base
     @user = user
     @url  = "www.meatup.in"
     @meat_url = "www.meatup.in/purchase"
-    attachments.inline['meatup_logo_on.png'] = File.read('/users/sashafklein/rails_projects/bloc/meatup2/app/assets/images/meatup_logo_on.png')
-    attachments.inline['grassy_knoll.gif'] = File.read('/users/sashafklein/rails_projects/bloc/meatup2/app/assets/images/grassy_knoll.gif')
+    attachments.inline['meatup_logo_white.png'] = File.read('/users/sashafklein/rails_projects/bloc/meatup2/app/assets/images/meatup_logo_white.png')
+    attachments.inline['grassy_knoll_white_sm.png'] = File.read('/users/sashafklein/rails_projects/bloc/meatup2/app/assets/images/grassy_knoll_white_sm.png')
     mail(:to => user.email, :subject => "Welcome to MeatUp!")
   end
 

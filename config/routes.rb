@@ -3,6 +3,8 @@ Meatup2::Application.routes.draw do
   match '/about', to: 'static_pages#about'
 
   match '/how', to: 'static_pages#how'
+  match '/welcome_email', to: 'static_pages#welcome_email'
+  match '/order_email', to: 'static_pages#order_email'
 
   match '/contact', to: 'static_pages#contact'
   match '/purchase', to: 'static_pages#purchase'
