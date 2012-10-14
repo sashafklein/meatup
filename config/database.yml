@@ -33,14 +33,6 @@ development:
   # The server defaults to notice.
   #min_messages: warning
 
-test:
-  adapter: postgresql
-  encoding: unicode
-  database: meatup2_test
-  pool: 5
-  username: sashafklein
-  password: pgpass
-
 production:
   adapter: postgresql
   encoding: unicode

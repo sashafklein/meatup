@@ -294,21 +294,23 @@
 		:email => "one@test.com",
 		:password => "password",
 		:password_confirmation => "password",
-		:zip => 94114
+		:zip => "94114"
 	)
 	two = User.create(
 		:name => "Two",
 		:email => "two@test.com",
 		:password => "password",
 		:password_confirmation => "password",
-		:zip => 94114
+		:zip => "94114"
 	)
 
 # Butchers
 	Butcher.delete_all
 	sanders = Butcher.create(
 		:name => "Sanders Meat Co",
-		:address => "Turlock",
+		:state => "CA",
+		:city => "Turlock",
+		:address => "Turlock St.",
 		:phone => "999-999-9999",
 		:hanging_price => 0.55,
 		:final_price => 0,
@@ -326,9 +328,10 @@
 	Ranch.delete_all
 	miller = Ranch.create(
 		:name => "Miller Ranch",
-		:address => "Oakdale",
+		:address => "Ranch Road",
 		:phone => "999-999-9999",
 		:state => "CA",
+		:city => "Oakdale",
 		:zip => "94114",
 		:cow => true,
 		:cow_live => 1.40,
