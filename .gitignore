@@ -14,8 +14,15 @@
 /log/*.log
 /tmp
 
-# Ignore the database.yml file.
+# Ignore the database differences
 /config/database.yml
+/db/schema.rb
+
+# Ignore the gemfile
+Gemfile
+
+# Ignore development environment
+/config/environments/development.rb
 
 # Ignore email config file
 /config/initializers/setup_mail.rb
