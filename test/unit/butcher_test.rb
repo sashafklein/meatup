@@ -16,6 +16,9 @@
 #  boneless      :boolean
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  state         :string(255)
+#  zip           :string(255)
+#  city          :string(255)
 #
 
 require 'test_helper'

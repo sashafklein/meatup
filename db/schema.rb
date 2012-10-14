@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121013145623) do
+ActiveRecord::Schema.define(:version => 20121014060839) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -44,6 +44,9 @@ ActiveRecord::Schema.define(:version => 20121013145623) do
     t.boolean  "boneless"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.string   "state"
+    t.string   "zip"
+    t.string   "city"
   end
 
   create_table "cuts", :force => true do |t|
@@ -68,6 +71,8 @@ ActiveRecord::Schema.define(:version => 20121013145623) do
     t.string   "phone"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "zip"
+    t.integer  "user_id"
   end
 
   create_table "lines", :force => true do |t|
@@ -124,6 +129,9 @@ ActiveRecord::Schema.define(:version => 20121013145623) do
     t.decimal  "goat_hanging"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "state"
+    t.string   "zip"
+    t.string   "city"
   end
 
   create_table "users", :force => true do |t|
