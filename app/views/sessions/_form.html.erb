@@ -1,9 +1,12 @@
-<%= form_for(:session, url: sessions_path) do |f| %>
-  <%= f.label :email %>
-  <%= f.text_field :email %>
+<div class="user_signinup">
+	 <%= form_for(:session, url: sessions_path) do |f| %>
+	  <%= f.label :email %>
+	  <%= f.text_field :email %>
 
-  <%= f.label :password %>
-  <%= f.password_field :password %>
+	  <%= f.label :password %>
+	  <%= f.password_field :password %>
 
-  <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
-<% end %>
+      <%= f.submit @string, class: "btn image-button", style: "float:right;margin-top:15px;margin-bottom:35px;" %>
+	<% end %>
+</div>
+<br>

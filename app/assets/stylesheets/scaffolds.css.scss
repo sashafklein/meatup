@@ -40,9 +40,24 @@ div {
 }
 
 .field_with_errors {
-  padding: 2px;
-  background-color: red;
-  display: table;
+  input {
+    background-color:#f0f0f0;
+  }
+}
+
+.alert .close {
+position: relative;
+top: -2px;
+right: -21px;
+line-height: 20px;
+}
+
+button.close {
+padding: 0;
+cursor: pointer;
+background: transparent;
+border: 0;
+-webkit-appearance: none;
 }
 
 #error_explanation {

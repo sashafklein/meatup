@@ -414,7 +414,7 @@ border: 1px solid #75726C;
 
 /* Cool Image Buttons */
 
-.btn.image-button {
+.btn.image-button, btn.image-button.a:link, btn.image-button.a:active, btn.image-button.a:visited {
   color:white;
   font-family:calibri, verdana, 'trebuchet ms';
   border: 1px solid #3C3932;
@@ -424,18 +424,20 @@ border: 1px solid #75726C;
   background-image: linear-gradient(top, #9a393a, #8a3333);
   background-image: -moz-linear-gradient(top, #9a393a, #8a3333);
   text-shadow: none;
-  margin: 10px 4px;
+  margin: 0px;
   padding: 6px 12px;
   border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   font-size: 16px;
   img { padding-right:10px;}
+  text-decoration:none;
  }
 
 .btn.image-button:hover, .btn.image-button.a:hover, .btn.image-button.input:hover {
  background-color:#8a3333;
  color:#fff4f7;
+ text-decoration:none;
 }
 
 #header_logo {
@@ -452,11 +454,28 @@ border: 1px solid #75726C;
   float:left;
   vertical-align:middle;
   text-align:center;
-  background-color: #eee;
+  background: #eee url('piglet_sign.png') no-repeat;
+  background-position: center bottom;
   width:45%;
-  height:500px;;
+  height:300px;
+  color:#fff;
+  font-family:calibri, verdana;
+  font-size:500%;
+  font-weight:bold;
+  padding-top:50px;
+  margin-bottom:35px;
 }
 
+.user_signinup_a {
+  padding: 0 0 0 50%;
+  a:link, a:active, a:visited {
+    color:#9a393a;
+  }
+  a:hover {
+    background:transparent;
+    text-decoration:underline;
+  }
+}
 .user_signinup {
   padding: 0 0 0 50%;
   input {
@@ -758,4 +777,24 @@ border: 1px solid #75726C;
 }
 .save {
   width: 10%; /* 83px;*/
+}
+
+#error_exp {
+  color:#B94A48;
+  font-family:calibri, verdana, 'trebuchet ms';
+  font-size:100%;
+  background-color:#fff;
+}
+
+.gray_botton {
+  padding: 6px 6px;
+  color:#333;
+  font-family:calibri, verdana, 'trebuchet ms';
+  font-size:100%;
+  border: 1px solid #ddd;
+  text-shadow: none;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  background-color:#eee;
 }

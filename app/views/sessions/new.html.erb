@@ -1,10 +1,8 @@
 <% provide(:title, "Sign in") %>
-<h1>Sign in</h1>
+<div id="title_signinup" style="height:280px;">Sign In</div>
 
-<div class="row">
-  <div class="span6 offset3">
-    <%= render 'form' %>
-
-    <p>New user? <%= link_to "Sign up now!", signup_path %></p>
-  </div>
+<% @string = "Sign In" %>
+<%= render :partial => 'form', :object => @string %>
+<div class="user_signinup_a" style="margin-top:50px;">
+	New user? <%= link_to "Sign up now!", signup_path %>
 </div>
