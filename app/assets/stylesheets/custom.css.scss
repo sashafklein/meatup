@@ -159,7 +159,6 @@ aside {
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
-  padding: 10px;
   height: auto !important;
   margin-bottom: 15px;
   @include box_sizing;
@@ -261,6 +260,7 @@ border: 1px solid #75726C;
                   background: none;
                   font-size: 80%;
                 }
+              width:100%;
             }
           background-image:url('trans.png');
           display: inline-block;
@@ -311,7 +311,8 @@ border: 1px solid #75726C;
 }
 
 .movie_demo {
-  margin-left:10px;
+  margin-left:35px;
+  margin-bottom:35px;
   float:right;
 }
 
@@ -450,24 +451,24 @@ border: 1px solid #75726C;
   }
 }
 
-#title_signinup {
-  float:left;
-  vertical-align:middle;
+/* User, Sign in/up & Profile Pages */
+
+.signinup_left {
   text-align:center;
+  vertical-align:top;
   background: #eee url('piglet_sign.png') no-repeat;
   background-position: center bottom;
   width:45%;
-  height:300px;
   color:#fff;
   font-family:calibri, verdana;
   font-size:500%;
   font-weight:bold;
   padding-top:50px;
+  padding-bottom:250px;
   margin-bottom:35px;
 }
 
-.user_signinup_a {
-  padding: 0 0 0 50%;
+.signinup_links {
   a:link, a:active, a:visited {
     color:#9a393a;
   }
@@ -476,8 +477,15 @@ border: 1px solid #75726C;
     text-decoration:underline;
   }
 }
-.user_signinup {
-  padding: 0 0 0 50%;
+
+.signinup_table {
+  width:100%;
+}
+
+.signinup_right {
+  width:55%;
+  vertical-align:top;
+  padding: 0 0 0 35px;
   input {
     &:focus {
       background-color:#eee;
@@ -486,8 +494,26 @@ border: 1px solid #75726C;
       box-shadow:          0 0 0px #fff;
       border: solid #999 1px;
     }
+    &:hover {
+      cursor:default;
+    }
+  select {
+    padding: 3px;
+    &:focus {
+      background-color:#eee;
+      -moz-box-shadow:     0 0 0px #fff;
+      -webkit-box-shadow:  0 0 0px #fff;
+      box-shadow:          0 0 0px #fff;
+      border: solid #999 1px;
+    }
+    &:hover {
+      cursor:default;
+    }
+  }
   }
 }
+
+/* Order Pages */ 
 
 .savings {
   background-color:#fc0;

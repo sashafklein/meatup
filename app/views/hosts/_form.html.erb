@@ -12,27 +12,26 @@
   <% end %>
 
     <div class="field">
-      <%= f.label :address %><br />
+      <%= f.label :address %>
       <%= f.text_field :address %>
     </div>
     <div class="field">
-      <%= f.label :city %><br />
+      <%= f.label :city %>
       <%= f.text_field :city %>
     </div>
     <div class="field">
-      <%= f.label :zip %><br />
-      <%= f.text_field :zip %>
+      <%= f.label :zip %>
+      <%= f.text_field :zip, :value => current_user.zip %>
     </div>
-       <div class="field">
-      <%= f.label "Phone Number" %><br />
+    <div class="field">
+      <%= f.label "Phone Number" %>
       <%= f.text_field :phone %>
     </div>
     <div class="field">
-      <%= f.label "State" %><br />
+      <%= f.label "State" %>
       <%= f.select :state, us_states %>
     </div>
-    
-    <div class="actions">
-    <%= f.submit %>
+     <div class="actions">
+    <%= f.submit @string, class: "btn image-button", style: "float:right;margin-top:15px;" %>
     </div>
 <% end %>		

@@ -1,6 +1,11 @@
-<div id="title_signinup" style="height:300px;">Make Edits</div>
+<table class="signinup_table">
+	<tr>
+		<td class="signinup_left">Make Edits</td>
+		<td class="signinup_right">
 
 <% provide(:title, "Edit user") %> 
 <% @string = "Save Changes" %>
 
 <%= render :partial => 'form', :object => @string %>
+	</tr>
+</table>

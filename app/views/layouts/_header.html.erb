@@ -15,16 +15,18 @@
                 <li class="spaced">&nbsp;</li>
                 <li class="top_spaced"><%= link_to "My Dashboard", animals_path %></li>
                 <li class="dropdown">
-                      <a href="#" class="btn image-button" data-toggle="dropdown">
+                      <a href="#" class="btn image-button" data-toggle="dropdown"style="margin-right:4px;">
                         <%= image_tag('icon-login.png') %> <%= current_user.name %> &nbsp; <b class="caret"></b>
                       </a>
                       
                       <ul class="dropdown-menu">
-                        <li class="dr"><%= link_to "Animals", animals_path %></li>
-                        <li class="dr"><%= link_to "Cuts", cuts_path %></li>
-                        <li class="dr"><%= link_to "Users", users_path %></li>
-                        <li class="dr"><%= link_to "Ranches", ranches_path %></li>
-                        <li class="dr"><%= link_to "Butchers", butchers_path %></li>
+                        <li class="dr"><%= link_to "Animals Overview", animals_path %></li>
+                        <li class="dr"><%= link_to "Cuts Overview", cuts_path %></li>
+                        <li class="dr"><%= link_to "Users Overview", users_path %></li>
+                        <li class="dr"><%= link_to "Ranches Overview", ranches_path %></li>
+                        <li class="dr"><%= link_to "Butchers Overview", butchers_path %></li>
+                        <li class="line_divider" style="margin-top:4px;margin-bottom:4px;"></li>
+                        <li class="dr"><%= link_to "My Profile & History", current_user %></li>
                         <li class="line_divider" style="margin-top:4px;margin-bottom:4px;"></li>
                         <li class="dr"><%= link_to "Sign out", signout_path, method: "delete" %></li>
                       </ul>
@@ -41,7 +43,11 @@
                       </a>
 
                       <ul class="dropdown-menu">
-                        <li class="dr"><%= link_to "Edit Profile", edit_user_path(current_user) %></li>
+                        <li class="dr"><%= link_to "My Community", purchase_path %></li>
+                        <li class="dr"><%= link_to "Browse Ranches", purchase_path %></li>
+                        <li class="dr" style="font-weight:bold;"><%= link_to "Open Auctions", purchase_path %></li>
+                        <li class="line_divider" style="margin-top:4px;margin-bottom:4px;"></li>
+                        <li class="dr"><%= link_to "View Profile & History", current_user %></li>
                         <li class="line_divider" style="margin-top:4px;margin-bottom:4px;"></li>
                         <li class="dr"><%= link_to "Sign out", signout_path, method: "delete" %></li>
                       </ul>

@@ -1,20 +1,24 @@
 <% provide(:title, @user.name) %>
 
-<div id="title_signinup" style="height:500px;">My Profile</div>
+<table class="signinup_table">
+	<tr>
+		<td class="signinup_left">My Profile</td>
+		<td class="signinup_right">
 
-<div class="user_signinup">
 <label for="user_info">User Name</label>
-<input type="text" value="<%= @user.name %>" <% if @user.admin %><% else %>disabled="disabled"<% end %>>
+<input type="text" value="<%= @user.name %>" disabled="disabled">
 <label for="user_info">Email</label>
-<input type="text" value="<%= @user.email %>" <% if @user.admin %><% else %>disabled="disabled"<% end %>>
+<input type="text" value="<%= @user.email %>" disabled="disabled">
 <label for="user_info">Zip Code</label>
-<input type="text" value="<%= @user.zip %>" <% if @user.admin %><% else %>disabled="disabled"<% end %>>
+<input type="text" value="<%= @user.zip %>" disabled="disabled">
 <label for="user_info">User Type</label>
 <input type="text" value="<% if @user.admin %>Administrator<% else %>Meat Lover<% end %>" disabled="disabled">
 <%= link_to "Edit Profile", edit_user_path(@user), class: "btn image-button", style: "float:right;margin-top:15px;margin-bottom:35px;" %>
-</div>
-<div class="user_signinup_a" style="margin-top:80px;">
+<div style="margin-top:80px;">
 <label for="user_info">Recent Orders</label>
 
 	<%= render 'orders' %>
 </div>
+		</td>
+	</tr>
+</table>

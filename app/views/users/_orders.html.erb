@@ -1,20 +1,24 @@
 <% if @user.orders %>
 	<table class="table">
+	<thead>
 		<tr>
-			<th>Animal Name</th>
-			<th>Animal Type</th>
-			<th>Order ID</th>
-			<th>Date</th>
+			<th width="25%">Date</th>
+			<th width="25%">Meat Type</th>
+			<th width="25%">Amount</th>
+			<th width="25%">Charge</th>
 		</tr>
+	</thead>
+	<tbody>
 		
 		<% @user.orders.last(5).each do |o| %>	
 			<tr>
-				<td><%= o.animal.name %></td>
+				<td><%= localize(o.created_at, :format => ("%d/%b/%Y")) %></td>
 				<td><%= o.animal.animal_type %></td>
-				<td><%= o.id %></td>
-				<td></td>
+				<td>AMOUNT IN LBS</td>
+				<td>AMOUNT IN $s</td>
 			</tr>
 		<% end %>
+	</tbody>
 	</table>
 <% else %>
 	<h3>No orders? <%= link_to 'Get Started!', root_path %></h3>
