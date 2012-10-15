@@ -1,6 +1,7 @@
 class HostsController < ApplicationController
 	
-  before_filter :admin_user
+  before_filter :admin_user, only: [:edit, :update, :destroy]
+  before_filter :signed_in_user
 
   def index
   	@hosts = Host.all
@@ -61,6 +62,13 @@ class HostsController < ApplicationController
         end
       else
         redirect_to root_path, notice: "Sign in as admin to access."
+      end
+    end
+
+    def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_url, notice: "Please sign in."
       end
     end
 end

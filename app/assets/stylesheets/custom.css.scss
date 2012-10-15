@@ -757,6 +757,13 @@ border: 1px solid #75726C;
   text-align:left;
   font-size:90%;
   font-family:calibri;
+  a:link, a:active, a:visited {
+    color:#9a393a;
+  }
+  a:hover {
+    background:transparent;
+    text-decoration:underline;
+  }
 }
 
 .receipt_pay {

@@ -1,10 +1,10 @@
-<% provide(:title, @host.name) %>
+<% provide(:title, @host.user.name) %>
 
 <p id="notice"><%= notice %></p>
 
   <div class="pull-left">
     <h2><span style="font-size:100%; font-weight:bold"> Host Name: </span>
-        <span style="font-size:120%; font-weight:bold"><%= @host.name %></span></h2>
+        <span style="font-size:120%; font-weight:bold"><%= @host.user.name %></span></h2>
   </div>
 
   <br>
@@ -15,12 +15,14 @@
     <th>City</th>
     <th>State</th>
     <th>Phone Number</th>
+    <th>Email</th>
   </tr>
   <tr>
     <td><%= @host.address %></td>
     <td><%= @host.city %></td>
     <td><%= @host.state %></td>
     <td><%= @host.phone %></td>
+    <td><%= @host.user.email %></td>
   </tr>
 </table>  
 

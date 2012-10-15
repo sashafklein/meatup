@@ -7,7 +7,6 @@
 #  name        :string(255)
 #  breed       :string(255)
 #  weight      :integer
-#  host        :string(255)
 #  photo       :string(255)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -17,16 +16,18 @@
 #  pig_mult    :decimal(, )
 #  lamb_mult   :decimal(, )
 #  goat_mult   :decimal(, )
+#  host_id     :integer
 #
 
 class Animal < ActiveRecord::Base
-  attr_accessible :breed, :host, :name, :photo, :animal_type,  
+  attr_accessible :breed, :name, :photo, :animal_type,  
                   :weight, :ranch_id, :butcher_id, :cow_mult, :pig_mult,
-                  :lamb_mult, :goat_mult
+                  :lamb_mult, :goat_mult, :host_id
   has_many :orders
   has_many :packages
   belongs_to :butcher
   belongs_to :ranch
+  belongs_to :host
   after_create :create_packages
  
   def create_packages

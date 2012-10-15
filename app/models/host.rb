@@ -16,6 +16,7 @@
 class Host < ActiveRecord::Base
   attr_accessible :address, :city, :phone, :state, :zip, :user_id
   belongs_to :user
+  has_many :animals
 
   validates :address, presence: true
   validates :city, presence: true

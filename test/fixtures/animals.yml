@@ -7,7 +7,6 @@
 #  name        :string(255)
 #  breed       :string(255)
 #  weight      :integer
-#  host        :string(255)
 #  photo       :string(255)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -17,6 +16,7 @@
 #  pig_mult    :decimal(, )
 #  lamb_mult   :decimal(, )
 #  goat_mult   :decimal(, )
+#  host_id     :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html

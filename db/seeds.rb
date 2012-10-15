@@ -1,7 +1,7 @@
 # Cuts
 	Cut.delete_all
 	# The Real Paul Ryan
-	Cut.create(
+	london = Cut.create(
 		:animal_type => "Cow",
 		:name => "London Broil",
 	  	:price => 4,
@@ -10,7 +10,7 @@
 	  	:comp => 7.99,
 	  	:savings => 50
   	)
-	Cut.create(
+	ground = Cut.create(
 		:animal_type => "Cow",
 		:name => "Ground Beef",
 	  	:price => 2.63,
@@ -19,7 +19,7 @@
 	  	:comp => 6.99,
 	  	:savings => 62
   	) 
-  	Cut.create(
+  	stew = Cut.create(
 		:animal_type => "Cow",
 		:name => "Beef Stew",
 	  	:price => 2.78,
@@ -28,7 +28,7 @@
 	  	:comp => 7.99,
 	  	:savings => 65
   	)
-  	Cut.create(
+  	brisket = Cut.create(
 		:animal_type => "Cow",
 		:name => "Brisket",
 	  	:price => 5.35,
@@ -37,7 +37,7 @@
 	  	:comp => 8.99,
 	  	:savings => 40
   	)
-  	Cut.create(
+  	cross = Cut.create(
 		:animal_type => "Cow",
 		:name => "Cross Rib",
 	  	:price => 4.5,
@@ -46,7 +46,7 @@
 	  	:comp => 7.99,
 	  	:savings => 44
   	)
-  	Cut.create(
+  	rump = Cut.create(
 		:animal_type => "Cow",
 		:name => "Rump Steak",
 	  	:price => 5.55,
@@ -55,7 +55,7 @@
 	  	:comp => 8.99,
 	  	:savings => 38
   	)
-  	Cut.create(
+  	short = Cut.create(
 		:animal_type => "Cow",
 		:name => "Short Ribs",
 	  	:price => 5.55,
@@ -64,7 +64,7 @@
 	  	:comp => 8.99,
 	  	:savings => 38
   	)
-  	Cut.create(
+  	eye = Cut.create(
 		:animal_type => "Cow",
 		:name => "Eye of Round",
 	  	:price => 5.25,
@@ -73,7 +73,7 @@
 	  	:comp => 9.99,
 	  	:savings => 47
   	)
-  	Cut.create(
+  	bottom = Cut.create(
 		:animal_type => "Cow",
 		:name => "Bottom Round",
 	  	:price => 6.55,
@@ -82,7 +82,7 @@
 	  	:comp => 8.99,
 	  	:savings => 27
   	)
-  	Cut.create(
+  	tri = Cut.create(
 		:animal_type => "Cow",
 		:name => "Tri Tip",
 	  	:price => 8.1,
@@ -91,7 +91,7 @@
 	  	:comp => 9.99,
 	  	:savings => 19
   	)
-  	Cut.create(
+  	flank = Cut.create(
 		:animal_type => "Cow",
 		:name => "Flank",
 	  	:price => 5.55,
@@ -100,7 +100,7 @@
 	  	:comp => 11.99,
 	  	:savings => 54
   	)
-  	Cut.create(
+  	chuck = Cut.create(
 		:animal_type => "Cow",
 		:name => "Chuck Roast",
 	  	:price => 7.6,
@@ -109,7 +109,7 @@
 	  	:comp => 9.99,
 	  	:savings => 24
   	)
-  	Cut.create(
+  	hanger = Cut.create(
 		:animal_type => "Cow",
 		:name => "Hanger Steak",
 	  	:price => 7.8,
@@ -118,7 +118,7 @@
 	  	:comp => 10.99,
 	  	:savings => 0
   	)
-  	Cut.create(
+  	flat = Cut.create(
 		:animal_type => "Cow",
 		:name => "Flat Iron",
 	  	:price => 8.15,
@@ -127,7 +127,7 @@
 	  	:comp => 13.99,
 	  	:savings => 0
   	)
-  	Cut.create(
+  	top = Cut.create(
 		:animal_type => "Cow",
 		:name => "Top Sirloin Steak",
 	  	:price => 10.9,
@@ -136,7 +136,7 @@
 	  	:comp => 11.99,
 	  	:savings => 9
   	)
-  	Cut.create(
+  	skirt = Cut.create(
 		:animal_type => "Cow",
 		:name => "Skirt",
 	  	:price => 13.2,
@@ -145,7 +145,7 @@
 	  	:comp => 14.99,
 	  	:savings => 12
   	)
-  	Cut.create(
+  	porter = Cut.create(
 		:animal_type => "Cow",
 		:name => "Porterhouse",
 	  	:price => 13.05,
@@ -154,7 +154,7 @@
 	  	:comp => 17.99,
 	  	:savings => 27
   	)
-  	Cut.create(
+  	t = Cut.create(
 		:animal_type => "Cow",
 		:name => "T-Bone",
 	  	:price => 15.05,
@@ -163,7 +163,7 @@
 	  	:comp => 16.99,
 	  	:savings => 11
   	)
-  	Cut.create(
+  	ribeye = Cut.create(
 		:animal_type => "Cow",
 		:name => "Ribeye",
 	  	:price => 15.75,
@@ -172,7 +172,7 @@
 	  	:comp => 20.99,
 	  	:savings => 25
   	)
-  	Cut.create(
+  	ny = Cut.create(
 		:animal_type => "Cow",
 		:name => "NY Strip",
 	  	:price => 15.7,
@@ -181,7 +181,7 @@
 	  	:comp => 19.99,
 	  	:savings => 0
   	)
-  	Cut.create(
+  	filet = Cut.create(
 		:animal_type => "Cow",
 		:name => "Filet Mignon Tenderloin",
 	  	:price => 20,
@@ -190,7 +190,7 @@
 	  	:comp => 29.99,
 	  	:savings => 33
   	)
-  	Cut.create(
+  	sirloin = Cut.create(
 		:animal_type => "Cow",
 		:name => "Sirloin Tip",
 	  	:price => 8.1,
@@ -199,7 +199,7 @@
 	  	:comp => 9.99,
 	  	:savings => 19
   	)
-  	Cut.create(
+  	shank = Cut.create(
 		:animal_type => "Cow",
 		:name => "Shank",
 	  	:price => 3,
@@ -208,7 +208,7 @@
 	  	:comp => 3,
 	  	:savings => 0
   	)
-  	Cut.create(
+  	knuckle = Cut.create(
 		:animal_type => "Cow",
 		:name => "Knuckle Bones",
 	  	:price => 3,
@@ -217,7 +217,7 @@
 	  	:comp => 3,
 	  	:savings => 0
   	)
-  	Cut.create(
+  	fat = Cut.create(
 		:animal_type => "Cow",
 		:name => "Suet Fat",
 	  	:price => 3,
@@ -226,7 +226,7 @@
 	  	:comp => 3,
 	  	:savings => 0
   	)
-  	Cut.create(
+  	kidney = Cut.create(
 		:animal_type => "Cow",
 		:name => "Kidney",
 	  	:price => 3,
@@ -235,7 +235,7 @@
 	  	:comp => 3,
 	  	:savings => 0
   	)
-  	Cut.create(
+  	offal = Cut.create(
 		:animal_type => "Cow",
 		:name => "Offal",
 	  	:price => 3,
@@ -244,7 +244,7 @@
 	  	:comp => 3,
 	  	:savings => 0
   	)
-  	Cut.create(
+  	flap = Cut.create(
 		:animal_type => "Cow",
 		:name => "Flap Meat",
 	  	:price => 3,
@@ -253,7 +253,7 @@
 	  	:comp => 3,
 	  	:savings => 0
   	)
-  	Cut.create(
+  	neck = Cut.create(
 		:animal_type => "Cow",
 		:name => "Neck",
 	  	:price => 3,
@@ -346,6 +346,7 @@
 	Host.delete_all
 	klein = Host.create(
 		:state => "CA",
+		:phone => "later",
 		:city => "San Francisco",
 		:zip => "94114",
 		:address => "3976 23rd St.",
@@ -356,11 +357,58 @@
 	Animal.delete_all
 	paul = Animal.create(
 		:breed => "Black Angus", 
-		:host => one.name, 
 		:name => "Paul Ryan", 
 		:photo => "Animals/PaulRyan.jpg", 
 		:animal_type => "Cow",  
         :weight => 1216, 
         :ranch_id => miller.id, 
-        :butcher_id => sanders.id
+        :butcher_id => sanders.id,
+        :host_id => klein.id
 	)
+
+# Real Users (with orders)
+Order.delete_all
+
+	jasper = User.create(
+		:name => "Jasper Sherman-Presser",
+		:email => "sashafklein@gmail.com",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+
+		jasper_1 = Order.create(
+			:status => 0,
+			:animal_id => paul.id,
+			:user_id => jasper.id
+		)
+			Line.create(
+				:order_id => jasper_1.id,
+				:cut_id => stew.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => jasper_1.id,
+				:cut_id => ribeye.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => jasper_1.id,
+				:cut_id => ground.id,
+				:units => 4
+			)
+			Line.create(
+				:order_id => jasper_1.id,
+				:cut_id => sirloin.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => jasper_1.id,
+				:cut_id => short.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => jasper_1.id,
+				:cut_id => top.id,
+				:units => 1
+			)
