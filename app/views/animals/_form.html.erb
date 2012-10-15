@@ -35,10 +35,7 @@
     <%= f.label "Butcher" %><br />
     <%= f.collection_select(:butcher_id, Butcher.all, :id, :name) %>
   </div>
-  <div class="field">
-    <%= f.label "Host" %><br />
-    <%= f.text_field :host %>
-  </div>
+  <%= f.hidden_field  :host_id, value: current_user.id %>
   <div class="field">
     <%= f.label "Photo" %><br />
     <%= f.text_field :photo %>
