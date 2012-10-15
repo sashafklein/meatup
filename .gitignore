@@ -26,4 +26,3 @@ Gemfile
 
 # Ignore email config file
 /config/initializers/setup_mail.rb
-/config/initializers/stripe.rb

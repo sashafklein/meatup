@@ -263,14 +263,15 @@
 	  	:savings => 0
   	)
 
-  	# Other Cuts
-
+  	#Pig Cuts
   	Cut.create(
 		:animal_type => "Pig",
 		:name => "Bacon",
 	  	:price => 7,
 	  	:package_weight => 1,
-	  	:percent => 3
+	  	:percent => 3,
+	  	:comp => 1, 
+	  	:savings 0
   	)
   	Cut.create(
 		:animal_type => "Pig",
@@ -279,6 +280,9 @@
 	  	:package_weight => 2,
 	  	:percent => 5
   	)
+
+  	# Other Cuts
+
   	Cut.create(
 		:animal_type => "Goat",
 		:name => "Goat Stew",
