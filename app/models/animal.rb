@@ -29,6 +29,10 @@ class Animal < ActiveRecord::Base
   belongs_to :ranch
   belongs_to :host
   after_create :create_packages
+
+  validates :weight, presence: true
+  validates :breed, presence: true
+  validates :animal_type, presence: true
  
   def create_packages
     

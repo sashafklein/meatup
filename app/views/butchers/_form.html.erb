@@ -68,6 +68,13 @@
       <%= f.label "Ground" %><br />
       <%= f.check_box :boneless %>
     </div>
+
+      <!-- Associates butcher with current user (unless user id already exists) -->
+    <% if current_user %>
+      <% unless @butcher.user_id %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+      <% end %>
+    <% end %>
   
     <div class="actions">
     <%= f.submit %>

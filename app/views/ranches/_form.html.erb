@@ -35,7 +35,14 @@
     <%= f.label "Phone Number" %><br />
     <%= f.text_field :phone %>
   </div>
-    <%= f.hidden_field :user_id, :value => current_user.id %>
+
+    <!-- Associates ranch with current user (unless user id already exists) -->
+    <% if current_user %>
+      <% unless @ranch.user_id %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+      <% end %>
+    <% end %>
+
   <div class="field">
     <%= f.label "Have Cows?" %><br />
     <%= f.check_box :cow %>

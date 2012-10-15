@@ -41,28 +41,34 @@ class Ranch < ActiveRecord::Base
 
   def to_meat 
     if self.cow_meat == 0 || self.cow_meat == nil
-      if self.cow_hanging != 0
+      if self.cow_hanging != nil && self.cow_hanging != 0
         self.cow_meat = self.cow_hanging / CMOH
-      elsif self.cow_live != 0
+      elsif self.cow_live != nil && self.cow_live != 0
         self.cow_meat = self.cow_live / CMOL
       end
+    end
     
-      if self.pig_hanging == 0
-        self.pig_meat = self.pig_hanging / PMOH
-      elsif self.pig_live != 0 
-        self.pig_meat = self.pig_live / PMOL
+    if self.pig_meat == 0 || self.pig_meat == nil
+      if self.pig_hanging != nil && self.pig_hanging != 0
+        self.pig_meat = self.pig_hanging / CMOH
+      elsif self.pig_live != nil && self.pig_live != 0
+        self.pig_meat = self.pig_live / CMOL
       end
-    
-      if self.lamb_hanging != 0
-        self.lamb_meat = self.lamb_hanging / LMOH
-      elsif self.lamb_live != 0
-        self.lamb_meat = self.lamb_live / LMOL
+    end
+
+    if self.lamb_meat == 0 || self.lamb_meat == nil
+      if self.lamb_hanging != nil && self.lamb_hanging != 0
+        self.lamb_meat = self.lamb_hanging / CMOH
+      elsif self.lamb_live != nil && self.lamb_live != 0
+        self.lamb_meat = self.lamb_live / CMOL
       end
-      
-      if self.goat_hanging != 0 
-        self.goat_meat = self.goat_hanging / GMOH
-      elsif self.goat_live != 0 
-        self.goat_meat = self.goat_live / GMOL
+    end
+
+    if self.goat_meat == 0 || self.goat_meat == nil
+      if self.goat_hanging != nil && self.goat_hanging != 0
+        self.goat_meat = self.goat_hanging / CMOH
+      elsif self.goat_live != nil && self.goat_live != 0
+        self.goat_meat = self.goat_live / CMOL
       end
     end
   end
