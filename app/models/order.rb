@@ -34,20 +34,22 @@ class Order < ActiveRecord::Base
     puts "Checking payment"
     self.reload
     if self.status == 0 
-      puts "in check_payment, self.status confirmed as 0"
-      self.roll_back
-      puts "roll_back called"
+      if self.rollback_packages
+        self.roll_back
+      end
     end
   end
 
   def roll_back
-    puts "Doing rollback for #{self.id}"
+    self.destroy
+  end
+
+  def rollback_packages
     self.lines.each do |l|
       l.packages each do |p|
         p.update_attributes(:sold => false, :line_id => nil)
       end
     end
-    self.destroy
   end
 
   # Returns the total poundage of a given order
