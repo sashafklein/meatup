@@ -5,8 +5,8 @@ class UserMailer < ActionMailer::Base
     @user = user
     @url  = "www.meatup.in"
     @meat_url = "www.meatup.in/purchase"
-    attachments.inline['meatup_logo_white.png'] = File.read('/users/sashafklein/rails_projects/bloc/meatup2/app/assets/images/meatup_logo_white.png')
-    attachments.inline['grassy_knoll_white_sm.png'] = File.read('/users/sashafklein/rails_projects/bloc/meatup2/app/assets/images/grassy_knoll_white_sm.png')
+    attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
+    attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
     mail(:to => user.email, :subject => "Welcome to MeatUp!")
   end
 
@@ -26,8 +26,8 @@ class UserMailer < ActionMailer::Base
     @receipt_url = "www.meatup.in/orders/#{@order.id}"
     @blog_url = "www.meatup.in/how"
     @host_url = "www.meatup.in/hosts/#{@host.id}"
-    attachments.inline['meatup_logo_white.png'] = File.read('/users/sashafklein/rails_projects/bloc/meatup2/app/assets/images/meatup_logo_white.png')
-    attachments.inline['grassy_knoll_white_sm.png'] = File.read('/users/sashafklein/rails_projects/bloc/meatup2/app/assets/images/grassy_knoll_white_sm.png')
+    attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
+    attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
     mail(:to => @user.email, :subject => "Thanks for the Order!")
   end
 
