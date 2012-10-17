@@ -38,8 +38,7 @@ class Order < ActiveRecord::Base
   def roll_back
     self.lines.each do |l|
       l.packages.each do |p|
-        p.update_attribute(:sold, false)
-        p.update_attribute(:line_id, nil)
+        p.update_attributes(:sold => false, :line_id => nil)
       end
     end
   end
