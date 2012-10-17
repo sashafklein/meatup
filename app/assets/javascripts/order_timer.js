@@ -1,7 +1,8 @@
 $(document).ready(function(){
+
     var now = $("#timer").attr('data-now');
     var start = $("#timer").attr('data-start');
-    var left = 300 - (now - start)
+    var left = 300 - (now - start);
 
     if (left < 1) {
           clearInterval(clock);
@@ -10,8 +11,8 @@ $(document).ready(function(){
           return;
     }
 
-    var seconds = left % 60 ;
-    var minutes = (left - (seconds)) / 60
+    var seconds = left % 60;
+    var minutes = (left - (seconds)) / 60;
     var clock = self.setInterval(function(){timer()}, 1000);
 
     function timer() {
@@ -24,8 +25,8 @@ $(document).ready(function(){
           $("#timer").html("TIME OUT");
           alert("You ran out of time to pay, and your order has been rolled back. Please place your order again.");
           return;
-        }
-      }
+        };
+      };
 
       if (seconds < 10) {
         $("#timer").html(minutes + " : " + "0" + seconds + "<br>" + "LEFT TO PAY");
@@ -33,4 +34,5 @@ $(document).ready(function(){
         $("#timer").html(minutes + " : " + seconds + "<br>" + "LEFT TO PAY");
       }
     }
+
 });
