@@ -20,10 +20,25 @@ class Order < ActiveRecord::Base
   has_many :lines, :dependent => :destroy
 
   after_create :schedule_check_payment
-  before_destroy :roll_back
 
   accepts_nested_attributes_for :lines
   accepts_nested_attributes_for :cuts
+
+  def schedule_check_payment
+    puts "Delay bout to start"
+    self.delay(:run_at => 1.minutes.from_now).check_payment
+    puts "Delay action over"
+  end
+
+  def check_payment
+    puts "Checking payment"
+    self.reload
+    if self.status == 0 
+      puts "in check_payment, self.status confirmed as 0"
+      self.roll_back
+      puts "roll_back called"
+    end
+  end
 
   def roll_back
     puts "Doing rollback for #{self.id}"
@@ -32,23 +47,13 @@ class Order < ActiveRecord::Base
         p.update_attributes(:sold => false, :line_id => nil)
       end
     end
-  end
-
-  def schedule_check_payment
-    self.delay(:run_at => 5.minutes.from_now).check_payment
-  end
-
-  def check_payment
-    self.reload
-    if self.status == 0 
-      self.destroy
-    end
+    self.destroy
   end
 
   # Returns the total poundage of a given order
   def poundage
     pounds = 0
-    lines = self.lines
+    lines = self.slines
     lines.each do |l|
       pounds += l.units * l.cut.package_weight
     end
