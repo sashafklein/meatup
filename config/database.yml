@@ -39,4 +39,4 @@ production:
   database: meatup2_production
   pool: 5
   username: sashafklein
-  password: pgpass
+  password: database
