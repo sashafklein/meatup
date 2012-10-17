@@ -35,6 +35,7 @@ class Order < ActiveRecord::Base
     self.reload
     if self.status == 0 
       if self.rollback_packages
+        puts "In the if statement"
         self.roll_back
       end
     end
@@ -47,6 +48,7 @@ class Order < ActiveRecord::Base
   def rollback_packages
     self.lines.each do |l|
       l.packages each do |p|
+        puts "INside the nested deal"
         p.update_attributes(:sold => false, :line_id => nil)
       end
     end
