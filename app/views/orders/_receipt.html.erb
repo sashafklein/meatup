@@ -1,0 +1,28 @@
+<% @total = 0 %>
+<% @total_weight = 0 %>
+
+<% @order.lines.each do |l| %>
+
+<% if l.units != 0 %>
+		<% @c = l.cut %>
+		<% show_helper %>
+		<tr>	
+		    	<td><%= @c.name %></td>
+		    	<td><%= l.notes %></td>
+		    	<td><%= (@c.package_weight * l.units).round(2) %> lb</td>
+		    	<% @line_total = @example.price * @c.package_weight * l.units %>
+		    	<td><%= number_to_currency(@line_total) %></td>
+		    	<% @total_weight += @c.package_weight * l.units %>
+	    </tr>
+	    <% @total += @line_total %>
+	<% end %>
+<%end%>
+
+<% @order.update_attribute(:total, @total) %>
+
+<tr>
+	<td></td>
+	<td></td>
+	<td><strong><%= @total_weight.round(2) %> lb</strong></td>
+	<td><b><%= number_to_currency(@total) %><b></td>
+</tr>

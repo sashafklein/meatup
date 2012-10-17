@@ -2,58 +2,33 @@
 <html>
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
- 	 <link rel="stylesheet" type="text/css" href="custom.css.scss">  
   </head>
   <body>
-    <h1>Your order on <%= @order.animal.name %> was placed successfully!</h1>
-    <h2>Your Order</h2>
-    <table class="table">
-    	<tr>
-			<th>Cut</th>
-			<th>Units</th>
-			<th>Notes</th>
-			<th>Package Weight</th>
-			<th>Price</th>
-			<th>Total</th>
-		</tr>
-		<% @total = 0 %>
-		<% @order.lines.each do |l| %>
-		<% if l.units != 0 %>
-			<% @c = l.cut %>
-			<% @a = @order.animal %>
-			<% cut_packages = @a.packages.where(:cut_id => @c.id) %>
-			<% sold = cut_packages.where(:sold => true).length %>
-	  		<% unsold = cut_packages.where(:sold => false).length %>
-	  		<% example = cut_packages.first %>
-			<tr>	
-		
-			    	<td><%= @c.name %></td>
-			    	<td><%= l.units %></td>
-			    	<td><%= l.notes %></td>
-			    	<td><%= @c.package_weight %> lb</td>
-			    	<td><%= number_to_currency(example.price) %></td>
-			    		<% @line_total = example.price * @c.package_weight * l.units %>
-			    	<td><%= number_to_currency(@line_total) %></td>
-		    </tr>
-		    <% @total += @line_total %>
-		<% end %>
-	<%end%>
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td><%= number_to_currency(@total) %></td>
-		</tr>
-	</table>
-
-	<br>
-
-    <p>
-      If you have any questions or requests, get in touch. .
-    </p>
-    <p>Thanks for your patronage, and have a great day!</p>
-    <p>-- Sasha</p>
+    <div style="width:720px;">
+      <%= link_to (image_tag(attachments['meatup_logo_white.png'].url)), @url %>
+      
+      <div style="padding: 0 35px 0 35px;">
+        <h1>Well thanks, <%= @user.name.capitalize %>!</h1>
+        <p>
+          Your <%= number_to_currency(@order.total) %> order was a success. Your card has been securely charged a "deposit" payment based on the estimated amount of <%= @order.animal.name %>'s delicious meat you'll be receiving. Now you can sit back, smile at your <% link_to "receipt" ,@receipt_url %>, and <%= link_to "plan out", @blog_url %> what you'll do with all your <%= @meat_type %>.<br/>
+        </p>
+        <br>
+        <h2>What's next?</h2>
+        <ul>
+        	<li>Your meat will be available for pickup on PICKUP DATE from your host, <%= (@host.user.name).capitalize %>, for a window of up to 24 hours (to ensure both freshness and <%= (@host.user.name).capitalize %>'s sanity).</li>
+        	<li>Get in touch with <%= link_to (@host.user.name).capitalize, @host_url %>, for pickup details and in case you need to make any changes.</li>
+          	<li>When the butcher sends us the real-life weight of your packages, your card will be refunded or charged the difference. If that difference exceeds 15% by weight -- which we take great pains to avoid -- you'll get a discount on your next order. </li>
+        </ul>
+        <br>
+        <p>Thanks again for being a part of our attempt to bring ranchers and meat-lovers a little closer. If there's anything at all we can do to make this experience better, please <%= mail_to "feedback@meatup.in", "let us know" %>. 
+        </p>
+        <br>
+        <p>Best,<p><br>
+        <p>The MeatUp Team<p> 
+        
+      </div>
+      
+      <%= image_tag attachments['grassy_knoll_white_sm.png'].url %>
+    </div>
   </body>
 </html>

@@ -18,7 +18,7 @@ module ApplicationHelper
   		"No"
   	end
   end
-
+ 
   # Allows for state select menus
   def us_states
     [
@@ -74,6 +74,18 @@ module ApplicationHelper
       ['WV', 'WV'],
       ['WY', 'WY']
     ]
+  end
+
+  def meat_type(animal)
+    if animal.animal_type == "Cow"
+      "beef"
+    elsif animal.animal_type == "Pig"
+      "pork"
+    elsif animal.animal_type == "Lamb"
+      "lamb"
+    elsif animal.animal_type == "Goat"
+      "goat"
+    end  
   end
   
 end

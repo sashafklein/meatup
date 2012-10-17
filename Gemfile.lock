@@ -56,6 +56,12 @@ GEM
     css_parser (1.2.6)
       addressable
       rdoc
+    daemons (1.1.9)
+    delayed_job (3.0.3)
+      activesupport (~> 3.0)
+    delayed_job_active_record (0.3.3)
+      activerecord (>= 2.1.0, < 4)
+      delayed_job (~> 3.0)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -77,6 +83,7 @@ GEM
     nokogiri (1.5.5)
     nokogiri (1.5.5-x86-mingw32)
     pg (0.14.1)
+    pg (0.14.1-x86-mingw32)
     polyglot (0.3.3)
     rack (1.4.1)
     rack-cache (1.2)
@@ -142,6 +149,8 @@ DEPENDENCIES
   bootstrap-sass (= 2.0.4)
   bootstrap-will_paginate (= 0.0.6)
   coffee-rails (~> 3.2.1)
+  daemons
+  delayed_job_active_record
   faker (= 1.0.1)
   jquery-rails
   pg

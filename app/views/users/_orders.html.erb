@@ -12,10 +12,10 @@
 		
 		<% @user.orders.last(5).each do |o| %>	
 			<tr>
-				<td><%= localize(o.created_at, :format => ("%d/%b/%Y")) %></td>
+				<td class="normal_links"><%= link_to (localize(o.created_at, :format => ("%d/%b/%Y"))), order_path(o) %></td>
 				<td><%= o.animal.animal_type %></td>
-				<td>AMOUNT IN LBS</td>
-				<td>AMOUNT IN $s</td>
+				<td><%= o.poundage %> lbs</td>
+				<td><%= number_to_currency(o.total_calc) %></td>
 			</tr>
 		<% end %>
 	</tbody>

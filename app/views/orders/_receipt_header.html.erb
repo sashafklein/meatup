@@ -1,0 +1,49 @@
+<% @a = @order.animal %>
+
+<thead>
+	<tr>
+		<% if @order.status == 0 %>	
+		<% start_time = (@order.created_at.to_i) %>
+		<% now_time = Time.now.to_i %>
+			<th colspan=5>
+
+				<div class="timer_stamp" id="timer" data-start=<%= start_time %> data-now=<%= now_time %> >
+				</div>
+
+				<div class="receipt_stamp" >
+					ORDER<br>REVIEW
+				</div>
+	
+				<%= @a.ranch.address %>, <%= @a.ranch.city %>, <%= @a.ranch.state %>, <u>&nbsp;<%= localize(@order.created_at, :format => ("on %d, %B, %Y")) %>&nbsp;</u><br>
+
+				<strong style="font-size:150%; font-weight:normal">Pay to order of <u style="font-weight:bold;">&nbsp;<%= @a.ranch.name %>&nbsp;,</u> c/o MeatUp</strong><br>
+
+				<div id="purveyor_of">
+				Purveyor of<br><b>High Class Viandes, Game and Forcemeats</b>
+				</div>
+			</th>
+		
+		<% else %>
+			<th colspan=5 class="header">
+				
+				<div class="receipt_stamp">
+					<% if @order.status == 1 %>
+						DEPOSIT RECEIVED<br>WITH THANKS
+					<% elsif @order.status == 2 %>
+						FINAL BILL<br>FULLY PAID
+					<% else %>
+						FINAL<br>ORDER<br>RETREIVED
+					<% end %>
+				</div>
+
+				<%= @a.ranch.address %>, <%= @a.ranch.city %>, <%= @a.ranch.state %>, <u>&nbsp;<%= localize(@order.created_at, :format => ("on %d, %B, %Y")) %>&nbsp;</u><br>
+
+				<strong style="font-size:150%; font-weight:normal">Pay to order of <u style="font-weight:bold;">&nbsp;<%= @a.ranch.name %>&nbsp;,</u> c/o MeatUp</strong><br>
+
+				<div id="purveyor_of">
+				Purveyor of<br><b>High Class Viandes, Game and Forcemeats</b>
+				</div>
+			</th>
+		<% end %>
+	</tr>
+</thead>

@@ -1,0 +1,33 @@
+<% @a = @order.animal %>
+<% status_array = ["Incomplete", "Deposited", "Final Price Paid", "Picked Up"] %>
+	
+<tr>
+	<td colspan=4 class="divider">
+	</td>
+</tr>
+<tr>
+	<td colspan=4>
+		Customer Name: <%= @order.user.name %>
+	</td>
+</tr>
+<tr>
+	<td colspan=4>
+		Animal Name: <%= @a.name %>
+	</td>
+</tr>
+<tr>
+	<td colspan=4>
+		Order Status: 
+		<b style="font-weight:normal;color:#9a393a;"><%= status_array[@order.status] %></b>
+	</td>
+</tr>
+<tr>
+	<td colspan=4 class="divider2">
+	</td>
+</tr>
+<tr>
+	<th class="details">Cut</th>
+	<th class="details">Notes</th>
+	<th class="details" width=15%>Total Lbs</th>
+	<th class="details" width=15%>Price</th>
+</tr>

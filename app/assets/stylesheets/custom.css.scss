@@ -668,6 +668,7 @@ border: 1px solid #75726C;
   }
 }
 
+// Extensive receipt formatting for order show page and emails
 .receipt_and_pay {
   padding:0px;
   margin:0px;
@@ -752,6 +753,18 @@ border: 1px solid #75726C;
   padding:5px;
  }
 
+.timer_stamp {
+  position:absolute;
+  top: 25px;
+  left: 25px;
+  border: 2px solid #9a393a;
+  line-height:110%;
+  font-size:100%;
+  font-weight:normal;
+  color:#9a393a;
+  padding:5px;
+ }
+
 .receipt_notes {
   padding: 25px 25px 0px 25px;
   text-align:left;
@@ -812,6 +825,7 @@ border: 1px solid #75726C;
   width: 10%; /* 83px;*/
 }
 
+// Prettified error messages
 #error_exp {
   color:#B94A48;
   font-family:calibri, verdana, 'trebuchet ms';
@@ -830,4 +844,15 @@ border: 1px solid #75726C;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   background-color:#eee;
+}
+
+// Formatting for regular-size text links on meatup
+.normal_links {
+  a:link, a:active, a:visited {
+    color:#9a393a;
+  }
+  a:hover {
+    background:transparent;
+    text-decoration:underline;
+  }
 }
