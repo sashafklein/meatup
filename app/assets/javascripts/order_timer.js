@@ -1,5 +1,8 @@
 $(document).ready(function(){
 
+    // The URL for redirecting users if the time runs out
+    var url = $("#timer").attr('data-url');
+
     var now = $("#timer").attr('data-now');
     var start = $("#timer").attr('data-start');
     var left = 300 - (now - start);
@@ -8,7 +11,7 @@ $(document).ready(function(){
           clearInterval(clock);
           $("#timer").html("TIME OUT");
           alert("You ran out of time to pay. Please place your order again.");
-          return;
+          location = url;
     };
 
     var seconds = left % 60;

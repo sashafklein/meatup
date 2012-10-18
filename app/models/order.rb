@@ -25,25 +25,22 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :cuts
 
   def schedule_check_payment
-    self.delay(:run_at => 1.minutes.from_now).check_payment
+    "running schedule check"
+    self.delay(:run_at => 5.minutes.from_now).check_payment
   end
 
   def check_payment
     self.reload
-    if self.status == 0 
-        self.roll_back
-    end
-  end
-
-  def roll_back
-    self.lines.each do |l|
-      l.packages.each do |p|
-        p.update_attributes(:sold => false, :line_id => nil)
+    if self.status == 0
+      self.lines.each do |l|
+        l.packages.each do |p|
+          p.update_attributes(:sold => false, :line_id => nil)
+        end 
       end
+      self.destroy
     end
   end
 
-  # Returns the total poundage of a given order
   def poundage
     pounds = 0
     lines = self.lines

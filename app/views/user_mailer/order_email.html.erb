@@ -10,7 +10,7 @@
       <div style="padding: 0 35px 0 35px;">
         <h1>Well thanks, <%= @user.name.capitalize %>!</h1>
         <p>
-          Your <%= number_to_currency(@order.total) %> order was a success. Your card has been securely charged a "deposit" payment based on the estimated amount of <%= @order.animal.name %>'s delicious meat you'll be receiving. Now you can sit back, smile at your <% link_to "receipt" , @receipt_url %>, and <%= link_to "plan out", @blog_url %> what you'll do with all your <%= @meat_type %>.<br/>
+          Your <%= number_to_currency(@order.total) %> order was a success. Your card has been securely charged a "deposit" payment based on the estimated amount of <%= @order.animal.name %>'s delicious meat you'll be receiving. Now you can sit back, smile at your <%= link_to "receipt", @receipt_url %>, and <%= link_to "plan out", @blog_url %> what you'll do with all your <%= @meat_type %>.<br/>
         </p>
         <br>
         <h2>What's next?</h2>

@@ -27,7 +27,6 @@ class Line < ActiveRecord::Base
   end
 
   def decrement_packages
-
     a = self.order.animal
     cut_packages = a.packages.where(:cut_id => self.cut_id)
     unsold = cut_packages.where(:sold => false)

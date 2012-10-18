@@ -271,7 +271,7 @@
 	  	:package_weight => 1,
 	  	:percent => 3,
 	  	:comp => 1, 
-	  	:savings 0
+	  	:savings => 0
   	)
   	Cut.create(
 		:animal_type => "Pig",

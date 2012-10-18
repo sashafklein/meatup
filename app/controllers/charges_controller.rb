@@ -18,6 +18,8 @@ class ChargesController < ApplicationController
     @order.update_attribute(:status, 1)
     UserMailer.order_email(@order).deliver
 
+    redirect_to @order, notice: "Charge processed successfully!"
+    
   rescue Stripe::CardError => e
     flash[:error] = e.message
     redirect_to charges_path
