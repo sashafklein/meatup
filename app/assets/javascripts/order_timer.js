@@ -1,10 +1,8 @@
 $(document).ready(function(){
 
-    // The URL for redirecting users if the time runs out
-    var url = $("#timer").attr('data-url');
-
     var now = $("#timer").attr('data-now');
     var start = $("#timer").attr('data-start');
+    var url = $("#timer").attr('data-url');
     var left = 300 - (now - start);
 
     if (left < 1) {
@@ -27,10 +25,11 @@ $(document).ready(function(){
           clearInterval(clock);
           $("#timer").html("TIME OUT");
           alert("You ran out of time to pay, and your order has been rolled back. Please place your order again.");
+          window.location.href=url;
           return;
         };
       };
-
+        
       if (seconds < 10) {
         $("#timer").html(minutes + " : " + "0" + seconds + "<br>" + "LEFT TO PAY");
       } else {

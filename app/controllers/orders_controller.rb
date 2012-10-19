@@ -116,6 +116,7 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
       format.html { redirect_to orders_url }
       format.json { head :no_content }
     end
+    
   end
 
    private
@@ -146,4 +147,9 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
          end
       end
     end
+
+    # def redirect_user
+    #   meat = @order.animal.animal_type.downcase
+    #   redirect_to "/orders/#{meat}", notice: "You didn't pay in time. Your order has been rolled back. Please place it again."
+    # end
 end
