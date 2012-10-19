@@ -9,21 +9,23 @@
       
       <div style="padding: 0 35px 0 35px;">
         <h1>Well thanks, <%= @user.name.capitalize %>!</h1>
-        <p>
-          Your <%= number_to_currency(@order.total) %> order was a success. Your card has been securely charged a "deposit" payment based on the estimated amount of <%= @order.animal.name %>'s delicious meat you'll be receiving. Now you can sit back, smile at your <%= link_to "receipt", @receipt_url %>, and <%= link_to "plan out", @blog_url %> what you'll do with all your <%= @meat_type %>.<br/>
-        </p>
+        <h4>
+          Your <%= number_to_currency(@order.total) %> order was a success. Your card has been securely charged a "deposit" payment based on the estimated amount of <%= @order.animal.name %>'s delicious meat you'll be receiving. Now you can sit back, review your <%= link_to "receipt", @receipt_url %>, and <%= link_to "plan out", @blog_url %> what you'll do with all that <%= @meat_type %>.<br/>
+        </h4>
         <br>
         <h2>What's next?</h2>
+        <h4>
         <ul>
         	<li>Your meat will be available for pickup on PICKUP DATE from your host, <%= (@host.user.name).capitalize %>, for a window of up to 24 hours (to ensure both your meat's freshness and <%= (@host.user.name).capitalize %>'s sanity).</li><br>
         	<li>Get in touch with <%= link_to (@host.user.name).capitalize, @host_url %>, for pickup details and in case you need to make any changes.</li><br>
           	<li>When the butcher sends us the real-life weight of your packages, your card will be refunded or charged the difference. If that difference exceeds 15% by weight -- which we take great pains to avoid -- you'll get a discount on your next order. </li>
         </ul>
-        <p>Thanks again for being a part of our attempt to bring ranchers and meat-lovers a little closer. If there's anything at all we can do to make this experience better, please <%= mail_to "feedback@meatup.in", "let us know" %>. 
-        </p>
+      </h4>
+        <h4>Thanks again for being a part of our attempt to bring ranchers and meat-lovers a little closer. If there's anything at all we can do to make this experience better, please <%= mail_to "feedback@meatup.in", "let us know" %>. 
+        </h4>
         <br>
-        <p>Best,<p><br>
-        <p>The MeatUp Team<p> 
+        <h4>Best,<h4><br>
+        <h4>The MeatUp Team<h4> 
         
       </div>
       

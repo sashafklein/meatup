@@ -25,7 +25,7 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :cuts
 
   def schedule_check_payment
-    self.delay(:run_at => 1.minutes.from_now).check_payment
+    self.delay(:run_at => 5.minutes.from_now).check_payment
   end
 
   def check_payment
