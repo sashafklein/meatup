@@ -14,7 +14,7 @@
 #
 
 class Package < ActiveRecord::Base
-  attr_accessible :animal_id, :cut_id, :price, :line_id, :sold
+  attr_accessible :animal_id, :cut_id, :price, :line_id, :sold, :savings
   belongs_to :animal
   belongs_to :cut
   belongs_to :line

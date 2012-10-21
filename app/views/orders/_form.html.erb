@@ -28,13 +28,16 @@
      <div class="order_title">"Life has its own hidden forces which you can only discover by <b style="color:#262220">eating grass-fed beef</b>." -S&oslash;ren Kierkegaard
 </div> 
     <% end %>
- -->    <%= f.hidden_field  :animal_id, value: @order_animal.id %>
+ -->    
+
+    <!-- Assign the Animal and User -->
+    <%= f.hidden_field  :animal_id, value: @order_animal.id %>
     <% if signed_in? %>
       <%= f.hidden_field  :user_id, value: current_user.id %>
     <% end %>
+
     <% @f = f %>
     <%= render :partial => "cut_table", :object => @f %>
-    
     <% f = @f %>
     
       <%= f.hidden_field :status, value: 0 %>

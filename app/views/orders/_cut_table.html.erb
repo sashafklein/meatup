@@ -13,31 +13,25 @@
     </tr>
   </thead>
   <tbody>
-
-  <% @unordered = Cut.where(:animal_type => @meat) %>
-  <% @cutlist = @unordered.find(:all, :order => 'savings DESC')%>
+  <% package_list = make_list(@order_animal) %>
   <% @b = @order_animal.butcher %>
 
-  <% @cutlist.each do |c| %>
+  <% package_list.each do |p| %>
 
     <%= @f.fields_for :lines do |l| %>
 
-      <% all_ps = @order_animal.packages %>  
-      <% cut_packages = all_ps.where(:cut_id => c.id) %>
+      <% all_packages = Package.where(:animal_id => @order_animal.id) %>
+      <% cut_packages = all_packages.where(:cut_id => p.cut.id) %>
       <% sold = cut_packages.where(:sold => true).length %>
       <% unsold = cut_packages.where(:sold => false).length %>
-      <% example = cut_packages.first %>
 
-      <!-- ROW LINE - Only if the cut exists (ex, no hanger) -->
-      <% unless cut_packages.length == 0 %>
+        <tr> <%= l.hidden_field :cut_id, value: p.cut.id %>
 
-        <tr> <%= l.hidden_field :cut_id, value: c.id %>
-
-          <td><div id="cut_name"><%= c.name %></div></td>
+          <td><div id="cut_name"><%= p.cut.name %></div></td>
 
           <!-- Prep Requests -->
           <% @prep_array = [["None", ""]] %>
-          <% prep_helper(c) %>
+          <% prep_helper(p.cut) %>
           <% if @prep_array[0] != "" %>
             <td><%= l.select :notes, @prep_array %></td>
           <% else %>
@@ -57,12 +51,12 @@
             </td>
           <% end %>
 
-           <td><span class="js-weight" data-weight=<%= c.package_weight %>><%= c.package_weight %> lb</span></td>
+           <td><span class="js-weight" data-weight=<%= p.cut.package_weight %>><%= p.cut.package_weight %> lb</span></td>
 
           <!-- Price/LB with JS calc functionality -->
           <td>
-            <span class="js-lb-price" data-lb-price=<%= example.price %>>
-              <%= number_to_currency(example.price) %>
+            <span class="js-lb-price" data-lb-price=<%= p.price %>>
+              <%= number_to_currency(p.price) %>
             </span>
           </td>
 
@@ -71,10 +65,13 @@
           <td class="js-price"></td>
 
           <!-- Package-specific savings -->
-          <% if ((c.comp - example.price) / c.comp) > 0.01 %>
-            <% cut_savings = (100 * (c.comp - example.price) / c.comp) %>
-            <td class="savings sav_content" style="text-align:center;" data-savings="<%= cut_savings %>">
-                <%= number_to_percentage((cut_savings), :precision => 0) %>
+          <% if p.savings > 0.01 %>
+            <td class="savings sav_content" style="text-align:center;" data-savings="<%= p.savings %>">
+                <%= number_to_percentage((p.savings), :precision => 0) %>
+            </td>
+          <% elsif p.savings == -1 %>
+            <td class="sav_content" style="text-align:center; background-color:#eaeaea;" data-savings=0>
+                <%= "NA" %>
             </td>
           <% else %>
             <td class="savings sav_content" style="text-align:center;" data-savings=0>
@@ -82,10 +79,9 @@
             </td>
           <% end %>
         </tr>
-      <% end %>
 
-    <% end %> <!-- End of Cuts Block -->
-  <% end %> <!-- End of Lines Block -->
+    <% end %> <!-- End of Lines Block -->
+  <% end %> <!-- End of Packages Block -->
       <tr class="total order_table_footer">
         <th colspan=5 class="order_table_footer">
         </th>
