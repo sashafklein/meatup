@@ -87,4 +87,5 @@ class Ranch < ActiveRecord::Base
       end
     end
   end
+
 end

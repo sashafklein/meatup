@@ -20,6 +20,8 @@ Meatup2::Application.routes.draw do
   match '/orders/lamb', to: "orders#lamb_order"
   match '/orders/goat', to: "orders#goat_order"
 
+  match '/hosts/dashboard', to: "hosts#dashboard"
+
   resources :sessions, only: [:new, :create, :destroy]
   resources :users
   resources :cuts
