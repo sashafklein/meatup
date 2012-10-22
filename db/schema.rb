@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(:version => 20121022191644) do
     t.string   "breed"
     t.integer  "weight"
     t.string   "photo"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.integer  "ranch_id"
     t.integer  "butcher_id"
     t.decimal  "cow_mult"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(:version => 20121022191644) do
     t.decimal  "lamb_mult"
     t.decimal  "goat_mult"
     t.integer  "host_id"
+    t.boolean  "final_sale",   :default => false
+    t.boolean  "opening_sale", :default => true
   end
 
   create_table "butchers", :force => true do |t|
@@ -55,11 +57,12 @@ ActiveRecord::Schema.define(:version => 20121022191644) do
     t.float    "percent"
     t.float    "package_weight"
     t.integer  "line_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.string   "animal_type"
     t.float    "comp"
     t.integer  "savings"
+    t.boolean  "incentive",      :default => false
   end
 
   add_index "cuts", ["line_id"], :name => "index_cuts_on_line_id"
@@ -113,13 +116,14 @@ ActiveRecord::Schema.define(:version => 20121022191644) do
 
   create_table "packages", :force => true do |t|
     t.integer  "cut_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.integer  "animal_id"
     t.decimal  "price"
     t.integer  "line_id"
     t.boolean  "sold"
     t.integer  "savings"
+    t.float    "true_weight"
   end
 
   create_table "ranches", :force => true do |t|

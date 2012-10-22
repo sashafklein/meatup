@@ -44,7 +44,8 @@
 	  	:package_weight => 3.38,
 	  	:percent => 2.25,
 	  	:comp => 7.99,
-	  	:savings => 44
+	  	:savings => 44,
+	  	:incentive => true
   	)
   	rump = Cut.create(
 		:animal_type => "Cow",
@@ -80,7 +81,8 @@
 	  	:package_weight => 4,
 	  	:percent => 0.67,
 	  	:comp => 8.99,
-	  	:savings => 27
+	  	:savings => 27,
+	  	:incentive => true
   	)
   	tri = Cut.create(
 		:animal_type => "Cow",
@@ -215,7 +217,8 @@
 	  	:package_weight => 4.75,
 	  	:percent => 1.58,
 	  	:comp => 3,
-	  	:savings => 0
+	  	:savings => 0,
+	  	:incentive => true
   	)
   	fat = Cut.create(
 		:animal_type => "Cow",
@@ -224,7 +227,8 @@
 	  	:package_weight => 1.8,
 	  	:percent => 0.75,
 	  	:comp => 3,
-	  	:savings => 0
+	  	:savings => 0,
+	  	:incentive => true
   	)
   	kidney = Cut.create(
 		:animal_type => "Cow",
@@ -233,7 +237,8 @@
 	  	:package_weight => 2,
 	  	:percent => 0.17,
 	  	:comp => 3,
-	  	:savings => 0
+	  	:savings => 0,
+	  	:incentive => true
   	)
   	offal = Cut.create(
 		:animal_type => "Cow",
@@ -242,7 +247,8 @@
 	  	:package_weight => 1.31,
 	  	:percent => 1.42,
 	  	:comp => 3,
-	  	:savings => 0
+	  	:savings => 0,
+	  	:incentive => true
   	)
   	flap = Cut.create(
 		:animal_type => "Cow",
@@ -251,7 +257,8 @@
 	  	:package_weight => 1.5,
 	  	:percent => 0.50,
 	  	:comp => 3,
-	  	:savings => 0
+	  	:savings => 0,
+	  	:incentive => true
   	)
   	neck = Cut.create(
 		:animal_type => "Cow",

@@ -7,7 +7,7 @@ module AnimalsHelper
 			o.lines.each do |l|
 				p_list = l.packages.where(:sold => true)
 				p_list.each do |p|
-					@revenue += l.cut.package_weight * p.price
+					@revenue += p.expected_weight * p.price
 				end
 			end
 		end
@@ -18,7 +18,7 @@ module AnimalsHelper
 				if l.packages
 					p_list = l.packages.where(:sold => true)
 					p_list.each do |p|
-						@lbs_sold += l.cut.package_weight
+						@lbs_sold += p.expected_weight
 					end
 				end
 			end
@@ -37,7 +37,7 @@ module AnimalsHelper
 		@possible = 0
 		p_list = Package.where(:animal_id => @animal.id)
 		p_list.each do |p|
-			@possible += p.price * p.cut.package_weight
+			@possible += p.price * p.expected_weight
 		end	
 
 		@r = @animal.ranch

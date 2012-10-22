@@ -50,7 +50,13 @@ module OrdersHelper
 		package_array = []
 		animal.packages.each do |p|
 			if package_array.any?
-				if p.cut != package_array[-1].cut
+				counter = 0
+				package_array.each do |element|
+					if p.cut == element.cut
+					 	counter += 1
+					end
+				end
+				if counter == 0
 					package_array << p
 				end
 			else 

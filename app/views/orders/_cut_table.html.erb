@@ -20,14 +20,13 @@
 
     <%= @f.fields_for :lines do |l| %>
 
-      <% all_packages = Package.where(:animal_id => @order_animal.id) %>
-      <% cut_packages = all_packages.where(:cut_id => p.cut.id) %>
-      <% sold = cut_packages.where(:sold => true).length %>
-      <% unsold = cut_packages.where(:sold => false).length %>
-
         <tr> <%= l.hidden_field :cut_id, value: p.cut.id %>
 
-          <td><div id="cut_name"><%= p.cut.name %></div></td>
+          <% if (p.cut.incentive && @order_animal.opening_sale) %>
+            <td><div id="on_sale"><%= p.cut.name %><strong class="sale_note"> EXTRA 10% OFF!</strong></div></td>
+          <% else %>
+            <td><div id="cut_name"><%= p.cut.name %></div></td>
+          <% end %>
 
           <!-- Prep Requests -->
           <% @prep_array = [["None", ""]] %>
@@ -39,7 +38,8 @@
           <% end %>
           
           <!-- Package drop-down with sold-out special case -->
-          <% dropdown = (0..unsold).to_a %>
+          <% list = @order_animal.unsold(p.cut).length %>
+          <% dropdown = (0..list).to_a %>
           <% if dropdown.length <= 1 %>
             <td>
               <div class="sold_out_item">Sold Out</div>
@@ -51,7 +51,7 @@
             </td>
           <% end %>
 
-           <td><span class="js-weight" data-weight=<%= p.cut.package_weight %>><%= p.cut.package_weight %> lb</span></td>
+           <td><span class="js-weight" data-weight=<%= p.expected_weight %>><%= p.expected_weight %> lb</span></td>
 
           <!-- Price/LB with JS calc functionality -->
           <td>
@@ -70,8 +70,8 @@
                 <%= number_to_percentage((p.savings), :precision => 0) %>
             </td>
           <% elsif p.savings == -1 %>
-            <td class="sav_content" style="text-align:center; background-color:#eaeaea;" data-savings=0>
-                <%= "NA" %>
+            <td class="sav_content" style="text-align:center; background-color:#eaeaea;">
+                NA
             </td>
           <% else %>
             <td class="savings sav_content" style="text-align:center;" data-savings=0>
