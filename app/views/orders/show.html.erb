@@ -1,5 +1,9 @@
 <% provide(:title, 'Your Order') %>
 
+<% if @order.user.apology %>
+	<% @order.apology_discount %>
+<% end %>
+
 <table class="receipt_display">
 	<%= render partial: "receipt_header", object: @order %>
 	<tbody>

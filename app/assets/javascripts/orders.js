@@ -33,11 +33,13 @@ $(document).ready(function(){
       	p_value = p_cell.textContent.replace(/[^0-9-.]/g, '');
       	lb_total += Number(p_value);
       	m_cell = table_rows[i].cells[6];
-          m_value = m_cell.textContent.replace(/[^0-9-.]/g, '');
-          money_total += Number(m_value);
-          s_cell = table_rows[i].cells[7];
-          s_value = s_cell.textContent.replace(/[^0-9-.]/g, '');
+        m_value = m_cell.textContent.replace(/[^0-9-.]/g, '');
+        money_total += Number(m_value);
+        s_cell = table_rows[i].cells[7];
+        s_value = s_cell.textContent.replace(/[^0-9-.]/g, '');
+        if (parseFloat(s_value)) {
           savings_total += (parseFloat(s_value) / 100) * Number(m_value);
+        };
       }
          
       // Value assignment

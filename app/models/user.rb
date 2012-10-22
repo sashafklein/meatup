@@ -33,6 +33,12 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
   validates :zip, presence: true, length: { is: 5 }
 
+  def end_apology
+    if self.apology
+      self.update_attribute(:apology, false)
+    end
+  end
+
   private
 
     def create_remember_token

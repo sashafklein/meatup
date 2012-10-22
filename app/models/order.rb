@@ -61,5 +61,23 @@ class Order < ActiveRecord::Base
     end
     return total
   end
+
+  def apology_discount
+    self.lines.each do |l|
+      l.packages.each do |p|
+        p.update_attribute(:price, (p.price * 0.9))
+      end
+    end
+  end
+
+  def discounted
+    total_savings = 0
+    self.lines.each do |l|
+      l.packages.each do |p|
+        total_savings += (0.1 * p.price * p.expected_weight)
+      end
+    end
+    total_savings
+  end
   
 end

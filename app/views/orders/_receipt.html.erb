@@ -3,22 +3,32 @@
 
 <% @order.lines.each do |l| %>
 
-<% if l.units != 0 %>
-		<% @c = l.cut %>
-		<% show_helper %>
+	<% if l.units != 0 %>
+		<% p = l.packages.first %>
+		<% c = l.cut %>
+		
 		<tr>	
-		    	<td><%= @c.name %></td>
+		    	<td><%= c.name %></td>
 		    	<td><%= l.notes %></td>
-		    	<td><%= (@c.package_weight * l.units).round(2) %> lb</td>
-		    	<% @line_total = @example.price * @c.package_weight * l.units %>
+		    	<td><%= (p.expected_weight * l.units).round(2) %> lb</td>
+		    	<% @line_total = p.price * p.expected_weight * l.units %>
 		    	<td><%= number_to_currency(@line_total) %></td>
-		    	<% @total_weight += @c.package_weight * l.units %>
+		    	<% @total_weight += p.expected_weight * l.units %>
 	    </tr>
 	    <% @total += @line_total %>
 	<% end %>
 <%end%>
 
 <% @order.update_attribute(:total, @total) %>
+
+<% if @order.user.apology %>
+	<tr>
+		<td></td>
+		<td></td>
+		<td>Saved by Discount:</td>
+		<td><em><%= "- #{number_to_currency(@order.discounted)}!" %></em></td>
+	</tr>
+<% end %>
 
 <tr>
 	<td></td>
