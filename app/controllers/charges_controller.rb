@@ -17,7 +17,7 @@ class ChargesController < ApplicationController
 
     @order.update_attribute(:status, 1)
     @order.user.end_apology
-    UserMailer.delay.order_email(@order) unless @order.user.email == "test@test.com"
+    UserMailer.delay.order_email(@order) unless @order.user.email.include? "@meatup.in"
 
     redirect_to @order, notice: "Charge processed successfully!"
     
