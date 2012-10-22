@@ -529,7 +529,26 @@ border: 1px solid #75726C;
 #cut_name {
   padding:2px;
   &:hover {
-   background-color:#fd0;
+   background-color:#FFE682;
+   cursor:none;
+  }
+}
+
+.sale_note {
+  font-size:80%;
+  font-weight:normal;
+  background-color:#ffa882;
+  padding:0px 3px;
+  border: 1px solid #ff6600;
+  margin-left:15px;
+  color:#6e5800;
+}
+
+#on_sale {
+  padding:2px;
+  background-color:#FFE682;
+  &:hover {
+   background-color:#FFE682;
    cursor:none;
   }
 }

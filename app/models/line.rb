@@ -36,4 +36,8 @@ class Line < ActiveRecord::Base
     end
   end
 
+  def expected_weight
+    self.cut.package_weight
+  end
+
 end
