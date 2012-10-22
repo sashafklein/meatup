@@ -307,43 +307,146 @@
 		:password_confirmation => "password",
 		:zip => "94114"
 	)
+	miller_ranch_user = User.create(
+		:name => "Miler Ranch",
+		:email => "miller_ranch@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+	clark_summit_user = User.create(
+		:name => "Clark Summit Farm",
+		:email => "clark_summit@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+	sanders_user = User.create(
+		:name => "Sanders Ranch",
+		:email => "sanders@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+	buds_custom_user = User.create(
+		:name => "Buds Custom Meats",
+		:email => "buds_custom@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
 
 # Butchers
 	Butcher.delete_all
 	sanders = Butcher.create(
 		:name => "Sanders Meat Co",
-		:state => "CA",
-		:city => "Turlock",
 		:address => "Turlock St.",
+		:city => "Turlock",
+		:state => "CA",
+		:zip => "94114",
 		:phone => "999-999-9999",
 		:hanging_price => 0.55,
 		:final_price => 0,
 		:wrap_price => 0,
 		:vacuum_price => 0.00,
-		:user_id => one.id,
 		:ground => true,
 		:stew => true,
 		:boneless => true,
+		:user_id => one.id
+	)
+
+	buds_custom = Butcher.create(
+		:name => "Bud's Custom Meats",
+		:address => "Turlock St.",
+		:city => "Turlock",
 		:state => "CA",
-		:zip => "94114"
+		:zip => "94114",
+		:phone => "999-999-9999",
+		:hanging_price => 0.80,
+		:final_price => 0,
+		:wrap_price => 0,
+		:vacuum_price => 0.00,
+		:ground => true,
+		:stew => true,
+		:boneless => true,
+		:user_id => buds_custom_user.id
 	)
 
 # Ranches
 	Ranch.delete_all
-	miller = Ranch.create(
+
+	blank_ranch = Ranch.create(
+		:name => "Blank",
+		:address => "Address",
+		:phone => "Number",
+		:state => "CA",
+		:city => "Tomales",
+		:zip => "94971",
+		:has_csa => true,
+		:delivers_butcher => true,  
+		:delivers_drop => true,  # Let's set this to ~50 mi radius from "city center"? Translates to delivery cost estimate
+		:delivers_host => true,  # Eliminates delivery cost estimate add-on
+		:cow => false,
+		:cow_live => 000,
+		:cow_hanging => 000,
+		:cow_fixed => 100,
+		:preferred_butcher => blank_butcher.id,
+		:pig => false,
+		:pig_live => 000,
+		:pig_hanging => 000,
+		:pig_fixed => 100,
+		:lamb => false,
+		:lamb_live => 000,
+		:lamb_hanging => 000,
+		:lamb_fixed => 100,
+		:goat => false,
+		:goat_live => 000,
+		:goat_hanging => 000,
+		:goat_fixed => 100,
+		:user_id => blank_ranch.id
+	)
+
+	miller_ranch = Ranch.create(
+		:user_id => miller_ranch.id,
 		:name => "Miller Ranch",
 		:address => "Ranch Road",
 		:phone => "999-999-9999",
 		:state => "CA",
 		:city => "Oakdale",
 		:zip => "94114",
+		:has_csa => true,
+		:preferred_butcher => sanders.id,
+		:delivers_butcher => true,
+		:delivers_drop => true,
+		:delivers_host => false,
 		:cow => true,
 		:cow_live => 1.40,
-		:cow_meat => 3.62,
-		:user_id => two.id,
 		:pig => false,
 		:lamb => false,
 		:goat => false
+	)
+
+	clark_summit = Ranch.create(
+		:name => "Clark Summit Farm",
+		:address => "30201 Shoreline Highway",
+		:phone => "707-876-3516",
+		:state => "CA",
+		:city => "Tomales",
+		:zip => "94971",
+		:has_csa => true,
+		:delivers_butcher => true,
+		:delivers_drop => false,
+		:delivers_host => true,
+		:cow => true,
+		:cow_hanging => 3.75,
+		:cow_fixed => 100,
+		:preferred_butcher => buds_custom.id,
+		:pig => true,
+		:pig_hanging => 4.00,
+		:pig_fixed => 60,
+		:lamb => false,
+		:goat => false,
+		:user_id => clark_summit_user.id
 	)
 
 # Hosts

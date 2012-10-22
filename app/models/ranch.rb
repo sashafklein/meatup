@@ -2,36 +2,51 @@
 #
 # Table name: ranches
 #
-#  id           :integer          not null, primary key
-#  name         :string(255)
-#  address      :string(255)
-#  phone        :string(255)
-#  user_id      :integer
-#  cow          :boolean
-#  pig          :boolean
-#  lamb         :boolean
-#  goat         :boolean
-#  cow_live     :decimal(, )
-#  pig_live     :decimal(, )
-#  goat_live    :decimal(, )
-#  lamb_live    :decimal(, )
-#  cow_meat     :decimal(, )
-#  pig_meat     :decimal(, )
-#  lamb_meat    :decimal(, )
-#  goat_meat    :decimal(, )
-#  cow_hanging  :decimal(, )
-#  pig_hanging  :decimal(, )
-#  lamb_hanging :decimal(, )
-#  goat_hanging :decimal(, )
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  state        :string(255)
-#  zip          :string(255)
-#  city         :string(255)
+#  id                :integer          not null, primary key
+#  name              :string(255)
+#  address           :string(255)
+#  phone             :string(255)
+#  user_id           :integer
+#  cow               :boolean          default(FALSE)
+#  pig               :boolean          default(FALSE)
+#  lamb              :boolean          default(FALSE)
+#  goat              :boolean          default(FALSE)
+#  cow_live          :decimal(, )
+#  pig_live          :decimal(, )
+#  goat_live         :decimal(, )
+#  lamb_live         :decimal(, )
+#  cow_meat          :decimal(, )
+#  pig_meat          :decimal(, )
+#  lamb_meat         :decimal(, )
+#  goat_meat         :decimal(, )
+#  cow_hanging       :decimal(, )
+#  pig_hanging       :decimal(, )
+#  lamb_hanging      :decimal(, )
+#  goat_hanging      :decimal(, )
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  state             :string(255)
+#  zip               :string(255)
+#  city              :string(255)
+#  preferred_butcher :integer
+#  has_csa           :boolean          default(FALSE)
+#  delivers_butcher  :boolean          default(FALSE)
+#  delivers_drop     :boolean          default(FALSE)
+#  delivers_host     :boolean          default(FALSE)
+#  cow_fixed         :integer          default(0)
+#  pig_fixed         :integer          default(0)
+#  lamb_fixed        :integer          default(0)
+#  goat_fixed        :integer          default(0)
 #
 
 class Ranch < ActiveRecord::Base
-  attr_accessible :address, :city, :state, :zip, :cow, :cow_meat, :cow_hanging, :cow_live, :goat, :goat_meat, :goat_hanging, :goat_live, :lamb, :lamb_meat, :lamb_hanging, :lamb_live, :name, :phone, :pig, :pig_meat, :pig_hanging, :pig_live, :user_id
+  attr_accessible :address, :city, :state, :zip, :cow, :cow_meat, 
+    :cow_hanging, :cow_live, :goat, :goat_meat, :goat_hanging, 
+    :goat_live, :lamb, :lamb_meat, :lamb_hanging, :lamb_live, 
+    :name, :phone, :pig, :pig_meat, :pig_hanging, :pig_live, 
+    :user_id, :preferred_butcher, :has_csa, :delivers_butcher,
+    :delivers_drop, :delivers_host, :cow_fixed, :pig_fixed, 
+    :lamb_fixed, :goat_fixed
   has_many :animals
 
   validates :zip, presence: true, length: {is: 5}

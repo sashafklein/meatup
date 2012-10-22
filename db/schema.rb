@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121015200139) do
+ActiveRecord::Schema.define(:version => 20121022191644) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -127,10 +127,10 @@ ActiveRecord::Schema.define(:version => 20121015200139) do
     t.string   "address"
     t.string   "phone"
     t.integer  "user_id"
-    t.boolean  "cow"
-    t.boolean  "pig"
-    t.boolean  "lamb"
-    t.boolean  "goat"
+    t.boolean  "cow",               :default => false
+    t.boolean  "pig",               :default => false
+    t.boolean  "lamb",              :default => false
+    t.boolean  "goat",              :default => false
     t.decimal  "cow_live"
     t.decimal  "pig_live"
     t.decimal  "goat_live"
@@ -143,11 +143,20 @@ ActiveRecord::Schema.define(:version => 20121015200139) do
     t.decimal  "pig_hanging"
     t.decimal  "lamb_hanging"
     t.decimal  "goat_hanging"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.string   "state"
     t.string   "zip"
     t.string   "city"
+    t.integer  "preferred_butcher"
+    t.boolean  "has_csa",           :default => false
+    t.boolean  "delivers_butcher",  :default => false
+    t.boolean  "delivers_drop",     :default => false
+    t.boolean  "delivers_host",     :default => false
+    t.integer  "cow_fixed",         :default => 0
+    t.integer  "pig_fixed",         :default => 0
+    t.integer  "lamb_fixed",        :default => 0
+    t.integer  "goat_fixed",        :default => 0
   end
 
   create_table "users", :force => true do |t|
