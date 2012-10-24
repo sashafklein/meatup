@@ -14,13 +14,6 @@
   <% end %>
 
   <div class="text-align:center">
-    
-    <% @animal_list = Animal.where(:animal_type => @meat) %>
-    <% if @meat %>
-      <% @order_animal = @animal_list.last %>
-    <% else %>
-      <% @order_animal = @order.animal %>
-    <% end %>
 
 <!--     <% if current_user %>
      <div class="order_title"><%= current_user.name %>, Place Your Order for '<%= @order_animal.name %>' Below</div> 

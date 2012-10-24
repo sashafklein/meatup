@@ -133,4 +133,18 @@ module OrdersHelper
 
 	end
 
+	def sold_out(cut, animal)
+		all_packages = Package.where(:animal_id => animal.id)
+		cut_packages = all_packages.where(:cut_id => cut.id)
+		counter = 0
+		cut_packages.each do |p|
+			counter += 1 unless p.sold
+		end
+		if counter == 0
+			true
+		else
+			false
+		end
+	end
+
 end

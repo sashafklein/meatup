@@ -32,6 +32,30 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
     @order = Order.new
     @order.lines.build
 
+    @animal_list = Animal.where(:animal_type => "Cow")
+    @order_animal = @animal_list.last
+
+    if @order_animal.opening_sale
+      
+      hours_left = (120 - (Time.now.to_i - @order_animal.created_at.to_i)/60)/60
+      mins_left = (120 - (Time.now.to_i - @order_animal.created_at.to_i)/60)%60
+
+      if hours_left == 1 
+        time_left = "1 hour and #{mins_left} minutes"
+      elsif hours_left > 1
+        time_left = "#{hours_left} hours"
+      else
+        time_left = "#{mins_left} minutes"
+      end
+
+      flash[:notice] = "Opening Sale on select cuts for the next #{time_left}!"
+
+    elsif @order_animal.final_sale
+
+      flash[:notice] = "Final Sale on all cuts until #{@order_animal.name} is sold out!"
+      
+    end 
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @order }
