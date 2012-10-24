@@ -1,6 +1,7 @@
 class RanchesController < ApplicationController
   
-  before_filter :admin_user
+  before_filter :rancher_or_admin, only: [:new, :update, :destroy, :edit]
+
   def index
   	@ranches = Ranch.all
   end
@@ -24,8 +25,6 @@ class RanchesController < ApplicationController
   def create
   	@ranch = Ranch.new(params[:ranch])
     if @ranch.save
-      @ranch.to_meat
-      @ranch.save
       redirect_to @ranch, notice: 'Ranch was successfully created'
     else
       render action: "new"
@@ -37,8 +36,6 @@ class RanchesController < ApplicationController
     @ranch = Ranch.find(params[:id])
 
     if @ranch.update_attributes!(params[:ranch])
-        @ranch.to_meat
-        @ranch.save
         redirect_to @ranch, notice: "Ranch was successfully updated."
       else
         render action: "edit"
@@ -55,13 +52,13 @@ class RanchesController < ApplicationController
 
   private
 
-    def admin_user
+    def rancher_or_admin
       if signed_in? 
-        unless current_user.admin?
-          redirect_to root_path, notice: "Sign in as admin to access."
+        unless current_user.admin? || current_user.is_rancher
+          redirect_to root_path, notice: "Sign in as rancher to access."
         end
       else
-        redirect_to root_path, notice: "Sign in as admin to access."
+        redirect_to root_path, notice: "Sign in as rancher to access."
       end
     end
 end

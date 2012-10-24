@@ -1,6 +1,6 @@
-class HostsController < ApplicationController
+aclass HostsController < ApplicationController
 	
-  before_filter :admin_user, only: [:edit, :update, :destroy]
+  before_filter :host_or_admin, only: [:edit, :new, :update, :destroy, :dashboard]
   before_filter :signed_in_user
 
   def index
@@ -53,15 +53,19 @@ class HostsController < ApplicationController
     redirect_to hosts_url
   end
 
+  def dashboard
+    @animal_array = ["Cow", "Pig", "Lamb", "Goat"]
+  end
+
   private
 
-    def admin_user
+    def host_or_admin
       if signed_in? 
-        unless current_user.admin?
-          redirect_to root_path, notice: "Sign in as admin to access."
+        unless current_user.admin? || current_user.is_host
+          redirect_to root_path, notice: "Sign up as host to access."
         end
       else
-        redirect_to root_path, notice: "Sign in as admin to access."
+        redirect_to root_path, notice: "Sign up as host to access."
       end
     end
 

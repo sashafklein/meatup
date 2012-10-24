@@ -12,12 +12,20 @@
 #  admin           :boolean          default(FALSE)
 #  zip             :string(255)
 #  apology         :boolean
+#  is_host         :boolean          default(FALSE)
+#  is_rancher      :boolean          default(FALSE)
+#  is_butcher      :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation, :order_id, :zip
-  attr_accessible :name, :email, :password, :password_confirmation, :order_id, :zip, :admin, :apology, :as => :administrator
+  attr_accessible :name, :email, :password, :password_confirmation, :order_id, :zip,
+                  :is_host, :is_rancher, :is_butcher
+  attr_accessible :name, :email, :password, :password_confirmation, :order_id, :zip, 
+                  :is_host, :is_rancher, :is_butcher, :admin, :apology, :as => :administrator
   has_many :orders
+  has_one :host
+  has_one :butcher
+  has_one :rancher
 
   has_secure_password
 

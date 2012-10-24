@@ -18,7 +18,7 @@
 #  goat_mult    :decimal(, )
 #  host_id      :integer
 #  final_sale   :boolean          default(FALSE)
-#  opening_sale :boolean          default(TRUE)
+#  opening_sale :boolean          default(FALSE)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html

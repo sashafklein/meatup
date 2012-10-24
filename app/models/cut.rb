@@ -13,8 +13,10 @@
 #  animal_type    :string(255)
 #  comp           :float
 #  savings        :integer
+#  incentive      :boolean          default(FALSE)
+#  description    :text
 #
 
 class Cut < ActiveRecord::Base
-  attr_accessible :name, :package_weight, :percent, :price, :animal_type, :comp, :savings, :incentive
+  attr_accessible :name, :package_weight, :percent, :price, :animal_type, :comp, :savings, :incentive, :description
 end

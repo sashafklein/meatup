@@ -1,6 +1,7 @@
 class ButchersController < ApplicationController
 
-  before_filter :admin_user
+  before_filter :butcher_or_admin, only: [:new, :edit, :update, :destroy]
+
   def index
   	@butchers = Butcher.all
   end
@@ -52,13 +53,13 @@ class ButchersController < ApplicationController
 
   private
 
-    def admin_user
+    def butcher_or_admin
       if signed_in? 
-        unless current_user.admin?
-          redirect_to root_path, notice: "Sign in as admin to access."
+        unless current_user.admin? || current_user.is_butcher
+          redirect_to root_path, notice: "Sign up as butcher to access."
         end
       else
-        redirect_to root_path, notice: "Sign in as admin to access."
+        redirect_to root_path, notice: "Sign up as butcher to access."
       end
     end
 end

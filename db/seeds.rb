@@ -8,7 +8,8 @@
 	  	:package_weight => 2,
 	  	:percent => 1.67,
 	  	:comp => 7.99,
-	  	:savings => 50
+	  	:savings => 50, 
+	  	:description => "'London Broil' was first a preparation technique, but became the name for the two cuts -- Flank and, increasingly, Top Round -- that the technique applied to."
   	)
 	ground = Cut.create(
 		:animal_type => "Cow",
@@ -17,7 +18,8 @@
 	  	:package_weight => 1,
 	  	:percent => 7.67,
 	  	:comp => 6.99,
-	  	:savings => 62
+	  	:savings => 62,
+	  	:description => "Burgers, meatballs, meatloaf and beef moussaka."
   	) 
   	stew = Cut.create(
 		:animal_type => "Cow",
@@ -26,7 +28,8 @@
 	  	:package_weight => 2.22,
 	  	:percent => 4.25,
 	  	:comp => 7.99,
-	  	:savings => 65
+	  	:savings => 65, 
+	  	:description => "Tagine, bourgignon, pot au feu, chili, and a good old fashioned beef stew."
   	)
   	brisket = Cut.create(
 		:animal_type => "Cow",
@@ -35,7 +38,8 @@
 	  	:package_weight => 4,
 	  	:percent => 0.67,
 	  	:comp => 8.99,
-	  	:savings => 40
+	  	:savings => 40,
+	  	:description => "The classic roasting/braising/BBQ/Passover cut from just below the chuck at the front of the animal."
   	)
   	cross = Cut.create(
 		:animal_type => "Cow",
@@ -45,7 +49,8 @@
 	  	:percent => 2.25,
 	  	:comp => 7.99,
 	  	:savings => 44,
-	  	:incentive => true
+	  	:incentive => true, 
+	  	:description => "Similar to the Chuck Roast, a braiser or roaster. Cook long and low."
   	)
   	rump = Cut.create(
 		:animal_type => "Cow",
@@ -54,7 +59,8 @@
 	  	:package_weight => 3.5,
 	  	:percent => 0.58,
 	  	:comp => 8.99,
-	  	:savings => 38
+	  	:savings => 38, 
+	  	:description => "One of Argentina/Brazil's favorites, less known in the states. Great flavor with a nice thick layer of fat. A crazy deal."
   	)
   	short = Cut.create(
 		:animal_type => "Cow",
@@ -63,7 +69,8 @@
 	  	:package_weight => 3.33,
 	  	:percent => 1.67,
 	  	:comp => 8.99,
-	  	:savings => 38
+	  	:savings => 38, 
+	  	:description => "A braising staple from the lower portions of the ribs. Undercook and they'll be unpleasantly chewy. Stew low and long to soften and release flavors."
   	)
   	eye = Cut.create(
 		:animal_type => "Cow",
@@ -72,7 +79,8 @@
 	  	:package_weight => 3.50,
 	  	:percent => 0.58,
 	  	:comp => 9.99,
-	  	:savings => 47
+	  	:savings => 47, 
+	  	:description => "A lean but relatively tender cut, the eye of the round is good for rare grilling or delicate braising."
   	)
   	bottom = Cut.create(
 		:animal_type => "Cow",
@@ -82,7 +90,8 @@
 	  	:percent => 0.67,
 	  	:comp => 8.99,
 	  	:savings => 27,
-	  	:incentive => true
+	  	:incentive => true, 
+	  	:description => "A lean cut from the outer leg. Stew/braise for a while or grind up."
   	)
   	tri = Cut.create(
 		:animal_type => "Cow",
@@ -91,7 +100,8 @@
 	  	:package_weight => 2,
 	  	:percent => 0.67,
 	  	:comp => 9.99,
-	  	:savings => 19
+	  	:savings => 19, 
+	  	:description => "An increasingly popular cut (in SF particularly), for its rich flavor and thick layer of fat."
   	)
   	flank = Cut.create(
 		:animal_type => "Cow",
@@ -100,7 +110,8 @@
 	  	:package_weight => 1.5,
 	  	:percent => 0.25,
 	  	:comp => 11.99,
-	  	:savings => 54
+	  	:savings => 54, 
+	  	:description => "A thin, tender, and (pleasantly) chewy steak from the abdomen. A favorite for marinated grilling."
   	)
   	chuck = Cut.create(
 		:animal_type => "Cow",
@@ -109,7 +120,8 @@
 	  	:package_weight => 3.9,
 	  	:percent => 3.25,
 	  	:comp => 9.99,
-	  	:savings => 24
+	  	:savings => 24, 
+	  	:description => "A well-marbled, rich piece of steak best for braising and roasts (but also not bad in steaks)."
   	)
   	hanger = Cut.create(
 		:animal_type => "Cow",
@@ -118,7 +130,8 @@
 	  	:package_weight => 0,
 	  	:percent => 0,
 	  	:comp => 10.99,
-	  	:savings => 0
+	  	:savings => 0, 
+	  	:description => "Used to be called the Butcher's Cut, because butchers would keep it for themselves. One of the most flavorful cuts for grilling/searing. From the inner skirt."
   	)
   	flat = Cut.create(
 		:animal_type => "Cow",
@@ -127,7 +140,8 @@
 	  	:package_weight => 0,
 	  	:percent => 0,
 	  	:comp => 13.99,
-	  	:savings => 0
+	  	:savings => 0, 
+	  	:description => "An increasingly popular cut for grilling or roasting. From the shoulder."
   	)
   	top = Cut.create(
 		:animal_type => "Cow",
@@ -136,7 +150,8 @@
 	  	:package_weight => 1.56,
 	  	:percent => 1.17,
 	  	:comp => 11.99,
-	  	:savings => 9
+	  	:savings => 9, 
+	  	:description => "Bread-and-butter grilling cut, with a nice cap of fat."
   	)
   	skirt = Cut.create(
 		:animal_type => "Cow",
@@ -145,7 +160,8 @@
 	  	:package_weight => 1.25,
 	  	:percent => 0.42,
 	  	:comp => 14.99,
-	  	:savings => 12
+	  	:savings => 12, 
+	  	:description => "This thin cut from the inner 'plate' is both chewy and tender."
   	)
   	porter = Cut.create(
 		:animal_type => "Cow",
@@ -154,7 +170,8 @@
 	  	:package_weight => 2.6,
 	  	:percent => 1.08,
 	  	:comp => 17.99,
-	  	:savings => 27
+	  	:savings => 27, 
+	  	:description => "A rich and satisfying steakhouse classic, from the short loin, in the lower ribs. A balance of sirloin steak and tenderloin, separated by a bone."
   	)
   	t = Cut.create(
 		:animal_type => "Cow",
@@ -163,7 +180,8 @@
 	  	:package_weight => 2,
 	  	:percent => 1.17,
 	  	:comp => 16.99,
-	  	:savings => 11
+	  	:savings => 11, 
+	  	:description => "Another delicious two-part grilling/roasting cut, with Tenderloin and NY Strip on either side of a T Bone"
   	)
   	ribeye = Cut.create(
 		:animal_type => "Cow",
@@ -172,7 +190,8 @@
 	  	:package_weight => 2,
 	  	:percent => 1.83,
 	  	:comp => 20.99,
-	  	:savings => 25
+	  	:savings => 25, 
+	  	:description => "An obscenely delicious steak cut from the upper ribs. Pan sear one of these and throw it in the oven for a handful of minutes."
   	)
   	ny = Cut.create(
 		:animal_type => "Cow",
@@ -181,7 +200,8 @@
 	  	:package_weight => 0,
 	  	:percent => 0,
 	  	:comp => 19.99,
-	  	:savings => 0
+	  	:savings => 0, 
+	  	:description => ""
   	)
   	filet = Cut.create(
 		:animal_type => "Cow",
@@ -190,7 +210,8 @@
 	  	:package_weight => 1.5,
 	  	:percent => 0.25,
 	  	:comp => 29.99,
-	  	:savings => 33
+	  	:savings => 33, 
+	  	:description => "A muscle that does very little work, tenderloin is an extremely tender steak. Sear briefly."
   	)
   	sirloin = Cut.create(
 		:animal_type => "Cow",
@@ -199,7 +220,8 @@
 	  	:package_weight => 1.1,
 	  	:percent => 0.25,
 	  	:comp => 9.99,
-	  	:savings => 19
+	  	:savings => 19, 
+	  	:description => "Peeled off the top sirloin, this cut is great for cooking quick and high."
   	)
   	shank = Cut.create(
 		:animal_type => "Cow",
@@ -208,7 +230,8 @@
 	  	:package_weight => 2.64,
 	  	:percent => 2.42,
 	  	:comp => 3,
-	  	:savings => 0
+	  	:savings => 0, 
+	  	:description => "A ring off of the weight-bearing front or back legs, these shanks are great for stews and braises, and come with a marrow bone."
   	)
   	knuckle = Cut.create(
 		:animal_type => "Cow",
@@ -218,7 +241,8 @@
 	  	:percent => 1.58,
 	  	:comp => 3,
 	  	:savings => 0,
-	  	:incentive => true
+	  	:incentive => true, 
+	  	:description => "Beef bones, full of flavor. Just roast these for a few minutes to darken them, and throw them in a soup. Baby, you got a stew going."
   	)
   	fat = Cut.create(
 		:animal_type => "Cow",
@@ -228,7 +252,8 @@
 	  	:percent => 0.75,
 	  	:comp => 3,
 	  	:savings => 0,
-	  	:incentive => true
+	  	:incentive => true, 
+	  	:description => "Rich, pure suet fat from around the kidneys. Rendered, this makes great cooking fat, with its rich taste and high smoke point."
   	)
   	kidney = Cut.create(
 		:animal_type => "Cow",
@@ -238,7 +263,8 @@
 	  	:percent => 0.17,
 	  	:comp => 3,
 	  	:savings => 0,
-	  	:incentive => true
+	  	:incentive => true, 
+	  	:description => "Dense and flavorful, sear these up quickly or throw them in a rich stew."
   	)
   	offal = Cut.create(
 		:animal_type => "Cow",
@@ -248,7 +274,8 @@
 	  	:percent => 1.42,
 	  	:comp => 3,
 	  	:savings => 0,
-	  	:incentive => true
+	  	:incentive => true, 
+	  	:description => "Heart, tongue, cheek, and everyone's favorite, liver."
   	)
   	flap = Cut.create(
 		:animal_type => "Cow",
@@ -258,7 +285,8 @@
 	  	:percent => 0.50,
 	  	:comp => 3,
 	  	:savings => 0,
-	  	:incentive => true
+	  	:incentive => true, 
+	  	:description => "From stringy diaphrams throughout the cow, this layered meat is chewy as hell when undercooked, but becomes unbelievably moist and soft when slow-roasted."
   	)
   	neck = Cut.create(
 		:animal_type => "Cow",
@@ -267,7 +295,8 @@
 	  	:package_weight => 4.75,
 	  	:percent => 1.58,
 	  	:comp => 3,
-	  	:savings => 0
+	  	:savings => 0, 
+	  	:description => "Thick, chewy, and meaty, the neck meat radiates out from the neckbone and is great for longs braises or barbecues."
   	)
 
   	#Pig Cuts
@@ -278,14 +307,16 @@
 	  	:package_weight => 1,
 	  	:percent => 3,
 	  	:comp => 1, 
-	  	:savings => 0
+	  	:savings => 0, 
+	  	:description => "Yum."
   	)
   	Cut.create(
 		:animal_type => "Pig",
 		:name => "Pork Chop",
 	  	:price => 10,
 	  	:package_weight => 2,
-	  	:percent => 5
+	  	:percent => 5, 
+	  	:description => ""
   	)
 
   	# Other Cuts
@@ -295,52 +326,67 @@
 		:name => "Goat Stew",
 	  	:price => 7,
 	  	:package_weight => 2,
-	  	:percent => 3
+	  	:percent => 3, 
+	  	:description => ""
   	)
 
 # Users
 	User.delete_all
-	one = User.create(
-		:name => "One",
-		:email => "one@test.com",
+	admin = User.create(
+		:name => "Sasha Klein",
+		:email => "sasha@meatup.in",
 		:password => "password",
 		:password_confirmation => "password",
 		:zip => "94114"
 	)
-	two = User.create(
-		:name => "Two",
-		:email => "two@test.com",
+	admin.toggle!(:admin)
+	one = User.create(
+		:name => "One",
+		:email => "one@meatup.in",
 		:password => "password",
 		:password_confirmation => "password",
-		:zip => "94114"
+		:zip => "94114", 
+		:is_host => true
+	)
+	two = User.create(
+		:name => "Two",
+		:email => "two@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114", 
+		:is_host => true
 	)
 	miller_ranch_user = User.create(
 		:name => "Miler Ranch",
 		:email => "miller_ranch@meatup.in",
 		:password => "password",
 		:password_confirmation => "password",
-		:zip => "94114"
+		:zip => "94114",
+		:is_rancher => true
 	)
 	clark_summit_user = User.create(
 		:name => "Clark Summit Farm",
 		:email => "clark_summit@meatup.in",
 		:password => "password",
 		:password_confirmation => "password",
-		:zip => "94114"
+		:zip => "94114", 
+		:is_rancher => true
 	)
 	sanders_user = User.create(
 		:name => "Sanders Ranch",
 		:email => "sanders@meatup.in",
 		:password => "password",
 		:password_confirmation => "password",
-		:zip => "94114"
+		:zip => "94114",
+		:is_butcher => true
 	)
 	buds_custom_user = User.create(
 		:name => "Buds Custom Meats",
 		:email => "buds_custom@meatup.in",
 		:password => "password",
 		:password_confirmation => "password",
-		:zip => "94114"
+		:zip => "94114", 
+		:is_butcher => true
 	)
 
 # Butchers
@@ -382,39 +428,39 @@
 # Ranches
 	Ranch.delete_all
 
-	blank_ranch = Ranch.create(
-		:name => "Blank",
-		:address => "Address",
-		:phone => "Number",
-		:state => "CA",
-		:city => "Tomales",
-		:zip => "94971",
-		:has_csa => true,
-		:delivers_butcher => true,  
-		:delivers_drop => true,  # Let's set this to ~50 mi radius from "city center"? Translates to delivery cost estimate
-		:delivers_host => true,  # Eliminates delivery cost estimate add-on
-		:cow => false,
-		:cow_live => 000,
-		:cow_hanging => 000,
-		:cow_fixed => 100,
-		:preferred_butcher => blank_butcher.id,
-		:pig => false,
-		:pig_live => 000,
-		:pig_hanging => 000,
-		:pig_fixed => 100,
-		:lamb => false,
-		:lamb_live => 000,
-		:lamb_hanging => 000,
-		:lamb_fixed => 100,
-		:goat => false,
-		:goat_live => 000,
-		:goat_hanging => 000,
-		:goat_fixed => 100,
-		:user_id => blank_ranch.id
-	)
+	# blank_ranch = Ranch.create(
+	# 	:name => "Blank",
+	# 	:address => "Address",
+	# 	:phone => "Number",
+	# 	:state => "CA",
+	# 	:city => "Tomales",
+	# 	:zip => "94971",
+	# 	:has_csa => true,
+	# 	:delivers_butcher => true,  
+	# 	:delivers_drop => true,  # Let's set this to ~50 mi radius from "city center"? Translates to delivery cost estimate
+	# 	:delivers_host => true,  # Eliminates delivery cost estimate add-on
+	# 	:cow => false,
+	# 	:cow_live => 000,
+	# 	:cow_hanging => 000,
+	# 	:cow_fixed => 100,
+	# 	:preferred_butcher => blank_butcher.id,
+	# 	:pig => false,
+	# 	:pig_live => 000,
+	# 	:pig_hanging => 000,
+	# 	:pig_fixed => 100,
+	# 	:lamb => false,
+	# 	:lamb_live => 000,
+	# 	:lamb_hanging => 000,
+	# 	:lamb_fixed => 100,
+	# 	:goat => false,
+	# 	:goat_live => 000,
+	# 	:goat_hanging => 000,
+	# 	:goat_fixed => 100,
+	# 	:user_id => blank_ranch.id
+	# )
 
 	miller_ranch = Ranch.create(
-		:user_id => miller_ranch.id,
+		:user_id => miller_ranch_user.id,
 		:name => "Miller Ranch",
 		:address => "Ranch Road",
 		:phone => "999-999-9999",
@@ -475,7 +521,7 @@
 		:photo => "Animals/PaulRyan.jpg", 
 		:animal_type => "Cow",  
         :weight => 1216, 
-        :ranch_id => miller.id, 
+        :ranch_id => miller_ranch.id, 
         :butcher_id => sanders.id,
         :host_id => klein.id
 	)
@@ -485,7 +531,7 @@ Order.delete_all
 
 	jasper = User.create(
 		:name => "Jasper Sherman-Presser",
-		:email => "sashafklein@gmail.com",
+		:email => "jasper@meatup.in",
 		:password => "password",
 		:password_confirmation => "password",
 		:zip => "94114"

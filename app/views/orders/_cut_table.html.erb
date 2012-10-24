@@ -23,9 +23,9 @@
         <tr> <%= l.hidden_field :cut_id, value: p.cut.id %>
 
           <% if (p.cut.incentive && @order_animal.opening_sale) %>
-            <td><div id="on_sale"><%= p.cut.name %><strong class="sale_note"> EXTRA 10% OFF!</strong></div></td>
+            <td><div id="on_sale" title="<%= p.cut.description %>" ><%= p.cut.name %><strong class="sale_note"> EXTRA 10% OFF!</strong></div></td>
           <% else %>
-            <td><div id="cut_name"><%= p.cut.name %></div></td>
+            <td><div id="cut_name" title="<%= p.cut.description %>" ><%= p.cut.name %></div></td>
           <% end %>
 
           <!-- Prep Requests -->

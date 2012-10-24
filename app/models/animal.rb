@@ -18,7 +18,7 @@
 #  goat_mult    :decimal(, )
 #  host_id      :integer
 #  final_sale   :boolean          default(FALSE)
-#  opening_sale :boolean          default(TRUE)
+#  opening_sale :boolean          default(FALSE)
 #
 
 class Animal < ActiveRecord::Base
@@ -134,7 +134,9 @@ class Animal < ActiveRecord::Base
   end  
 
   def start_opening_sale
-    self.delay(:run_at => 120.minutes.from_now).end_opening_sale
+    if self.delay(:run_at => 120.minutes.from_now).end_opening_sale
+      self.update_attribute(:opening_sale, true)
+    end
   end
 
   def end_opening_sale

@@ -13,6 +13,8 @@
 #  animal_type    :string(255)
 #  comp           :float
 #  savings        :integer
+#  incentive      :boolean          default(FALSE)
+#  description    :text
 #
 
 require 'test_helper'
