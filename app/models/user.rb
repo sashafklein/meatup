@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
 
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
+  after_create :zip_test
 
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -48,6 +49,24 @@ class User < ActiveRecord::Base
   end
 
   private
+
+    def zip_test
+      if self.unacceptable_zip
+        # Send an email and prohibit orders
+        # Add to expansion list
+      end
+    end
+
+    def unacceptable_zip
+      zip = self.zip
+      bay_area_zips = ["94114"]
+
+      bay_area_zips.each do |z|
+        return false if z == zip
+      end
+
+      return true
+    end
 
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64
