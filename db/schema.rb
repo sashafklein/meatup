@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024171249) do
+ActiveRecord::Schema.define(:version => 20121024212724) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -23,10 +23,10 @@ ActiveRecord::Schema.define(:version => 20121024171249) do
     t.datetime "updated_at",                      :null => false
     t.integer  "ranch_id"
     t.integer  "butcher_id"
-    t.decimal  "cow_mult"
-    t.decimal  "pig_mult"
-    t.decimal  "lamb_mult"
-    t.decimal  "goat_mult"
+    t.float    "cow_mult"
+    t.float    "pig_mult"
+    t.float    "lamb_mult"
+    t.float    "goat_mult"
     t.integer  "host_id"
     t.boolean  "final_sale",   :default => false
     t.boolean  "opening_sale", :default => false
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(:version => 20121024171249) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "animal_id"
-    t.decimal  "price"
+    t.float    "price"
     t.integer  "line_id"
     t.boolean  "sold"
     t.integer  "savings"
@@ -136,18 +136,18 @@ ActiveRecord::Schema.define(:version => 20121024171249) do
     t.boolean  "pig",               :default => false
     t.boolean  "lamb",              :default => false
     t.boolean  "goat",              :default => false
-    t.decimal  "cow_live"
-    t.decimal  "pig_live"
-    t.decimal  "goat_live"
-    t.decimal  "lamb_live"
-    t.decimal  "cow_meat"
-    t.decimal  "pig_meat"
-    t.decimal  "lamb_meat"
-    t.decimal  "goat_meat"
-    t.decimal  "cow_hanging"
-    t.decimal  "pig_hanging"
-    t.decimal  "lamb_hanging"
-    t.decimal  "goat_hanging"
+    t.float    "cow_live"
+    t.float    "pig_live"
+    t.float    "goat_live"
+    t.float    "lamb_live"
+    t.float    "cow_meat"
+    t.float    "pig_meat"
+    t.float    "lamb_meat"
+    t.float    "goat_meat"
+    t.float    "cow_hanging"
+    t.float    "pig_hanging"
+    t.float    "lamb_hanging"
+    t.float    "goat_hanging"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
     t.string   "state"

@@ -49,19 +49,21 @@ class Animal < ActiveRecord::Base
         if c.incentive
           # Create incentive-priced packages
           unless c.package_weight == 0
+            p_price = c.price * 0.9 * multiplier(self.animal_type)
             package_number = ((self.weight * (c.percent)/100) / c.package_weight).to_i
             package_number.times do 
               Package.create!(:animal_id => self.id, :cut_id => c.id, 
-                  :price => (c.price * 0.9 * multiplier(self.animal_type)), :sold => false) 
+                  :price => p_price, :sold => false, :savings => (c.comp - p_price)/c.comp * 100)
             end
           end
         else
           # Create regularly priced packages
           unless c.package_weight == 0
+            p_price = c.price * multiplier(self.animal_type)
             package_number = ((self.weight * (c.percent)/100) / c.package_weight).to_i
             package_number.times do 
             	Package.create!(:animal_id => self.id, :cut_id => c.id, 
-                  :price => (c.price * multiplier(self.animal_type)), :sold => false) 
+                  :price => p_price, :sold => false, :savings => (c.comp - p_price)/c.comp * 100) 
             end
           end
         end     
@@ -145,6 +147,7 @@ class Animal < ActiveRecord::Base
       unsold.each do |p|
         if p.cut.incentive
           p.update_attribute(:price, (p.price / 0.9))
+          p.update_attribute(:savings, (p.cut.comp - p.price)/p.cut.comp)
         end
       end
       self.update_attribute(:opening_sale, false)
@@ -156,6 +159,7 @@ class Animal < ActiveRecord::Base
     unsold = self.packages.where(:sold => false)
     unsold.each do |p|
       p.update_attribute(:price, (p.price * 0.85))
+      p.update_attribute(:savings, (p.cut.comp - p.price)/p.cut.comp)
     end
     self.update_attribute(:final_sale, true)
   end  

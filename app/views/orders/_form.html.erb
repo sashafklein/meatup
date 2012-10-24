@@ -15,14 +15,10 @@
 
   <div class="text-align:center">
 
-<!--     <% if current_user %>
-     <div class="order_title"><%= current_user.name %>, Place Your Order for '<%= @order_animal.name %>' Below</div> 
-    <% else %>
-     <div class="order_title">"Life has its own hidden forces which you can only discover by <b style="color:#262220">eating grass-fed beef</b>." -S&oslash;ren Kierkegaard
-</div> 
-    <% end %>
- -->    
 
+     <div class="order_title">"Life has its own hidden forces which you can only discover by <b style="color:#262220">eating grass-fed beef</b>." -S&oslash;ren Kierkegaard
+     </div> 
+  
     <!-- Assign the Animal and User -->
     <%= f.hidden_field  :animal_id, value: @order_animal.id %>
     <% if signed_in? %>

@@ -31,8 +31,9 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
   def cow_order
     @order = Order.new
     @order.lines.build
+    @meat = "Cow"
 
-    @animal_list = Animal.where(:animal_type => "Cow")
+    @animal_list = Animal.where(:animal_type => @meat)
     @order_animal = @animal_list.last
 
     if @order_animal.opening_sale
@@ -53,7 +54,7 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
     elsif @order_animal.final_sale
 
       flash[:notice] = "Final Sale on all cuts until #{@order_animal.name} is sold out!"
-      
+
     end 
 
     respond_to do |format|
