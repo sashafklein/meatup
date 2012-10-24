@@ -1,4 +1,4 @@
-aclass HostsController < ApplicationController
+class HostsController < ApplicationController
 	
   before_filter :host_or_admin, only: [:edit, :new, :update, :destroy, :dashboard]
   before_filter :signed_in_user
@@ -40,9 +40,9 @@ aclass HostsController < ApplicationController
     if @host.update_attributes!(params[:host])
         @host.save
         redirect_to @host, notice: "Host was successfully updated."
-      else
+    else
         render action: "edit"
-      end
+    end
   end
 
   # DELETE /hosts/1
@@ -75,4 +75,5 @@ aclass HostsController < ApplicationController
         redirect_to signin_url, notice: "Please sign in."
       end
     end
+
 end
