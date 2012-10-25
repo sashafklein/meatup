@@ -1,0 +1,25 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var sold = $('#chart_div').attr('data-sold');
+        var left = $('#chart_div').attr('data-left');
+        var data = google.visualization.arrayToDataTable([
+          ['Pounds', 'Sold/Left'],
+          ['Pounds Sold', sold],
+          ['Left', left]
+        ]);
+
+        var options = {
+          
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+    
+    <div id="chart_div" data-sold=<%= @animal.pounds_sold.to_i %> data-left=<%= @animal.pounds_left.to_i %> ></div>
+    <%= @animal.pounds_sold %>
+    <%= @animal.pounds_left %>

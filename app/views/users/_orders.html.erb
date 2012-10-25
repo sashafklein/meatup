@@ -1,4 +1,4 @@
-<% if @user.orders %>
+<% if @user.orders.length > 0 %>
 	<table class="table">
 	<thead>
 		<tr>
@@ -14,12 +14,12 @@
 			<tr>
 				<td class="normal_links"><%= link_to (localize(o.created_at, :format => ("%d/%b/%Y"))), order_path(o) %></td>
 				<td><%= o.animal.animal_type %></td>
-				<td><%= o.poundage %> lbs</td>
+				<td><%= o.poundage.round(2) %> lbs</td>
 				<td><%= number_to_currency(o.total_calc) %></td>
 			</tr>
 		<% end %>
 	</tbody>
 	</table>
 <% else %>
-	<h3>No orders? <%= link_to 'Get Started!', root_path %></h3>
+	<h3>No orders? <%= link_to 'Get Started!', purchase_path %></h3>
 <% end %>

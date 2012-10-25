@@ -40,4 +40,24 @@ class Line < ActiveRecord::Base
     self.cut.package_weight
   end
 
+  def poundage
+    total = 0
+    self.packages.each do |p|
+      total += p.expected_weight
+    end
+    total
+  end
+
+  def total
+    total = 0
+    self.packages.each do |p|
+      total += p.price * p.expected_weight
+    end
+    total
+  end
+
+  def price
+    p = self.packages.first
+    p.price
+  end
 end

@@ -1,21 +1,11 @@
-<% cut_list = @animal.cut_find.find(:all, :order => 'percent DESC') %>
-<% cut_list.each do |cut| %>
-
-	<% all_ps = @animal.packages %>
-	<% cut_packages = all_ps.where(:cut_id => cut.id) %>
-	<% sold = cut_packages.where(:sold => true).length %>
-	<% unsold = cut_packages.where(:sold => false).length %>
-	<% example = cut_packages.first %>
-
-	<% unless cut_packages.length == 0 %>
-	  <tr>
-	  	<td><%= cut.name %></td>
-	  	<td><%= number_to_currency(example.price) %></td>
-		<td><%= cut_packages.length %></td>  	
-		<td><%= cut_packages.length - sold %></td>
-		<td><%= sold %></td>
-		<td><%= cut.package_weight %> lb</td>
-		<td><%= (sold * cut.package_weight).to_i %></td>
-	  </tr>
-	<% end %>
+<% make_list(@animal).sort.each do |p| %>
+  <tr>
+  	<td><%= p.cut.name %></td>
+  	<td><%= number_to_currency(p.price) %></td>
+	<td><%= @animal.cut_packages(p.cut).length %></td>  	
+	<td><%= @animal.unsold(p.cut).length %></td>
+	<td><%= @animal.sold(p.cut).length %></td>
+	<td><%= p.expected_weight %> lb</td>
+	<td><%= (@animal.sold(p.cut).length * p.expected_weight).to_i %></td>
+  </tr>
 <%end%>

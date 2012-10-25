@@ -1,12 +1,14 @@
 <% provide(:title, @animal.name) %>
 
 <p id="notice"><%= notice %></p>
-<% animal_calculator %>
 
     <h2 style="text-align:left">
       <span style="font-size:120%; font-weight:none"> <%= @animal.animal_type %> Name: </span>
       <span style="font-size:120%; font-weight:bold"><%= @animal.name %></span>
     </h2>
+
+    <%= render partial: "charts" %>
+
   <div class="line_divider"></div>
       <h2 style="text-align:center">Sales Data</h2>
         <table class="table">
@@ -19,12 +21,12 @@
             <th>Expected Margins</th>
           </tr>
           <tr>
-            <td><%= @lbs_meat.to_i %></td>
-            <td><%= @lbs_sold.to_i %></td>
-            <td><%= (@lbs_meat - @lbs_sold).to_i %></td>
-            <td><%= number_to_currency(@revenue) %></td>
-            <td><%= number_to_currency(@possible) %></td>
-            <td><%= number_to_currency(@margins) %></td>
+            <td><%= @animal.pounds_total.round(2) %></td>
+            <td><%= @animal.pounds_sold.round(2) %></td>
+            <td><%= @animal.pounds_left.round(2) %></td>
+            <td><%= number_to_currency(@animal.revenue_made) %></td>
+            <td><%= number_to_currency(@animal.revenue_possible) %></td>
+            <td><%= number_to_currency(@animal.expected_margins) %></td>
           </tr>
         </table>
         
@@ -45,7 +47,7 @@
             <td><%= @animal.weight %></td>
             <td><%= @animal.breed %></td>
             <td><%= @animal.ranch.name %></td>
-            <td><%= @animal.host %></td>
+            <td><%= @animal.host.user.name %></td>
             <td><%= @animal.photo %></td>
           </tr>
         </table>
@@ -69,7 +71,7 @@
       <h2>Associated Orders</h2>
         <table class="table">
           <tr>
-            <th>Order #</th>
+            <th>User</th>
             <th>Order Status</th>
             <th>Line Item</th>
             <th># Packages</th>

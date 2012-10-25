@@ -184,4 +184,86 @@ class Animal < ActiveRecord::Base
   def unsold(cut)
     self.cut_packages(cut).where(:sold => false)
   end
+
+  def revenue_made
+    deposited = self.packages.where(sold: true)
+    revenue = 0
+    deposited.each do |p|
+      revenue += p.price * p.cut.package_weight
+    end
+    revenue
+  end
+
+  def revenue_possible
+    all_packages = self.packages.all
+    revenue = 0
+    all_packages.each do |p|
+      revenue += p.cut.package_weight * p.price
+    end
+    revenue
+  end
+
+  def left_to_make
+    money_left = self.revenue_possible - self.revenue_made
+    money_left
+  end
+
+  # Returns total cost (for meat, butchery, and fixed, for the given animal)
+  def total_cost
+
+    # Determining variables on the basis of animal_type
+    cost = 0
+    if self.animal_type == "Cow"
+      a_meat = self.ranch.cow_meat
+      a_hanging = self.ranch.cow_hanging
+      a_live = self.ranch.cow_live
+      amol = CMOL
+      ahol = CHOL
+      fixed = self.ranch.cow_fixed if fixed
+    elsif self.animal_type == "Pig"
+      a_meat = self.ranch.pig_meat
+      a_hanging = self.ranch.pig_hanging
+      a_live = self.ranch.pig_live
+      amol = PMOL
+      ahol = PHOL
+      fixed = self.ranch.pig_fixed if fixed
+    elsif self.animal_type == "Lamb"
+      a_meat = self.ranch.lamb_meat
+      a_hanging = self.ranch.lamb_hanging
+      a_live = self.ranch.lamb_live
+      amol = LMOL
+      ahol = LHOL      
+      fixed = self.ranch.lamb_fixed if fixed
+    else
+      a_meat = self.ranch.goat_meat
+      a_hanging = self.ranch.goat_hanging
+      a_live = self.ranch.goat_live
+      amol = GMOL
+      ahol = GHOL
+      fixed = self.ranch.goat_fixed if fixed
+    end
+
+    if a_meat > 0
+      cost = a_meat * amol * self.weight
+    elsif a_hanging > 0
+      cost = a_hanging * ahol * self.weight
+    else
+      cost = a_live * self.weight
+    end
+
+    if fixed != 0 && fixed != nil
+      cost += fixed
+    end
+
+    if self.butcher.final_price
+      cost += self.butcher.final_price
+    end
+
+    cost
+  end
+
+  def expected_margins 
+    margins = self.revenue_possible - self.total_cost
+  end
+
 end

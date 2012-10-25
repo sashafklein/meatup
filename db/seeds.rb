@@ -332,17 +332,17 @@
 
 # Users
 	User.delete_all
-	admin = User.create(
+	sasha = User.create(
 		:name => "Sasha Klein",
 		:email => "sasha@meatup.in",
 		:password => "password",
 		:password_confirmation => "password",
 		:zip => "94114"
 	)
-	admin.toggle!(:admin)
-	one = User.create(
-		:name => "One",
-		:email => "one@meatup.in",
+	sasha.toggle!(:admin)
+	niko = User.create(
+		:name => "Niko Klein",
+		:email => "niko@meatup.in",
 		:password => "password",
 		:password_confirmation => "password",
 		:zip => "94114", 
@@ -353,8 +353,7 @@
 		:email => "two@meatup.in",
 		:password => "password",
 		:password_confirmation => "password",
-		:zip => "94114", 
-		:is_host => true
+		:zip => "94114"
 	)
 	miller_ranch_user = User.create(
 		:name => "Miler Ranch",
@@ -373,7 +372,7 @@
 		:is_rancher => true
 	)
 	sanders_user = User.create(
-		:name => "Sanders Ranch",
+		:name => "Sanders Butcher Person",
 		:email => "sanders@meatup.in",
 		:password => "password",
 		:password_confirmation => "password",
@@ -405,8 +404,9 @@
 		:ground => true,
 		:stew => true,
 		:boneless => true,
-		:user_id => one.id
+		:user_id => sanders_user.id,
 	)
+	sanders_user.update_attribute(:butcher_id, sanders.id)
 
 	buds_custom = Butcher.create(
 		:name => "Bud's Custom Meats",
@@ -424,6 +424,7 @@
 		:boneless => true,
 		:user_id => buds_custom_user.id
 	)
+	buds_custom_user.update_attribute(:butcher_id, buds_custom.id)
 
 # Ranches
 	Ranch.delete_all
@@ -478,6 +479,7 @@
 		:lamb => false,
 		:goat => false
 	)
+	miller_ranch_user.update_attribute(:ranch_id, miller_ranch.id)
 
 	clark_summit = Ranch.create(
 		:name => "Clark Summit Farm",
@@ -501,6 +503,7 @@
 		:goat => false,
 		:user_id => clark_summit_user.id
 	)
+	clark_summit_user.update_attribute(:ranch_id, clark_summit.id)
 
 # Hosts
 	Host.delete_all
@@ -510,8 +513,9 @@
 		:city => "San Francisco",
 		:zip => "94114",
 		:address => "3976 23rd St.",
-		:user_id => one.id
+		:user_id => niko.id
 	)
+	niko.update_attribute(:host_id, klein.id)
 
 # Animals
 	Animal.delete_all

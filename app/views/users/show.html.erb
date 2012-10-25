@@ -15,9 +15,13 @@
 <input type="text" value="<% if @user.admin %>Administrator<% else %>Meat Lover<% end %>" disabled="disabled">
 <%= link_to "Edit Profile", edit_user_path(@user), class: "btn image-button", style: "float:right;margin-top:15px;margin-bottom:35px;" %>
 <div style="margin-top:80px;">
-<label for="user_info">Recent Orders</label>
+<h2  class="normal_links" style="text-align:left">Recent Orders</h2>
 
 	<%= render 'orders' %>
+</div>
+
+<div  class="normal_links" style="margin-top:80px;">
+	<%= render 'extras' %>
 </div>
 		</td>
 	</tr>

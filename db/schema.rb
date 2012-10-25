@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024212724) do
+ActiveRecord::Schema.define(:version => 20121025230503) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -177,6 +177,9 @@ ActiveRecord::Schema.define(:version => 20121024212724) do
     t.boolean  "is_host",         :default => false
     t.boolean  "is_rancher",      :default => false
     t.boolean  "is_butcher",      :default => false
+    t.integer  "butcher_id"
+    t.integer  "ranch_id"
+    t.integer  "host_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
