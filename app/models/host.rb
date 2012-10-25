@@ -23,4 +23,8 @@ class Host < ActiveRecord::Base
   validates :phone, presence: true
   validates :state, presence: true
   validates :zip, presence: true, length: { is: 5 }
+
+  def name
+  	self.user.name
+  end
 end

@@ -5,6 +5,7 @@ before_filter :admin_user
    # GET /animals
   def index
   	@animals = Animal.all
+    @animal_array = ["Cow", "Pig", "Lamb", "Goat"]
   end
 
    # GET /animals/1
