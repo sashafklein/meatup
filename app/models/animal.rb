@@ -169,7 +169,7 @@ class Animal < ActiveRecord::Base
   end
 
   def sold
-    self.packages.where(:sold => false)
+    self.packages.where(:sold => true)
   end
 
   def cut_packages(cut)
@@ -264,6 +264,198 @@ class Animal < ActiveRecord::Base
 
   def expected_margins 
     margins = self.revenue_possible - self.total_cost
+  end
+
+  def check_for_sold
+    if self.unsold == 0
+      self.close_animal
+    end
+  end
+
+  def close_animal
+    self.toggle!(:open)
+    UserMailer.delay.animal_close(self) if self.host.user.email.!include?("@meatup.in")
+    User.all.each do |u|
+      if u.admin
+        unless u.email.include?("@meatup.in")
+          UserMailer.delay.animal_overview(self)
+        end
+      end
+    end
+    UserMailer.delay.butcher_specs(self) unless self.butcher.user.email.include?("@meatup.in")
+  end
+
+  # Returns a list of packages, one per cut, ordered by savings, sold-out at bottom
+  def make_list
+    shortened = shorten(self) # Turns all packages into a one-per list
+    on_sale = remove_sold_out(shortened, self) # Removes sold_out items from list
+    by_savings = arrange_packages(on_sale) # A one-per, savings-organized list
+    sold_bottom = to_bottom(shortened, by_savings, self) 
+    sold_bottom
+  end
+
+  # Similar to the above, but with no sold-out ordering, as everything is sold out.
+  # Also, elements of the list are differentiated by line notes.
+  def make_sold_list
+    sold_list = shorten(self)
+    sorted = butcher_sort(sold_list, self)
+    sorted
+  end
+
+  # Returns a shortened list of cuts with NOTES included in ordering
+  def butcher_sort(list, animal)
+    array = []
+    list.each do |p|
+      package_list = animal.sold(p.cut)
+      package_list.each do |noted_cut|
+        if array.any?
+          counter = 0
+          array.each do |element|
+            if noted_cut.cut == element.cut
+              if noted_cut.line.notes == element.line.notes
+                counter += 1
+              end
+            end
+          end
+          if counter == 0
+            array << noted_cut
+          end
+        else 
+          array << noted_cut
+        end 
+      end
+    end
+    array
+  end
+
+
+  # Creates a complete list of packages -- one per cut (sold-out included)
+  def shorten(animal)
+    package_array = []
+    animal.packages.each do |p|
+      if package_array.any?
+        counter = 0
+        package_array.each do |element|
+          if p.cut == element.cut
+            counter += 1
+          end
+        end
+        if counter == 0
+          package_array << p
+        end
+      else 
+        package_array << p
+      end 
+    end
+    package_array
+  end
+
+  def remove_sold_out(shortened, animal)
+    cleaned_up = []
+    shortened.each do |p|
+      animal_list = Package.where(:animal_id => animal.id)
+      full_list = animal_list.where(:cut_id => p.cut.id)
+      counter = 0
+
+      full_list.each do |package|
+        unless package.sold
+          # Counter > 1 means there are unsold packages
+          counter += 1
+        end
+      end
+
+      # A single unsold package means it's not sold out
+      if counter > 0
+        cleaned_up << p
+      end 
+    end
+    cleaned_up
+  end
+
+  def arrange_packages(shortened)
+    shortened.each do |p|
+      savings = (100 * (p.cut.comp - p.price) / p.cut.comp)
+      p.update_attribute(:savings, savings)
+    end
+    savings_list = shortened.sort_by{ |p| -p[:savings] }
+    savings_list
+  end
+
+  def to_bottom(shortened, by_savings, animal)
+
+    # Create a bottom layer of sold out packages
+    bottom = []
+
+    shortened.each do |p|
+      animal_list = Package.where(:animal_id => animal.id)
+      full_list = animal_list.where(:cut_id => p.cut.id)
+      counter = 0
+
+      full_list.each do |package|
+          counter += 1 unless package.sold 
+      end
+
+      # A single unsold package means it's not sold out
+      if counter == 0
+        p.update_attribute(:savings, -1)
+        bottom << p
+      end 
+    end
+
+    # Combine, with sold-out at bottom 
+    complete = []
+      by_savings.each do |t|
+        complete << t
+      end
+      bottom.each do |b|
+        complete << b
+      end
+
+    complete
+
+  end
+
+  def sold_out(cut, animal)
+    all_packages = Package.where(:animal_id => animal.id)
+    cut_packages = all_packages.where(:cut_id => cut.id)
+    counter = 0
+    cut_packages.each do |p|
+      counter += 1 unless p.sold
+    end
+    if counter == 0
+      true
+    else
+      false
+    end
+  end
+
+  def user_list 
+    list = []
+    self.orders.each do |o|
+      counter = 0
+      if list.empty?
+        list << o.user
+      else
+        list.each do |u|
+          if o.user == u
+            counter += 1
+          end
+          list << o.user if counter == 0
+        end
+      end
+    end
+    list
+  end
+
+  def user_order_list
+    order_list = []
+    self.user_list.each do |u|
+      animal_orders = u.orders.where(:animal_id => self.id)
+      animal_orders.each do |o|
+        order_list << o
+      end
+    end
+    order_list  
   end
 
 end

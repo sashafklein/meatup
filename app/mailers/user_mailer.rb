@@ -31,4 +31,14 @@ class UserMailer < ActionMailer::Base
     mail(:to => @user.email, :subject => "Thanks for the Order!")
   end
 
+  def animal_overview(@animal)
+    @url  = "www.meatup.in"
+    @label_url = "www.meatup.in/animals/#{@animal.id}/labels"
+    attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
+    attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
+    User.where(:admin => true) do |u|
+      mail(:to => u, :subject "#{@animal.name} has closed!")
+    end
+  end
+
 end

@@ -23,6 +23,10 @@ before_filter :admin_user
   	@animal = Animal.find(params[:id])
   end
 
+  def labels
+    @animal = Animal.find(params[:id])
+  end
+
   # POST /animals
   def create
   	@animal = Animal.new(params[:animal])

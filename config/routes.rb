@@ -21,18 +21,10 @@ Meatup2::Application.routes.draw do
   match '/orders/goat', to: "orders#goat_order"
 
   match '/hosts/dashboard', to: "hosts#dashboard"
+  match '/animals/:id/labels' => "animals#labels"
 
   resources :sessions, only: [:new, :create, :destroy]
-  resources :users
-  resources :cuts
-  resources :animals
-  resources :ranches
-  resources :butchers
-  resources :hosts
-  resources :charges
-
-  resources :orders 
-  resources :lines
+  resources :users, :cuts, :animals, :ranches, :butchers, :hosts, :charges, :orders, :lines
 
   root to: 'static_pages#welcome'
 

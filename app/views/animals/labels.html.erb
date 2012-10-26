@@ -1,0 +1,58 @@
+<h2>Ordered by Cut and Notes</h2>
+<table class="table" %>
+	<thead>
+		<tr>
+			<th>Cut</th>
+			<th>Prep Notes</th>
+			<th>Package #</th>
+			<th>Average Exp. Lbs</th>
+			<th>Label User</th>
+			<th>Label Number</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @animal.make_sold_list.each do |p| %>
+			<% p.note_list.each do |i| %>
+				<tr>
+					<td><%= i.cut.name %></td>
+					<td><%= i.line.notes %></td>
+					<td><%= i.expected_packages.length %></td>
+					<td><%= i.expected_weight %></td>
+					<td><%= i.order.user.name %></td>
+					<td><%= i.id %></td>
+				</tr>
+			<% end %>
+		<% end %>
+	</tbody>	
+</table>	
+
+<h2>Ordered by User</h2>
+<table class="table" %>
+	<thead>
+		<tr>
+			<th>User</th>
+			<th>Cut</th>
+			<th>Prep Notes</th>
+			<th>Package #</th>
+			<th>Average Exp. Lbs</th>
+			<th>Label<th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @animal.user_order_list.each do |o| %>
+		<tr><td><%= o.user.name %></td><td></td><td></td><td></td><td></td><td></td></tr>
+			<% o.lines.each do |l| %>
+				<% l.packages.each do |p| %>
+					<tr>
+						<td></td>
+						<td><%= p.cut.name %></td>
+						<td><%= p.line.notes %></td>
+						<td><%= p.expected_packages.length %></td>
+						<td><%= p.expected_weight %></td>
+						<td><%= "\#:#{p.id}" %></td>
+					</tr>
+				<% end %>
+			<% end %>
+		<% end %>
+	</tbody>	
+</table>	
