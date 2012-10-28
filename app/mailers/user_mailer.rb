@@ -15,11 +15,7 @@ class UserMailer < ActionMailer::Base
   	@order = order
     @host = order.animal.host
     @animal = order.animal
-
-      @meat_type = "beef" if order.animal.animal_type == "Cow"
-      @meat_type = "pork" if order.animal.animal_type == "Pig"
-      @meat_type = "lamb" if order.animal.animal_type == "Lamb"
-      @meat_type = "goat" if order.animal.animal_type == "Goat"
+    @meat_type = @animal.meat_type
 
     @url  = "www.meatup.in"
     @meat_url = "www.meatup.in/purchase"
@@ -37,8 +33,30 @@ class UserMailer < ActionMailer::Base
     attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
     attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
     User.where(:admin => true) do |u|
-      mail(:to => u, :subject "#{@animal.name} has closed!")
+      mail(:to => u.email, :subject => "#{@animal.name} has closed!")
     end
   end
+
+  def butcher_specs(@animal)
+    @url  = "www.meatup.in"
+    @label_url = "www.meatup.in/animals/#{@animal.id}/labels"
+    @log_url = "www.meatup.in/butchers/#{@animal.butcher.id}/log/#{@animal.id}"
+    attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
+    attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
+    @user = @animal.butcher.user
+    mail(:to => @user.email, :subject => "#{@animal.name}'s Butchery Instructions are ready!")
+  end
+
+  def animal_close(@animal)
+    @users = animal.users
+    @url  = "www.meatup.in"
+    attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
+    attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
+    @users.each do |u|
+      mail(to: u.email, subject: "Your #{@animal.meat_type} is on the move")
+    end
+  end
+
+
 
 end

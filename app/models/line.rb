@@ -60,4 +60,13 @@ class Line < ActiveRecord::Base
     p = self.packages.first
     p.price
   end
+
+  def processed_notes
+    if self.notes == ""
+      "None"
+    else
+      self.notes
+    end
+
+  end
 end

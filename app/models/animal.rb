@@ -447,6 +447,7 @@ class Animal < ActiveRecord::Base
     list
   end
 
+  # Returns list of orders on animal arranged by user.
   def user_order_list
     order_list = []
     self.user_list.each do |u|
@@ -456,6 +457,45 @@ class Animal < ActiveRecord::Base
       end
     end
     order_list  
+  end
+
+  def to_hanging
+    return self.pounds_sold * CHOM if self.animal_type == "Cow"
+    return self.pounds_sold * PHOM if self.animal_type == "Pig"
+    return self.pounds_sold * LHOM if self.animal_type == "Lamb"
+    return self.pounds_sold * GHOM if self.animal_type == "Goat"
+  end
+
+  def packages_for_log
+    all_packages = []
+    self.make_sold_list.each do |p| # One representative package per cut/line notes.
+      self.sold(p.cut).each do |i| # Cylcle through each of the packages of that cut/animal
+        all_packages << i if i.line.notes == p.line.notes # Add only if the line notes are equivalent
+      end
+    end 
+    all_packages
+  end
+
+  # Returns full list of the users who bought from the animal
+  def users
+    user_list = []
+    self.orders.each do |o|
+      counter = 0
+      user_list.each do |u|
+        if o.user == u
+          counter += 1
+        end
+      end
+      user_list << o.user if counter == 0 
+    end
+    user_list
+  end
+
+  def meat_type
+    "beef" if self.animal_type == "Cow"
+    "pork" if self.animal_type == "Pig"
+    "lamb" if self.animal_type == "Lamb"
+    "goat" if self.animal_type == "Goat"
   end
 
 end

@@ -14,7 +14,7 @@
 
           <%= @animal.name %>'s sale history (and other info) can be seen <%= link_to "here", @animal %>. The animal hosting is under care of <%= link_to @animal.host.name, @animal.host %>, and is set to be picked up at PICK-UP-DATE. 
 
-          A butchery order sheet has been sent to the <%= @animal.name %>'s butcher, <%= link_to @animal.butcher.name, @animal.butcher %>. A copy of that spec sheet is included below. It is simplified. Follow <%= link_to "this link", @label_url %> for a full, package-by-package list:
+          A butchery order sheet has been sent to the <%= @animal.name %>'s butcher, <%= link_to @animal.butcher.name, @animal.butcher %>. A simplified copy of that spec sheet (each line representing however many packages were ordered of that cut/prep type) is included below. Follow <%= link_to "this link", @label_url %> for a full, package-by-package list:
 
           	<table class="table" %>
           		<thead>

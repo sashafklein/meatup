@@ -8,8 +8,6 @@ Meatup2::Application.routes.draw do
 
   match '/contact', to: 'static_pages#contact'
   match '/purchase', to: 'static_pages#purchase'
-  match '/rancher', to: 'ranches#new'
-  match '/butcher', to: 'butchers#new'
 
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'
@@ -22,6 +20,7 @@ Meatup2::Application.routes.draw do
 
   match '/hosts/dashboard', to: "hosts#dashboard"
   match '/animals/:id/labels' => "animals#labels"
+  match '/butchers/:butcher_id/log/:animal_id' => "butchers#log"
 
   resources :sessions, only: [:new, :create, :destroy]
   resources :users, :cuts, :animals, :ranches, :butchers, :hosts, :charges, :orders, :lines

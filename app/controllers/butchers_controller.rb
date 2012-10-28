@@ -51,6 +51,11 @@ class ButchersController < ApplicationController
     redirect_to butchers_url
   end
 
+  def log
+    @butcher = Butcher.find(params[:butcher_id])
+    @animal = Animal.find(params[:animal_id])
+  end
+
   private
 
     def butcher_or_admin

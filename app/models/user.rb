@@ -48,6 +48,17 @@ class User < ActiveRecord::Base
     end
   end
 
+  def my_packages(animal)
+    orders = animal.user_order_list.where(:user_id => self.id)
+    package_list = []
+    orders.lines.each do |l|
+      l.packages.each do |p|
+        package_list << p
+      end
+    end
+    package_list
+  end
+
   private
 
     def zip_test
