@@ -26,3 +26,7 @@ Gemfile
 
 # Ignore email config file
 /config/initializers/setup_mail.rb
+
+# Ignore csr files
+meatup.key
+meatup.csr
