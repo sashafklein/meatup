@@ -18,8 +18,6 @@ Meatup2::Application.routes.draw do
   match '/orders/lamb', to: "orders#lamb_order"
   match '/orders/goat', to: "orders#goat_order"
 
-  match '/googledbb15ea7279f5bad.html', to: 'static_pages#google'
-
   match '/hosts/dashboard', to: "hosts#dashboard"
   match '/animals/:id/labels' => "animals#labels"
   match '/butchers/:butcher_id/log/:animal_id' => "butchers#log"
