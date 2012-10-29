@@ -17,6 +17,7 @@ Meatup2::Application.routes.draw do
   match '/orders/pig', to: "orders#pig_order"
   match '/orders/lamb', to: "orders#lamb_order"
   match '/orders/goat', to: "orders#goat_order"
+
   match '/googledbb15ea7279f5bad.html', to: 'static_pages#google'
 
   match '/hosts/dashboard', to: "hosts#dashboard"

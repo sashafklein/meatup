@@ -17,4 +17,7 @@ class StaticPagesController < ApplicationController
   def order_email
   	@order = Order.first
   end
+
+  def google
+  end
 end
