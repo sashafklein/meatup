@@ -274,15 +274,15 @@ class Animal < ActiveRecord::Base
 
   def close_animal
     self.toggle!(:open)
-    UserMailer.delay.animal_close(self) if self.host.user.email.!include?("@meatup.in")
+    UserMailer.animal_close(self).deliver if self.host.user.email.!include?("@meatup.in")
     User.all.each do |u|
       if u.admin
         unless u.email.include?("@meatup.in")
-          UserMailer.delay.animal_overview(self)
+          UserMailer.animal_overview(self).deliver
         end
       end
     end
-    UserMailer.delay.butcher_specs(self) unless self.butcher.user.email.include?("@meatup.in")
+    UserMailer.butcher_specs(self).deliver unless self.butcher.user.email.include?("@meatup.in")
   end
 
   # Returns a list of packages, one per cut, ordered by savings, sold-out at bottom
