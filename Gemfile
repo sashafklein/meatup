@@ -3,12 +3,13 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.8'
 gem 'rspec'
 gem 'googlecharts', :require => "gchart"
+gem 'unicorn'
+gem 'newrelic_rpm'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 group :production do
 	gem 'pg'
-	gem 'thin'
 end
 
 group :development do
