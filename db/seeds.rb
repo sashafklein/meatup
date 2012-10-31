@@ -387,6 +387,31 @@
 		:zip => "94114", 
 		:is_butcher => true
 	)
+	gleason_user = User.create(
+		:name => "Nancy",
+		:email => "infoatgleasonranch@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114", 
+		:is_butcher => true,
+		:is_rancher => true
+	)
+	godfrey_user = User.create(
+		:name => "Godfrey",
+		:email => "speechatthespeechworks@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114", 
+		:is_rancher => true
+	)
+	devils_gulch_user = User.create(
+		:name => "Mark Pasternak",
+		:email => "markatdevilsgulchranch@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114",
+		:is_rancher => true
+	)
 
 # Butchers
 	Butcher.delete_all
@@ -426,6 +451,24 @@
 	)
 	buds_custom_user.update_attribute(:butcher_id, buds_custom.id)
 
+	gleason_butcher = Butcher.create(
+		:name => "FIX NAME",
+		:address => "Turlock St.",
+		:city => "Turlock",
+		:state => "CA",
+		:zip => "94114",
+		:phone => "999-999-9999",
+		:hanging_price => 0.75,
+		:final_price => 0,
+		:wrap_price => 0,
+		:vacuum_price => 0.00,
+		:ground => true,
+		:stew => true,
+		:boneless => true,
+		:user_id => gleason_user.id,
+	)
+	gleason_user.update_attribute(:butcher_id, gleason_butcher.id)
+
 # Ranches
 	Ranch.delete_all
 
@@ -457,7 +500,7 @@
 	# 	:goat_live => 000,
 	# 	:goat_hanging => 000,
 	# 	:goat_fixed => 100,
-	# 	:user_id => blank_ranch.id
+	# 	:user_id => blank_ranch_user.id
 	# )
 
 	miller_ranch = Ranch.create(
@@ -504,6 +547,71 @@
 		:user_id => clark_summit_user.id
 	)
 	clark_summit_user.update_attribute(:ranch_id, clark_summit.id)
+
+	gleason_ranch = Ranch.create(
+		:name => "Gleason Ranch",
+		:address => "",
+		:phone => "7074770879",
+		:state => "CA",
+		:city => "Bodega, Sonoma",
+		:zip => "94971",
+		:has_csa => true,
+		:delivers_butcher => true,  
+		:delivers_drop => true,  # Let's set this to ~50 mi radius from "city center"? Translates to delivery cost estimate
+		:delivers_host => false,  # Eliminates delivery cost estimate add-on
+		:cow => true,
+		:cow_live => 000,
+		:cow_hanging => 3.25,
+		:cow_fixed => 75,
+		:pig => true,
+		:pig_live => 000,
+		:pig_hanging => 3.0,
+		:pig_fixed => 60,
+		:lamb => true,
+		:lamb_live => 000,
+		:lamb_hanging => 6.25,
+		:lamb_fixed => 60,
+		:goat => false,
+		:user_id => gleason_user.id
+	)
+	gleason_user.update_attribute(:ranch_id, gleason_ranch.id)
+
+	# These guys have veal!!
+	godfrey_ranch = Ranch.create(
+		:name => "Godfrey Family Farms",
+		:address => "",
+		:phone => "7074770879",
+		:state => "CA",
+		:city => "Meridian",
+		:zip => "94971",
+		:has_csa => true,
+		:delivers_butcher => true,  
+		:delivers_drop => true,  # Let's set this to ~50 mi radius from "city center"? Translates to delivery cost estimate
+		:delivers_host => false,  # Eliminates delivery cost estimate add-on
+		:pig => true,
+		:pig_live => 000,
+		:pig_hanging => 3.0, # Must be filled in. Pricing not accurate.
+		:pig_fixed => 60, # Ditto
+		:user_id => godfrey_user.id
+	)
+	godfrey_user.update_attribute(:ranch_id, godfrey_ranch.id)
+
+	devils_gulch_ranch = Ranch.create(
+		:name => "Devil's Gulch Ranch",
+		:phone => "707-953-0923",
+		:state => "CA",
+		:city => "Marin",
+		:zip => "94971",
+		:has_csa => false,
+		:pig => true,
+		:pig_hanging => 3.75, #Fill in
+		:pig_fixed => 100, #Fill in
+		:lamb => true,
+		:lamb_hanging => 4.00, #Fill in
+		:lamb_fixed => 60, #Fill in
+		:user_id => devils_gulch_user.id
+	)
+	devils_gulch_user.update_attribute(:ranch_id, devils_gulch_ranch.id)
 
 # Hosts
 	Host.delete_all
