@@ -15,6 +15,9 @@
 #  is_host         :boolean          default(FALSE)
 #  is_rancher      :boolean          default(FALSE)
 #  is_butcher      :boolean          default(FALSE)
+#  butcher_id      :integer
+#  ranch_id        :integer
+#  host_id         :integer
 #
 
 class User < ActiveRecord::Base

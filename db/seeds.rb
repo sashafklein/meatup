@@ -603,9 +603,10 @@
 		:city => "Marin",
 		:zip => "94971",
 		:has_csa => false,
+		:preferred_butcher => buds_custom.id,
 		:pig => true,
-		:pig_hanging => 3.75, #Fill in
-		:pig_fixed => 100, #Fill in
+		:pig_hanging => 3.25,
+		:pig_fixed => 00, 
 		:lamb => true,
 		:lamb_hanging => 4.00, #Fill in
 		:lamb_fixed => 60, #Fill in

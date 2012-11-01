@@ -11,18 +11,18 @@
 #  pig               :boolean          default(FALSE)
 #  lamb              :boolean          default(FALSE)
 #  goat              :boolean          default(FALSE)
-#  cow_live          :decimal(, )
-#  pig_live          :decimal(, )
-#  goat_live         :decimal(, )
-#  lamb_live         :decimal(, )
-#  cow_meat          :decimal(, )
-#  pig_meat          :decimal(, )
-#  lamb_meat         :decimal(, )
-#  goat_meat         :decimal(, )
-#  cow_hanging       :decimal(, )
-#  pig_hanging       :decimal(, )
-#  lamb_hanging      :decimal(, )
-#  goat_hanging      :decimal(, )
+#  cow_live          :float
+#  pig_live          :float
+#  goat_live         :float
+#  lamb_live         :float
+#  cow_meat          :float
+#  pig_meat          :float
+#  lamb_meat         :float
+#  goat_meat         :float
+#  cow_hanging       :float
+#  pig_hanging       :float
+#  lamb_hanging      :float
+#  goat_hanging      :float
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  state             :string(255)

@@ -12,13 +12,14 @@
 #  updated_at   :datetime         not null
 #  ranch_id     :integer
 #  butcher_id   :integer
-#  cow_mult     :decimal(, )
-#  pig_mult     :decimal(, )
-#  lamb_mult    :decimal(, )
-#  goat_mult    :decimal(, )
+#  cow_mult     :float
+#  pig_mult     :float
+#  lamb_mult    :float
+#  goat_mult    :float
 #  host_id      :integer
 #  final_sale   :boolean          default(FALSE)
 #  opening_sale :boolean          default(FALSE)
+#  open         :boolean          default(TRUE)
 #
 
 require 'test_helper'

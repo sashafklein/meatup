@@ -7,7 +7,6 @@ Meatup2::Application.routes.draw do
   match '/order_email', to: 'static_pages#order_email'
 
   match '/contact', to: 'static_pages#contact'
-  match '/purchase', to: 'static_pages#purchase'
 
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'
@@ -17,6 +16,9 @@ Meatup2::Application.routes.draw do
   match '/orders/pig', to: "orders#pig_order"
   match '/orders/lamb', to: "orders#lamb_order"
   match '/orders/goat', to: "orders#goat_order"
+  match '/orders/list/:type' => "orders#list"
+  match '/orders/new/:animal' => 'orders#new'
+  match '/orders/purchase' => 'orders#purchase'
 
   match '/hosts/dashboard', to: "hosts#dashboard"
   match '/animals/:id/labels' => "animals#labels"

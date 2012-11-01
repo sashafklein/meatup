@@ -7,7 +7,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  animal_id   :integer
-#  price       :decimal(, )
+#  price       :float
 #  line_id     :integer
 #  sold        :boolean
 #  savings     :integer

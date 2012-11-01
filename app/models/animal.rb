@@ -12,19 +12,20 @@
 #  updated_at   :datetime         not null
 #  ranch_id     :integer
 #  butcher_id   :integer
-#  cow_mult     :decimal(, )
-#  pig_mult     :decimal(, )
-#  lamb_mult    :decimal(, )
-#  goat_mult    :decimal(, )
+#  cow_mult     :float
+#  pig_mult     :float
+#  lamb_mult    :float
+#  goat_mult    :float
 #  host_id      :integer
 #  final_sale   :boolean          default(FALSE)
 #  opening_sale :boolean          default(FALSE)
+#  open         :boolean          default(TRUE)
 #
 
 class Animal < ActiveRecord::Base
   attr_accessible :breed, :name, :photo, :animal_type,  
                   :weight, :ranch_id, :butcher_id, :cow_mult, :pig_mult,
-                  :lamb_mult, :goat_mult, :host_id, :final_sale, :opening_sale
+                  :lamb_mult, :goat_mult, :host_id, :final_sale, :opening_sale, :open
   has_many :orders
   has_many :packages
   belongs_to :butcher
@@ -491,11 +492,54 @@ class Animal < ActiveRecord::Base
     user_list
   end
 
+  def mult
+    cow_mult if self.animal_type == "Cow"
+    pig_mult if self.animal_type == "Pig"
+    lamb_mult if self.animal_type == "Lamb"
+    goat_mult if self.animal_type == "Goat"
+  end
+
+  def avg_price
+    pounds = 0
+    sum = 0
+    self.packages.each do |p|
+      pounds += p.expected_weight
+      sum += p.price
+    end
+    sum / pounds
+  end
+
+  def avg_weight
+    num = 0
+    sum = 0
+    self.packages.each do |p|
+      num += 1
+      sum += p.expected_weight
+    end
+    sum / num
+  end
+
+  def get_open
+    Animal.where(:open => true)
+  end
+
   def meat_type
     "beef" if self.animal_type == "Cow"
     "pork" if self.animal_type == "Pig"
     "lamb" if self.animal_type == "Lamb"
     "goat" if self.animal_type == "Goat"
+  end
+
+  def harvest_date
+    "TBD"
+  end
+
+  def butchery_date
+    "TBD"
+  end
+
+  def pickup_date
+    "TBD"
   end
 
 end
