@@ -79,5 +79,30 @@ class Order < ActiveRecord::Base
     end
     total_savings
   end
+
+  def packages
+    packages = []
+    self.lines.each do |l|
+      l.packages.each do |p|
+        packages << p
+      end
+    end
+    packages
+  end
+
+  def get_difference
+    total = 0
+    self.packages.each do |p|
+      total += (p.expected_weight - p.true_weight) * p.price
+    end
+    total
+  end  
+
+  def true_weight
+    total = 0
+    self.packages.each do |p|
+      total += p.true_weight
+    end
+  end
   
 end

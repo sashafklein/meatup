@@ -75,5 +75,9 @@ class Package < ActiveRecord::Base
   def order
     self.line.order
   end
+
+  def weight_diff
+    self.expected_weight - self.true_weight
+  end
   
 end

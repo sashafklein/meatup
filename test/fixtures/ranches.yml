@@ -37,6 +37,7 @@
 #  pig_fixed         :integer          default(0)
 #  lamb_fixed        :integer          default(0)
 #  goat_fixed        :integer          default(0)
+#  description       :string(255)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html

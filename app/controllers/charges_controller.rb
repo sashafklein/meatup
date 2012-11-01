@@ -6,21 +6,38 @@ class ChargesController < ApplicationController
   def create
     # Amount in cents
     @order = Order.find(params[:order_id])
-    @amount = (@order.total * 100).to_i
+    if !@order.animal.finalized 
+      @amount = (@order.total * 100).to_i
 
-    Stripe::Charge.create(
-      :amount      => @amount,
-      :card        => params[:stripeToken],
-      :description => 'Rails Stripe customer',
-      :currency    => 'usd'
-    )
+      Stripe::Charge.create(
+        :amount      => @amount,
+        :card        => params[:stripeToken],
+        :description => "Deposit on #{@order.animal.name}",
+        :currency    => 'usd'
+      )
 
-    @order.update_attribute(:status, 1)
-    @order.user.end_apology
-    UserMailer.order_email(@order).deliver unless @order.user.email.include? "@meatup.in"
-    @order.animal.check_for_sold if @order.animal.open
+      @order.update_attribute(:status, 1)
+      @order.user.end_apology
+      UserMailer.order_email(@order).deliver unless @order.user.email.include? "@meatup.in"
+      @order.animal.check_for_sold if @order.animal.open
 
-    redirect_to @order, notice: "Charge processed successfully!"
+      redirect_to @order, notice: "Charge processed successfully!"
+    else
+      @amount = (@order.get_difference * 100).to_i
+
+      Stripe::Charge.create(
+        :amount      => @amount,
+        :card        => params[:stripeToken],
+        :description => 'Final Cost Difference',
+        :currency    => 'usd'
+      )
+
+      @order.update_attribute(:status, 2)
+      @order.update_attribute(:total, @order.total + @order.get_difference)
+      UserMailer.finalized_email(@order).deliver unless @order.user.email.include? "@meatup.in"
+
+      redirect_to @order, notice: "Payment update complete!"
+    end
     
   rescue Stripe::CardError => e
     flash[:error] = e.message

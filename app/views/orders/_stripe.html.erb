@@ -1,16 +1,35 @@
-<tr>
-	<td colspan=4 class="spacer">
-		<div class="receipt_pay">
-			<%= form_tag charges_path do %>
+<% if @order.animal.finalized %>
+	<tr>
+		<td colspan=4 class="spacer">
+			<div class="receipt_pay">
+				<%= form_tag charges_path do %>
 
-			  	<script src="https://button.stripe.com/v1/button.js" 
-			  		class="stripe-button"
-			        data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-			        data-description="<%= @order.animal.name %>"
-			        data-amount="<%= @order.total * 100 %>"></script>
-			    <%= hidden_field_tag(:order_id, @order.id) %>
-			    
-			<% end %>
-		</div>
-	</td>
-</tr>
+				  	<script src="https://button.stripe.com/v1/button.js" 
+				  		class="stripe-button"
+				        data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+				        data-description="<%= "#{@order.animal.name} Final Payment" %>"
+				        data-amount="<%= @order.get_difference * 100 %>"></script>
+				    <%= hidden_field_tag(:order_id, @order.id) %>
+				    
+				<% end %>
+			</div>
+		</td>
+	</tr>
+<% else %>
+	<tr>
+		<td colspan=4 class="spacer">
+			<div class="receipt_pay">
+				<%= form_tag charges_path do %>
+
+				  	<script src="https://button.stripe.com/v1/button.js" 
+				  		class="stripe-button"
+				        data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+				        data-description="<%= @order.animal.name %>"
+				        data-amount="<%= @order.total * 100 %>"></script>
+				    <%= hidden_field_tag(:order_id, @order.id) %>
+				    
+				<% end %>
+			</div>
+		</td>
+	</tr>
+<% end %>

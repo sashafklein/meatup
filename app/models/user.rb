@@ -62,6 +62,10 @@ class User < ActiveRecord::Base
     package_list
   end
 
+  def animal_orders(animal)
+    self.orders.where(:animal_id => animal.id)
+  end
+
   private
 
     def zip_test

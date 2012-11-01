@@ -20,6 +20,7 @@
 #  final_sale   :boolean          default(FALSE)
 #  opening_sale :boolean          default(FALSE)
 #  open         :boolean          default(TRUE)
+#  finalized    :boolean          default(FALSE)
 #
 
 class Animal < ActiveRecord::Base

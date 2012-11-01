@@ -21,7 +21,7 @@
 		<b style="font-weight:normal;color:#9a393a;"><%= status_array[@order.status] %></b>
 	</td>
 </tr>
-<% if @order.user.apology %>
+<% if @order.user.apology && !@a.finalized %>
 	<tr>
 	<td colspan=4>
 		<strong>10% "Apology Discount" applied to all cuts!</strong>
@@ -32,13 +32,22 @@
 	<td colspan=4 class="divider2">
 	</td>
 </tr>
-<tr>
-	<th class="details">Cut</th>
-	<th class="details">Notes</th>
-	<th class="details" width=15%>Total Lbs</th>
-	<% if @order.user.apology  %>
-		<th class="details" width=15%>(Discounted) Price</th>
-	<% else %>
+<% if !@a.finalized %>
+	<tr>
+		<th class="details">Cut</th>
+		<th class="details">Notes</th>
+		<th class="details" width=15%>Total Lbs</th>
+		<% if @order.user.apology && !@a.finalized %>
+			<th class="details" width=15%>(Discounted) Price</th>
+		<% else %>
+			<th class="details" width=15%>Price</th>
+		<% end %>
+	</tr>
+<% elsif @a.finalized %>
+	<tr>
+		<th class="details">Cut</th>
+		<th class="details">Notes</th>
+		<th class="details" width=15%>Weight Difference</th>
 		<th class="details" width=15%>Price</th>
-	<% end %>
-</tr>
+	</tr>
+<% end %>

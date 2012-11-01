@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <div style="width:720px;">
+      <%= link_to (image_tag(attachments['meatup_logo_white.png'].url)), @url %>
+      
+      <div style="padding: 0 35px 0 35px;">
+        <h1>Congrats, <%= @user.name.capitalize %>!</h1>
+        <h4>
+          Your order has now been finalized! Your card has been securely charged or refunded whatever you were over or under-charged based on unexpected variance. Now you just have to pick up (and eat) your meat.<br/>
+        </h4>
+        <br>
+        <h4>
+        Your meat will be available for pickup on <%= @animal.pickup_date %> from your host, <%= (@host.user.name).capitalize %>. Get in touch for details. 
+      	<br><br>
+      	Thanks again for being a part of our attempt to bring ranchers and meat-lovers a little closer. If there's anything at all we can do to make this experience better, please <%= mail_to "feedback@meatup.in", "let us know" %>. 
+        </h4>
+        <br>
+        <h4>Best,<h4><br>
+        <h4>The MeatUp Team<h4> 
+        
+      </div>
+      
+      <%= image_tag attachments['grassy_knoll_white_sm.png'].url %>
+    </div>
+  </body>
+</html>

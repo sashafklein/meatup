@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121025233546) do
+ActiveRecord::Schema.define(:version => 20121101204844) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20121025233546) do
     t.boolean  "final_sale",   :default => false
     t.boolean  "opening_sale", :default => false
     t.boolean  "open",         :default => true
+    t.boolean  "finalized",    :default => false
   end
 
   create_table "butchers", :force => true do |t|
@@ -163,6 +164,7 @@ ActiveRecord::Schema.define(:version => 20121025233546) do
     t.integer  "pig_fixed",         :default => 0
     t.integer  "lamb_fixed",        :default => 0
     t.integer  "goat_fixed",        :default => 0
+    t.string   "description"
   end
 
   create_table "users", :force => true do |t|

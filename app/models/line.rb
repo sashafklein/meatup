@@ -67,6 +67,13 @@ class Line < ActiveRecord::Base
     else
       self.notes
     end
+  end
 
+  def weight_diff
+    total = 0
+    self.packages.each do |p|
+      total += p.weight_diff
+    end 
+    total
   end
 end
