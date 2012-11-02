@@ -138,9 +138,8 @@ class Animal < ActiveRecord::Base
   end  
 
   def start_opening_sale
-    if self.delay(:run_at => 120.minutes.from_now).end_opening_sale
-      self.update_attribute(:opening_sale, true)
-    end
+    self.delay(:run_at => 120.minutes.from_now).end_opening_sale
+    self.update_attribute(:opening_sale, true)
   end
 
   def end_opening_sale
