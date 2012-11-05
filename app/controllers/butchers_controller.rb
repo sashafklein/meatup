@@ -1,6 +1,7 @@
 class ButchersController < ApplicationController
 
-  before_filter :butcher_or_admin, only: [:new, :edit, :update, :destroy]
+  before_filter :butcher_or_admin, only: [:new, :edit, :update, :destroy, :log]
+  before_filter :right_butcher, only: [:log]
 
   def index
   	@butchers = Butcher.all
@@ -54,6 +55,12 @@ class ButchersController < ApplicationController
   def log
     @butcher = Butcher.find(params[:butcher_id])
     @animal = Animal.find(params[:animal_id])
+    @packages = @animal.packages_for_log
+
+    if @animal.save
+      p.update_attribute(:true_weight, p.actual_lbs + p.actual_oz / 16)
+    end
+
   end
 
   private
@@ -66,5 +73,10 @@ class ButchersController < ApplicationController
       else
         redirect_to root_path, notice: "Sign up as butcher to access."
       end
+    end
+
+    def right_butcher
+      @butcher = Butcher.find(params[:butcher_id])
+      redirect_to(root_path) unless current_user.butcher == @butcher || current_user.admin?
     end
 end

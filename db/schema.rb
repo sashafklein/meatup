@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121101204844) do
+ActiveRecord::Schema.define(:version => 20121102234737) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20121101204844) do
     t.float    "goat_mult"
     t.integer  "host_id"
     t.boolean  "final_sale",   :default => false
-    t.boolean  "opening_sale", :default => false
+    t.boolean  "opening_sale", :default => true
     t.boolean  "open",         :default => true
     t.boolean  "finalized",    :default => false
   end
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20121101204844) do
     t.datetime "updated_at", :null => false
     t.integer  "animal_id"
     t.float    "total"
+    t.float    "difference"
   end
 
   add_index "orders", ["user_id"], :name => "index_orders_on_user_id"

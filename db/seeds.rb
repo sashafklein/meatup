@@ -235,21 +235,21 @@
   	)
   	knuckle = Cut.create(
 		:animal_type => "Cow",
-		:name => "Knuckle Bones",
+		:name => "Bones",
 	  	:price => 3,
-	  	:package_weight => 4.75,
-	  	:percent => 1.58,
+	  	:package_weight => 1.84,
+	  	:percent => 0.61,
 	  	:comp => 3,
 	  	:savings => 0,
 	  	:incentive => true, 
-	  	:description => "Beef bones, full of flavor. Just roast these for a few minutes to darken them, and throw them in a soup. Baby, you got a stew going."
+	  	:description => "Beef bones, full of flavor. Just roast these for a few minutes to darken them, and throw them in a soup."
   	)
   	fat = Cut.create(
 		:animal_type => "Cow",
 		:name => "Suet Fat",
 	  	:price => 3,
 	  	:package_weight => 1.8,
-	  	:percent => 0.75,
+	  	:percent => 0.4,
 	  	:comp => 3,
 	  	:savings => 0,
 	  	:incentive => true, 
@@ -636,8 +636,12 @@
         :weight => 1216, 
         :ranch_id => miller_ranch.id, 
         :butcher_id => sanders.id,
-        :host_id => klein.id
+        :host_id => klein.id,
+        :opening_sale => false
 	)
+
+##################################################################################################################################
+##################################################################################################################################
 
 # Real Users (with orders)
 Order.delete_all
@@ -651,7 +655,7 @@ Order.delete_all
 	)
 
 		jasper_1 = Order.create(
-			:status => 0,
+			:status => 2,
 			:animal_id => paul.id,
 			:user_id => jasper.id
 		)
@@ -685,3 +689,577 @@ Order.delete_all
 				:cut_id => top.id,
 				:units => 1
 			)
+
+			jasper_1.update_attribute(:total, jasper_1.to_total)
+
+	angelo = User.create(
+		:name => "Angelo Maddox",
+		:email => "angelo@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		angelo_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => angelo.id
+		)
+			Line.create(
+				:order_id => angelo_1.id,
+				:cut_id => sirloin.id,
+				:units => 11
+			)
+			Line.create(
+				:order_id => angelo_1.id,
+				:cut_id => ground.id,
+				:units => 15
+			)
+			Line.create(
+				:order_id => angelo_1.id,
+				:cut_id => shank.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => angelo_1.id,
+				:cut_id => offal.id,
+				:units => 1
+			)
+			angelo_1.update_attribute(:total, angelo_1.to_total)
+
+		angelo_2 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => angelo.id
+		)
+			Line.create(
+				:order_id => angelo_2.id,
+				:cut_id => porter.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => angelo_2.id,
+				:cut_id => top.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => angelo_2.id,
+				:cut_id => chuck.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => angelo_2.id,
+				:cut_id => shank.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => angelo_2.id,
+				:cut_id => offal.id,
+				:units => 1
+			)
+			angelo_2.update_attribute(:total, angelo_2.to_total)
+
+	thea = User.create(
+		:name => "Thea Baumann",
+		:email => "thea@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		thea_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => thea.id
+		)
+			Line.create(
+				:order_id => thea_1.id,
+				:cut_id => cross.id,
+				:units => 3
+			)
+			Line.create(
+				:order_id => thea_1.id,
+				:cut_id => shank.id,
+				:units => 3
+			)
+			Line.create(
+				:order_id => thea_1.id,
+				:cut_id => offal.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => thea_1.id,
+				:cut_id => skirt.id,
+				:units => 1
+			)
+			thea_1.update_attribute(:total, thea_1.to_total)
+
+	pim = User.create(
+		:name => "Pim Kyne",
+		:email => "thea@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		pim_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => pim.id
+		)
+			Line.create(
+				:order_id => pim_1.id,
+				:cut_id => london.id,
+				:units => 10
+			)
+			Line.create(
+				:order_id => pim_1.id,
+				:cut_id => ground.id,
+				:units => 60
+			)
+			Line.create(
+				:order_id => pim_1.id,
+				:cut_id => stew.id,
+				:units => 15
+			)
+			Line.create(
+				:order_id => pim_1.id,
+				:cut_id => chuck.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => pim_1.id,
+				:cut_id => top.id,
+				:units => 2
+			)
+			pim_1.update_attribute(:total, pim_1.to_total)
+
+		pim_2 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => pim.id
+		)
+			Line.create(
+				:order_id => pim_2.id,
+				:cut_id => chuck.id,
+				:units => 6
+			)
+			Line.create(
+				:order_id => pim_2.id,
+				:cut_id => eye.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => pim_2.id,
+				:cut_id => bottom.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => pim_2.id,
+				:cut_id => flank.id,
+				:units => 2
+			)
+			pim_2.update_attribute(:total, pim_2.to_total)
+			
+	virginia = User.create(
+		:name => "Virginia Woolworth",
+		:email => "virginia@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		virginia_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => virginia.id
+		)
+			Line.create(
+				:order_id => virginia_1.id,
+				:cut_id => filet.id,
+				:units => 2
+			)
+			virginia_1.update_attribute(:total, virginia_1.to_total)
+
+	andrea = User.create(
+		:name => "Andrea Woodside",
+		:email => "andrea@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		andrea_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => andrea.id
+		)
+			Line.create(
+				:order_id => andrea_1.id,
+				:cut_id => sirloin.id,
+				:units => 1
+			)
+			andrea_1.update_attribute(:total, andrea_1.to_total)
+
+	james = User.create(
+		:name => "James Ruggiero",
+		:email => "james@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		james_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => james.id
+		)
+			Line.create(
+				:order_id => james_1.id,
+				:cut_id => eye.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => james_1.id,
+				:cut_id => chuck.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => james_1.id,
+				:cut_id => offal.id,
+				:units => 1
+			)
+			james_1.update_attribute(:total, james_1.to_total)
+
+	maura = User.create(
+		:name => "Maura Thompson",
+		:email => "maura@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		maura_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => maura.id
+		)
+			Line.create(
+				:order_id => maura_1.id,
+				:cut_id => stew.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => maura_1.id,
+				:cut_id => brisket.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => maura_1.id,
+				:cut_id => ground.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => maura_1.id,
+				:cut_id => top.id,
+				:units => 1
+			)
+			maura_1.update_attribute(:total, maura_1.to_total)
+
+		sasha_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => sasha.id
+		)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => flap.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => ground.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => porter.id,
+				:units => 3
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => ribeye.id,
+				:units => 3
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => neck.id,
+				:units => 4
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => cross.id,
+				:units => 4
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => offal.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => t.id,
+				:units => 3
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => stew.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => shank.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => fat.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => top.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => rump.id,
+				:units => 1
+			)
+			sasha_1.update_attribute(:total, sasha_1.to_total)
+
+	loren = User.create(
+		:name => "Loren Kwan",
+		:email => "loren@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		loren_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => loren.id
+		)
+			Line.create(
+				:order_id => loren_1.id,
+				:cut_id => skirt.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => loren_1.id,
+				:cut_id => offal.id,
+				:units => 1
+			)
+			loren_1.update_attribute(:total, loren_1.to_total)
+
+		loren_2 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => loren.id
+		)
+			Line.create(
+				:order_id => loren_2.id,
+				:cut_id => ground.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => loren_2.id,
+				:cut_id => tri.id,
+				:units => 1
+			)
+			loren_2.update_attribute(:total, loren_2.to_total)
+	vincent = User.create(
+		:name => "Vincent Casotti",
+		:email => "vincent@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		vincent_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => vincent.id
+		)
+			Line.create(
+				:order_id => vincent_1.id,
+				:cut_id => ground.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => vincent_1.id,
+				:cut_id => stew.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => vincent_1.id,
+				:cut_id => ribeye.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => vincent_1.id,
+				:cut_id => t.id,
+				:units => 1
+			)
+			vincent_1.update_attribute(:total, vincent_1.to_total)
+
+	amy = User.create(
+		:name => "Amy Lin",
+		:email => "amy@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		amy_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => amy.id
+		)
+			Line.create(
+				:order_id => amy_1.id,
+				:cut_id => top.id,
+				:units => 1
+			)
+			amy_1.update_attribute(:total, amy_1.to_total)
+
+	lyra = User.create(
+		:name => "Lyra Levin",
+		:email => "lyra@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		lyra_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => lyra.id
+		)
+			Line.create(
+				:order_id => lyra_1.id,
+				:cut_id => ground.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => lyra_1.id,
+				:cut_id => stew.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => lyra_1.id,
+				:cut_id => top.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => lyra_1.id,
+				:cut_id => offal.id,
+				:units => 2
+			)
+			lyra_1.update_attribute(:total, lyra_1.to_total)
+
+	ted = User.create(
+		:name => "Ted Blackman",
+		:email => "ted@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		ted_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => ted.id
+		)
+			Line.create(
+				:order_id => ted_1.id,
+				:cut_id => stew.id,
+				:units => 1
+			)
+			ted_1.update_attribute(:total, ted_1.to_total)
+
+	eli = User.create(
+		:name => "Eli Scott",
+		:email => "eli@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		eli_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => eli.id
+		) 
+			Line.create(
+				:order_id => eli_1.id,
+				:cut_id => ribeye.id,
+				:units => 1
+			)
+			eli_1.update_attribute(:total, eli_1.to_total)
+
+	ashley = User.create(
+		:name => "Ashley Meyer",
+		:email => "ashley@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		ashley_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => ashley.id
+		) 
+			Line.create(
+				:order_id => ashley_1.id,
+				:cut_id => ground.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => ashley_1.id,
+				:cut_id => skirt.id,
+				:units => 1
+			)
+			ashley_1.update_attribute(:total, ashley_1.to_total)
+
+	laura = User.create(
+		:name => "Laura Spiekerman",
+		:email => "laura@meatup.in",
+		:password => "password",
+		:password_confirmation => "password",
+		:zip => "94114"
+	)
+		laura_1 = Order.create(
+			:status => 2,
+			:animal_id => paul.id,
+			:user_id => laura.id
+		) 
+			Line.create(
+				:order_id => laura_1.id,
+				:cut_id => brisket.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => laura_1.id,
+				:cut_id => short.id,
+				:units => 2
+			)
+			Line.create(
+				:order_id => laura_1.id,
+				:cut_id => porter.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => laura_1.id,
+				:cut_id => ribeye.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => laura_1.id,
+				:cut_id => skirt.id,
+				:units => 1
+			)
+			Line.create(
+				:order_id => laura_1.id,
+				:cut_id => ground.id,
+				:units => 3
+			)
+			laura_1.update_attribute(:total, laura_1.to_total)

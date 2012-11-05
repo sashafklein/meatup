@@ -4,7 +4,7 @@ class UserMailer < ActionMailer::Base
   def welcome_email(user)
     @user = user
     @url  = "www.meatup.in"
-    @meat_url = "www.meatup.in/purchase"
+    @meat_url = "www.meatup.in/orders/purchase"
     attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
     attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
     mail(:to => user.email, :subject => "Welcome to MeatUp!")

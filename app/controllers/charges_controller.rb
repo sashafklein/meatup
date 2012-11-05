@@ -7,7 +7,7 @@ class ChargesController < ApplicationController
     # Amount in cents
     @order = Order.find(params[:order_id])
     if !@order.animal.finalized 
-      @amount = (@order.total * 100).to_i
+      @amount = (@order.total * 80).to_i
 
       Stripe::Charge.create(
         :amount      => @amount,
@@ -23,7 +23,7 @@ class ChargesController < ApplicationController
 
       redirect_to @order, notice: "Charge processed successfully!"
     else
-      @amount = (@order.get_difference * 100).to_i
+      @amount = ((@order.get_difference + 0.2 * @order.total) * 100).to_i
 
       Stripe::Charge.create(
         :amount      => @amount,

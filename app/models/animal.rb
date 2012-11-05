@@ -17,10 +17,10 @@
 #  lamb_mult    :float
 #  goat_mult    :float
 #  host_id      :integer
-#  final_sale   :boolean          default(FALSE)
-#  opening_sale :boolean          default(FALSE)
-#  open         :boolean          default(TRUE)
-#  finalized    :boolean          default(FALSE)
+#  final_sale   :boolean          default(FALSE) 
+#  opening_sale :boolean          default(FALSE) # False at start, optionally started, then closed after 2 hours.
+#  open         :boolean          default(TRUE) # False when animal sold out
+#  finalized    :boolean          default(FALSE) # Triggered when package weights updated
 #
 
 class Animal < ActiveRecord::Base
@@ -138,8 +138,9 @@ class Animal < ActiveRecord::Base
   end  
 
   def start_opening_sale
-    self.delay(:run_at => 120.minutes.from_now).end_opening_sale
-    self.update_attribute(:opening_sale, true)
+    if self.opening_sale
+      self.delay(:run_at => 120.minutes.from_now).end_opening_sale
+    end
   end
 
   def end_opening_sale

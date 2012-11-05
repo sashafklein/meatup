@@ -12,10 +12,6 @@ Meatup2::Application.routes.draw do
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
 
-  match '/orders/cow', to: "orders#cow_order"
-  match '/orders/pig', to: "orders#pig_order"
-  match '/orders/lamb', to: "orders#lamb_order"
-  match '/orders/goat', to: "orders#goat_order"
   match '/orders/list/:type' => "orders#list"
   match '/orders/new/:animal' => 'orders#new'
   match '/orders/purchase' => 'orders#purchase'
@@ -25,7 +21,7 @@ Meatup2::Application.routes.draw do
   match '/butchers/:butcher_id/log/:animal_id' => "butchers#log"
 
   resources :sessions, only: [:new, :create, :destroy]
-  resources :users, :cuts, :animals, :ranches, :butchers, :hosts, :charges, :orders, :lines
+  resources :users, :cuts, :animals, :ranches, :butchers, :hosts, :charges, :orders, :lines, :packages
 
   root to: 'static_pages#welcome'
 

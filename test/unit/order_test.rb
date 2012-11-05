@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #  animal_id  :integer
 #  total      :float
+#  difference :float
 #
 
 require 'test_helper'

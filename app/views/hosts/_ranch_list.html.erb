@@ -5,7 +5,7 @@
 			<tr>
 				<th>Ranch Name</th>
 				<th>Ranch City</th>
-				<th>Est Meat Cost</th>
+				<th>Avg Meat Cost</th>
 				<th>Delivers To Butcher?</th>
 				<th>Delivers To Drop-Point?</th>
 				<th>Delivers To Host?</th>
@@ -19,13 +19,13 @@
 					<td><%= r.name %></td>
 					<td><%= r.city %></td>
 					<% if animal == "Cow" %>
-						<td><%= r.cow_meat %></td>
+						<td><%= number_to_currency(r.cow_meat) %>/lb</td>
 					<% elsif animal == "Pig" %>
-						<td><%= r.pig_meat %></td>
+						<td><%= number_to_currency(r.pig_meat) %>/lb</td>
 					<% elsif animal == "Lamb" %>
-						<td><%= r.lamb_meat %></td>
+						<td><%= number_to_currency(r.lamb_meat) %>/lb</td>
 					<% elsif animal == "Goat" %>
-						<td><%= r.goat_meat %></td>
+						<td><%= number_to_currency(r.goat_meat) %>/lb</td>
 					<% else %>
 						<td>ERROR</td>
 					<% end %>

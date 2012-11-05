@@ -36,16 +36,16 @@
               <% else %>
 
                <li class="spaced">&nbsp;</li>
-               <li class="top_spaced"><%= link_to "What's Cooking?", how_path %></li>
+               <li class="top_spaced"><%= link_to "What's Cooking?", "blog.meatup.in" %></li>
                <li class="dropdown">
                       <a href="#" class="btn image-button" data-toggle="dropdown">
                         <%= image_tag('icon-login.png') %> <%= current_user.name %> &nbsp; <b class="caret"></b>
                       </a>
 
                       <ul class="dropdown-menu">
-                        <li class="dr"><%= link_to "My Community", purchase_path %></li>
-                        <li class="dr"><%= link_to "Browse Ranches", purchase_path %></li>
-                        <li class="dr" style="font-weight:bold;"><%= link_to "Open Auctions", purchase_path %></li>
+                        <!-- <li class="dr"><%= link_to "My Community", orders_purchase_path %></li> -->
+                        <li class="dr"><%= link_to "Browse Ranches", ranches_path %></li>
+                        <li class="dr" style="font-weight:bold;"><%= link_to "Open Auctions", orders_purchase_path %></li>
                         <li class="line_divider" style="margin-top:4px;margin-bottom:4px;"></li>
                         <li class="dr"><%= link_to "View Profile & History", current_user %></li>
                         <li class="line_divider" style="margin-top:4px;margin-bottom:4px;"></li>

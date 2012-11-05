@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #  animal_id  :integer
 #  total      :float
+#  difference :float
 #
 
 class Order < ActiveRecord::Base
@@ -102,6 +103,24 @@ class Order < ActiveRecord::Base
     total = 0
     self.packages.each do |p|
       total += p.true_weight
+    end
+  end
+
+  def real
+    self.packages.each do |p|
+      unless p.true_weight
+        return false
+      end
+    end
+    return true
+  end
+
+  def to_total
+    if !self.total 
+      total = 0
+      self.packages.each do |p|
+        total += p.expected_weight * p.price
+      end
     end
   end
   

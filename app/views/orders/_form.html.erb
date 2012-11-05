@@ -16,9 +16,9 @@
   <div class="text-align:center">
 
 
-     <div class="order_title">"Life has its own hidden forces which you can only discover by <b style="color:#262220">eating grass-fed beef</b>." -S&oslash;ren Kierkegaard
+     <!-- <div class="order_title">"Life has its own hidden forces which you can only discover by <b style="color:#262220">eating grass-fed beef</b>." -S&oslash;ren Kierkegaard
      </div> 
-  
+   -->
     <!-- Assign the Animal and User -->
     <%= f.hidden_field  :animal_id, value: @order_animal.id %>
     <% if signed_in? %>
@@ -37,7 +37,7 @@
     
       <%= f.hidden_field :status, value: 0 %>
     
-        <%= link_to 'Back', purchase_path, :class => "order_back" %>
+        <%= link_to 'Back', orders_purchase_path, :class => "order_back" %>
 
         <%= f.submit "Review Order", :class => "btn image-button right" %> 
     

@@ -146,7 +146,7 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
       @user = User.find_by_id(@user_id)
       unless current_user.admin?
          unless current_user?(@user)
-          redirect_to purchase_path, notice: "Specific order-page unavailable to this user."
+          redirect_to orders_purchase_path, notice: "Specific order-page unavailable to this user."
          end
       end
     end
