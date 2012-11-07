@@ -218,7 +218,7 @@
 		:name => "Sirloin Tip",
 	  	:price => 8.1,
 	  	:package_weight => 1.1,
-	  	:percent => 0.25,
+	  	:percent => 1.81,
 	  	:comp => 9.99,
 	  	:savings => 19, 
 	  	:description => "Peeled off the top sirloin, this cut is great for cooking quick and high."
@@ -707,6 +707,7 @@ Order.delete_all
 			Line.create(
 				:order_id => angelo_1.id,
 				:cut_id => sirloin.id,
+				:notes => "Ground",
 				:units => 11
 			)
 			Line.create(
@@ -794,7 +795,7 @@ Order.delete_all
 
 	pim = User.create(
 		:name => "Pim Kyne",
-		:email => "thea@meatup.in",
+		:email => "pim@meatup.in",
 		:password => "password",
 		:password_confirmation => "password",
 		:zip => "94114"

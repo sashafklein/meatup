@@ -19,7 +19,7 @@ class Line < ActiveRecord::Base
   after_create :decrement_packages
 
   def cut
-  	Cut.find(cut_id)
+  	Cut.find(self.cut_id)
   end
 
   def note_taker 
@@ -57,8 +57,11 @@ class Line < ActiveRecord::Base
   end
 
   def price
-    p = self.packages.first
-    p.price
+    if self.packages.size > 0
+      p = self.packages.first
+      return p.price
+    end
+    1000
   end
 
   def processed_notes

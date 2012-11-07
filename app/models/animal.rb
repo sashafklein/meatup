@@ -299,9 +299,53 @@ class Animal < ActiveRecord::Base
   # Similar to the above, but with no sold-out ordering, as everything is sold out.
   # Also, elements of the list are differentiated by line notes.
   def make_sold_list
-    sold_list = shorten(self)
-    sorted = butcher_sort(sold_list, self)
-    sorted
+    list = []
+    self.orders.each do |o|
+      o.lines.each do |l|
+        if list.any?
+          counter = 0
+          list.each do |element|
+            if l.cut == element.cut && l.notes == element.notes
+              counter += 1
+            end
+          end
+          list << l if counter == 0
+        else
+          list << l
+        end
+      end
+    end
+    list.sort_by{:cut_id}
+  end
+
+  # Creates an array of arrays by notes/cut (Boneless Ribeye is its own array)
+  def packages_for_log 
+    master = []
+    self.packages.each do |p|
+      if p.sold
+
+        # The master has sublists
+        if master.any?
+          counter = 0
+
+          # Check for matching list. Add if found.
+          master.each do |list|
+            if p.notes == list.first.notes && p.cut == list.first.cut
+              list << p
+              counter += 1 # Don't create list is appropriate one found.
+            end
+          end
+          if counter == 0
+            master << [p] if counter == 0 # Add as new list if list doesn't yet exist.
+          end
+        else # If master is empty, add the package to a new sub-list.
+            master << [p]
+        end
+
+      end
+
+    end
+    master.sort
   end
 
   # Returns a shortened list of cuts with NOTES included in ordering
@@ -466,16 +510,6 @@ class Animal < ActiveRecord::Base
     return self.pounds_sold * PHOM if self.animal_type == "Pig"
     return self.pounds_sold * LHOM if self.animal_type == "Lamb"
     return self.pounds_sold * GHOM if self.animal_type == "Goat"
-  end
-
-  def packages_for_log
-    all_packages = []
-    self.make_sold_list.each do |p| # One representative package per cut/line notes.
-      self.sold(p.cut).each do |i| # Cylcle through each of the packages of that cut/animal
-        all_packages << i if i.line.notes == p.line.notes # Add only if the line notes are equivalent
-      end
-    end 
-    all_packages
   end
 
   # Returns full list of the users who bought from the animal

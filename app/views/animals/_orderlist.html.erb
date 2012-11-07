@@ -1,7 +1,7 @@
 <% @animal.orders.each do |o| %>
 	<tr class="info">
 		<td><%= link_to o.user.name, user_path(o.user.id) %></td>
-			<% status_array = ["Incomplete", "Complete", "Deposited", "Other"] %>
+			<% status_array = ["Incomplete", "Deposited", "Finalized", "Other"] %>
 		<td><%= status_array[o.status] %></td>
 		<td></td>
     	<td></td>
@@ -30,9 +30,9 @@
     	<td></td>
     	<td></td>
     	<td></td>
-    	<td></td>
     	<th>Order Total:</th>
     	<th><%= "#{o.poundage.round(2)}lbs" %></th>
+    	<th></th>
     	<th><%= number_to_currency(o.total) %></th>
     </tr>
 

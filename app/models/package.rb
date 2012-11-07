@@ -20,6 +20,7 @@ class Package < ActiveRecord::Base
   belongs_to :animal
   belongs_to :cut
   belongs_to :line
+  # before_save :to_true
 
   def expected_weight
   	self.cut.package_weight
@@ -77,8 +78,24 @@ class Package < ActiveRecord::Base
     self.line.order
   end
 
+  def identical_sold
+    list = []
+    self.animal.packages.where(:cut_id => self.cut_id).where(:sold => true).each do |p|
+      list << p if p.line.notes == self.line.notes
+    end
+    list
+  end
+
   def weight_diff
     self.expected_weight - self.true_weight
   end
-  
+
+  def to_true
+    self.update_attribute(:true_weight, self.actual_lbs + self.actual_oz/16)
+  end
+
+  def notes
+    self.line.notes if self.sold
+  end
+
 end

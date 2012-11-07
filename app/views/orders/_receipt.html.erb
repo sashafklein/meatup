@@ -4,7 +4,7 @@
 <% if !@order.animal.finalized %>
 	<% @order.lines.each do |l| %>
 
-		<% if l.units != 0 %>
+		<% if l.packages.size > 0 %>
 			<% p = l.packages.first %>
 			<% c = l.cut %>
 			

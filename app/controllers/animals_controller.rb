@@ -57,6 +57,15 @@ before_filter :admin_user
     redirect_to animals_url
   end
 
+  def log
+    @animal = Animal.find(params[:animal_id])
+
+    if @animal.update_attributes(params[:animal])
+      @animal.toggle!(:finalized)
+    end
+    
+  end
+
   private
 
     def admin_user

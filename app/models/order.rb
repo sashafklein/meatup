@@ -116,12 +116,13 @@ class Order < ActiveRecord::Base
   end
 
   def to_total
-    if !self.total 
+    unless self.total 
       total = 0
       self.packages.each do |p|
         total += p.expected_weight * p.price
       end
     end
+    total
   end
   
 end

@@ -18,7 +18,7 @@ Meatup2::Application.routes.draw do
 
   match '/hosts/dashboard', to: "hosts#dashboard"
   match '/animals/:id/labels' => "animals#labels"
-  match '/butchers/:butcher_id/log/:animal_id' => "butchers#log"
+  match '/animals/:animal_id/log' => "animals#log"
 
   resources :sessions, only: [:new, :create, :destroy]
   resources :users, :cuts, :animals, :ranches, :butchers, :hosts, :charges, :orders, :lines, :packages

@@ -52,17 +52,6 @@ class ButchersController < ApplicationController
     redirect_to butchers_url
   end
 
-  def log
-    @butcher = Butcher.find(params[:butcher_id])
-    @animal = Animal.find(params[:animal_id])
-    @packages = @animal.packages_for_log
-
-    if @animal.save
-      p.update_attribute(:true_weight, p.actual_lbs + p.actual_oz / 16)
-    end
-
-  end
-
   private
 
     def butcher_or_admin

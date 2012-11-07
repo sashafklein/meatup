@@ -1,0 +1,41 @@
+<div class="row">
+	<div class="collapse-group">
+		<h4 class="normal_links"> 
+			<%= "#{bundle.first.cut.name} -- #{bundle.first.line.notes} (#{bundle.size} packages) " %>
+			<a class="bundle" style="font-size:70%" href='#'>(expand)</a>
+		</h4>	
+		<div class="collapse normal_links" %>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Cut Name</th>
+						<th>Prep Notes</th>
+						<th>Label</th>
+						<th>Actual Lbs</th>
+						<th>Actual Oz</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% bundle.each do |package| %> <!-- Produces for each "bundle" the list of identical packages -->
+						<%= fields_for package do |p| %>
+							<% if package.order.user %>
+								<tr>
+									<td><%= package.cut.name %></td>
+									<td><%= package.line.processed_notes %></td>
+									<td><%= "#{package.order.user.name.first(3).upcase}-#{package.id}" %></td>
+									<% if !package.true_weight %>
+										<td colspan=1><%= p.text_field :actual_lbs %></td>
+										<td colspan=1><%= p.text_field :actual_oz %></td>
+									<% else %>
+										<td><%= package.true_weight.round(0) %>lb</td>
+										<td><%= (package.true_weight % 1) * 16 %>lb</td>
+									<% end %>  
+								</tr>
+							<% end %>
+						<% end %>	
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

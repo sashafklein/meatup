@@ -10,7 +10,7 @@
 			<% if @order.real %>
 				<%= @order.true_weight.round(2) %> lbs
 			<% else %>
-				<%= @order.poundage %> lbs
+				<%= @order.poundage.round(2) %> lbs
 			<% end %>
 		, placed on <%= @a.name %>, a <%= @a.weight %> lb <%= @a.breed %> <%= @a.animal_type %>, raised sustainably on <%= @a.ranch.name %>, in <%= @a.ranch.city %>, <%= @a.ranch.state %>.  All that remains is to pick the meat up at <%= link_to "your host", host_path(@h) %>'s.  As a customer, you are responsible for organizing a timely pick-up of your order, and if you are not personally able to retrieve your order during the pickup window, please contact your host, <%= @h.user.name %>, to make special arrangements.  Neither MeatUp, nor <%= @a.ranch.name %>, nor <%= @h.user.name %> is responsible for any damage that may occur to the contents of your order if it is retrieved outside of the established pickup window.
 	</div>
