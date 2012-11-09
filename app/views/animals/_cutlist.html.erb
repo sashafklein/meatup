@@ -3,7 +3,7 @@
   	<td><%= p.cut.name %></td>
   	<td><%= number_to_currency(p.price) %></td>
 	<td><%= @animal.cut_packages(p.cut).length %></td>  	
-	<td><%= @animal.unsold(p.cut).length %></td>
+	<td><%= @animal.cut_unsold(p.cut).length %></td>
 	<td><%= @animal.sold(p.cut).length %></td>
 	<td><%= p.expected_weight %> lb</td>
 	<td><%= (@animal.sold(p.cut).length * p.expected_weight).to_i %></td>

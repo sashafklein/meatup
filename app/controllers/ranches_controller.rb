@@ -1,6 +1,6 @@
 class RanchesController < ApplicationController
   
-  before_filter :rancher_or_admin, only: [:new, :update, :destroy, :edit]
+  before_filter :rancher_or_admin, only: [:new, :update, :destroy, :edit, :index]
 
   def index
   	@ranches = Ranch.all

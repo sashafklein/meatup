@@ -637,6 +637,7 @@
         :ranch_id => miller_ranch.id, 
         :butcher_id => sanders.id,
         :host_id => klein.id,
+        :no_sales => true,
         :opening_sale => false
 	)
 

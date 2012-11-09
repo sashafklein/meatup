@@ -23,7 +23,7 @@ Meatup2::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :users, :cuts, :animals, :ranches, :butchers, :hosts, :charges, :orders, :lines, :packages
 
-  root to: 'static_pages#welcome'
+  root to: 'orders#purchase'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

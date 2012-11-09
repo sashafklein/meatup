@@ -35,7 +35,7 @@
 		<td></td>
 		<td></td>
 		<td><strong><%= @total_weight.round(2) %> lb</strong></td>
-		<td><b><%= number_to_currency(@total) %><b></td>
+		<td><b><%= "Downpayment: #{number_to_currency(0.8 * @total)}" %><b></td>
 	</tr>
 <% else %>
 	<% @order.lines.each do |l| %>

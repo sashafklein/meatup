@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105204443) do
+ActiveRecord::Schema.define(:version => 20121109011948) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20121105204443) do
     t.boolean  "finalized",      :default => false
     t.float    "hanging_weight"
     t.float    "meat_weight"
+    t.boolean  "no_sales",       :default => false
   end
 
   create_table "butchers", :force => true do |t|

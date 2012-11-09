@@ -28,7 +28,7 @@
 class Animal < ActiveRecord::Base
   attr_accessible :breed, :name, :photo, :animal_type, :hanging_weight, :meat_weight,  
                   :weight, :ranch_id, :butcher_id, :cow_mult, :pig_mult, :packages_attributes,
-                  :lamb_mult, :goat_mult, :host_id, :final_sale, :opening_sale, :open
+                  :lamb_mult, :goat_mult, :host_id, :final_sale, :opening_sale, :open, :no_sales
   has_many :orders
   has_many :packages
   belongs_to :butcher
@@ -111,14 +111,19 @@ class Animal < ActiveRecord::Base
 
   def pounds_total
     total = 0
-    self.packages.each do |p|
+    self.packages.all.each do |p|
       total += p.expected_weight
     end
     total
   end
 
   def pounds_sold
-    deposited = self.orders.where(:status => 1)
+    deposited = []
+    self.orders.each do |o|
+      if o.status > 0
+        deposited << o
+      end
+    end
     sold = 0
     deposited.each do |o|
       o.lines.each do |l|
@@ -142,8 +147,10 @@ class Animal < ActiveRecord::Base
   end  
 
   def start_opening_sale
-    if self.opening_sale
-      self.delay(:run_at => 120.minutes.from_now).end_opening_sale
+    unless self.no_sales
+      if self.opening_sale
+        self.delay(:run_at => 120.minutes.from_now).end_opening_sale
+      end
     end
   end
 
@@ -161,13 +168,15 @@ class Animal < ActiveRecord::Base
   end
 
   def start_final_sale
-    self.end_opening_sale
-    unsold = self.packages.where(:sold => false)
-    unsold.each do |p|
-      p.update_attribute(:price, (p.price * 0.85))
-      p.update_attribute(:savings, (p.cut.comp - p.price)/p.cut.comp)
+    unless self.no_sales
+      self.end_opening_sale
+      unsold = self.packages.where(:sold => false)
+      unsold.each do |p|
+        p.update_attribute(:price, (p.price * 0.85))
+        p.update_attribute(:savings, (p.cut.comp - p.price)/p.cut.comp)
+      end
+      self.update_attribute(:final_sale, true)
     end
-    self.update_attribute(:final_sale, true)
   end  
 
   def unsold
@@ -187,7 +196,7 @@ class Animal < ActiveRecord::Base
     self.cut_packages(cut).where(:sold => true)
   end
 
-  def unsold(cut)
+  def cut_unsold(cut)
     self.cut_packages(cut).where(:sold => false)
   end
 
@@ -204,7 +213,7 @@ class Animal < ActiveRecord::Base
     all_packages = self.packages.all
     revenue = 0
     all_packages.each do |p|
-      revenue += p.cut.package_weight * p.price
+      revenue += p.expected_weight * p.price
     end
     revenue
   end
@@ -524,23 +533,11 @@ class Animal < ActiveRecord::Base
   end
 
   def avg_price
-    pounds = 0
-    sum = 0
-    self.packages.each do |p|
-      pounds += p.expected_weight
-      sum += p.price
-    end
-    sum / pounds
+    self.revenue_possible / self.pounds_total
   end
 
   def avg_weight
-    num = 0
-    sum = 0
-    self.packages.each do |p|
-      num += 1
-      sum += p.expected_weight
-    end
-    sum / num
+    self.pounds_total / self.packages.size
   end
 
   def get_open
@@ -569,7 +566,7 @@ class Animal < ActiveRecord::Base
   def true_weight_default
     self.packages.where(:sold => true).each do |p|
       if p.true_weight == nil
-        p.update_attribute(:true_weight, p.expected_weight)
+        p.update_attribute(:true_weight, 0) #p.expected_weight)
       end
     end
   end

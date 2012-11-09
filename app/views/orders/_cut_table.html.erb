@@ -44,7 +44,7 @@
           <% end %>
           
           <!-- Package drop-down with sold-out special case -->
-          <% list = @order_animal.unsold(p.cut).length %>
+          <% list = @order_animal.cut_unsold(p.cut).length %>
           <% dropdown = (0..list).to_a %>
           <% if dropdown.length <= 1 %>
             <td>
