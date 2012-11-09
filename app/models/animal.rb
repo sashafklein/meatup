@@ -2,30 +2,32 @@
 #
 # Table name: animals
 #
-#  id           :integer          not null, primary key
-#  animal_type  :string(255)
-#  name         :string(255)
-#  breed        :string(255)
-#  weight       :integer
-#  photo        :string(255)
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  ranch_id     :integer
-#  butcher_id   :integer
-#  cow_mult     :float
-#  pig_mult     :float
-#  lamb_mult    :float
-#  goat_mult    :float
-#  host_id      :integer
-#  final_sale   :boolean          default(FALSE) 
-#  opening_sale :boolean          default(FALSE) # False at start, optionally started, then closed after 2 hours.
-#  open         :boolean          default(TRUE) # False when animal sold out
-#  finalized    :boolean          default(FALSE) # Triggered when package weights updated
+#  id             :integer          not null, primary key
+#  animal_type    :string(255)
+#  name           :string(255)
+#  breed          :string(255)
+#  weight         :integer
+#  photo          :string(255)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  ranch_id       :integer
+#  butcher_id     :integer
+#  cow_mult       :float
+#  pig_mult       :float
+#  lamb_mult      :float
+#  goat_mult      :float
+#  host_id        :integer
+#  final_sale     :boolean          default(FALSE)
+#  opening_sale   :boolean          default(TRUE)
+#  open           :boolean          default(TRUE)
+#  finalized      :boolean          default(FALSE)
+#  hanging_weight :float
+#  meat_weight    :float
 #
 
 class Animal < ActiveRecord::Base
-  attr_accessible :breed, :name, :photo, :animal_type,  
-                  :weight, :ranch_id, :butcher_id, :cow_mult, :pig_mult,
+  attr_accessible :breed, :name, :photo, :animal_type, :hanging_weight, :meat_weight,  
+                  :weight, :ranch_id, :butcher_id, :cow_mult, :pig_mult, :packages_attributes,
                   :lamb_mult, :goat_mult, :host_id, :final_sale, :opening_sale, :open
   has_many :orders
   has_many :packages
@@ -33,6 +35,8 @@ class Animal < ActiveRecord::Base
   belongs_to :ranch
   belongs_to :host
   after_create :create_packages
+
+  accepts_nested_attributes_for :packages
 
   validates :weight, presence: true
   validates :breed, presence: true
@@ -319,7 +323,7 @@ class Animal < ActiveRecord::Base
   end
 
   # Creates an array of arrays by notes/cut (Boneless Ribeye is its own array)
-  def packages_for_log 
+  def sold_bundles 
     master = []
     self.packages.each do |p|
       if p.sold
@@ -475,34 +479,19 @@ class Animal < ActiveRecord::Base
     end
   end
 
-  def user_list 
-    list = []
-    self.orders.each do |o|
-      counter = 0
-      if list.empty?
-        list << o.user
-      else
-        list.each do |u|
-          if o.user == u
-            counter += 1
-          end
-          list << o.user if counter == 0
-        end
-      end
-    end
-    list
-  end
-
-  # Returns list of orders on animal arranged by user.
+  # Returns list of packages a user placed on the animal. Separate orders ignored.
   def user_order_list
-    order_list = []
-    self.user_list.each do |u|
-      animal_orders = u.orders.where(:animal_id => self.id)
-      animal_orders.each do |o|
-        order_list << o
+    master = []
+    self.users.each do |u|
+      list = []
+      u.orders.where(:animal_id => self.id).each do |o|
+        o.packages.each do |p|
+          list << p
+        end 
       end
+      master << list
     end
-    order_list  
+    master  
   end
 
   def to_hanging
@@ -575,6 +564,14 @@ class Animal < ActiveRecord::Base
 
   def pickup_date
     "TBD"
+  end
+
+  def true_weight_default
+    self.packages.where(:sold => true).each do |p|
+      if p.true_weight == nil
+        p.update_attribute(:true_weight, p.expected_weight)
+      end
+    end
   end
 
 end

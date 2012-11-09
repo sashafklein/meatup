@@ -1,5 +1,6 @@
 class StaticPagesController < ApplicationController
   def welcome
+    redirect_to orders_purchase_path
   end
 
   def about

@@ -15,7 +15,7 @@
 #
 
 class Package < ActiveRecord::Base
-  attr_accessible :animal_id, :cut_id, :price, :line_id, :sold, :savings, :actual_lbs, :actual_oz
+  attr_accessible :animal_id, :cut_id, :price, :line_id, :sold, :savings, :actual_lbs, :actual_oz, :true_weight
   attr_accessor :actual_lbs, :actual_oz
   belongs_to :animal
   belongs_to :cut
@@ -76,6 +76,10 @@ class Package < ActiveRecord::Base
 
   def order
     self.line.order
+  end
+
+  def user
+    self.order.user
   end
 
   def identical_sold

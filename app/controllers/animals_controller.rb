@@ -1,6 +1,7 @@
 class AnimalsController < ApplicationController
 
-before_filter :admin_user
+before_filter :admin_user, only: [:new, :show, :edit]
+before_filter :right_butcher, only: [:labels, :log]
 
    # GET /animals
   def index
@@ -24,7 +25,7 @@ before_filter :admin_user
   end
 
   def labels
-    @animal = Animal.find(params[:id])
+    @animal = Animal.find(params[:animal_id])
   end
 
   # POST /animals
@@ -61,7 +62,11 @@ before_filter :admin_user
     @animal = Animal.find(params[:animal_id])
 
     if @animal.update_attributes(params[:animal])
+      #@animal.true_weight_default
+      puts "Inside If Block"
       @animal.toggle!(:finalized)
+    else
+      render action: "log"
     end
     
   end
@@ -77,4 +82,15 @@ before_filter :admin_user
         redirect_to root_path, notice: "Sign in as admin to access."
       end
     end
+
+    def right_butcher
+      if signed_in?
+        unless current_user.admin? || current_user == Animal.find(params[:animal_id]).butcher.user
+          redirect_to root_path, notice: "Sign in as butcher of this animal to access."
+        end
+      else
+        redirect_to root_path, notice: "Sign in as butcher of this animal to access."
+      end
+    end
+
 end

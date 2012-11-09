@@ -1,7 +1,7 @@
 <h2>Cut Log<h2>
 <h4>Enter the actual weights for each package butchered</h4>
 
-<%= form_for(@animal) do |f| %>	
+<%= form_for(@animal, :url => { :action => "log" }) do |f| %>	
 
 	<div style="width: 200px">
 			<%= f.label "Hanging Weight (in lbs)" %>
@@ -10,12 +10,12 @@
 			<%= f.text_field :meat_weight %>
 	</div>
 
-	<% @animal.packages_for_log.each do |bundle| %> <!-- Packages are bundled by cut and prep notes -->
-		<%= render partial: 'package_bundle', locals: {:bundle => bundle} %><br>
+	<% @animal.sold_bundles.each do |bundle| %> <!-- Packages are bundled by cut and prep notes -->
+		<%= render partial: 'package_bundle', locals: {:bundle => bundle, :f => f} %><br>
 	<% end %>
+
+	<h4>And then you'd allow addition of extra packages here.</h4>
 
 	<%= f.submit "Submit Animal Log", :class => "btn image-button right" %>
 
 <% end %>
-
-<h4>And then you'd allow addition of extra packages here.</h4>

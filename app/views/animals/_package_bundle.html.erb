@@ -11,29 +11,29 @@
 						<th>Cut Name</th>
 						<th>Prep Notes</th>
 						<th>Label</th>
+						<th>True Weight</th><!-- 
 						<th>Actual Lbs</th>
-						<th>Actual Oz</th>
+						<th>Actual Oz</th> -->
 					</tr>
 				</thead>
 				<tbody>
-					<% bundle.each do |package| %> <!-- Produces for each "bundle" the list of identical packages -->
-						<%= fields_for package do |p| %>
-							<% if package.order.user %>
+					<!-- list of identical packages -->
+						<%= f.fields_for :packages, bundle do |p| %>
+							<% if p.object.order.user %>
 								<tr>
-									<td><%= package.cut.name %></td>
-									<td><%= package.line.processed_notes %></td>
-									<td><%= "#{package.order.user.name.first(3).upcase}-#{package.id}" %></td>
-									<% if !package.true_weight %>
-										<td colspan=1><%= p.text_field :actual_lbs %></td>
-										<td colspan=1><%= p.text_field :actual_oz %></td>
+									<td><%= p.object.cut.name %></td>
+									<td><%= p.object.line.processed_notes %></td>
+									<td><%= "#{p.object.order.user.name.first(3).upcase}-#{p.object.id}" %></td>
+									<% if !p.object.true_weight %>
+										<td colspan=1><%= p.text_field :true_weight %></td
 									<% else %>
-										<td><%= package.true_weight.round(0) %>lb</td>
-										<td><%= (package.true_weight % 1) * 16 %>lb</td>
+										<td><%= p.object.true_weight.round(0) %>lb</td>
+										
 									<% end %>  
 								</tr>
 							<% end %>
 						<% end %>	
-					<% end %>
+					
 				</tbody>
 			</table>
 		</div>

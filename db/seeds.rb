@@ -168,7 +168,7 @@
 		:name => "Porterhouse",
 	  	:price => 13.05,
 	  	:package_weight => 2.6,
-	  	:percent => 1.08,
+	  	:percent => 2.78,
 	  	:comp => 17.99,
 	  	:savings => 27, 
 	  	:description => "A rich and satisfying steakhouse classic, from the short loin, in the lower ribs. A balance of sirloin steak and tenderloin, separated by a bone."
@@ -218,7 +218,7 @@
 		:name => "Sirloin Tip",
 	  	:price => 8.1,
 	  	:package_weight => 1.1,
-	  	:percent => 1.81,
+	  	:percent => 1.99,
 	  	:comp => 9.99,
 	  	:savings => 19, 
 	  	:description => "Peeled off the top sirloin, this cut is great for cooking quick and high."
@@ -831,7 +831,6 @@ Order.delete_all
 				:units => 2
 			)
 			pim_1.update_attribute(:total, pim_1.to_total)
-
 		pim_2 = Order.create(
 			:status => 2,
 			:animal_id => paul.id,
