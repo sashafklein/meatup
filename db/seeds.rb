@@ -334,7 +334,7 @@
 	User.delete_all
 	sasha = User.create(
 		:name => "Sasha Klein",
-		:email => "sasha@meatup.in",
+		:email => "sashaklein1@gmail.com",
 		:password => "password",
 		:password_confirmation => "password",
 		:zip => "94114"
@@ -984,11 +984,6 @@ Order.delete_all
 				:order_id => sasha_1.id,
 				:cut_id => ribeye.id,
 				:units => 3
-			)
-			Line.create(
-				:order_id => sasha_1.id,
-				:cut_id => neck.id,
-				:units => 4
 			)
 			Line.create(
 				:order_id => sasha_1.id,

@@ -6,9 +6,10 @@
 		<% start_time = (@order.created_at.to_i) %>
 		<% now_time = Time.now.to_i %>
 		<% meat = @order.animal.animal_type.downcase %>
+		<% url = "new/#{@order.animal.id}" %>
 			<th colspan=5>
 
-				<div class="timer_stamp" id="timer" data-start=<%= start_time %> data-now=<%= now_time %> data-url=<%= meat %> >
+				<div class="timer_stamp" id="timer" data-start=<%= start_time %> data-now=<%= now_time %> data-url=<%= url %> >
 					TIME<br>LEFT TO PAY
 				</div>
 
