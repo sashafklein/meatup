@@ -35,6 +35,7 @@ class UsersController < ApplicationController
     if current_user.admin?
       if @user.update_attributes(params[:user], :as => :administrator)
         flash[:success] = "Profile updated"
+        sign_in current_user
         redirect_to @user
       else
         render 'edit'
