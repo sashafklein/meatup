@@ -73,7 +73,8 @@ class UsersController < ApplicationController
         @user = User.find(params[:id])
         redirect_to(root_path) unless current_user?(@user) || current_user.admin?
       else
-      redirect_to root_path, notice: "Sign in as correct user to access."
+        redirect_to root_path, notice: "Sign in as correct user to access."
+      end
     end
 
     def admin_user
