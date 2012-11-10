@@ -564,9 +564,13 @@ class Animal < ActiveRecord::Base
   end
 
   def true_weight_default
-    self.packages.where(:sold => true).each do |p|
-      if p.true_weight == nil
-        p.update_attribute(:true_weight, p.expected_weight)
+    self.orders.each do |o|
+      if o.status > 1
+        o.packages.each do |p|
+          if p.true_weight == nil && p.sold
+            p.update_attribute(:true_weight, p.expected_weight)
+          end
+        end
       end
     end
   end

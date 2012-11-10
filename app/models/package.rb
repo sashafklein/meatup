@@ -100,9 +100,10 @@ class Package < ActiveRecord::Base
   def to_true
     if self.sold
       if self.order.status > 1
-        if self.actual_lbs
-          unless self.true_weight
-            self.update_attribute(:true_weight, self.actual_lbs + self.actual_oz / 16)
+        if self.actual_lbs && self.actual_oz
+          unless self.true_weight != nil
+            percent = self.actual_oz / 16 if self.actual_oz
+            self.update_attribute(:true_weight, self.actual_lbs + percent)
           end
         end
       end
