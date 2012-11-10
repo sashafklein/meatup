@@ -20,7 +20,7 @@ class Package < ActiveRecord::Base
   belongs_to :animal
   belongs_to :cut
   belongs_to :line
-  # before_save :to_true
+  before_update :to_true
 
   def expected_weight
   	self.cut.package_weight
@@ -91,11 +91,22 @@ class Package < ActiveRecord::Base
   end
 
   def weight_diff
-    self.expected_weight - self.true_weight
+    if self.true_weight
+      return self.expected_weight - self.true_weight
+    end
+    return self.expected_weight
   end
 
   def to_true
-    self.update_attribute(:true_weight, self.actual_lbs + self.actual_oz/16)
+    if self.sold
+      if self.order.status > 1
+        if self.actual_lbs
+          unless self.true_weight
+            self.update_attribute(:true_weight, self.actual_lbs + self.actual_oz / 16)
+          end
+        end
+      end
+    end
   end
 
   def notes

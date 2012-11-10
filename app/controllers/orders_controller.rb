@@ -83,6 +83,7 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
 
     respond_to do |format|
       if @order.save
+        @order.update_attribute(:total, @order.make_total)
       
         format.html { redirect_to @order}
         format.json { render json: @order, status: :created, location: @order }

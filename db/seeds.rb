@@ -1025,6 +1025,21 @@ Order.delete_all
 				:cut_id => rump.id,
 				:units => 1
 			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => sirloin.id,
+				:units => 4
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => porter.id,
+				:units => 7
+			)
+			Line.create(
+				:order_id => sasha_1.id,
+				:cut_id => tri.id,
+				:units => 2
+			)
 			sasha_1.update_attribute(:total, sasha_1.to_total)
 
 	loren = User.create(

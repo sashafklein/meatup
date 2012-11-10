@@ -94,7 +94,9 @@ class Order < ActiveRecord::Base
   def get_difference
     total = 0
     self.packages.each do |p|
-      total += (p.expected_weight - p.true_weight) * p.price
+      if p.true_weight
+        total += (p.expected_weight - p.true_weight) * p.price
+      end
     end
     total
   end  
@@ -125,4 +127,14 @@ class Order < ActiveRecord::Base
     total
   end
   
+  def make_total
+    total = 0
+    self.lines.each do |l|
+      l.packages.each do |p|
+        total += p.expected_weight * p.price
+      end
+    end
+    total
+  end
+
 end
