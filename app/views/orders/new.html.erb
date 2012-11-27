@@ -1,3 +1,5 @@
-<h2>Paul Ryan:</h2>
+<%= provide(:title, full_title(@animal.name) %>
+
+<h2><%= "Place your order on #{@order_animal.name}:" %></h2>
 
 <%= render :partial => "form" %>

@@ -1,3 +1,7 @@
+    <div id="chart_div" data-sold=<%= @animal.pounds_sold.to_i %> data-left=<%= @animal.pounds_left.to_i %> ></div>
+    <%= "Sold: #{@animal.pounds_sold}" %>
+    <%= "Left: #{@animal.pounds_left}" %>
+
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
@@ -20,6 +24,3 @@
       }
     </script>
     
-    <div id="chart_div" data-sold=<%= @animal.pounds_sold.to_i %> data-left=<%= @animal.pounds_left.to_i %> ></div>
-    <%= @animal.pounds_sold %>
-    <%= @animal.pounds_left %>

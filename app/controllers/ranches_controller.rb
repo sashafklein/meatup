@@ -4,6 +4,7 @@ class RanchesController < ApplicationController
 
   def index
   	@ranches = Ranch.all
+    @animal_types = ["Cow", "Pig", "Lamb", "Goat"]
   end
 
    # GET /ranches/1

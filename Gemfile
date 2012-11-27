@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
-gem 'rspec'
 gem 'googlecharts', :require => "gchart"
 gem 'unicorn'
 gem 'newrelic_rpm'
@@ -14,6 +13,17 @@ end
 
 group :development do
 	gem 'sqlite3'
+	gem 'rspec-rails', '2.11.0'
+  gem 'guard-rspec', '1.2.1'
+end
+
+group :test do 
+	gem 'capybara', '1.1.2'
+  gem 'rb-fsevent', '0.9.1'
+  gem 'growl', '1.0.3'
+  gem 'guard-spork', '1.2.0'
+  gem 'spork', '0.9.2'
+  gem 'factory_girl_rails', '4.1.0'
 end
 
 gem 'annotate', '2.5.0'

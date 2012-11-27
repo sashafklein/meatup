@@ -36,52 +36,21 @@
 		</tr>
 	<% end %>
 
-</table>	
+</table>
 
-<h2>Cow Pricing</h2>
-<table class="table">
-	<tr>
-		<th>Ranch Name</th>
-		<th>Live $/LB</th>
-		<th>Hanging $/LB</th>
-		<th>Meat $/LB</th>
-	</tr>
-	<%= render 'cow_pricing'%>
-</table>		
+<% @animal_types.each do |t| %>
 
-<h2>Pig Pricing</h2>
-<table class="table">
-	<tr>
-		<th>Ranch Name</th>
-		<th>Live $/LB</th>
-		<th>Hanging $/LB</th>
-		<th>Meat $/LB</th>
-	</tr>
-	<%= render 'pig_pricing'%>
-</table>		
-
-<h2>Lamb Pricing</h2>
-<table class="table">
-	<tr>
-		<th>Ranch Name</th>
-		<th>Live $/LB</th>
-		<th>Hanging $/LB</th>
-		<th>Meat $/LB</th>
-	</tr>
-	<%= render 'lamb_pricing'%>
-</table>	
-
-<h2>Goat Pricing</h2>
-<table class="table">
-	<tr>
-		<th>Ranch Name</th>
-		<th>Live $/LB</th>
-		<th>Hanging $/LB</th>
-		<th>Meat $/LB</th>
-	</tr>
-	<%= render 'goat_pricing'%>
-</table>	
-
+	<h2><%= "#{t} Pricing" %></h2>
+	<table class="table">
+		<tr>
+			<th>Ranch Name</th>
+			<th>Live $/LB</th>
+			<th>Hanging $/LB</th>
+			<th>Meat $/LB</th>
+		</tr>
+		<%= render partial: 'pricing', locals: { t: t } %>
+	</table>
+<% end %>
 
 
 <br />

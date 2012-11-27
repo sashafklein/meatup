@@ -1,0 +1,45 @@
+<% if t == "Cow" %>
+	<% @ranches.each do |ranch| %>
+		<% if ranch.cow %>
+			<tr>
+				<td><%= ranch.name %></td>
+				<td><%= ranch.cow_live.round(2) if ranch.cow_live %></td>
+				<td><%= ranch.cow_hanging.round(2) if ranch.cow_hanging %></td>
+				<td><%= ranch.cow_meat.round(2) if ranch.cow_meat %></td>
+			</tr>
+		<% end %>
+	<% end %>
+<% elsif t == "Pig" %>
+	<% @ranches.each do |ranch| %>
+		<% if ranch.pig %>
+			<tr>
+				<td><%= ranch.name %></td>
+				<td><%= ranch.pig_live.round(2) if ranch.pig_live %></td>
+				<td><%= ranch.pig_hanging.round(2) if ranch.pig_hanging %></td>
+				<td><%= ranch.pig_meat.round(2) if ranch.pig_meat %></td>
+			</tr>
+		<% end %>
+	<% end %>
+<% elsif t == "Lamb" %>
+	<% @ranches.each do |ranch| %>
+		<% if ranch.lamb %>
+		<tr>
+			<td><%= ranch.name %></td>
+			<td><%= ranch.lamb_live.round(2) if ranch.lamb_live %></td>
+			<td><%= ranch.lamb_hanging.round(2) if ranch.lamb_hanging %></td>
+			<td><%= ranch.lamb_meat.round(2) if ranch.lamb_meat %></td>
+		</tr>
+		<% end %>
+	<% end %>
+<% elsif t == "Goat" %>
+	<% @ranches.each do |ranch| %>
+		<% if ranch.goat %>
+		<tr>
+			<td><%= ranch.name %></td>
+			<td><%= ranch.goat_live.round(2) if ranch.goat_live %></td>
+			<td><%= ranch.goat_hanging.round(2) if ranch.goat_hanging %></td>
+			<td><%= ranch.goat_meat.round(2) if ranch.goat_meat %></td>
+		</tr>
+		<% end %>
+	<% end %>
+<% end %>

@@ -111,35 +111,24 @@ class Animal < ActiveRecord::Base
 
   def pounds_total
     total = 0
-    self.packages.all.each do |p|
+    self.packages.each do |p|
       total += p.expected_weight
     end
     total
   end
 
   def pounds_sold
-    deposited = []
+    sold_weight = 0
     self.orders.each do |o|
-      if o.status > 0
-        deposited << o
+      o.packages.each do |p|
+        sold_weight += p.expected_weight if p.sold
       end
     end
-    sold = 0
-    deposited.each do |o|
-      o.lines.each do |l|
-        l.packages.each do |p|
-          sold += p.expected_weight
-        end
-      end
-    end
-    sold
+    sold_weight
   end
 
   def pounds_left
-    total = self.pounds_total
-    bought = self.pounds_sold
-    left = total - bought
-    left
+    self.pounds_total - self.pounds_sold
   end 
 
   def percent_left

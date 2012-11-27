@@ -6,6 +6,6 @@
 	<td><%= @animal.cut_unsold(p.cut).length %></td>
 	<td><%= @animal.sold(p.cut).length %></td>
 	<td><%= p.expected_weight %> lb</td>
-	<td><%= (@animal.sold(p.cut).length * p.expected_weight).to_i %></td>
+	<td><%= (@animal.sold(p.cut).length * p.expected_weight).round(2) %></td>
   </tr>
 <%end%>

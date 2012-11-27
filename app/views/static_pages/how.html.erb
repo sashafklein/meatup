@@ -1,4 +1,4 @@
-<% provide(:title, 'How MeatUp Works') %>
+<% provide(:title, 'How It Works') %>
 <h1>How MeatUp Works</h1>
 <p class="normal_links">MeatUp exists to foster a community of <strong>Consumers</strong>, <strong>Ranchers</strong>, and <strong>Butchers</strong>, and to streamline the process of bringing sustainably raised, healthy, local meat from the farm directly to your table. 
 <br><br>
@@ -7,7 +7,7 @@ The process is simple: A volunteer "<strong>hosts</strong>" an animal, choosing 
 <h2>Consumers</h2>
 <p class="normal_links">For <strong>consumers</strong>, MeatUp is a simple online retail experience. You just <%= link_to "pick the meat type", orders_purchase_path %> you're interested in, choose between available animals being hosted, and then select the exact cuts you want and pay for them on site, using the simple and secure Stripe API. 
 <br><br>
-Because exactly how much meat is in one 1.5"-thick ribeye is inherently unpredictable, MeatUp uses a straightforward two-charge approach: You just put down an 80% "downpayment" for your meat, and when we get the exact weights back from the butcher, (<%= link_to "usually after about a week or two", '#' %>), you pay the remainder.
+Because exactly how much meat is in one 1.5"-thick ribeye is inherently unpredictable, MeatUp uses a straightforward two-charge approach: You just put down an 80% "downpayment" for your meat, and when we get the exact weights back from the butcher, (<%= link_to "usually after about a week or two", '#long' %>), you pay the remainder.
 <br><br>
 When the meat is ready, you just head over to your local <strong>host</strong> and pick it up.</p><br>
 
@@ -31,7 +31,7 @@ When a host chooses your butcher shop, you'll be notified, and then when the mea
 
       <div class="row">
 		<div class="collapse-group">
-			<li><a class="stuff" href="#">Why does it take so long?</a></li>
+			<li id="long"><a class="stuff" href="#">Why does it take so long?</a></li>
 		  	<p class="collapse">
 			Timing's an issue we hope to work on as MeatUp grows. Almost unavoidably, though, if you're ordering a specific animal while it's still at pasture, it's going to have to take some time. There's scheduling the slaughter, then transporting to the butcher, then aging. Even leaner grass-fed beef, for instance, takes a solid 1.5-2 weeks to age properly. Finally, butchering a whole animal isn't an instantaneous process. In the future, we hope to be able to predict orders sooner and short-circuit the process, but for now, a short wait is one of the costs of getting local, sustainably-raised meat directly from the farmer.</p>
 		</div>
