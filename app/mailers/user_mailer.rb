@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "Meatup <no_reply@meatup.in>"
+  default from: "Meatup <sasha@meatup.in>"
 
   def welcome_email(user)
     @user = user

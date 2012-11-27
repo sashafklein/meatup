@@ -564,4 +564,61 @@ class Animal < ActiveRecord::Base
     end
   end
 
+  def downpaid_orders
+    self.orders.where(:status => 1)
+  end
+
+  def paid_orders
+    self.orders.where(:status => 2)
+  end
+
+  def downpaid_total
+    total = 0
+    self.downpaid_orders.each do |o|
+      o.packages.each do |p|
+        total += p.price * p.expected_weight
+      end
+    end
+    total
+  end
+
+  def downpaid_pounds
+    total = 0
+    self.downpaid_orders.each do |o|
+      o.packages.each do |p|
+        total += p.expected_weight
+      end
+    end
+    total
+  end
+
+
+  def paid_total
+    total = 0
+    self.paid_orders.each do |o|
+      o.packages.each do |p|
+        if p.true_weight
+          total += p.true_weight * p.price
+        else 
+          total += p.expected_weight * p.price
+        end
+      end
+    end
+    total
+  end
+
+  def paid_pounds
+    total = 0
+    self.paid_orders.each do |o|
+      o.packages.each do |p|
+        if p.true_weight
+          total += p.true_weight
+        else 
+          total += p.expected_weight
+        end
+      end
+    end
+    total
+  end
+
 end

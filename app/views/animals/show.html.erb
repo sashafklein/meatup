@@ -53,6 +53,12 @@
         </table>
 
       <h2>Associated Cuts</h2>
+      <div class="row" style="text-align:center">
+      <div class="collapse-group">
+        <h4 class="normal_links">
+          <a class="bundle" href='#'>(expand)</a>
+        </h4><br>
+      <div class="collapse normal_links" %>
         <table class="table">
           <tr>
             <th>Cut Name</th>
@@ -65,23 +71,12 @@
           </tr>
           <%= render 'cutlist' %>
         </table>
+      </div></div></div>
 
         <br>
 
       <h2>Associated Orders</h2>
-        <table class="table">
-          <tr>
-            <th>User</th>
-            <th>Order Status</th>
-            <th>Line Item</th>
-            <th># Packages</th>
-            <th>Cut Notes</th>
-            <th>Package Weight</th>
-            <th>Price</th>
-            <th>Line Total</th>
-          <tr>
-          <%= render 'orderlist' %>
-        </table>
+      <%= render 'orderlist' %>
 
 <br>
 

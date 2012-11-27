@@ -16,14 +16,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					<!-- list of identical packages -->
+					<!-- list of specified packages -->
 						<%= f.fields_for :packages, bundle do |p| %>
 							<% if p.object.order.user %>
 								<tr>
 									<td><%= p.object.cut.name %></td>
 									<td><%= p.object.line.processed_notes %></td>
 									<td><%= "#{p.object.order.user.name.first(3).upcase}-#{p.object.id}" %></td>
-									<% if p.object.true_weight == nil %>
+									<% if p.object.true_weight == nil || p.object.true_weight == 0 %>
 										<td colspan=1><%= p.text_field :actual_lbs %></td>
 										<td colspan=1><%= p.text_field :actual_oz %></td>
 									<% else %>
