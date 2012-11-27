@@ -106,6 +106,7 @@ class Order < ActiveRecord::Base
     self.packages.each do |p|
       total += p.true_weight
     end
+    total
   end
 
   def real
