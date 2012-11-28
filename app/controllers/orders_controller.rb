@@ -140,6 +140,11 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
         store_location
         redirect_to signin_url, notice: "Please sign in."
       end
+      if signed_in?
+        if current_user.email.include? "@meatup.in"
+          redirect_to root_path, notice: "Please enter real email before ordering."
+        end
+      end
     end
 
     def correct_user
