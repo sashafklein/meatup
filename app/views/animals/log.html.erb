@@ -1,7 +1,7 @@
 <h2>Cut Log<h2>
 <h4>Enter the actual weights for each package butchered</h4>
 
-<%= form_for(@animal, :url => { :action => "log" }) do |f| %>	
+<%= form_for(@animal, :url => { :action => "log" }, :method => :put) do |f| %>	
 
 	<div style="width: 200px">
 			<% if @animal.hanging_weight %>
