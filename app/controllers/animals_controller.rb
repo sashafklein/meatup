@@ -62,8 +62,7 @@ before_filter :right_butcher, only: [:labels, :log]
     @animal = Animal.find(params[:animal_id])
 
     if @animal.update_attributes(params[:animal])
-      @animal.true_weight_default
-      @animal.update_attribute(:finalized, true)
+      @animal.update_attribute(:finalized, true) if @animal.all_finalized
     else
       render action: "log"
     end

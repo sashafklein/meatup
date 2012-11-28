@@ -92,7 +92,7 @@ class Package < ActiveRecord::Base
 
   def weight_diff
     if self.true_weight
-      return self.expected_weight - self.true_weight
+      return self.true_weight - self.expected_weight
     end
     return self.expected_weight
   end
@@ -101,8 +101,8 @@ class Package < ActiveRecord::Base
     if self.sold
       if self.order.status > 1
         if self.actual_lbs && self.actual_oz
-          unless self.true_weight != nil
-            percent = self.actual_oz / 16 if self.actual_oz
+          unless self.true_weight && self.true_weight > 0
+            percent = self.actual_oz / 16
             self.update_attribute(:true_weight, self.actual_lbs + percent)
           end
         end
@@ -112,6 +112,14 @@ class Package < ActiveRecord::Base
 
   def notes
     self.line.notes if self.sold
+  end
+
+  def finalized
+    if self.order.status <= 1
+      return false
+    elsif self.order.status >= 2
+      return true
+    end
   end
 
 end

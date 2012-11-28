@@ -552,18 +552,6 @@ class Animal < ActiveRecord::Base
     "TBD"
   end
 
-  def true_weight_default
-    self.orders.each do |o|
-      if o.status > 1
-        o.packages.each do |p|
-          if p.true_weight == nil && p.sold
-            p.update_attribute(:true_weight, p.expected_weight)
-          end
-        end
-      end
-    end
-  end
-
   def downpaid_orders
     self.orders.where(:status => 1)
   end
@@ -619,6 +607,15 @@ class Animal < ActiveRecord::Base
       end
     end
     total
+  end
+
+  def all_finalized
+    self.orders.each do |o|
+      if o.status < 2
+        return false
+      end
+    end
+    return true
   end
 
 end
