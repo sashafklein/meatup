@@ -4,10 +4,21 @@
 <%= form_for(@animal, :url => { :action => "log" }) do |f| %>	
 
 	<div style="width: 200px">
-			<%= f.label "Hanging Weight (in lbs)" %>
-			<%= f.text_field :hanging_weight %>
-			<%= f.label "Meat Weight (in lbs)" %>
-			<%= f.text_field :meat_weight %>
+			<% if @animal.hanging_weight %>
+				<%= "Hanging Weight: #{@animal.hanging_weight}lbs" %>
+			<% else %>
+				<%= f.label "Hanging Weight (in lbs)" %>
+				<%= f.text_field :hanging_weight %>
+			<% end %>
+
+			<% if @animal.meat_weight %>
+				<%= "Meat Weight: #{@animal.meat_weight}lbs" %>
+			<% else %>
+				<%= f.label "Meat Weight (in lbs)" %>
+				<%= f.text_field :meat_weight %>
+			<% end %>
+			
+			
 	</div>
 
 	<% @animal.sold_bundles.each do |bundle| %> <!-- Packages are bundled by cut and prep notes -->

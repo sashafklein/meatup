@@ -618,4 +618,8 @@ class Animal < ActiveRecord::Base
     return true
   end
 
+  def finalize
+    self.toggle!(:finalized) unless self.finalized
+  end
+
 end

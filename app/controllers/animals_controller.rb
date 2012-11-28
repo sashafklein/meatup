@@ -62,7 +62,7 @@ before_filter :right_butcher, only: [:labels, :log]
     @animal = Animal.find(params[:animal_id])
 
     if @animal.update_attributes(params[:animal])
-      @animal.update_attribute(:finalized, true) if @animal.all_finalized
+      redirect_to butcher_path(@animal), notice: "Animal Update Successful!"
     else
       render action: "log"
     end
