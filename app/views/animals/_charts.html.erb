@@ -1,27 +1,3 @@
-<div id="chart_div" data-sold=<%= @animal.pounds_sold.to_i %> data-left=<%= @animal.pounds_left.to_i %> ></div>
+<div id="sales"> </div>
 <%= "Sold: #{@animal.pounds_sold.to_i}" %>
 <%= "Left: #{@animal.pounds_left.to_i}" %>
-
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-  google.load("visualization", "1", {packages:["corechart"]});
-  google.setOnLoadCallback(drawChart);
-  function drawChart() {
-    var sold = $(document).find('#chart_div').attr('data-sold');
-    var left = $(document).find('#chart_div').attr('data-left');
-    var other = 50;
-    var data = google.visualization.arrayToDataTable([
-      ['Pounds', 'Sold/Left'],
-      ['Pounds Sold', sold],
-      ['Left', left],
-      ['Test', other]
-    ]);
-
-    var options = {
-      
-    };
-
-    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-    chart.draw(data, options);
-  }
-</script>

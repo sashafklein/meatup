@@ -21,6 +21,8 @@
     <%= @f.fields_for :lines do |l| %>
 
         <tr> <%= l.hidden_field :cut_id, value: p.cut.id %>
+
+          <!-- Sale-Dependent Titling -->
           <% if !sold_out(p.cut, @order_animal) %>
               <% if (p.cut.incentive && @order_animal.opening_sale) %>
                 <td><div id="on_sale" title="<%= p.cut.description %>" ><%= p.cut.name %><strong class="sale_note"> EXTRA 10% OFF!</strong></div></td>

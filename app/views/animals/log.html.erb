@@ -4,29 +4,29 @@
 <%= form_for(@animal, :url => { :action => "log" }, :method => :put) do |f| %>	
 
 	<div style="width: 200px">
-			<% if @animal.hanging_weight %>
-				<%= "Hanging Weight: #{@animal.hanging_weight}lbs" %>
-			<% else %>
-				<%= f.label "Hanging Weight (in lbs)" %>
-				<%= f.text_field :hanging_weight %>
-			<% end %>
+		<% if @animal.hanging_weight %>
+			<%= "Hanging Weight: #{@animal.hanging_weight}lbs" %>
+		<% else %>
+			<%= f.label "Hanging Weight (in lbs)" %>
+			<%= f.text_field :hanging_weight %>
+		<% end %>
 
-			<% if @animal.meat_weight %>
-				<%= "Meat Weight: #{@animal.meat_weight}lbs" %>
-			<% else %>
-				<%= f.label "Meat Weight (in lbs)" %>
-				<%= f.text_field :meat_weight %>
-			<% end %>
-			
-			
+		<% if @animal.meat_weight %>
+			<%= "Meat Weight: #{@animal.meat_weight}lbs" %>
+		<% else %>
+			<%= f.label "Meat Weight (in lbs)" %>
+			<%= f.text_field :meat_weight %>
+		<% end %>
+		
+		
 	</div>
 
 	<% @animal.sold_bundles.each do |bundle| %> <!-- Packages are bundled by cut and prep notes -->
-		<%= render partial: 'package_bundle', locals: {:bundle => bundle, :f => f} %><br>
+	<%= render partial: 'package_bundle', locals: {:bundle => bundle, :f => f} %><br>
 	<% end %>
 
 	<h4>And then you'd allow addition of extra packages here.</h4>
 
-	<%= f.submit "Submit Animal Log", :class => "btn image-button right" %>
+<%= f.submit "Submit Animal Log", :class => "btn image-button right" %>
 
 <% end %>

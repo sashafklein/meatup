@@ -6,7 +6,7 @@ class ChargesController < ApplicationController
   def create
     # Amount in cents
     @order = Order.find(params[:order_id])
-    if !@order.animal.finalized 
+    if @order.status < 1
       @amount = (@order.total * 80).to_i
 
       Stripe::Charge.create(
@@ -34,7 +34,7 @@ class ChargesController < ApplicationController
 
       @order.update_attribute(:status, 2)
       @order.update_attribute(:total, @order.total + @order.get_difference)
-      UserMailer.finalized_email(@order).deliver unless @order.user.email.include? "@meatup.in"
+      UserMailer.finalized_order(@order).deliver unless @order.user.email.include? "@meatup.in"
 
       redirect_to @order, notice: "Payment update complete!"
     end

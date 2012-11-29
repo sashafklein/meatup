@@ -622,4 +622,13 @@ class Animal < ActiveRecord::Base
     self.toggle!(:finalized) unless self.finalized
   end
 
+  def packages_attributes=(attrs)
+    puts "THIS IS ATTRS: #{attrs}"
+    attrs.each do |attr|
+      p = Package.find(attr[id])
+      p.update_attributes(attr)
+      p.touch
+    end
+  end
+
 end

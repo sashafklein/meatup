@@ -98,12 +98,18 @@ class Package < ActiveRecord::Base
   end
 
   def to_true
+    puts "Pre-sold"
     if self.sold
+      puts "First"
       if self.order.status > 1
+        puts "Second"
         if self.actual_lbs && self.actual_oz
+          puts "Third"
           unless self.true_weight && self.true_weight > 0
-            percent = self.actual_oz / 16
-            self.update_attribute(:true_weight, self.actual_lbs + percent)
+            puts "Unless"
+            percent = self.actual_oz.to_f / 16
+            puts self.actual_lbs.to_f + percent
+            self.update_attribute(:true_weight, self.actual_lbs.to_f + percent)
           end
         end
       end

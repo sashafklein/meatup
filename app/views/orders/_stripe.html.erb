@@ -1,5 +1,5 @@
 <!-- Charging the remainder based on what butchers report back -->
-<% if @order.animal.finalized %>
+<% if @order.status > 1 %>
 	<tr>
 		<td colspan=4 class="spacer">
 			<div class="receipt_pay">
