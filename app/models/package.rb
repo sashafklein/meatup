@@ -101,14 +101,14 @@ class Package < ActiveRecord::Base
     puts "Pre-sold"
     if self.sold
       puts "First"
-      if self.order.status > 1
+      if self.order.status == 1
         puts "Second"
-        if self.actual_lbs && self.actual_oz
-          puts "Third"
-          unless self.true_weight && self.true_weight > 0
-            puts "Unless"
-            percent = self.actual_oz.to_f / 16
-            puts self.actual_lbs.to_f + percent
+        if self.true_weight.nil? || self.true_weight <= 0
+          puts "First Unless"
+          percent = self.actual_oz.to_f / 16
+          puts self.actual_lbs.to_f + percent
+          unless self.actual_lbs.to_f + percent == 0 
+            puts "Last Unless"
             self.update_attribute(:true_weight, self.actual_lbs.to_f + percent)
           end
         end
@@ -126,6 +126,11 @@ class Package < ActiveRecord::Base
     elsif self.order.status >= 2
       return true
     end
+  end
+
+  def actual_lbs=(val)
+    true_weight_will_change!
+    @actual_lbs=val
   end
 
 end

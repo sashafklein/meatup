@@ -60,6 +60,7 @@ before_filter :right_butcher, only: [:labels, :log]
 
   def log
     @animal = Animal.find(params[:animal_id])
+    
     if params[:animal]
       if @animal.update_attributes(params[:animal])
         redirect_to log_path(@animal), notice: "Animal update successful!"

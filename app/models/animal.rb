@@ -552,12 +552,20 @@ class Animal < ActiveRecord::Base
     "TBD"
   end
 
+  def incomplete_orders
+    self.orders.where(:status => 0)
+  end
+
   def downpaid_orders
     self.orders.where(:status => 1)
   end
 
   def paid_orders
     self.orders.where(:status => 2)
+  end
+
+  def complete_orders
+    self.orders.where(:status => 3)
   end
 
   def downpaid_total
@@ -620,15 +628,6 @@ class Animal < ActiveRecord::Base
 
   def finalize
     self.toggle!(:finalized) unless self.finalized
-  end
-
-  def packages_attributes=(attrs)
-    puts "THIS IS ATTRS: #{attrs}"
-    attrs.each do |attr|
-      p = Package.find(attr[id])
-      p.update_attributes(attr)
-      p.touch
-    end
   end
 
 end

@@ -53,7 +53,6 @@ $(document).ready(function(){
 // Persistent Header
 function UpdateTableHeaders() {
    $(".persist-area").each(function() {
-   console.log("anything");
        var el             = $(this),
            offset         = el.offset(),
            scrollTop      = $(window).scrollTop(),

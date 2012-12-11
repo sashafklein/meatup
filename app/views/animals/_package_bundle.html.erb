@@ -1,10 +1,10 @@
 <div class="row">
 	<div class="collapse-group">
 		<h4 class="normal_links"> 
-			<%= "#{bundle.first.cut.name} -- #{bundle.first.line.notes} (#{bundle.size} packages) " %>
+			<%= "#{bundle.first.cut.name} -- #{bundle.first.line.notes} (#{bundle.size} packages) "%>
 			<a class="bundle" style="font-size:70%" href='#'>(expand)</a>
 		</h4>	
-		<div class="collapse normal_links" %>
+		<div class="collapse normal_links">
 			<table class="table">
 				<thead>
 					<tr>
@@ -28,7 +28,7 @@
 										<td colspan=1><%= p.text_field :actual_oz %></td>
 									<% else %>
 										<td><%= p.object.true_weight.round(0) %> lb</td>
-										<td><%= ((p.object.true_weight % 1) * 16).round(2)%> oz </td>
+										<td><%= ((p.object.true_weight % 1) * 16).round(2)%> oz</td>
 									<% end %>  
 								</tr>
 							<% else %>
@@ -41,7 +41,7 @@
 										<td colspan=1><%= p.text_field :actual_oz %></td>
 									<% else %>
 										<td><%= p.object.true_weight.round(0) %> lb</td>
-										<td><%= ((p.object.true_weight % 1) * 16).round(2)%> oz </td>
+										<td><%= ((p.object.true_weight % 1) * 16).round(2)%> oz</td>
 									<% end %>  
 								</tr>
 							<% end %>
