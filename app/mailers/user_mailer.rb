@@ -90,10 +90,21 @@ class UserMailer < ActionMailer::Base
   end
 
   def new_user(user)
+    @url  = "www.meatup.in"
     @user = user
     attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
     attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
     mail(to: user.email, subject: "New MeatUp User: #{user.name}")
+  end
+
+  def new_order(order)
+    @url  = "www.meatup.in"
+    @user = order.user
+    @animal = order.animal
+    @order = order
+    attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
+    attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
+    mail(to: user.email, subject: "#{user.name} has placed an order on #{animal.name}")
   end
 
 
