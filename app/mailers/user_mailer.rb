@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "Meatup <sasha@meatup.in>"
+  default from: "Meatup <sasha@meatup.mailgun.org>"
 
   def welcome_email(user)
     @user = user
@@ -89,6 +89,12 @@ class UserMailer < ActionMailer::Base
     end
   end
 
+  def new_user(user)
+    @user = user
+    attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
+    attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
+    mail(to: user.email, subject: "New MeatUp User: #{user.name}")
+  end
 
 
 end

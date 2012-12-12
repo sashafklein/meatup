@@ -16,6 +16,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       UserMailer.welcome_email(@user).deliver unless @user.email.include? "@meatup.in"
+      UserMailer.new_user(@user) unless @user.email.include? "@meatup.in"
       sign_in @user
       flash[:success] = "Welcome to MeatUp!"
       redirect_to @user

@@ -1,28 +1,40 @@
-<h2>Cut Log<h2>
-<h4>Enter the actual weights for each package butchered</h4>
+<% provide(:title, 'Butchery Log') %>
+<h2><%= "#{@animal.name}'s Butchery Log" %></h2>
 
-<%= form_for(@animal, :url => { :action => "log" }, :method => :put) do |f| %>	
+<div class="row inset">
 
-	<div style="width: 200px">
+<!-- Macro Weight Formatting -->
+<h4>
+<% if !@animal.hanging_weight || !@animal.meat_weight %>
+	<span style="font-size:120%;font-weight:bold"><%= "Enter #{@animal.name}'s actual weight:" %></span>
+<% else %>
+	<span style="font-size:120%;font-weight:bold"><%= "#{@animal.name}'s Final Weight:" %></span>
+<% end %><br><br>
+
+<%= form_for(@animal, :url => { :action => "log" }, :method => :put) do |f| %>
 		<% if @animal.hanging_weight %>
-			<%= "Hanging Weight: #{@animal.hanging_weight}lbs" %>
+			<span style="font-weight:bold" class="inset">Hanging Weight:</span><%= " #{@animal.hanging_weight}lbs" %>
 		<% else %>
-			<%= f.label "Hanging Weight (in lbs)" %>
-			<%= f.text_field :hanging_weight %>
-		<% end %>
-
+			<span class="inset"><%= f.label "Hanging Weight (in lbs)" %>
+			<%= f.text_field :hanging_weight %></span>
+		<% end %><br>
+		</br>
 		<% if @animal.meat_weight %>
-			<%= "Meat Weight: #{@animal.meat_weight}lbs" %>
+			<span style="font-weight:bold" class="inset">Meat Weight:</span><%= " #{@animal.meat_weight}lbs" %>
 		<% else %>
-			<%= f.label "Meat Weight (in lbs)" %>
-			<%= f.text_field :meat_weight %>
+			<span class="inset"><%= f.label "Meat Weight (in lbs)" %>
+			<%= f.text_field :meat_weight %></span>
 		<% end %>
-		
-		
-	</div>
+	<br><br><br>
 
-	<% @animal.sold_bundles.each do |bundle| %> <!-- Packages are bundled by cut and prep notes -->
-	<%= render partial: 'package_bundle', locals: {:bundle => bundle, :f => f} %><br>
+	<span style="font-size:120%;font-weight:bold">Fill in individual package weights below:</p>
+</h4>
+</div>
+
+	<!-- Create an expandable table for each package type (cut and notes) -->
+	<% @animal.sold_bundles.each do |bundle| %> 
+		<%= render partial: 'package_bundle', 
+			   locals: {:bundle => bundle, :f => f} %><br>
 	<% end %>
 
 	<h4>And then you'd allow addition of extra packages here.</h4>

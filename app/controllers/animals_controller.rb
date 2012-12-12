@@ -65,7 +65,7 @@ before_filter :right_butcher, only: [:labels, :log]
       if @animal.update_attributes(params[:animal])
         redirect_to log_path(@animal), notice: "Animal update successful!"
       else
-        redirect_to log_path(@animal), notice: "Update unsuccessful. Contact sasha@meatup.in"
+        redirect_to log_path(@animal), notice: "Update unsuccessful. Contact sasha@meatup.mailgun.org"
       end
     end
     
