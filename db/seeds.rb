@@ -299,7 +299,37 @@
 	  	:description => "Thick, chewy, and meaty, the neck meat radiates out from the neckbone and is great for longs braises or barbecues."
   	)
 
-  	#Pig Cuts
+  	#The Real Donald Trump
+  # 	sait = Cut.create(
+		# :animal_type => "Pig",
+		# :name => "Bacon",
+	 #  	:price => 7,
+	 #  	:package_weight => 1,
+	 #  	:percent => 3,
+	 #  	:comp => 1, 
+	 #  	:savings => 0, 
+	 #  	:description => "Yum."
+  # 	)
+		leaf = Cut.create(
+		:animal_type => "Pig",
+		:name => "Leaf Lard",
+			:package_weight => .94,
+	  	:percent => 3,
+	  	:price => 2,
+	  	:comp => 6, 
+	  	:savings => 67, 
+	  	:description => "Fat from around the kidneys, leaf lard (the equivalent of beef/mutton suet) is clean tasting and great for frying and even baking."
+  	)
+  	leg_steak = Cut.create(
+		:animal_type => "Pig",
+		:name => "Fresh Ham Steak",
+			:package_weight => 3.97,
+	  	:percent => 9.52,
+	  	:price => 5.2,
+	  	:comp => 6, 
+	  	:savings => 67, 
+	  	:description => "Fat from around the kidneys, leaf lard (the equivalent of beef/mutton suet) is clean tasting and great for frying and even baking."
+  	) 
   	Cut.create(
 		:animal_type => "Pig",
 		:name => "Bacon",
