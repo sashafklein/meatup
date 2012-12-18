@@ -6,6 +6,7 @@
 <h2> Butcher Info </h2>
 <table class="table"> 
   <tr>
+    <th>Name</th>
     <th>Address</th>
     <th>Phone Number</th>
     <th>$/LB Meat</th>
@@ -23,6 +24,7 @@
   <% @butchers.each do |b| %>
   	<tr>
 		<td><%= b.address %></td>
+      <td><%= b.name %></td>
 	    <td><%= b.phone %></td>
 	    <td><%= b.final_price %></td>
 	    <td><%= b.wrap_price %></td>

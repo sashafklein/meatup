@@ -19,6 +19,7 @@ class ChargesController < ApplicationController
       @order.update_attribute(:status, 1)
       @order.user.end_apology
       UserMailer.order_email(@order).deliver unless @order.user.email.include? "@meatup.in"
+      UserMailer.new_order(@order).deliver unless @order.user.email.include? "@meatup.in"
       @order.animal.check_for_sold if @order.animal.open
 
       redirect_to @order, notice: "Charge processed successfully!"
