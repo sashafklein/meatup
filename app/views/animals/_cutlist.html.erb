@@ -1,6 +1,6 @@
 <% make_list(@animal).sort.each do |p| %>
   <tr>
-  	<td><%= p.cut.name %></td>
+  	<td><%= link_to p.cut.name, p.cut %></td>
   	<td><%= number_to_currency(p.price) %></td>
 	<td><%= @animal.cut_packages(p.cut).length %></td>  	
 	<td><%= @animal.cut_unsold(p.cut).length %></td>
