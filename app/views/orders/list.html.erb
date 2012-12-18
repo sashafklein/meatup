@@ -5,7 +5,6 @@
 			<tr>
 				<th>Name</th>
 				<th>Ranch</th>
-				<!-- <th>Avg Cost/LB</th> -->
 				<th>Lbs Left</th>
 				<th>Harvest Date</th>
 				<th>Pickup Date</th>
@@ -17,7 +16,6 @@
 			<tr>
 				<td><%= link_to a.name, "/orders/new/#{a.id}" %></td>
 				<td><%= a.ranch.name%></td>
-				<!-- <td><%= #number_to_currency(a.avg_price) %></td> -->
 				<td><%= a.pounds_left.round(2) %></td>
 				<td><%= a.harvest_date %></td>
 				<td><%= a.pickup_date %></td>
