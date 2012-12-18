@@ -69,7 +69,7 @@ class Animal < ActiveRecord::Base
             package_number = ((self.weight * (c.percent)/100) / c.package_weight).to_i
             package_number.times do 
             	Package.create!(:animal_id => self.id, :cut_id => c.id, 
-                  :price => p_price, :sold => false, :savings => (c.comp - p_price)/c.comp * 100) 
+                  :price => p_price, :sold => false, :savings => c.savings)#(c.comp - p_price)/c.comp * 100) 
             end
           end
         end     
