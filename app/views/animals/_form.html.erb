@@ -36,7 +36,7 @@
     <%= f.collection_select(:butcher_id, Butcher.all, :id, :name) %>
   </div>
   <% if current_user %>
-    <% unless @animal.user_id %>
+    <% unless @animal.host_id %>
       <%= f.hidden_field  :host_id, value: current_user.id %>
     <% end %>
   <% end %>
