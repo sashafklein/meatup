@@ -55,7 +55,7 @@ class Animal < ActiveRecord::Base
         if c.incentive
           # Create incentive-priced packages
           unless c.package_weight == 0
-            p_price = c.price * 0.9 * multiplier(self.animal_type)
+            p_price = c.price * 0.9 #* multiplier(self.animal_type)
             package_number = ((self.weight * (c.percent)/100) / c.package_weight).to_i
             package_number.times do 
               Package.create!(:animal_id => self.id, :cut_id => c.id, 
@@ -65,7 +65,7 @@ class Animal < ActiveRecord::Base
         else
           # Create regularly priced packages
           unless c.package_weight == 0
-            p_price = c.price * multiplier(self.animal_type)
+            p_price = c.price #* multiplier(self.animal_type)
             package_number = ((self.weight * (c.percent)/100) / c.package_weight).to_i
             package_number.times do 
             	Package.create!(:animal_id => self.id, :cut_id => c.id, 
