@@ -549,7 +549,11 @@ class Animal < ActiveRecord::Base
   end
 
   def pickup_date
-    "TBD"
+    if self.name == "Donald Trump" 
+      "January 12th"
+    else
+      "TBD"
+    end
   end
 
   def incomplete_orders
