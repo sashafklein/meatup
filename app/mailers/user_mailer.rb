@@ -102,9 +102,10 @@ class UserMailer < ActionMailer::Base
     @user = order.user
     @animal = order.animal
     @order = order
+    @meat_type = @animal.meat_type
     attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
     attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
-    mail(to: user.email, subject: "#{user.name} has placed an order on #{animal.name}")
+    mail(to: @user.email, subject: "#{user.name} has placed an order on #{animal.name}")
   end
 
 
