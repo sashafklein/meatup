@@ -94,7 +94,7 @@ class UserMailer < ActionMailer::Base
     @user = user
     attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
     attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
-    mail(to: user.email, subject: "New MeatUp User: #{user.name}")
+    mail(to: "sashafklein@gmail.com", subject: "New MeatUp User: #{user.name}")
   end
 
   def new_order(order)
@@ -105,7 +105,7 @@ class UserMailer < ActionMailer::Base
     @meat_type = @animal.meat_type
     attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
     attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
-    mail(to: @user.email, subject: "#{user.name} has placed an order on #{animal.name}")
+    mail(to: "sashafklein@gmail.com", subject: "#{@user.name} has placed an order on #{animal.name}")
   end
 
 
