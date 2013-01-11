@@ -32,13 +32,17 @@ class Order < ActiveRecord::Base
   def check_payment
     self.reload
     if self.status == 0
-      self.lines.each do |l|
-        l.packages.each do |p|
-          p.update_attributes(:sold => false, :line_id => nil)
-        end 
-      end
-      self.destroy
+      self.rollback
     end
+  end
+
+  def rollback
+    self.lines.each do |l|
+      l.packages.each do |p|
+        p.update_attributes(:sold => false, :line_id => nil)
+      end 
+    end
+    self.destroy
   end
 
   def poundage
