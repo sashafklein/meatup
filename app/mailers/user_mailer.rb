@@ -108,5 +108,13 @@ class UserMailer < ActionMailer::Base
     mail(to: "sashafklein@gmail.com", subject: "#{@user.name} has placed an order on #{animal.name}")
   end
 
+  def private_email(user)
+    @url  = "www.meatup.in"
+    @user = user
+    attachments.inline['meatup_logo_white.png'] = File.read("#{Rails.root}/app/assets/images/meatup_logo_white.png")
+    attachments.inline['grassy_knoll_white_sm.png'] = File.read("#{Rails.root}/app/assets/images/grassy_knoll_white_sm.png")
+    mail(to: user.email, subject: "We'll keep you updated!")
+  end
+
 
 end
