@@ -16,6 +16,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       @user.toggle!(:beta)
+      UserMailer.private_email(@user).deliver
       flash.now[:error] = "MeatUp is still in private Beta. We'll let you know when we're accepting new users!"
       render 'new'
       # The below for after private beta.
