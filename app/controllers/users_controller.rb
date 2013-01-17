@@ -16,8 +16,8 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       @user.toggle!(:beta)
-      UserMailer.private_email(@user).deliver unless @user.email.include? "@meatup.in"
-      redirect_to root_path, error: "MeatUp is still in private Beta. We'll let you know when we're accepting new users!"
+      flash.now[:error] = "MeatUp is still in private Beta. We'll let you know when we're accepting new users!"
+      render 'new'
       # The below for after private beta.
         # UserMailer.welcome_email(@user).deliver unless @user.email.include? "@meatup.in"
         # UserMailer.new_user(@user).deliver unless @user.email.include? "@meatup.in"
