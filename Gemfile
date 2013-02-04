@@ -51,6 +51,7 @@ gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'foreman'
+gem 'hirefire'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
