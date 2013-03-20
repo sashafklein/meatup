@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       if user.beta
         sign_in user
-        redirect_back_or user
+        redirect_to user
       else
         flash.now[:error] = "MeatUp is still in private Beta. We'll let you know when you can sign in!"
         render 'new'

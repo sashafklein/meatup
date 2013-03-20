@@ -8,7 +8,6 @@ describe "Authentication" do
     before { visit signin_path }
 
     it { should have_selector('a',    text: 'Sign up now!') }
-    it { should have_selector('title', text: full_title('Sign In')) }
   end
 
   describe "signin" do
@@ -23,17 +22,24 @@ describe "Authentication" do
         end
   
         it { should have_selector('title', text: user.name) }
-        it { should have_link('Profile', href: user_path(user)) }
-        it { should have_link('Sign out', href: signout_path) }
-        it { should have_link('Open Auctions', href: orders_purchase_path) }
-        it { should_not have_link('Sign in', href: signin_path) }
+    end
+
+    describe "with non-beta user" do
+      let (:user) { FactoryGirl.create(:user, :beta => false) }
+      before do 
+          fill_in "Email",    with: user.email
+          fill_in "Password", with: user.password
+          click_button "Sign In"
+      end
+
+      it { should have_selector '.alert', text: "MeatUp is still in private Beta." }
     end
 
     describe "with invalid information" do
       before { click_button "Sign In" }
 
       it { should have_selector('title', text: full_title('Sign In')) }
-      it { should have_selector('div.alert.alert-error', text: 'Invalid') }
+      it { should have_selector('.alert', text: 'Invalid') }
     end
   end
 end

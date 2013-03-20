@@ -23,6 +23,7 @@
 #  finalized      :boolean          default(FALSE)
 #  hanging_weight :float
 #  meat_weight    :float
+#  no_sales       :boolean          default(FALSE)
 #
 
 class Animal < ActiveRecord::Base

@@ -18,6 +18,7 @@
 #  butcher_id      :integer
 #  ranch_id        :integer
 #  host_id         :integer
+#  beta            :boolean          default(TRUE)
 #
 
 class User < ActiveRecord::Base
