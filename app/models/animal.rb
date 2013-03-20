@@ -43,11 +43,13 @@ class Animal < ActiveRecord::Base
   validates :animal_type, presence: true
  
   def create_packages
-    
-    if self.butcher.vacuum_price > self.butcher.wrap_price
-      @wrapping = self.butcher.vacuum_price
+
+    v = self.butcher.vacuum_price
+    b = self.butcher.wrap_price
+    if v > b
+      @wrapping = v
     else
-      @wrapping = self.butcher.wrap_price
+      @wrapping = b
     end 
 
   	@cut_list = Cut.where(:animal_type => self.animal_type)
@@ -622,11 +624,7 @@ class Animal < ActiveRecord::Base
   end
 
   def all_finalized
-    self.orders.each do |o|
-      if o.status < 2
-        return false
-      end
-    end
+    return false if self.orders.select{ |o| o.status < 2 }.length > 0 
     return true
   end
 

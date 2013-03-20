@@ -22,21 +22,19 @@ class Package < ActiveRecord::Base
   belongs_to :line
   before_update :to_true
 
+  scope :sold, where(:sold => true)
+  scope :unsold, where(:sold => false)
+
   def expected_weight
   	self.cut.package_weight
   end
 
   def expected_packages
-  	animal = self.animal
-  	number = animal.packages.where(:cut_id => self.cut.id)
-  	number
+    self.animal.packages.where(:cut_id => self.cut.id)
   end
 
   def sold_packages
-    animal = self.animal
-    package_list = animal.packages.where(:cut_id => self.cut.id)
-    sold = package_list.where(:sold => true)
-    sold
+    self.animal.packages.where(:cut_id => self.cut.id).sold
   end
 
   # Fills an array with all the packages associated with a particular Cut and Prep Type
