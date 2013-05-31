@@ -42,48 +42,43 @@ class Animal < ActiveRecord::Base
   validates :weight, presence: true
   validates :breed, presence: true
   validates :animal_type, presence: true
+
+  scope :sold, packages.where(:sold => true)
+  scope :unsold, packages.where(:sold => false)
  
   def create_packages
 
     v = self.butcher.vacuum_price
     b = self.butcher.wrap_price
-    if v > b
-      @wrapping = v
-    else
-      @wrapping = b
-    end 
+    v > b ? @wrapping = v : @wrapping = b
 
-  	@cut_list = Cut.where(:animal_type => self.animal_type)
+  	@cut_list = Cut.where(:animal_type => animal_type)
   	@cut_list.each do |c|
+      if c.package_weight != 0 
         if c.incentive
-          # Create incentive-priced packages
-          unless c.package_weight == 0
-            p_price = c.price * 0.9 #* multiplier(self.animal_type)
-            package_number = ((self.weight * (c.percent)/100) / c.package_weight).to_i
-            package_number.times do 
-              Package.create!(:animal_id => self.id, :cut_id => c.id, 
-                  :price => p_price, :sold => false, :savings => c.savings)#(c.comp - p_price)/c.comp * 100)
-            end
-          end
+        # Create incentive package pricing
+          p_price = c.price * 0.9 #* multiplier(self.animal_type)
+          package_number = ((weight * (c.percent)/100) / c.package_weight).to_i
         else
-          # Create regularly priced packages
-          unless c.package_weight == 0
-            p_price = c.price #* multiplier(self.animal_type)
-            package_number = ((self.weight * (c.percent)/100) / c.package_weight).to_i
-            package_number.times do 
-            	Package.create!(:animal_id => self.id, :cut_id => c.id, 
-                  :price => p_price, :sold => false, :savings => c.savings)#(c.comp - p_price)/c.comp * 100) 
-            end
-          end
-        end     
+        # Create regular package pricing
+          p_price = c.price #* multiplier(self.animal_type)
+          package_number = ((weight * (c.percent)/100) / c.package_weight).to_i
+        end 
+
+        package_number.times do 
+          Package.create!(:animal_id => id, :cut_id => c.id, 
+              :price => p_price, :sold => false, :savings => c.savings)
+        end
+      end
     end
-    self.start_opening_sale
+    start_opening_sale
   end
 
   def cut_find
-	 Cut.where(:animal_type => self.animal_type)
+	 Cut.where(:animal_type => animal_type)
   end
 
+  # WHAT DOES THIS DO??? I THINK IT DOESN'T DO IT
   def multiplier(string)
 
     @r = self.ranch
@@ -113,16 +108,12 @@ class Animal < ActiveRecord::Base
   end
 
   def pounds_total
-    total = 0
-    self.packages.each do |p|
-      total += p.expected_weight
-    end
-    total
+    packages.inject{ |sum, n| sum + p.expected_weight }
   end
 
   def pounds_sold
     sold_weight = 0
-    self.orders.each do |o|
+    orders.each do |o|
       o.packages.each do |p|
         sold_weight += p.expected_weight if p.sold
       end
@@ -131,88 +122,64 @@ class Animal < ActiveRecord::Base
   end
 
   def pounds_left
-    self.pounds_total - self.pounds_sold
+    pounds_total - pounds_sold
   end 
 
   def percent_left
-    percent = (100 * self.pounds_left) / self.pounds_total
+    (100 * pounds_left) / pounds_total
   end  
 
   def start_opening_sale
-    unless self.no_sales
-      if self.opening_sale
-        self.delay(:run_at => 120.minutes.from_now).end_opening_sale
+    unless no_sales
+      if opening_sale
+        delay(:run_at => 120.minutes.from_now).end_opening_sale
       end
     end
   end
 
   def end_opening_sale
-    if self.opening_sale
-      unsold = self.packages.where(:sold => false)
-      unsold.each do |p|
-        if p.cut.incentive
-          p.update_attribute(:price, (p.price / 0.9))
-          p.update_attribute(:savings, (p.cut.comp - p.price)/p.cut.comp)
-        end
+    if opening_sale
+      unsold.select{ |p| p.cut.incentive }.each do |p|
+        p.update_attribute(:price, p.price / 0.9)
+        p.update_attribute(:savings, (p.cut.comp - p.price)/p.cut.comp)
       end
-      self.update_attribute(:opening_sale, false)
+      update_attribute(:opening_sale, false)
     end
   end
 
   def start_final_sale
-    unless self.no_sales
-      self.end_opening_sale
-      unsold = self.packages.where(:sold => false)
+    unless no_sales
+      end_opening_sale
       unsold.each do |p|
         p.update_attribute(:price, (p.price * 0.85))
         p.update_attribute(:savings, (p.cut.comp - p.price)/p.cut.comp)
       end
-      self.update_attribute(:final_sale, true)
+      update_attribute(:final_sale, true)
     end
-  end  
-
-  def unsold
-    self.packages.where(:sold => false)
-  end
-
-  def sold
-    self.packages.where(:sold => true)
   end
 
   def cut_packages(cut)
-    all_packages = Package.where(:animal_id => self.id)
-    all_packages.where(:cut_id => cut.id)
+    Package.where(:animal_id => id).where(:cut_id => cut.id)
   end
 
   def sold(cut)
-    self.cut_packages(cut).where(:sold => true)
+    cut_packages(cut).where(:sold => true)
   end
 
   def cut_unsold(cut)
-    self.cut_packages(cut).where(:sold => false)
+    cut_packages(cut).where(:sold => false)
   end
 
   def revenue_made
-    deposited = self.packages.where(sold: true)
-    revenue = 0
-    deposited.each do |p|
-      revenue += p.price * p.cut.package_weight
-    end
-    revenue
+    sold.inject{ |sum, p| sum + (p.price * p.cut.package_weight) }
   end
 
   def revenue_possible
-    all_packages = self.packages.all
-    revenue = 0
-    all_packages.each do |p|
-      revenue += p.expected_weight * p.price
-    end
-    revenue
+    packages.inject{ |sum, p| sum + (p.expected_weight * p.price) }
   end
 
   def left_to_make
-    money_left = self.revenue_possible - self.revenue_made
-    money_left
+    revenue_possible - revenue_made
   end
 
   # Returns total cost (for meat, butchery, and fixed, for the given animal)
@@ -220,76 +187,76 @@ class Animal < ActiveRecord::Base
 
     # Determining variables on the basis of animal_type
     cost = 0
-    if self.animal_type == "Cow"
-      a_meat = self.ranch.cow_meat
-      a_hanging = self.ranch.cow_hanging
-      a_live = self.ranch.cow_live
+    case animal_type 
+    when "Cow"
+      a_meat = ranch.cow_meat
+      a_hanging = ranch.cow_hanging
+      a_live = ranch.cow_live
       amol = CMOL
       ahol = CHOL
-      fixed = self.ranch.cow_fixed if fixed
-    elsif self.animal_type == "Pig"
-      a_meat = self.ranch.pig_meat
-      a_hanging = self.ranch.pig_hanging
-      a_live = self.ranch.pig_live
+      fixed = ranch.cow_fixed if fixed
+    when "Pig"
+      a_meat = ranch.pig_meat
+      a_hanging = ranch.pig_hanging
+      a_live = ranch.pig_live
       amol = PMOL
       ahol = PHOL
-      fixed = self.ranch.pig_fixed if fixed
-    elsif self.animal_type == "Lamb"
-      a_meat = self.ranch.lamb_meat
-      a_hanging = self.ranch.lamb_hanging
-      a_live = self.ranch.lamb_live
+      fixed = ranch.pig_fixed if fixed
+    when "Lamb"
+      a_meat = ranch.lamb_meat
+      a_hanging = ranch.lamb_hanging
+      a_live = ranch.lamb_live
       amol = LMOL
       ahol = LHOL      
-      fixed = self.ranch.lamb_fixed if fixed
-    else
-      a_meat = self.ranch.goat_meat
-      a_hanging = self.ranch.goat_hanging
-      a_live = self.ranch.goat_live
+      fixed = ranch.lamb_fixed if fixed
+    when "Goat"
+      a_meat = ranch.goat_meat
+      a_hanging = ranch.goat_hanging
+      a_live = ranch.goat_live
       amol = GMOL
       ahol = GHOL
-      fixed = self.ranch.goat_fixed if fixed
+      fixed = ranch.goat_fixed if fixed
     end
+    
 
     if a_meat > 0
-      cost = a_meat * amol * self.weight
+      cost = a_meat * amol * weight
     elsif a_hanging > 0
-      cost = a_hanging * ahol * self.weight
+      cost = a_hanging * ahol * weight
     else
-      cost = a_live * self.weight
+      cost = a_live * weight
     end
 
     if fixed != 0 && fixed != nil
       cost += fixed
     end
 
-    if self.butcher.final_price
-      cost += self.butcher.final_price
+    if butcher.final_price
+      cost += butcher.final_price
     end
 
     cost
   end
 
   def expected_margins 
-    margins = self.revenue_possible - self.total_cost
+    margins = revenue_possible - total_cost
   end
 
   def check_for_sold
-    if self.unsold == 0
-      self.close_animal
+    if unsold == 0
+      close_animal
     end
   end
 
   def close_animal
     self.toggle!(:open)
-    UserMailer.animal_close(self).deliver if self.host.user.email.!include?("@meatup.in")
-    User.all.each do |u|
-      if u.admin
-        unless u.email.include?("@meatup.in")
-          UserMailer.animal_overview(self).deliver
-        end
+    UserMailer.animal_close(self).deliver if host.user.email.!include?("@meatup.in")
+    User.admins.each do |u|
+      unless u.email.include?("@meatup.in")
+        UserMailer.animal_overview(self).deliver
       end
     end
-    UserMailer.butcher_specs(self).deliver unless self.butcher.user.email.include?("@meatup.in")
+    UserMailer.butcher_specs(self).deliver unless butcher.user.email.include?("@meatup.in")
   end
 
   # Returns a list of packages, one per cut, ordered by savings, sold-out at bottom
@@ -301,8 +268,13 @@ class Animal < ActiveRecord::Base
     sold_bottom
   end
 
+######################################
+### VERY INEFFICIENT METHODS BELOW ###
+######################################
+
   # Similar to the above, but with no sold-out ordering, as everything is sold out.
   # Also, elements of the list are differentiated by line notes.
+
   def make_sold_list
     list = []
     self.orders.each do |o|

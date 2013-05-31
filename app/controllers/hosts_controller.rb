@@ -1,7 +1,8 @@
 class HostsController < ApplicationController
 	
-  before_filter :host_or_admin, only: [:edit, :new, :update, :destroy, :dashboard]
   before_filter :signed_in_user
+  before_filter :beta_block
+  before_filter :host_or_admin, only: [:edit, :new, :update, :destroy, :dashboard]
 
   def index
   	@hosts = Host.all

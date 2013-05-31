@@ -1,5 +1,7 @@
 class RanchesController < ApplicationController
   
+  before_filter :signed_in_user
+  before_filter :beta_block
   before_filter :rancher_or_admin, only: [:new, :update, :destroy, :edit, :index]
 
   def index

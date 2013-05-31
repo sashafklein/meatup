@@ -1,5 +1,7 @@
 class AnimalsController < ApplicationController
 
+before_filter :signed_in_user
+before_filter :beta_block
 before_filter :admin_user, only: [:new, :show, :edit]
 before_filter :right_butcher, only: [:labels, :log]
 
@@ -73,16 +75,6 @@ before_filter :right_butcher, only: [:labels, :log]
 
   private
 
-    def admin_user
-      if signed_in? 
-        unless current_user.admin?
-          redirect_to root_path, notice: "Sign in as admin to access."
-        end
-      else
-        redirect_to root_path, notice: "Sign in as admin to access."
-      end
-    end
-
     def right_butcher
       if signed_in?
         unless current_user.admin? || current_user == Animal.find(params[:animal_id]).butcher.user
@@ -92,5 +84,6 @@ before_filter :right_butcher, only: [:labels, :log]
         redirect_to root_path, notice: "Sign in as butcher of this animal to access."
       end
     end
+
 
 end

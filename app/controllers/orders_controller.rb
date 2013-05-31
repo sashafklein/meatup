@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
-  
+
 before_filter :signed_in_user
+before_filter :beta_block
 before_filter :admin_user,     only: [:index, :edit, :update, :destroy]
 before_filter :correct_user, only: [:show, :edit, :update, :destroy]
 
@@ -132,18 +133,6 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
         end
       else
         redirect_to root_path, notice: "Sign in as admin to access."
-      end
-    end
-
-    def signed_in_user
-      unless signed_in?
-        store_location
-        redirect_to signin_url, notice: "Please sign in."
-      end
-      if signed_in?
-        if current_user.email.include? "@meatup.in"
-          redirect_to root_path, notice: "Please enter real email before ordering."
-        end
       end
     end
 

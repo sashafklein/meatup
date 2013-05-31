@@ -19,4 +19,9 @@
 
 class Cut < ActiveRecord::Base
   attr_accessible :name, :package_weight, :percent, :price, :animal_type, :comp, :savings, :incentive, :description
+
+  scope :cow, where(:animal_type == "Cow")
+  scope :pig, where(:animal_type == "Pig")
+  scope :goat, where(:animal_type == "Goat")
+  scope :lamb, where(:animal_type == "Lamb")
 end

@@ -46,6 +46,11 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
   validates :zip, presence: true, length: { is: 5 }
 
+  scope :admins, where(:admin => true)
+  scope :butchers, where(:is_butcher => true)
+  scope :ranchers, where(:is_rancher => true)
+  scope :hosts, where(:is_host => true)
+
   def end_apology
     if self.apology
       self.update_attribute(:apology, false)

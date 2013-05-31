@@ -1,6 +1,8 @@
 class CutsController < ApplicationController
 
-before_filter :admin_user
+  before_filter :signed_in_user
+  before_filter :beta_block
+  before_filter :admin_user
 
   # GET /cuts
   # GET /cuts.json

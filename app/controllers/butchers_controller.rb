@@ -1,5 +1,7 @@
 class ButchersController < ApplicationController
 
+  before_filter :signed_in_user
+  before_filter :beta_block
   before_filter :butcher_or_admin, only: [:new, :edit, :update, :destroy, :log]
   before_filter :right_butcher, only: [:log]
 
