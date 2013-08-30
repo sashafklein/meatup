@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
+  before_filter: :incubate
 
   def beta_block
   	if current_user.beta == false
@@ -28,6 +29,10 @@ class ApplicationController < ActionController::Base
         redirect_to root_path, notice: "Please enter real email before ordering."
       end
     end
+  end
+
+  def incubate
+    redirect_to incubation_path
   end
 
 end

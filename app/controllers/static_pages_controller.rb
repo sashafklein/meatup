@@ -1,4 +1,6 @@
 class StaticPagesController < ApplicationController
+  skip_before_filter :incubate, only: [:incubation, :how]
+
   def welcome
     redirect_to orders_purchase_path
   end
@@ -20,5 +22,8 @@ class StaticPagesController < ApplicationController
   end
 
   def google
+  end
+
+  def incubation
   end
 end
