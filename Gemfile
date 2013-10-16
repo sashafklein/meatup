@@ -4,6 +4,7 @@ gem 'rails', '3.2.11'
 gem 'googlecharts', :require => "gchart"
 gem 'unicorn'
 gem 'newrelic_rpm'
+gem "pry"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -13,6 +14,8 @@ end
 
 group :development do
 	gem 'sqlite3'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 	gem 'rspec-rails', '2.11.0'
   gem 'guard-rspec', '1.2.1'
 end

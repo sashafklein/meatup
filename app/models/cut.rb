@@ -24,4 +24,13 @@ class Cut < ActiveRecord::Base
   scope :pig, where(:animal_type == "Pig")
   scope :goat, where(:animal_type == "Goat")
   scope :lamb, where(:animal_type == "Lamb")
+  scope :weighted, -> { where('package_weight > ?', 0) }
+
+  def package_number(weight)
+    (weight * (percent / 100) / package_weight).to_i
+  end
+
+  def package_price
+    incentive ? price * 0.9 : price
+  end
 end

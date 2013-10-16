@@ -32,83 +32,91 @@ class Animal < ActiveRecord::Base
                   :lamb_mult, :goat_mult, :host_id, :final_sale, :opening_sale, :open, :no_sales
   has_many :orders
   has_many :packages
+  has_many :lines, through: :orders
   belongs_to :butcher
   belongs_to :ranch
   belongs_to :host
-  after_create :create_packages
+  
+  after_create do 
+    if !Rails.env.test
+      create_packages
+      start_opening_sale
+    end
+  end
 
   accepts_nested_attributes_for :packages
 
   validates :weight, presence: true
   validates :breed, presence: true
   validates :animal_type, presence: true
-
-  scope :sold, packages.where(:sold => true)
-  scope :unsold, packages.where(:sold => false)
  
+  def sold
+    packages.where(sold: true)
+  end
+
+  def unsold
+    packages.where(sold: false)
+  end
+
+  def cut_list
+    Cut.where(animal_type: animal_type)
+  end
+
+  def determine_wrapping
+    butcher.vacuum_price > butcher.wrap_price ? vaccuum_price : wrap_price
+  end
+
   def create_packages
+  	cut_list.weighted.each{ |cut| create_cut_packages(cut) }
+  end
 
-    v = self.butcher.vacuum_price
-    b = self.butcher.wrap_price
-    v > b ? @wrapping = v : @wrapping = b
+  def package_price(cut)
+    cut.incentive ? cut.price * 0.9 : cut.price
+  end
 
-  	@cut_list = Cut.where(:animal_type => animal_type)
-  	@cut_list.each do |c|
-      if c.package_weight != 0 
-        if c.incentive
-        # Create incentive package pricing
-          p_price = c.price * 0.9 #* multiplier(self.animal_type)
-          package_number = ((weight * (c.percent)/100) / c.package_weight).to_i
-        else
-        # Create regular package pricing
-          p_price = c.price #* multiplier(self.animal_type)
-          package_number = ((weight * (c.percent)/100) / c.package_weight).to_i
-        end 
-
-        package_number.times do 
-          Package.create!(:animal_id => id, :cut_id => c.id, 
-              :price => p_price, :sold => false, :savings => c.savings)
-        end
-      end
+  def create_cut_packages(cut)
+    cut.package_number(weight).times do 
+      create_package_for_cut(cut)
     end
-    start_opening_sale
+  end
+
+  def create_package_for_cut(cut)
+    Package.create!(
+      animal_id: id,
+      cut_id: cut.id,
+      price: cut.package_price,
+      sold: false,
+      savings: cut.savings)
   end
 
   def cut_find
 	 Cut.where(:animal_type => animal_type)
   end
 
-  # WHAT DOES THIS DO??? I THINK IT DOESN'T DO IT
-  def multiplier(string)
+  # # WHAT DOES THIS DO??? I THINK IT DOESN'T DO IT
+  # def multiplier(string)
 
-    @r = self.ranch
-    @b = self.butcher
+  #   wrapping = determine_wrapping
 
-    if @b.vacuum_price > @b.wrap_price
-      @wrapping = @b.vacuum_price
-    else
-      @wrapping = @b.wrap_price
-    end 
+  #   # Mult is the total per pound meat price including butchery fees
+  #   self.cow_mult = (ranch.cow_meat + (butcher.hanging_price + wrapping) / CMOH) / 4.401
+  #   self.pig_mult = 1
+  #   self.lamb_mult = 1
+  #   self.goat_mult = 1
 
-    # Mult is the total per pound meat price including butchery fees
-    self.cow_mult = (@r.cow_meat + (@b.hanging_price + @wrapping) / CMOH) / 4.401
-    self.pig_mult = 1
-    self.lamb_mult = 1
-    self.goat_mult = 1
-
-    if string == "Cow"
-      self.cow_mult
-    elsif string == "Pig"
-      self.pig_mult
-    elsif string == "Lamb"
-      self.lamb_mult
-    elsif string == "Goat"
-      self.goat_mult
-    end
-  end
+  #   if string == "Cow"
+  #     self.cow_mult
+  #   elsif string == "Pig"
+  #     self.pig_mult
+  #   elsif string == "Lamb"
+  #     self.lamb_mult
+  #   elsif string == "Goat"
+  #     self.goat_mult
+  #   end
+  # end
 
   def pounds_total
-    packages.inject{ |sum, n| sum + p.expected_weight }
+    packages.map(&:expected_weight).inject(:+)
   end
 
   def pounds_sold
@@ -130,10 +138,8 @@ class Animal < ActiveRecord::Base
   end  
 
   def start_opening_sale
-    unless no_sales
-      if opening_sale
-        delay(:run_at => 120.minutes.from_now).end_opening_sale
-      end
+    if !no_sales && opening_sale
+      delay(:run_at => 120.minutes.from_now).end_opening_sale
     end
   end
 
@@ -171,11 +177,11 @@ class Animal < ActiveRecord::Base
   end
 
   def revenue_made
-    sold.inject{ |sum, p| sum + (p.price * p.cut.package_weight) }
+    packages.sold.map(&:revenue).inject(:+) || 0
   end
 
   def revenue_possible
-    packages.inject{ |sum, p| sum + (p.expected_weight * p.price) }
+    packages.map(&:expected_revenue).inject(:+)
   end
 
   def left_to_make
@@ -183,59 +189,45 @@ class Animal < ActiveRecord::Base
   end
 
   # Returns total cost (for meat, butchery, and fixed, for the given animal)
-  def total_cost
+  
+  def meat_price
+    ranch.send("#{animal_type.downcase}_meat".to_sym)
+  end
 
-    # Determining variables on the basis of animal_type
-    cost = 0
-    case animal_type 
-    when "Cow"
-      a_meat = ranch.cow_meat
-      a_hanging = ranch.cow_hanging
-      a_live = ranch.cow_live
-      amol = CMOL
-      ahol = CHOL
-      fixed = ranch.cow_fixed if fixed
-    when "Pig"
-      a_meat = ranch.pig_meat
-      a_hanging = ranch.pig_hanging
-      a_live = ranch.pig_live
-      amol = PMOL
-      ahol = PHOL
-      fixed = ranch.pig_fixed if fixed
-    when "Lamb"
-      a_meat = ranch.lamb_meat
-      a_hanging = ranch.lamb_hanging
-      a_live = ranch.lamb_live
-      amol = LMOL
-      ahol = LHOL      
-      fixed = ranch.lamb_fixed if fixed
-    when "Goat"
-      a_meat = ranch.goat_meat
-      a_hanging = ranch.goat_hanging
-      a_live = ranch.goat_live
-      amol = GMOL
-      ahol = GHOL
-      fixed = ranch.goat_fixed if fixed
-    end
-    
+  def hanging_price
+    ranch.send("#{animal_type.downcase}_hanging".to_sym)
+  end
 
-    if a_meat > 0
-      cost = a_meat * amol * weight
-    elsif a_hanging > 0
-      cost = a_hanging * ahol * weight
+  def live_price
+    ranch.send("#{animal_type.downcase}_live".to_sym)
+  end
+
+  def weight_ratio(first, second)
+    constant = "#{animal_type[0].capitalize}#{first[0].capitalize}O#{second[0].capitalize}"
+    return constant.constantize
+  end
+
+  def fixed_price
+    ranch_fixed = ranch.send("#{animal_type.downcase}_fixed".to_sym)
+    ranch_fixed ? ranch_fixed : 0
+  end
+
+  def butcher_final_price
+    butcher.final_price ? butcher.final_price : 0
+  end
+
+  def raw_animal_price
+    if meat_price > 0
+      meat_price * weight_ratio("meat", "live") * weight
+    elsif hanging_price > 0
+      hanging_price * weight_ratio("hanging", "live") * weight
     else
-      cost = a_live * weight
+      live_price * weight
     end
+  end
 
-    if fixed != 0 && fixed != nil
-      cost += fixed
-    end
-
-    if butcher.final_price
-      cost += butcher.final_price
-    end
-
-    cost
+  def total_cost
+    raw_animal_price + fixed_price + butcher_final_price
   end
 
   def expected_margins 
@@ -277,48 +269,25 @@ class Animal < ActiveRecord::Base
 
   def make_sold_list
     list = []
-    self.orders.each do |o|
-      o.lines.each do |l|
-        if list.any?
-          counter = 0
-          list.each do |element|
-            if l.cut == element.cut && l.notes == element.notes
-              counter += 1
-            end
-          end
-          list << l if counter == 0
-        else
-          list << l
-        end
+    lines.each do |line_item|
+      if list.empty? || !list.any?{ |item| item.has_same_cut_and_notes_as(line_item) }
+        list << line_item
       end
     end
     list.sort_by{:cut_id}
   end
 
-  # Creates an array of arrays by notes/cut (Boneless Ribeye is its own array)
+  # Creates an array of hashes, organized by cut_name/notes (Boneless Ribeye is its own "bundle")
   def sold_bundles 
     master = []
-    self.packages.each do |p|
-      if p.sold
+    self.packages.sold.each do |p|
 
-        # The master has sublists
-        if master.any?
-          counter = 0
-
-          # Check for matching list. Add if found.
-          master.each do |list|
-            if p.notes == list.first.notes && p.cut == list.first.cut
-              list << p
-              counter += 1 # Don't create list is appropriate one found.
-            end
-          end
-          if counter == 0
-            master << [p] if counter == 0 # Add as new list if list doesn't yet exist.
-          end
-        else # If master is empty, add the package to a new sub-list.
-            master << [p]
-        end
-
+      bundle_name = "#{p.cut} - #{p.notes}"
+      if !master.any?{ |bundle| bundle[:name] == bundle_name}
+        master << { name: bundle_name, packages: [p] }
+      else
+        bundle = master.select{ |bundle| bundle[:name] == bundle_name }.first
+        bundle[:packages] << p
       end
 
     end
@@ -468,10 +437,7 @@ class Animal < ActiveRecord::Base
   end
 
   def to_hanging
-    return self.pounds_sold * CHOM if self.animal_type == "Cow"
-    return self.pounds_sold * PHOM if self.animal_type == "Pig"
-    return self.pounds_sold * LHOM if self.animal_type == "Lamb"
-    return self.pounds_sold * GHOM if self.animal_type == "Goat"
+    self.pounds_sold * weight_ratio("hanging", "meat")
   end
 
   # Returns full list of the users who bought from the animal
@@ -490,10 +456,7 @@ class Animal < ActiveRecord::Base
   end
 
   def mult
-    cow_mult if self.animal_type == "Cow"
-    pig_mult if self.animal_type == "Pig"
-    lamb_mult if self.animal_type == "Lamb"
-    goat_mult if self.animal_type == "Goat"
+    self.send("#{animal_type.downcase}_mult".to_sym)
   end
 
   def avg_price
@@ -539,61 +502,46 @@ class Animal < ActiveRecord::Base
     self.orders.where(:status => 1)
   end
 
+  def downpaid_packages
+    order_ids = downpaid_orders.map(&:id)
+    line_items = Line.where(order_id: order_ids)
+    line_items.map(&:packages).flatten
+  end
+
   def paid_orders
     self.orders.where(:status => 2)
+  end
+
+  def paid_packages
+    order_ids = paid_orders.map(&:id)
+    line_items = Line.where(order_id: order_ids)
+    line_items.map(&:packages).flatten
   end
 
   def complete_orders
     self.orders.where(:status => 3)
   end
 
+  def complete_packages
+    order_ids = complete_orders.map(&:id)
+    line_items = Line.where(order_id: order_ids)
+    line_items.map(&:packages).flatten
+  end
+
   def downpaid_total
-    total = 0
-    self.downpaid_orders.each do |o|
-      o.packages.each do |p|
-        total += p.price * p.expected_weight
-      end
-    end
-    total
+    downpaid_packages.map(&:expected_revenue).inject(:+)
   end
 
   def downpaid_pounds
-    total = 0
-    self.downpaid_orders.each do |o|
-      o.packages.each do |p|
-        total += p.expected_weight
-      end
-    end
-    total
+    downpaid_packages.map(&:expected_weight).inject(:+)
   end
 
-
   def paid_total
-    total = 0
-    self.paid_orders.each do |o|
-      o.packages.each do |p|
-        if p.true_weight
-          total += p.true_weight * p.price
-        else 
-          total += p.expected_weight * p.price
-        end
-      end
-    end
-    total
+    paid_packages.map(&:paid_revenue).inject(:+)
   end
 
   def paid_pounds
-    total = 0
-    self.paid_orders.each do |o|
-      o.packages.each do |p|
-        if p.true_weight
-          total += p.true_weight
-        else 
-          total += p.expected_weight
-        end
-      end
-    end
-    total
+    paid_packages.map(&:legit_weight).inject(:+)
   end
 
   def all_finalized

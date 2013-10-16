@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
-  before_filter :incubate
+  # before_filter :incubate
 
   def beta_block
   	if current_user.beta == false

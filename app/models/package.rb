@@ -37,32 +37,17 @@ class Package < ActiveRecord::Base
     animal.packages.where(:cut_id => cut.id).sold
   end
 
-  # Fills an array with all the packages associated with a particular Cut and Prep Type
   def note_list
-  	straight = []
-  	ground = []
-  	stew = []
-  	boneless = []
-  	complete = []
-  	sold_packages.each do |p|
-  		straight << p if p.line.notes == ""
-  		ground << p if p.line.notes == "Ground"
-  		stew << p if p.line.notes == "As Stew"
-  		boneless << p if p.line.notes == "Deboned"
+  	complete = { straight_up: [], ground: [], stew: [], boneless: [] }
+  	
+    sold_packages.each do |p|
+  		complete[:straight_up] << p if p.line.notes == ""
+  		complete[:ground] << p if p.line.notes == "Ground"
+  		complete[:stew] << p if p.line.notes == "As Stew"
+  		complete[:boneless] << p if p.line.notes == "Deboned"
   	end	
-  	straight.each do |s|
-      complete << s
-    end
-    ground.each do |g|
-      complete << g
-    end
-    stew.each do |s|
-      complete << stew
-    end
-    boneless.each do |b|
-      complete << b
-    end
-  	complete
+
+    complete
   end
 
   def label_list
@@ -114,4 +99,21 @@ class Package < ActiveRecord::Base
     @actual_lbs=val
   end
 
+  def revenue
+    if sold
+      price * cut.package_weight
+    end
+  end
+
+  def expected_revenue
+    sold ? revenue : price * expected_weight
+  end
+
+  def paid_revenue
+    true_weight.present? ? true_weight * price : expected_weight * price
+  end
+
+  def legit_weight
+    true_weight.present? ? true_weight : expected_weight
+  end
 end

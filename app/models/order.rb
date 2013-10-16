@@ -19,6 +19,7 @@ class Order < ActiveRecord::Base
 
   has_many :cuts
   has_many :lines, :dependent => :destroy
+  has_many :packages, through: :lines
 
   after_create :schedule_check_payment
 
@@ -37,21 +38,12 @@ class Order < ActiveRecord::Base
   end
 
   def rollback
-    self.lines.each do |l|
-      l.packages.each do |p|
-        p.update_attributes(:sold => false, :line_id => nil)
-      end 
-    end
+    packages.update_all!(sold: false, line_id: nil) 
     self.destroy
   end
 
   def poundage
-    pounds = 0
-    lines = self.lines
-    lines.each do |l|
-      pounds += l.units * l.expected_weight
-    end
-    return pounds
+    lines.map(&:poundage).inject(:+)
   end
 
   # Returns the total cost of a given order

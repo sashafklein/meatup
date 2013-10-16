@@ -50,6 +50,7 @@ class Ranch < ActiveRecord::Base
     :lamb_fixed, :goat_fixed
 
   has_many :animals
+  belongs_to :user
   after_create :to_meat
   after_update :to_meat
 

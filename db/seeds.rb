@@ -313,7 +313,7 @@
 		leaf = Cut.create(
 		:animal_type => "Pig",
 		:name => "Leaf Lard",
-			:package_weight => .94,
+			:package_weight => 0.94,
 	  	:percent => 3,
 	  	:price => 2,
 	  	:comp => 6, 

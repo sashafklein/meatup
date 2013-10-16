@@ -41,42 +41,27 @@ class Line < ActiveRecord::Base
   end
 
   def poundage
-    total = 0
-    self.packages.each do |p|
-      total += p.expected_weight
-    end
-    total
+    packages.map(&:expected_weight).inject(:+)
   end
 
   def total
-    total = 0
-    self.packages.each do |p|
-      total += p.price * p.expected_weight
-    end
-    total
+    packages.map(&:expected_revenue).inject(:+)
   end
 
   def price
-    if self.packages.size > 0
-      p = self.packages.first
-      return p.price
-    end
+    return packages.first.price if packages.any?
     1000
   end
 
   def processed_notes
-    if self.notes == ""
-      "None"
-    else
-      self.notes
-    end
+    notes.blank? ? "None" : notes
   end
 
   def weight_diff
-    total = 0
-    self.packages.each do |p|
-      total += p.weight_diff
-    end 
-    total
+    packages.map(&:weight_diff).inject(:+)
+  end
+
+  def has_same_cut_and_notes_as(item)
+    cut == item.cut && notes == item.notes
   end
 end
