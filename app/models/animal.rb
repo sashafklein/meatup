@@ -93,28 +93,6 @@ class Animal < ActiveRecord::Base
 	 Cut.where(:animal_type => animal_type)
   end
 
-  # # WHAT DOES THIS DO??? I THINK IT DOESN'T DO IT
-  # def multiplier(string)
-
-  #   wrapping = determine_wrapping
-
-  #   # Mult is the total per pound meat price including butchery fees
-  #   self.cow_mult = (ranch.cow_meat + (butcher.hanging_price + wrapping) / CMOH) / 4.401
-  #   self.pig_mult = 1
-  #   self.lamb_mult = 1
-  #   self.goat_mult = 1
-
-  #   if string == "Cow"
-  #     self.cow_mult
-  #   elsif string == "Pig"
-  #     self.pig_mult
-  #   elsif string == "Lamb"
-  #     self.lamb_mult
-  #   elsif string == "Goat"
-  #     self.goat_mult
-  #   end
-  # end
-
   def pounds_total
     packages.map(&:expected_weight).inject(:+)
   end
