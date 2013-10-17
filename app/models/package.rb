@@ -15,51 +15,29 @@
 #
 
 class Package < ActiveRecord::Base
+
+  include PackageStatusMethods
+  include WeightAndPriceMethods
+
   attr_accessible :animal_id, :cut_id, :price, :line_id, :sold, :savings, :actual_lbs, :actual_oz, :true_weight
-  attr_accessor :actual_lbs, :actual_oz
-  belongs_to :animal
-  belongs_to :cut
-  belongs_to :line
+
+  belongs_to :animal, :cut, :line
+  delegate   :order, to: :line, :allow_nil => true
   before_update :to_true
 
   scope :sold, where(:sold => true)
   scope :unsold, where(:sold => false)
 
-  def expected_weight
-  	cut.package_weight
-  end
-
-  def expected_packages
+  def cut_siblings
     animal.packages.where(:cut_id => cut.id)
   end
 
-  def sold_packages
-    animal.packages.where(:cut_id => cut.id).sold
-  end
-
-  def note_list
-  	complete = { straight_up: [], ground: [], stew: [], boneless: [] }
-  	
-    sold_packages.each do |p|
-  		complete[:straight_up] << p if p.line.notes == ""
-  		complete[:ground] << p if p.line.notes == "Ground"
-  		complete[:stew] << p if p.line.notes == "As Stew"
-  		complete[:boneless] << p if p.line.notes == "Deboned"
-  	end	
-
-    complete
+  def line_siblings
+    line.packages
   end
 
   def label_list
-  	array = []
-  	line.packages.each do |p|
-  		array << p
-  	end
-    array
-  end
-
-  def order
-    line.order
+  	line_siblings.to_a
   end
 
   def user
@@ -67,23 +45,22 @@ class Package < ActiveRecord::Base
   end
 
   def identical_sold
-    animal.packages.where(:cut_id => cut_id).where(:sold => true).select{ |p| p.line.notes == line.notes }
-  end
-
-  def weight_diff
-    true_weight ? true_weight - expected_weight : expected_weight
+    line_item_ids = animal.lines.where(notes: p.notes).pluck(:id)
+    animal.packages.sold.where(line_id: line_item_ids)
   end
 
   def to_true
-    puts "Pre-sold"
-    if sold && order.status == 1
-      if true_weight.nil? || true_weight <= 0
-        percent = actual_oz.to_f / 16
-        unless actual_lbs.to_f + percent == 0 
-          update_attribute(:true_weight, actual_lbs.to_f + percent)
-        end
-      end
+    if ready_to_weigh && new_weight_present?
+      update_attribute(:true_weight, actual_lbs + actual_oz)
     end
+  end
+
+  def new_weight_present?
+    actual_lbs + actual_oz <= 0
+  end
+
+  def ready_to_weigh
+    sold && downpaid && true_weight.blank?
   end
 
   def notes
@@ -91,7 +68,7 @@ class Package < ActiveRecord::Base
   end
 
   def finalized
-    order.status < 2 ? false : true
+    order.status > 2
   end
 
   def actual_lbs=(val)
@@ -99,25 +76,11 @@ class Package < ActiveRecord::Base
     @actual_lbs=val
   end
 
-  def revenue
-    if sold
-      price * cut.package_weight
-    end
+  def actual_lbs
+    actual_lbs.to_f
   end
 
-  def expected_revenue
-    sold ? revenue : price * expected_weight
-  end
-
-  def paid_revenue
-    true_weight.present? ? true_weight * price : expected_weight * price
-  end
-
-  def legit_weight
-    true_weight.present? ? true_weight : expected_weight
-  end
-
-  def revenue_difference_from_expectations
-    (legit_weight - expected_weight) * price
+  def actual_oz
+    actual_oz.to_f
   end
 end

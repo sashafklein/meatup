@@ -32,4 +32,7 @@ class Butcher < ActiveRecord::Base
   validates :name, presence: true
   validates :zip, presence: true, length: { is: 5 }
 
+  def wrapping_price
+    vacuum_price > wrap_price ? vaccuum_price : wrap_price
+  end
 end

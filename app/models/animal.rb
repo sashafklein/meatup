@@ -51,23 +51,19 @@ class Animal < ActiveRecord::Base
   validates :animal_type, presence: true
  
   def sold
-    packages.where(sold: true)
+    packages.sold
   end
 
   def unsold
-    packages.where(sold: false)
+    packages.unsold
   end
 
-  def cut_list
-    Cut.where(animal_type: animal_type)
-  end
-
-  def determine_wrapping
-    butcher.vacuum_price > butcher.wrap_price ? vaccuum_price : wrap_price
+  def cutlist
+    Cut.where(animal_type: animal_type).weighted
   end
 
   def create_packages
-  	cut_list.weighted.each{ |cut| create_cut_packages(cut) }
+  	cutlist.each{ |cut| create_cut_packages(cut) }
   end
 
   def package_price(cut)
@@ -75,7 +71,7 @@ class Animal < ActiveRecord::Base
   end
 
   def create_cut_packages(cut)
-    cut.package_number(weight).times do 
+    cut.number_of_packages_for_animal(weight).times do 
       create_package_for_cut(cut)
     end
   end
@@ -86,7 +82,8 @@ class Animal < ActiveRecord::Base
       cut_id: cut.id,
       price: cut.package_price,
       sold: false,
-      savings: cut.savings)
+      savings: cut.savings
+    )
   end
 
   def cut_find
@@ -98,18 +95,13 @@ class Animal < ActiveRecord::Base
   end
 
   def pounds_sold
-    sold_weight = 0
-    orders.each do |o|
-      o.packages.each do |p|
-        sold_weight += p.expected_weight if p.sold
-      end
-    end
-    sold_weight
+    packages.sold.map(&:expected_weight).inject(:+)
   end
 
   def pounds_left
     pounds_total - pounds_sold
   end 
+
 
   def percent_left
     (100 * pounds_left) / pounds_total
@@ -242,9 +234,7 @@ class Animal < ActiveRecord::Base
 ### VERY INEFFICIENT METHODS BELOW ###
 ######################################
 
-  # Similar to the above, but with no sold-out ordering, as everything is sold out.
-  # Also, elements of the list are differentiated by line notes.
-
+  # A compact list of the unique "lines" sold
   def make_sold_list
     list = []
     lines.each do |line_item|
@@ -472,59 +462,24 @@ class Animal < ActiveRecord::Base
     end
   end
 
-  def incomplete_orders
-    self.orders.where(:status => 0)
-  end
-
-  def downpaid_orders
-    self.orders.where(:status => 1)
-  end
-
-  def downpaid_packages
-    order_ids = downpaid_orders.map(&:id)
-    line_items = Line.where(order_id: order_ids)
-    line_items.map(&:packages).flatten
-  end
-
-  def paid_orders
-    self.orders.where(:status => 2)
-  end
-
-  def paid_packages
-    order_ids = paid_orders.map(&:id)
-    line_items = Line.where(order_id: order_ids)
-    line_items.map(&:packages).flatten
-  end
-
-  def complete_orders
-    self.orders.where(:status => 3)
-  end
-
-  def complete_packages
-    order_ids = complete_orders.map(&:id)
-    line_items = Line.where(order_id: order_ids)
-    line_items.map(&:packages).flatten
-  end
-
   def downpaid_total
-    downpaid_packages.map(&:expected_revenue).inject(:+)
+    packages.downpaid.map(&:expected_revenue).inject(:+)
   end
 
   def downpaid_pounds
-    downpaid_packages.map(&:expected_weight).inject(:+)
+    packages.downpaid.map(&:expected_weight).inject(:+)
   end
 
   def paid_total
-    paid_packages.map(&:paid_revenue).inject(:+)
+    packages.paid.map(&:paid_revenue).inject(:+)
   end
 
   def paid_pounds
-    paid_packages.map(&:legit_weight).inject(:+)
+    packages.paid.map(&:fallback_weight).inject(:+)
   end
 
   def all_finalized
-    return false if self.orders.select{ |o| o.status < 2 }.length > 0 
-    return true
+    packages.count == packages.complete.count + packages.paid.count
   end
 
   def finalize

@@ -26,7 +26,7 @@ class Cut < ActiveRecord::Base
   scope :lamb, where(:animal_type == "Lamb")
   scope :weighted, -> { where('package_weight > ?', 0) }
 
-  def package_number(weight)
+  def number_of_packages_for_animal(weight)
     (weight * (percent / 100) / package_weight).to_i
   end
 

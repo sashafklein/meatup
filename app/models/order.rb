@@ -26,6 +26,14 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :lines
   accepts_nested_attributes_for :cuts
 
+  scope :incomplete,  -> { where(status: 0) }
+  scope :downpaid,    -> { where(status: 1) }
+  scope :paid,        -> { where(status: 2) }
+  scope :complete,    -> { where(status: 3) }
+  scope :finalized,   -> { where(status: 4) }
+
+  include StatusMethods
+
   def schedule_check_payment
     self.delay(:run_at => 5.minutes.from_now).check_payment
   end
@@ -49,19 +57,19 @@ class Order < ActiveRecord::Base
   end
 
   def apology_discount
-    packages.update_all(price: (p.price * 0.9))
+    packages.update_all(price: price * 0.9)
   end
 
   def discounted
-    packages.map{ |p| p.expected_revenue / 10).inject(:+)
+    packages.map{ |p| p.expected_revenue / 10}.inject(:+)
   end
 
   def get_difference
-    packages.map(&:revenue_difference_from_expectations).inject(:+)
+    packages.map(&:revenue_diff).inject(:+)
   end  
 
   def true_weight
-    packages.map(&:true_weight).inject(:+)
+    packages.weighed.map(&:true_weight).inject(:+)
   end
 
   def real

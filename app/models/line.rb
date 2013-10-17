@@ -12,10 +12,13 @@
 #
 
 class Line < ActiveRecord::Base
-  belongs_to :order
-  delegate   :animal, to: :order, :allow_nil => true
+
   attr_accessible :notes, :units, :order_id, :cut_id, :dependent => :destroy
+  
+  belongs_to :order
   has_many :packages
+  delegate   :animal, to: :order, :allow_nil => true
+  
   before_save :note_taker
   after_create :decrement_packages
 
@@ -42,11 +45,11 @@ class Line < ActiveRecord::Base
   end
 
   def poundage
-    packages.map(&:expected_weight).inject(:+)
+    packages.map(&:fallback_weight).inject(:+)
   end
 
   def total
-    packages.map(&:expected_revenue).inject(:+)
+    packages.map(&:fallback_revenue).inject(:+)
   end
 
   def price
@@ -56,10 +59,6 @@ class Line < ActiveRecord::Base
 
   def processed_notes
     notes.blank? ? "None" : notes
-  end
-
-  def weight_diff
-    packages.map(&:weight_diff).inject(:+)
   end
 
   def has_same_cut_and_notes_as(item)
