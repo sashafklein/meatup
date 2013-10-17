@@ -13,6 +13,7 @@
 
 class Line < ActiveRecord::Base
   belongs_to :order
+  delegate   :animal, to: :order, :allow_nil => true
   attr_accessible :notes, :units, :order_id, :cut_id, :dependent => :destroy
   has_many :packages
   before_save :note_taker
@@ -26,13 +27,13 @@ class Line < ActiveRecord::Base
     self.notes ||= ""
   end
 
+  def target_packages
+    animal.packages.where(cut_id: cut_id)
+  end
+
   def decrement_packages
-    a = self.order.animal
-    cut_packages = a.packages.where(:cut_id => self.cut_id)
-    unsold = cut_packages.where(:sold => false)
-    unsold.first(self.units).each do |p|
-      p.update_attribute(:line_id, self.id)
-      p.toggle!(:sold)
+    target_packages.unsold.first(units).each do |package|
+      package.update_attributes!(line_id: id, sold: true)
     end
   end
 

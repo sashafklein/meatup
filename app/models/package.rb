@@ -116,4 +116,8 @@ class Package < ActiveRecord::Base
   def legit_weight
     true_weight.present? ? true_weight : expected_weight
   end
+
+  def revenue_difference_from_expectations
+    (legit_weight - expected_weight) * price
+  end
 end

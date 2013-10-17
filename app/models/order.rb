@@ -31,10 +31,7 @@ class Order < ActiveRecord::Base
   end
 
   def check_payment
-    self.reload
-    if self.status == 0
-      self.rollback
-    end
+    rollback if status == 0
   end
 
   def rollback
@@ -48,90 +45,35 @@ class Order < ActiveRecord::Base
 
   # Returns the total cost of a given order
   def total_calc
-    total = 0
-    lines = self.lines
-    lines.each do |l|
-      pkgs = l.packages
-      pkgs.each do |p|
-        total += p.price * p.expected_weight
-      end
-    end
-    return total
+    packages.map(&:expected_revenue).inject(:+)
   end
 
   def apology_discount
-    self.lines.each do |l|
-      l.packages.each do |p|
-        p.update_attribute(:price, (p.price * 0.9))
-      end
-    end
+    packages.update_all(price: (p.price * 0.9))
   end
 
   def discounted
-    total_savings = 0
-    self.lines.each do |l|
-      l.packages.each do |p|
-        total_savings += (0.1 * p.price * p.expected_weight)
-      end
-    end
-    total_savings
-  end
-
-  def packages
-    packages = []
-    self.lines.each do |l|
-      l.packages.each do |p|
-        packages << p
-      end
-    end
-    packages
+    packages.map{ |p| p.expected_revenue / 10).inject(:+)
   end
 
   def get_difference
-    total = 0
-    self.packages.each do |p|
-      if p.true_weight
-        total += (p.expected_weight - p.true_weight) * p.price
-      end
-    end
-    total
+    packages.map(&:revenue_difference_from_expectations).inject(:+)
   end  
 
   def true_weight
-    total = 0
-    self.packages.each do |p|
-      total += p.true_weight
-    end
-    total
+    packages.map(&:true_weight).inject(:+)
   end
 
   def real
-    self.packages.each do |p|
-      unless p.true_weight
-        return false
-      end
-    end
-    return true
+    packages.first.true_weight.present?
   end
 
   def to_total
-    unless self.total 
-      total = 0
-      self.packages.each do |p|
-        total += p.expected_weight * p.price
-      end
-    end
-    total
+    total ? total : packages.map(&:expected_revenue).inject(:+)
   end
   
   def make_total
-    total = 0
-    self.lines.each do |l|
-      l.packages.each do |p|
-        total += p.expected_weight * p.price
-      end
-    end
-    total
+    packages.map(&:expected_revenue).inject(:+)
   end
 
 end
