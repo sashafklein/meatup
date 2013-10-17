@@ -24,8 +24,10 @@
 class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :order_id, :zip,
                   :is_host, :is_rancher, :is_butcher
+
   attr_accessible :name, :email, :password, :password_confirmation, :order_id, :zip, 
                   :is_host, :is_rancher, :is_butcher, :admin, :apology, :as => :administrator
+  
   has_many :orders
   has_one :host
   has_one :butcher

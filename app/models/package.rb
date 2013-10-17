@@ -21,12 +21,15 @@ class Package < ActiveRecord::Base
 
   attr_accessible :animal_id, :cut_id, :price, :line_id, :sold, :savings, :actual_lbs, :actual_oz, :true_weight
 
-  belongs_to :animal, :cut, :line
+  belongs_to :animal
+  belongs_to :cut
+  belongs_to :line
+
   delegate   :order, to: :line, :allow_nil => true
   before_update :to_true
 
-  scope :sold, where(:sold => true)
-  scope :unsold, where(:sold => false)
+  scope :sold, -> { where(:sold => true) }
+  scope :unsold, -> { where(:sold => false) }
 
   def cut_siblings
     animal.packages.where(:cut_id => cut.id)

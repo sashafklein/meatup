@@ -1,30 +1,8 @@
 describe Animal do
-  def create_some_cuts
-    %w(ground london cross stew brisket).each do |cut_factory_name|
-      FactoryGirl.create(cut_factory_name.to_sym)
-    end
-  end
-
-  def create_connected_paul
-    @sasha = FactoryGirl.create(:sasha)
-    @host = FactoryGirl.create(:host)
-    @miller = FactoryGirl.create(:ranch, user: @sasha)
-    @sanders = FactoryGirl.create(:butcher)
-    @paul = FactoryGirl.create(:paul_ryan, host: @host, ranch: @miller, butcher: @sanders)
-  end
-
-  def empty_all
-    User.find_each(&:delete)
-    Ranch.find_each(&:delete)
-    Butcher.find_each(&:delete)
-    Cut.find_each(&:delete)
-    Animal.find_each(&:delete)
-    Package.find_each(&:delete)
-  end
 
   before(:all) do
-    empty_all
-    create_connected_paul
+    # empty_all
+    create_connected_paul_ryan
     create_some_cuts
   end
 
@@ -55,4 +33,23 @@ describe Animal do
     end
   end
 
+  # HELPER METHODS FOR CLARITY
+  def create_some_cuts
+    %w(ground london cross stew brisket).map(&:to_sym).each do |cut_factory|
+      FactoryGirl.create(cut_factory)
+    end
+  end
+
+  def create_connected_paul_ryan
+    @sasha = FactoryGirl.create(:sasha)
+    @host = FactoryGirl.create(:host)
+    @miller = FactoryGirl.create(:ranch, user: @sasha)
+    @sanders = FactoryGirl.create(:butcher)
+    @paul = FactoryGirl.create(:paul_ryan, host: @host, ranch: @miller, butcher: @sanders)
+  end
+
+  def empty_all
+    model_list = %w( User Ranch Butcher Cut Animal Package ).map(&:constantize)
+    model_list.each(&:delete_all)
+  end
 end
