@@ -49,11 +49,6 @@ class Animal < ActiveRecord::Base
   validates :weight, presence: true
   validates :breed, presence: true
   validates :animal_type, presence: true
- 
-  def self.weight_ratio(animal_type, first, second)
-    constant = "#{animal_type[0].capitalize}#{first[0].capitalize}O#{second[0].capitalize}"
-    constant.constantize
-  end
 
   def sold
     packages.sold
@@ -182,8 +177,7 @@ class Animal < ActiveRecord::Base
   end
 
   def weight_ratio(first, second)
-    constant = "#{animal_type[0].capitalize}#{first[0].capitalize}O#{second[0].capitalize}"
-    return constant.constantize
+    WeightRatio.new(animal_type).ratio(first, second)
   end
 
   def fixed_price

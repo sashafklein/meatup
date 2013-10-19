@@ -92,16 +92,12 @@ class Ranch < ActiveRecord::Base
     send("#{meat_type}_live".to_sym)
   end
 
-  def ratio(type, first, second)
-    Animal.weight_ratio(type, first, second)
-  end
-
   def meat_from_hanging(meat_type)
-    hanging_price(meat_type) / ratio(meat_type, "m", "h")
+    hanging_price(meat_type) / WeightRatio.new(meat_type).ratio(:meat, :hanging)
   end
 
   def meat_from_live(meat_type)
-    live_price(meat_type) / ratio(meat_type, "m", "l")
+    live_price(meat_type) / WeightRatio.new(meat_type).ratio(:meat, :live)
   end
 
   def prices_for_animal(meat_type)
