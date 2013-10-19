@@ -5,15 +5,12 @@ gem 'googlecharts', :require => "gchart"
 gem 'unicorn'
 gem 'newrelic_rpm'
 gem "pry"
+gem 'pg'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-group :production do
-	gem 'pg'
-end
 
 group :development do
-	gem 'sqlite3'
   gem 'better_errors'
   gem 'binding_of_caller'
 	gem 'rspec-rails', '2.11.0'
