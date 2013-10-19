@@ -2,9 +2,9 @@ FactoryGirl.define do
 
   factory :animal, class: "Animal" do
     breed         "Cow Breed"
-    name          "Cowy Name"
+    name          "Mr. Moo"
     animal_type   "Cow"
-    weight        1216
+    weight        100
     no_sales      true
     opening_sale  false
 
@@ -23,6 +23,10 @@ FactoryGirl.define do
     factory :paul_ryan, traits: [:with_host, :with_ranch, :with_butcher] do
       name "Paul Ryan"
       breed "Black Angus"
+    end
+
+    factory :tiny do
+      weight 10
     end
 
   end
