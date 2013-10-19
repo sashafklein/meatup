@@ -38,7 +38,7 @@ class Animal < ActiveRecord::Base
   belongs_to :host
   
   after_create do 
-    if !Rails.env.test
+    if !Rails.env.test?
       create_packages
       start_opening_sale
     end
@@ -463,19 +463,19 @@ class Animal < ActiveRecord::Base
   end
 
   def downpaid_total
-    packages.downpaid.map(&:expected_revenue).inject(:+)
+    packages.downpaid.map(&:expected_revenue).sum
   end
 
   def downpaid_pounds
-    packages.downpaid.map(&:expected_weight).inject(:+)
+    packages.downpaid.map(&:expected_weight).sum
   end
 
   def paid_total
-    packages.paid.map(&:paid_revenue).inject(:+)
+    packages.paid.map(&:paid_revenue).sum
   end
 
   def paid_pounds
-    packages.paid.map(&:fallback_weight).inject(:+)
+    packages.paid.map(&:fallback_weight).sum
   end
 
   def all_finalized

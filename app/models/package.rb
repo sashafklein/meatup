@@ -20,6 +20,7 @@ class Package < ActiveRecord::Base
   include WeightAndPriceMethods
 
   attr_accessible :animal_id, :cut_id, :price, :line_id, :sold, :savings, :actual_lbs, :actual_oz, :true_weight
+  attr_reader :actual_lbs, :actual_oz
 
   belongs_to :animal
   belongs_to :cut
@@ -54,12 +55,12 @@ class Package < ActiveRecord::Base
 
   def to_true
     if ready_to_weigh && new_weight_present?
-      update_attribute(:true_weight, actual_lbs + actual_oz)
+      true_weight =  actual_lbs + actual_oz
     end
   end
 
   def new_weight_present?
-    actual_lbs + actual_oz <= 0
+    actual_lbs && actual_oz && actual_lbs + actual_oz > 0
   end
 
   def ready_to_weigh
@@ -75,15 +76,10 @@ class Package < ActiveRecord::Base
   end
 
   def actual_lbs=(val)
-    true_weight_will_change!
-    @actual_lbs=val
+    @actual_lbs = val.to_f
   end
 
-  def actual_lbs
-    actual_lbs.to_f
-  end
-
-  def actual_oz
-    actual_oz.to_f
+  def actual_oz=(val)
+    @actual_oz = val.to_f
   end
 end

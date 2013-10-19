@@ -1,20 +1,21 @@
 module Package::PackageStatusMethods
 
   ## CLASS METHODS
-  module ClassMethods
-    def self.with_order_status(status_symbol)
-      order_ids = animal.orders.send(status_symbol).pluck(:id)
-      line_item_ids = Line.where(order_id: line_item_ids).pluck(:id)
-      where(line_item: line_item_ids)
-    end
-  end
+  # module ClassMethods
+  # end
 
-  def self.included(base)
-    base.extend ClassMethods
-  end
+  # def self.included(base)
+  #   base.extend ClassMethods
+  # end
 
 
   ## INSTANCE METHODS
+
+  def with_order_status(status_symbol)
+    order_ids = animal.orders.send(status_symbol).pluck(:id)
+    line_item_ids = Line.where(order_id: line_item_ids).pluck(:id)
+    Package.where(line_item: line_item_ids)
+  end
 
   def incomplete
     with_order_status(:incomplete)

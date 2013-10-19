@@ -19,15 +19,10 @@ class Line < ActiveRecord::Base
   has_many :packages
   delegate   :animal, to: :order, :allow_nil => true
   
-  before_save :note_taker
   after_create :decrement_packages
 
   def cut
   	Cut.find(self.cut_id)
-  end
-
-  def note_taker 
-    self.notes ||= ""
   end
 
   def target_packages
@@ -44,12 +39,21 @@ class Line < ActiveRecord::Base
     self.cut.package_weight
   end
 
+  def real_weight
+    return nil if packages.pluck(:true_weight).include?(nil)
+    packages.pluck(:true_weight).sum
+  end
+
+  def weight_diff
+    real_weight ? expected_weight - real_weight : 'Unknown'
+  end
+
   def poundage
-    packages.map(&:fallback_weight).inject(:+)
+    packages.map(&:fallback_weight).sum
   end
 
   def total
-    packages.map(&:fallback_revenue).inject(:+)
+    packages.map(&:fallback_revenue).sum
   end
 
   def price

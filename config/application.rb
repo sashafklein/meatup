@@ -68,7 +68,7 @@ module Meatup2
     config.assets.version = '1.0'
 
     # For unicorn logging
-    config.logger = Logger.new(STDOUT)
+    # config.logger = Logger.new(STDOUT)
 
   end
 end

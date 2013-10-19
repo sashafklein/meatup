@@ -1,5 +1,12 @@
+completions_array = []
+
+# Completions array is filled with updates that get 
+# rescued if anything errored, letting me know where
+# the problem occurred
+begin
+
 # Cuts
-	Cut.delete_all
+
 	# The Real Paul Ryan
 	london = Cut.create(
 		:animal_type => "Cow",
@@ -361,7 +368,8 @@
   	)
 
 # Users
-	User.delete_all
+completions_array << "Seeded Cuts"
+
 	sasha = User.create(
 		:name => "Sasha Klein",
 		:email => "sashaklein1@gmail.com",
@@ -444,7 +452,8 @@
 	)
 
 # Butchers
-	Butcher.delete_all
+completions_array << "Seeded Users"
+
 	sanders = Butcher.create(
 		:name => "Sanders Meat Co",
 		:address => "Turlock St.",
@@ -500,7 +509,8 @@
 	gleason_user.update_attribute(:butcher_id, gleason_butcher.id)
 
 # Ranches
-	Ranch.delete_all
+completions_array << "Seeded Butchers"
+
 
 	# blank_ranch = Ranch.create(
 	# 	:name => "Blank",
@@ -645,7 +655,8 @@
 	devils_gulch_user.update_attribute(:ranch_id, devils_gulch_ranch.id)
 
 # Hosts
-	Host.delete_all
+completions_array << "Seeded Ranches"
+
 	klein = Host.create(
 		:state => "CA",
 		:phone => "later",
@@ -657,7 +668,8 @@
 	niko.update_attribute(:host_id, klein.id)
 
 # Animals
-	Animal.delete_all
+completions_array << "Seeded Hosts"
+
 	paul = Animal.create(
 		:breed => "Black Angus", 
 		:name => "Paul Ryan", 
@@ -675,7 +687,8 @@
 ##################################################################################################################################
 
 # Real Users (with orders)
-Order.delete_all
+completions_array << "Seeded Animals"
+completions_array << "Onto user/order/line recreation"
 
 	jasper = User.create(
 		:name => "Jasper Sherman-Presser",
@@ -722,6 +735,7 @@ Order.delete_all
 			)
 
 			jasper_1.update_attribute(:total, jasper_1.to_total)
+			completions_array << "Jasper done"
 
 	angelo = User.create(
 		:name => "Angelo Maddox",
@@ -789,6 +803,7 @@ Order.delete_all
 				:units => 1
 			)
 			angelo_2.update_attribute(:total, angelo_2.to_total)
+			completions_array << "Angelo 1 & 2 done"
 
 	thea = User.create(
 		:name => "Thea Baumann",
@@ -823,6 +838,7 @@ Order.delete_all
 				:units => 1
 			)
 			thea_1.update_attribute(:total, thea_1.to_total)
+			completions_array << "Thea done"
 
 	pim = User.create(
 		:name => "Pim Kyne",
@@ -888,6 +904,7 @@ Order.delete_all
 				:units => 2
 			)
 			pim_2.update_attribute(:total, pim_2.to_total)
+			completions_array << "Pim done"
 			
 	virginia = User.create(
 		:name => "Virginia Woolworth",
@@ -907,6 +924,7 @@ Order.delete_all
 				:units => 2
 			)
 			virginia_1.update_attribute(:total, virginia_1.to_total)
+			completions_array << "Virginia done"
 
 	andrea = User.create(
 		:name => "Andrea Woodside",
@@ -926,6 +944,7 @@ Order.delete_all
 				:units => 1
 			)
 			andrea_1.update_attribute(:total, andrea_1.to_total)
+			completions_array << "Andrea done"
 
 	james = User.create(
 		:name => "James Ruggiero",
@@ -955,6 +974,7 @@ Order.delete_all
 				:units => 1
 			)
 			james_1.update_attribute(:total, james_1.to_total)
+			completions_array << "James done"
 
 	maura = User.create(
 		:name => "Maura Thompson",
@@ -989,6 +1009,7 @@ Order.delete_all
 				:units => 1
 			)
 			maura_1.update_attribute(:total, maura_1.to_total)
+			completions_array << "Maura done"
 
 		sasha_1 = Order.create(
 			:status => 2,
@@ -1071,6 +1092,7 @@ Order.delete_all
 				:units => 2
 			)
 			sasha_1.update_attribute(:total, sasha_1.to_total)
+			completions_array << "Sasha done"
 
 	loren = User.create(
 		:name => "Loren Kwan",
@@ -1112,6 +1134,8 @@ Order.delete_all
 				:units => 1
 			)
 			loren_2.update_attribute(:total, loren_2.to_total)
+			completions_array << "Loren done"
+
 	vincent = User.create(
 		:name => "Vincent Casotti",
 		:email => "vincent@meatup.in",
@@ -1145,6 +1169,7 @@ Order.delete_all
 				:units => 1
 			)
 			vincent_1.update_attribute(:total, vincent_1.to_total)
+			completions_array << "Vinny done"
 
 	amy = User.create(
 		:name => "Amy Lin",
@@ -1164,6 +1189,7 @@ Order.delete_all
 				:units => 1
 			)
 			amy_1.update_attribute(:total, amy_1.to_total)
+			completions_array << "Amy done"
 
 	lyra = User.create(
 		:name => "Lyra Levin",
@@ -1198,6 +1224,7 @@ Order.delete_all
 				:units => 2
 			)
 			lyra_1.update_attribute(:total, lyra_1.to_total)
+			completions_array << "Lyra done"
 
 	ted = User.create(
 		:name => "Ted Blackman",
@@ -1217,6 +1244,7 @@ Order.delete_all
 				:units => 1
 			)
 			ted_1.update_attribute(:total, ted_1.to_total)
+			completions_array << "Ted done"
 
 	eli = User.create(
 		:name => "Eli Scott",
@@ -1236,6 +1264,7 @@ Order.delete_all
 				:units => 1
 			)
 			eli_1.update_attribute(:total, eli_1.to_total)
+			completions_array << "Eli done"
 
 	ashley = User.create(
 		:name => "Ashley Meyer",
@@ -1260,6 +1289,7 @@ Order.delete_all
 				:units => 1
 			)
 			ashley_1.update_attribute(:total, ashley_1.to_total)
+			completions_array << "Ashley done"
 
 	laura = User.create(
 		:name => "Laura Spiekerman",
@@ -1304,3 +1334,8 @@ Order.delete_all
 				:units => 3
 			)
 			laura_1.update_attribute(:total, laura_1.to_total)
+			completions_array << "Laura done"
+
+rescue
+	puts completions_array.split("\n")
+end

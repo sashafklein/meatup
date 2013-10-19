@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130117182802) do
+ActiveRecord::Schema.define(:version => 20131019052830) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -102,10 +102,10 @@ ActiveRecord::Schema.define(:version => 20130117182802) do
 
   create_table "lines", :force => true do |t|
     t.integer  "units"
-    t.string   "notes"
+    t.string   "notes",      :default => ""
     t.integer  "order_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
     t.integer  "cut_id"
   end
 

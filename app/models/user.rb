@@ -54,12 +54,11 @@ class User < ActiveRecord::Base
   scope :hosts, where(:is_host => true)
 
   def end_apology
-    if self.apology
-      self.update_attribute(:apology, false)
-    end
+    update_attribute(:apology, false) if apology
   end
 
-  def my_packages(animal)
+  def associated_packages(animal)
+    # animal.orders.map(&:packages).flatten
     orders = animal.user_order_list.where(:user_id => self.id)
     package_list = []
     orders.lines.each do |l|
@@ -84,14 +83,8 @@ class User < ActiveRecord::Base
     end
 
     def unacceptable_zip
-      zip = self.zip
       bay_area_zips = ["94114"]
-
-      bay_area_zips.each do |z|
-        return false if z == zip
-      end
-
-      return true
+      !bay_area_zips.include?(z)
     end
 
     def create_remember_token
