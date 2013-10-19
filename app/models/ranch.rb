@@ -60,37 +60,56 @@ class Ranch < ActiveRecord::Base
   validates :city, presence: true
 
   def to_meat 
-    if self.cow_meat == 0 || self.cow_meat == nil
-      if self.cow_hanging != nil && self.cow_hanging != 0
-        self.update_attribute(:cow_meat, self.cow_hanging / CMOH)
-      elsif self.cow_live != nil && self.cow_live != 0
-        self.update_attribute(:cow_meat, self.cow_live / CMOL)
-      end
-    end
-    
-    if self.pig_meat == 0 || self.pig_meat == nil
-      if self.pig_hanging != nil && self.pig_hanging != 0
-        self.update_attribute(:pig_meat, self.pig_hanging / CMOH)
-      elsif self.pig_live != nil && self.pig_live != 0
-        self.update_attribute(:pig_meat, self.pig_live / CMOL)
-      end
-    end
+    meat_types = %w( cow pig lamb goat)
 
-    if self.lamb_meat == 0 || self.lamb_meat == nil
-      if self.lamb_hanging != nil && self.lamb_hanging != 0
-        self.update_attribute(:lamb_meat, self.lamb_hanging / CMOH)
-      elsif self.lamb_live != nil && self.lamb_live != 0
-        self.update_attribute(:lamb_meat, self.lamb_live / CMOL)
-      end
+    meat_types.each do |meat_type|
+      replace_meat_price_with_hanging_or_live(meat_type) if !has_price_for?(meat_type, "meat")
     end
+  end
 
-    if self.goat_meat == 0 || self.goat_meat == nil
-      if self.goat_hanging != nil && self.goat_hanging != 0
-        self.update_attribute(:goat_meat, self.goat_hanging / CMOH)
-      elsif self.goat_live != nil && self.goat_live != 0
-        self.update_attribute(:goat_meat, self.goat_live / CMOL)
-      end
+  def replace_meat_price_with_hanging_or_live(meat_type)
+    if has_price_for?(meat_type, "hanging")
+      update_attribute "#{meat_type}_meat".to_sym, meat_from_hanging(meat_type)
+    elsif has_price_for?(meat_type, "live")
+      update_attribute "#{meat_type}_meat".to_sym, meat_from_live(meat_type)
     end
+  end 
+
+  def has_price_for?(meat_type, measurement)
+    price = send("#{meat_type}_#{measurement}".to_sym)
+    price.present? && price > 0
+  end
+
+  def meat_price(meat_type)
+    send("#{meat_type}_meat".to_sym)
+  end
+
+  def hanging_price(meat_type)
+    send("#{meat_type}_hanging".to_sym)
+  end
+
+  def live_price(meat_type)
+    send("#{meat_type}_live".to_sym)
+  end
+
+  def ratio(type, first, second)
+    Animal.weight_ratio(type, first, second)
+  end
+
+  def meat_from_hanging(meat_type)
+    hanging_price(meat_type) / ratio(meat_type, "m", "h")
+  end
+
+  def meat_from_live(meat_type)
+    live_price(meat_type) / ratio(meat_type, "m", "l")
+  end
+
+  def prices_for_animal(meat_type)
+    {
+      meat: meat_price(meat_type),
+      hanging: hanging_price(meat_type),
+      live: live_price(meat_type)
+    }
   end
 
 end

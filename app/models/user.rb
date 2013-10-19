@@ -58,15 +58,7 @@ class User < ActiveRecord::Base
   end
 
   def associated_packages(animal)
-    # animal.orders.map(&:packages).flatten
-    orders = animal.user_order_list.where(:user_id => self.id)
-    package_list = []
-    orders.lines.each do |l|
-      l.packages.each do |p|
-        package_list << p
-      end
-    end
-    package_list
+    animal.orders.includes(:packages).map(&:packages).flatten
   end
 
   def animal_orders(animal)
@@ -76,7 +68,7 @@ class User < ActiveRecord::Base
   private
 
     def zip_test
-      if self.unacceptable_zip
+      if unacceptable_zip
         # Send an email and prohibit orders
         # Add to expansion list
       end

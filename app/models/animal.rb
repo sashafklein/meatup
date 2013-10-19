@@ -50,6 +50,11 @@ class Animal < ActiveRecord::Base
   validates :breed, presence: true
   validates :animal_type, presence: true
  
+  def self.weight_ratio(animal_type, first, second)
+    constant = "#{animal_type[0].capitalize}#{first[0].capitalize}O#{second[0].capitalize}"
+    constant.constantize
+  end
+
   def sold
     packages.sold
   end
@@ -147,11 +152,15 @@ class Animal < ActiveRecord::Base
   end
 
   def revenue_made
-    packages.sold.map(&:revenue).inject(:+) || 0
+    packages.sold.map(&:real_revenue).sum || 0
   end
 
   def revenue_possible
-    packages.map(&:expected_revenue).inject(:+)
+    packages.map(&:expected_revenue).sum
+  end
+
+  def profit
+    revenue_made - total_cost
   end
 
   def left_to_make

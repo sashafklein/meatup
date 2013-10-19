@@ -16,6 +16,7 @@ class Line < ActiveRecord::Base
   attr_accessible :notes, :units, :order_id, :cut_id, :dependent => :destroy
   
   belongs_to :order
+  belongs_to :cut
   has_many :packages
   delegate   :animal, to: :order, :allow_nil => true
   

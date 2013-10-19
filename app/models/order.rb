@@ -39,7 +39,7 @@ class Order < ActiveRecord::Base
   end
 
   def check_payment
-    rollback if status == 0
+    rollback if incomplete?
   end
 
   def rollback
@@ -48,12 +48,12 @@ class Order < ActiveRecord::Base
   end
 
   def poundage
-    lines.map(&:poundage).inject(:+)
+    lines.map(&:poundage).sum
   end
 
   # Returns the total cost of a given order
   def total_calc
-    packages.map(&:expected_revenue).inject(:+)
+    packages.map(&:expected_revenue).sum
   end
 
   def apology_discount
@@ -61,15 +61,15 @@ class Order < ActiveRecord::Base
   end
 
   def discounted
-    packages.map{ |p| p.expected_revenue / 10}.inject(:+)
+    packages.map{ |p| p.expected_revenue / 10}.sum
   end
 
   def get_difference
-    packages.map(&:revenue_diff).inject(:+)
+    packages.map(&:revenue_diff).sum
   end  
 
   def true_weight
-    packages.weighed.map(&:true_weight).inject(:+)
+    packages.weighed.map(&:true_weight).sum
   end
 
   def real
@@ -77,11 +77,11 @@ class Order < ActiveRecord::Base
   end
 
   def to_total
-    total ? total : packages.map(&:expected_revenue).inject(:+)
+    total ? total : packages.map(&:expected_revenue).sum
   end
   
   def make_total
-    packages.map(&:expected_revenue).inject(:+)
+    packages.map(&:expected_revenue).sum
   end
 
 end
