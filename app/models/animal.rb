@@ -50,12 +50,19 @@ class Animal < ActiveRecord::Base
   validates :breed, presence: true
   validates :animal_type, presence: true
 
-  def sold
-    packages.sold
+  scope :open, -> { where(open: true) }
+
+  def self.meat_type(animal_type)
+    case animal_type.to_s.downcase
+      when "cow"  then "beef"
+      when "pig"  then "pork"
+      when "lamb" then "lamb"
+      when "goat" then "goat"
+    end
   end
 
-  def unsold
-    packages.unsold
+  def meat_type
+    Animal.meat_type(animal_type)
   end
 
   def cutlist
@@ -114,24 +121,18 @@ class Animal < ActiveRecord::Base
   end
 
   def end_opening_sale
-    if opening_sale
-      unsold.select{ |p| p.cut.incentive }.each do |p|
-        p.update_attribute(:price, p.price / 0.9)
-        p.update_attribute(:savings, (p.cut.comp - p.price)/p.cut.comp)
-      end
-      update_attribute(:opening_sale, false)
-    end
+    return false unless opening_sale
+
+    packages.unsold.incentivized.each { |package| package.remove_from_opening_sale }
+    update_attribute(:opening_sale, false)
   end
 
   def start_final_sale
-    unless no_sales
-      end_opening_sale
-      unsold.each do |p|
-        p.update_attribute(:price, (p.price * 0.85))
-        p.update_attribute(:savings, (p.cut.comp - p.price)/p.cut.comp)
-      end
-      update_attribute(:final_sale, true)
-    end
+    return false if no_sales
+    end_opening_sale if opening_sale
+
+    packages.unsold.each { |package| package.start_final_sale }
+    update_attribute(:final_sale, true)
   end
 
   def cut_packages(cut)
@@ -163,7 +164,6 @@ class Animal < ActiveRecord::Base
   end
 
   # Returns total cost (for meat, butchery, and fixed, for the given animal)
-  
   def meat_price
     ranch.send("#{animal_type.downcase}_meat".to_sym)
   end
@@ -208,245 +208,59 @@ class Animal < ActiveRecord::Base
   end
 
   def check_for_sold
-    if unsold == 0
-      close_animal
-    end
+    close_animal if all_sold?
+  end
+
+  def all_sold?
+    packges.unsold.size == 0
   end
 
   def close_animal
-    self.toggle!(:open)
-    UserMailer.animal_close(self).deliver if host.user.email.!include?("@meatup.in")
-    User.admins.each do |u|
-      unless u.email.include?("@meatup.in")
-        UserMailer.animal_overview(self).deliver
-      end
-    end
-    UserMailer.butcher_specs(self).deliver unless butcher.user.email.include?("@meatup.in")
+    update_attribute(:open, false)
+    notify_users_of_animal_close
   end
 
-  # Returns a list of packages, one per cut, ordered by savings, sold-out at bottom
-  def make_list
-    shortened = shorten(self) # Turns all packages into a one-per list
-    on_sale = remove_sold_out(shortened, self) # Removes sold_out items from list
-    by_savings = arrange_packages(on_sale) # A one-per, savings-organized list
-    sold_bottom = to_bottom(shortened, by_savings, self) 
-    sold_bottom
+  def notify_users_of_animal_close
+    UserMailer.animal_close(self).deliver if !host.user.has_meatup_address?
+    User.admins.reject(&:has_meatup_address?).each { |u| UserMailer.animal_overview(self).deliver }
+    UserMailer.butcher_specs(self).deliver unless butcher.user.has_meatup_address?
   end
 
-######################################
-### VERY INEFFICIENT METHODS BELOW ###
-######################################
+  def list_for_sale
+    packages.by_cut_sale_and_savings
+  end
 
-  # A compact list of the unique "lines" sold
+  # Array of Open Structs with "bundles" of unique (cut/notes) lines
   def make_sold_list
-    list = []
-    lines.each do |line_item|
-      if list.empty? || !list.any?{ |item| item.has_same_cut_and_notes_as(line_item) }
-        list << line_item
-      end
-    end
-    list.sort_by{:cut_id}
+    bundles = lines.in_cut_and_note_bundles
   end
 
-  # Creates an array of hashes, organized by cut_name/notes (Boneless Ribeye is its own "bundle")
+  # Array of Open Structs with "bundles" of unique (cut/notes) packages
   def sold_bundles 
-    master = []
-    self.packages.sold.each do |p|
-
-      bundle_name = "#{p.cut} - #{p.notes}"
-      if !master.any?{ |bundle| bundle[:name] == bundle_name}
-        master << { name: bundle_name, packages: [p] }
-      else
-        bundle = master.select{ |bundle| bundle[:name] == bundle_name }.first
-        bundle[:packages] << p
-      end
-
-    end
-    master.sort
+    packages.sold_in_line_note_bundles
   end
 
-  # Returns a shortened list of cuts with NOTES included in ordering
-  def butcher_sort(list, animal)
-    array = []
-    list.each do |p|
-      package_list = animal.sold(p.cut)
-      package_list.each do |noted_cut|
-        if array.any?
-          counter = 0
-          array.each do |element|
-            if noted_cut.cut == element.cut
-              if noted_cut.line.notes == element.line.notes
-                counter += 1
-              end
-            end
-          end
-          if counter == 0
-            array << noted_cut
-          end
-        else 
-          array << noted_cut
-        end 
-      end
-    end
-    array
+  def sold_out_of?(cut)
+    cut_packages.all?(&:sold)
   end
 
-
-  # Creates a complete list of packages -- one per cut (sold-out included)
-  def shorten(animal)
-    package_array = []
-    animal.packages.each do |p|
-      if package_array.any?
-        counter = 0
-        package_array.each do |element|
-          if p.cut == element.cut
-            counter += 1
-          end
-        end
-        if counter == 0
-          package_array << p
-        end
-      else 
-        package_array << p
-      end 
-    end
-    package_array
-  end
-
-  def remove_sold_out(shortened, animal)
-    cleaned_up = []
-    shortened.each do |p|
-      animal_list = Package.where(:animal_id => animal.id)
-      full_list = animal_list.where(:cut_id => p.cut.id)
-      counter = 0
-
-      full_list.each do |package|
-        unless package.sold
-          # Counter > 1 means there are unsold packages
-          counter += 1
-        end
-      end
-
-      # A single unsold package means it's not sold out
-      if counter > 0
-        cleaned_up << p
-      end 
-    end
-    cleaned_up
-  end
-
-  def arrange_packages(shortened)
-    shortened.each do |p|
-      savings = (100 * (p.cut.comp - p.price) / p.cut.comp)
-      p.update_attribute(:savings, savings)
-    end
-    savings_list = shortened.sort_by{ |p| -p[:savings] }
-    savings_list
-  end
-
-  def to_bottom(shortened, by_savings, animal)
-
-    # Create a bottom layer of sold out packages
-    bottom = []
-
-    shortened.each do |p|
-      animal_list = Package.where(:animal_id => animal.id)
-      full_list = animal_list.where(:cut_id => p.cut.id)
-      counter = 0
-
-      full_list.each do |package|
-          counter += 1 unless package.sold 
-      end
-
-      # A single unsold package means it's not sold out
-      if counter == 0
-        p.update_attribute(:savings, -1)
-        bottom << p
-      end 
-    end
-
-    # Combine, with sold-out at bottom 
-    complete = []
-      by_savings.each do |t|
-        complete << t
-      end
-      bottom.each do |b|
-        complete << b
-      end
-
-    complete
-
-  end
-
-  def sold_out(cut, animal)
-    all_packages = Package.where(:animal_id => animal.id)
-    cut_packages = all_packages.where(:cut_id => cut.id)
-    counter = 0
-    cut_packages.each do |p|
-      counter += 1 unless p.sold
-    end
-    if counter == 0
-      true
-    else
-      false
-    end
-  end
-
-  # Returns list of packages a user placed on the animal. Separate orders ignored.
+  # Array of Open Structs associating users with the packages they purchase of this animal
   def user_order_list
-    master = []
-    self.users.each do |u|
-      list = []
-      u.orders.where(:animal_id => self.id).each do |o|
-        o.packages.each do |p|
-          list << p
-        end 
-      end
-      master << list
-    end
-    master  
+    users.map{ |u| OpenStruct.new(user: u, packages: u.associated_packages) }
   end
 
-  def to_hanging
-    self.pounds_sold * weight_ratio("hanging", "meat")
+  def hanging_weight
+    weight * weight_ratio("hanging", "meat")
   end
 
   # Returns full list of the users who bought from the animal
   def users
-    user_list = []
-    self.orders.each do |o|
-      counter = 0
-      user_list.each do |u|
-        if o.user == u
-          counter += 1
-        end
-      end
-      user_list << o.user if counter == 0 
-    end
-    user_list
+    user_ids = orders.pluck(:user_id).uniq
+    User.where(user: user_ids)
   end
 
   def mult
-    self.send("#{animal_type.downcase}_mult".to_sym)
-  end
-
-  def avg_price
-    self.revenue_possible / self.pounds_total
-  end
-
-  def avg_weight
-    self.pounds_total / self.packages.size
-  end
-
-  def get_open
-    Animal.where(:open => true)
-  end
-
-  def meat_type
-    "beef" if self.animal_type == "Cow"
-    "pork" if self.animal_type == "Pig"
-    "lamb" if self.animal_type == "Lamb"
-    "goat" if self.animal_type == "Goat"
+    send("#{animal_type.downcase}_mult".to_sym)
   end
 
   def harvest_date
@@ -458,11 +272,7 @@ class Animal < ActiveRecord::Base
   end
 
   def pickup_date
-    if self.name == "Donald Trump" 
-      "January 12th"
-    else
-      "TBD"
-    end
+    name == "Donald Trump" ? "January 12th" : "TBD"
   end
 
   def downpaid_total
@@ -481,12 +291,21 @@ class Animal < ActiveRecord::Base
     packages.paid.map(&:fallback_weight).sum
   end
 
+  def avg_price
+    revenue_possible / pounds_total
+  end
+
+  def avg_weight
+    pounds_total / packages.size
+  end
+
   def all_finalized
     packages.count == packages.complete.count + packages.paid.count
   end
 
   def finalize
-    self.toggle!(:finalized) unless self.finalized
+    return false if finalized?
+    update_attribute(:finalized, true)
   end
 
 end

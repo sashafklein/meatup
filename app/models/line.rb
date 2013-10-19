@@ -22,6 +22,17 @@ class Line < ActiveRecord::Base
   
   after_create :decrement_packages
 
+  def self.in_cut_and_note_bundles
+    bundles = group_by{ |line| [line.cut.name, line.notes] }.sort
+    bundles.map do |line_group|
+      OpenStruct.new(
+        cut_name: line_group[0][0], 
+        notes: line_group[0][1],
+        number: line_group[1]
+      )
+    end
+  end
+
   def cut
   	Cut.find(self.cut_id)
   end

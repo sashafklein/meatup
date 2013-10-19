@@ -32,6 +32,39 @@ class Package < ActiveRecord::Base
   scope :sold, -> { where(:sold => true) }
   scope :unsold, -> { where(:sold => false) }
 
+  # Array of Open Structs grouping packages by :sold, :savings, and cut name;
+  # Sold Out at bottom, then ordered with savings at top.
+  def self.by_cut_sale_and_savings
+    unsold.in_savings_bundles + sold.in_savings_bundles
+  end
+
+  def self.in_savings_bundles
+    bundles = group_by{ |p| [p.savings, p.cut.name] }.sort
+    bundles.map do |bundle|
+      OpenStruct.new(
+        cut_name: bundle[0][1],
+        savings: bundle[0][0],
+        packages: bundle[1]
+      )
+    end
+  end
+
+  def self.sold_in_line_note_bundles
+    bundles = sold.group_by{ |p| p.cut.name, p.line.notes }.sort
+    bundles.map do |bundle|
+      OpenStruct.new(
+        cut_name: bundle[0][0],
+        notes: bundle[0][1],
+        packages: bundle[1]
+      )
+    end
+  end
+
+  def incentivized
+    cut_ids = animal.cutlist.incentive_priced.pluck(:id)
+    where(cut_id: cut_ids)
+  end
+
   def cut_siblings
     animal.packages.where(:cut_id => cut.id)
   end
@@ -81,5 +114,28 @@ class Package < ActiveRecord::Base
 
   def actual_oz=(val)
     @actual_oz = val.to_f
+  end
+
+  def incentive_priced?
+    cut.incentive
+  end
+
+  def get_savings_from_benchmark(new_price = nil)
+    new_price ||= price
+    1 - (new_price / cut.retail_price_benchmark)
+  end
+
+  def remove_from_opening_sale
+    update_attributes!(
+      price: price / 0.9,
+      savings: get_savings_from_benchmark(price / 0.9)
+    )
+  end
+
+  def start_final_sale
+    update_attributes!(
+      price: price * 0.85,
+      savings: get_savings_from_benchmark(price * 0.85)
+    )
   end
 end

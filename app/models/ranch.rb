@@ -41,12 +41,14 @@
 #
 
 class Ranch < ActiveRecord::Base
-  attr_accessible :address, :city, :state, :zip, :cow, :cow_meat, 
-    :cow_hanging, :cow_live, :goat, :goat_meat, :goat_hanging, 
-    :goat_live, :lamb, :lamb_meat, :lamb_hanging, :lamb_live, 
-    :name, :phone, :pig, :pig_meat, :pig_hanging, :pig_live, 
-    :user_id, :preferred_butcher, :has_csa, :delivers_butcher,
-    :delivers_drop, :delivers_host, :cow_fixed, :pig_fixed, 
+  attr_accessible :address, :city, :state, :zip, 
+    :name, :phone, :user_id, :preferred_butcher, :has_csa, 
+    :delivers_butcher, :delivers_drop, :delivers_host,
+    :cow, :cow_meat, :cow_hanging, :cow_live, 
+    :goat, :goat_meat, :goat_hanging, :goat_live, 
+    :lamb, :lamb_meat, :lamb_hanging, :lamb_live, 
+    :pig, :pig_meat, :pig_hanging, :pig_live, 
+    :cow_fixed, :pig_fixed, 
     :lamb_fixed, :goat_fixed
 
   has_many :animals
@@ -60,51 +62,44 @@ class Ranch < ActiveRecord::Base
   validates :city, presence: true
 
   def to_meat 
-    meat_types = %w( cow pig lamb goat)
+    animal_types = %w( cow pig lamb goat )
 
-    meat_types.each do |meat_type|
-      replace_meat_price_with_hanging_or_live(meat_type) if !has_price_for?(meat_type, "meat")
+    animal_types.each do |animal_type|
+      replace_meat_price_with_hanging_or_live(animal_type) if !has_price_for?(animal_type, :meat)
     end
   end
 
-  def replace_meat_price_with_hanging_or_live(meat_type)
-    if has_price_for?(meat_type, "hanging")
-      update_attribute "#{meat_type}_meat".to_sym, meat_from_hanging(meat_type)
-    elsif has_price_for?(meat_type, "live")
-      update_attribute "#{meat_type}_meat".to_sym, meat_from_live(meat_type)
+  def replace_meat_price_with_hanging_or_live(animal_type)
+    [:hanging, :live].select{ |meas| has_price_for?(meas) }.each do |measurement| 
+      return convert_from_measurement(measurement, animal_type) # first to have price returns
     end
   end 
 
-  def has_price_for?(meat_type, measurement)
-    price = send("#{meat_type}_#{measurement}".to_sym)
-    price.present? && price > 0
+  def convert_from_measurement(measurement, animal_type)
+    update_attribute "#{animal_type}_meat", meat_from_measurement(measurement, animal_type)
   end
 
-  def meat_price(meat_type)
-    send("#{meat_type}_meat".to_sym)
+  def has_price_for?(animal_type, measurement)
+    specific_price = price(animal_type, measurement)
+    specific_price.present? && !specific_price.zero?
   end
 
-  def hanging_price(meat_type)
-    send("#{meat_type}_hanging".to_sym)
+
+  def meat_from_measurement(measurement, animal_type)
+    price(animal_type, measurement) / WeightRatio.new(animal_type).ratio(:meat, measurement)
   end
 
-  def live_price(meat_type)
-    send("#{meat_type}_live".to_sym)
+  def price(animal_type, measurement)
+    send "#{animal_type}_#{measurement}"
+  rescue
+    nil
   end
 
-  def meat_from_hanging(meat_type)
-    hanging_price(meat_type) / WeightRatio.new(meat_type).ratio(:meat, :hanging)
-  end
-
-  def meat_from_live(meat_type)
-    live_price(meat_type) / WeightRatio.new(meat_type).ratio(:meat, :live)
-  end
-
-  def prices_for_animal(meat_type)
+  def prices_for_animal(animal_type)
     {
-      meat: meat_price(meat_type),
-      hanging: hanging_price(meat_type),
-      live: live_price(meat_type)
+      meat: price( :meat, animal_type ),
+      hanging: price( :hanging, animal_type ),
+      live: price( :live, animal_type )
     }
   end
 

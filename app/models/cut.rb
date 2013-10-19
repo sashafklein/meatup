@@ -27,6 +27,7 @@ class Cut < ActiveRecord::Base
   scope :goat, where(:animal_type == "Goat")
   scope :lamb, where(:animal_type == "Lamb")
   scope :weighted, -> { where('package_weight > ?', 0) }
+  scope :incentive_price, -> { where(incentive: true) }
 
   validates :price, :percent, :package_weight, 
             :name, :description, :animal_type,
@@ -38,5 +39,9 @@ class Cut < ActiveRecord::Base
 
   def package_price
     incentive ? price * 0.9 : price
+  end
+
+  def retail_price_benchmark
+    comp
   end
 end

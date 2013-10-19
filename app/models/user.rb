@@ -62,7 +62,11 @@ class User < ActiveRecord::Base
   end
 
   def animal_orders(animal)
-    self.orders.where(:animal_id => animal.id)
+    orders.where(:animal_id => animal.id)
+  end
+
+  def has_meatup_address?
+    email.include?("@meatup.in")
   end
 
   private
