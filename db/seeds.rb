@@ -1337,5 +1337,6 @@ completions_array << "Onto user/order/line recreation"
 			completions_array << "Laura done"
 
 rescue
-	puts completions_array.split("\n")
+	full_mgs = ["SEED FAILED", "SUCCESSFUL SECTIONS BELOW:"] + completions_array
+	puts full_mgs.split("\n") 
 end
