@@ -1,7 +1,6 @@
 describe Animal do
 
   before(:all) do
-    # empty_all
     create_connected_paul_ryan
     create_some_cuts
   end
@@ -9,34 +8,61 @@ describe Animal do
   describe "create_packages" do
 
     it "creates the appropriate number of packages" do
-      expect { @paul.create_packages }.to change{ Package.count }.by(136)
+      expect { @paul.create_packages }.to change{ Package.count }.by(68)
     end
 
     it "prices the packages appropriately" do
       @paul.create_packages
 
-      ground_beef = Cut.find_by_name("Ground Beef")
-      london_broil = Cut.find_by_name("London Broil")
-      ground_packages = Package.where(cut_id: ground_beef.id)
-      
-      ground_packages.count.should == 93
-      ground_packages.reject{ |p| p.price == 2.63 }.count.should == 0
-      Package.find_by_cut_id(london_broil.id).price.should == 4.0
+      ground_packages = Package.where(cut_id: @ground.id)
+      london_packages = Package.where(cut_id: @london.id)
+
+      Package.where(cut_id: @filet.id).size.should == 3
+      Package.where(cut_id: @stew.id).size.should == 12
+      london_packages.size.should == 3
+      ground_packages.size.should == 50
+
+      ground_packages.reject{ |p| p.price == 2 }.size.should == 0
+      london_packages.first.price.should == 4
     end
   end
 
-  describe "total_cost" do
-
+  describe "#total_cost" do
     it "chooses the right cost" do
       @paul.create_packages
-      @paul.total_cost.to_f.round(1).should == 1702.4
+
+      @paul.total_cost.to_i.should == 140
+    end
+  end
+
+  describe '#total_revenue' do
+    it "calculates correctly" do
+      @paul.create_packages
+      @paul.packages.where(cut_id: @filet.id).update_all(sold: true, true_weight: @filet.package_weight)
+
+      @paul.reload.revenue_made.should == 180
+
+      Package.any_instance.stub(:weighted?).and_return(true)
+      @paul.packages.unsold.update_all(sold: true)
+      @paul.reload.revenue_made.should == 180
+    end
+  end
+
+  describe "finer-grain money calcs" do
+    describe '#profit' do
+      it "subtracts revenue from total cost" do
+        @paul.create_packages
+        @paul.profit.floor.to_i.should == -140.0
+        @paul.packages.where(cut_id: @filet.id).update_all(sold: true, true_weight: @filet.package_weight)
+        @paul.reload.profit.to_i.should == 40
+      end
     end
   end
 
   # HELPER METHODS FOR CLARITY
   def create_some_cuts
-    %w(ground london cross stew brisket).map(&:to_sym).each do |cut_factory|
-      FactoryGirl.create(cut_factory)
+    %w(ground london stew filet).map(&:to_sym).each do |cut_factory|
+      instance_variable_set "@#{cut_factory}", FactoryGirl.create(cut_factory)
     end
   end
 
@@ -48,8 +74,4 @@ describe Animal do
     @paul = FactoryGirl.create(:paul_ryan, host: @host, ranch: @miller, butcher: @sanders)
   end
 
-  def empty_all
-    model_list = %w( User Ranch Butcher Cut Animal Package ).map(&:constantize)
-    model_list.each(&:delete_all)
-  end
 end
