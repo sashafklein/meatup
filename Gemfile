@@ -38,6 +38,7 @@ group :assets do
   gem 'bootstrap-sass', '2.0.4'
   gem 'bcrypt-ruby', '3.0.1'
   gem 'haml'
+  gem 'haml-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
