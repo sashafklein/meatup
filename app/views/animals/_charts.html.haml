@@ -1,19 +1,8 @@
 %table
   %tr
     %td
-      = content_tag :div, "", id: "weight_chart",   |
-        data: {sold: @animal.pounds_sold.round(2),  |
-               left: @animal.pounds_left.round(2)}, |
-        class: "morris_chart"                       |
+      .morris_chart#weight_chart{ data: { sold: @animal.pounds_sold.round(2), left: @animal.pounds_left.round(2) } }
     %td
-      = content_tag :div, "", id: "sales_chart",                                  |
-        data: {sold: @animal.revenue_made.round(2),                               |
-               left: (@animal.revenue_possible - @animal.revenue_made).round(2)}, |
-        class: "morris_chart"                                                     |
+      .morris_chart#sales_chart{ data: {sold: @animal.revenue_made.round(2), left: (@animal.revenue_possible - @animal.revenue_made).round(2) } }
     %td
-      = content_tag :div, "", id: "status_chart",     |
-        data: { zero: @animal.incomplete_orders.size, |
-               one: @animal.downpaid_orders.size,     |
-               two: @animal.paid_orders.size,         |
-               three: @animal.complete_orders.size }, |
-        class: "morris_chart"                         |
+      .morris_chart#status_chart{ data: { zero: @animal.orders.incomplete.size, one: @animal.orders.downpaid.size, two: @animal.orders.paid.size, three: @animal.orders.complete.size } }

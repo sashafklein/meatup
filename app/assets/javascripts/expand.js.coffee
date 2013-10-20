@@ -1,5 +1,6 @@
-jQuery ->
-	$('.row .bundle').on "click", (e) ->
-		e.preventDefault()
-		$collapse = $(@).closest('.collapse-group').find('.collapse')
-		$collapse.collapse 'toggle'
+$ ->
+
+  $('.collapse_trigger').click ->
+    target = $(@).data 'target'
+    $("\##{target}").collapse 'toggle'
+    return false

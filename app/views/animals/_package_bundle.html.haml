@@ -1,51 +1,50 @@
 .row.inset
-  .collapse-group
-    %h4.normal_links.inset
-      = bundle.first.cut.name
-      - if bundle.first.line.notes != ""
-        = "- #{bundle.first.line.notes}"
-      %span{:style => "font-size: 80%"}
-        = " -- (#{bundle.size} packages" + unfinalized(bundle)
-      %a.bundle{:href => "#", :style => "font-size:70%"} (expand)
-    .collapse.normal_links.inset
-      %table.table
-        %thead
-          %tr
-            %th Cut Name
-            %th Prep Notes
-            %th Label
-            %th Actual Lbs
-            %th Actual Oz
-        %tbody
-          / list of specified packages
-          = f.fields_for :packages, bundle do |p|
-            - if p.object.order.user
-              %tr
-                %td= p.object.cut.name
-                %td= p.object.line.processed_notes
-                %td= "#{p.object.order.user.name.first(3).upcase}-#{p.object.id}"
-                - if p.object.true_weight == nil || p.object.true_weight == 0
-                  %td{:colspan => "1"}= p.text_field :actual_lbs
-                  %td{:colspan => "1"}= p.text_field :actual_oz
-                - else
-                  %td
-                    = p.object.true_weight.round(0)
-                    lb
-                  %td
-                    = ((p.object.true_weight % 1) * 16).round(2)
-                    oz
-            - else
-              %tr
-                %td= p.object.cut.name
-                %td Unsold
-                %td Unsold
-                - if p.object.true_weight == nil
-                  %td{:colspan => "1"}= p.text_field :actual_lbs
-                  %td{:colspan => "1"}= p.text_field :actual_oz
-                - else
-                  %td
-                    = p.object.true_weight.round(0)
-                    lb
-                  %td
-                    = ((p.object.true_weight % 1) * 16).round(2)
-                    oz
+  %h4.normal_links.inset
+    = bundle.first.cut.name
+    - if bundle.first.line.notes != ""
+      = "- #{bundle.first.line.notes}"
+    %span{:style => "font-size: 80%"}
+      = " -- (#{bundle.size} packages" + unfinalized(bundle)
+    %a.collapse_trigger{:href => "#", :style => "font-size:70%", :'data-target' => 'package_bundle'} (expand)
+  .collapse.normal_links.inset#package_bundle
+    %table.table
+      %thead
+        %tr
+          %th Cut Name
+          %th Prep Notes
+          %th Label
+          %th Actual Lbs
+          %th Actual Oz
+      %tbody
+        / list of specified packages
+        = f.fields_for :packages, bundle do |p|
+          - if p.object.order.user
+            %tr
+              %td= p.object.cut.name
+              %td= p.object.line.processed_notes
+              %td= "#{p.object.order.user.name.first(3).upcase}-#{p.object.id}"
+              - if p.object.true_weight == nil || p.object.true_weight == 0
+                %td{:colspan => "1"}= p.text_field :actual_lbs
+                %td{:colspan => "1"}= p.text_field :actual_oz
+              - else
+                %td
+                  = p.object.true_weight.round(0)
+                  lb
+                %td
+                  = ((p.object.true_weight % 1) * 16).round(2)
+                  oz
+          - else
+            %tr
+              %td= p.object.cut.name
+              %td Unsold
+              %td Unsold
+              - if p.object.true_weight == nil
+                %td{:colspan => "1"}= p.text_field :actual_lbs
+                %td{:colspan => "1"}= p.text_field :actual_oz
+              - else
+                %td
+                  = p.object.true_weight.round(0)
+                  lb
+                %td
+                  = ((p.object.true_weight % 1) * 16).round(2)
+                  oz

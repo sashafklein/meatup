@@ -1,6 +1,8 @@
-.collapse-group
+.row{:style => "text-align:center"}
+  %h2 Associated Cuts
   %h4.normal_links
-    %a.bundle{:href => "#"} (expand).collapse.normal_links
+    %a.collapse_trigger{href: "#", data: {target: "associated_cuts"} } (expand)
+  .normal_links.collapse#associated_cuts
     %table.table
       %tr
         %th Cut Name

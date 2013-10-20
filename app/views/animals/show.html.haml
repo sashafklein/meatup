@@ -3,7 +3,7 @@
 
 %h2{:style => "text-align:left"}
   %span{:style => "font-size:120%; font-weight:none"}
-    = @animal.animal_type
+    = @animal.animal_type.capitalize
     Name:
   %span{:style => "font-size:120%; font-weight:bold"}= @animal.name
 
@@ -28,7 +28,6 @@
     %td= number_to_currency(@animal.revenue_possible)
     %td= number_to_currency(@animal.expected_margins)
     %td= number_to_currency(@animal.profit)
-%br/
 
 %h2 Animal Info
 %table.table
@@ -47,13 +46,10 @@
     %td= @animal.host.user.name
     %td= @animal.photo
 
-%h2 Associated Cuts
-.row{:style => "text-align:center"}
-  = render 'cutlist'
-%br/
-%h2 Associated Orders
-  = render 'orderlist'
-%br/
+
+= render 'cutlist'
+= render 'orderlist'
+
 = link_to 'Edit', edit_animal_path(@animal)
 |
-\#{link_to 'Back', animals_path}
+= #{link_to 'Back', animals_path}

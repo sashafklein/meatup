@@ -1,29 +1,28 @@
 .row
-  .collapse-group
-    %h4.normal_links
-      = "#{bundle.cut_name} -- #{bundle.notes} (#{bundle.packages.count} packages) "
-      %a.bundle{:href => "#", :style => "font-size:70%"} (expand)
-    .collapse.normal_links" %>
-      %table.table
-        %thead
+  %h4.normal_links
+    = "#{bundle.cut_name} -- #{bundle.notes} (#{bundle.packages.count} packages) "
+    %a.collapse_trigger{href: "#", style: "font-size:70%", :'data-target' => 'labels'} (expand)
+  .collapse.normal_links#labels
+    %table.table
+      %thead
+        %tr
+          %th Cut
+          %th Prep Notes
+          %th Package #
+          - if @animal.finalized
+            %th Final Weight (Lbs)
+            %th
+          - else
+            %th Expected Weight (Lbs)
+          %th Label User
+      %tbody
+        - bundle.packages.each do |p|
           %tr
-            %th Cut
-            %th Prep Notes
-            %th Package #
+            %td= bundle.cut_name
+            %td= bundle.notes
+            %td= bundle.packages.count
             - if @animal.finalized
-              %th Final Weight (Lbs)
-              %th
+              %td= p.true_weight
             - else
-              %th Expected Weight (Lbs)
-            %th Label User
-        %tbody
-          - bundle.packages.each do |p|
-            %tr
-              %td= bundle.cut_name
-              %td= bundle.notes
-              %td= bundle.packages.count
-              - if @animal.finalized
-                %td= p.true_weight
-              - else
-                %td= p.expected_weight
-              %td= "#{p.order.user.name.first(3).upcase}-#{p.id}"
+              %td= p.expected_weight
+            %td= "#{p.order.user.name.first(3).upcase}-#{p.id}"
