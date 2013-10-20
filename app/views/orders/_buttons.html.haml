@@ -1,10 +1,4 @@
-/ <h2 style="text-align:center">We've Got:</h2>
 .animal-buttons
-  - if @cows.any?
-    = link_to image_tag("beef_button.png"), '/orders/new/1'
-  - if @pigs.any?
-    = link_to image_tag("pork_button.png"), '/orders/list/pig'
-  - if @lambs.any?
-    = link_to image_tag("lamb_button.png"), '/orders/list/lamb'
-  - if @goats.any?
-    = link_to image_tag("goat_button.png"), '/orders/list/goat'
+  - @types.each do |type|
+    - if type.any_real_open?
+      = link_to image_tag("#{type.meat}_button.png"), "/orders/list/#{type.name}"

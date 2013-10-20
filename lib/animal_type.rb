@@ -13,6 +13,10 @@ class AnimalType
     %w( cow pig lamb goat )
   end
 
+  def self.instance_list
+    list.map{ |type| AnimalType.new(type) }
+  end
+
   def self.capitalized_list
     list.map(&:capitalize)
   end
@@ -29,6 +33,18 @@ class AnimalType
     Animal.where(animal_type: type_string)
   end
 
+  def real_open
+    real_animals.open
+  end
+
+  def any_real_open?
+    real_open.any?
+  end
+
+  def inspect
+    type_string
+  end
+
   def meat
     case type_string
       when "cow"  then "beef"
@@ -36,6 +52,14 @@ class AnimalType
       when "lamb" then "lamb"
       when "goat" then "goat"
     end
+  end
+
+  def type
+    type_string
+  end
+
+  def name
+    type
   end
 
 end

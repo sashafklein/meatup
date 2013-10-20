@@ -35,17 +35,11 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
   end
 
   def list
-    @animal_type = params[:type].capitalize
-    @open = Animal.where(:open => true)
-    @animals = @open.where(:animal_type => @animal_type)
+    @type = AnimalType.new(params[:type])
   end
 
   def purchase
-    @open = Animal.where(:open => true)
-    @cows = @open.where(:animal_type => "Cow")
-    @pigs = @open.where(:animal_type => "Pig")
-    @lambs = @open.where(:animal_type => "Lamb")
-    @goats = @open.where(:animal_type => "Goat")
+    @types = AnimalType.instance_list
   end
 
   # GET /orders/new/:animal_id

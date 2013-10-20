@@ -1,6 +1,8 @@
 - provide(:title, 'Change Your Order')
+
 %h1 Editing order
 = render 'form'
+
 = link_to 'Show', @order
 |
-\#{link_to 'Back', orders_path}
+= link_to 'Back', orders_path
