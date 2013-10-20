@@ -44,6 +44,8 @@ class Animal < ActiveRecord::Base
     end
   end
 
+  before_create { animal_type.downcase! }
+
   accepts_nested_attributes_for :packages
 
   validates :weight, presence: true
@@ -51,7 +53,6 @@ class Animal < ActiveRecord::Base
   validates :animal_type, presence: true
 
   scope :open, -> { where(open: true) }
-
 
   def meat_type
     AnimalType.new(animal_type).meat
@@ -90,7 +91,7 @@ class Animal < ActiveRecord::Base
   end
 
   def best_lb_estimate
-    package.map(&:fallback_weight).inject(:+)
+    packages.map(&:fallback_weight).inject(:+)
   end
 
   def pounds_total
@@ -152,7 +153,7 @@ class Animal < ActiveRecord::Base
   end
 
   def profit
-    revenue_made - total_cost
+    revenue_made - wholesale_cost
   end
 
   def left_to_make
@@ -160,16 +161,9 @@ class Animal < ActiveRecord::Base
   end
 
   # Returns total cost (for meat, butchery, and fixed, for the given animal)
-  def meat_price
-    ranch.send("#{animal_type.downcase}_meat".to_sym)
-  end
 
-  def hanging_price
-    ranch.send("#{animal_type.downcase}_hanging".to_sym)
-  end
-
-  def live_price
-    ranch.send("#{animal_type.downcase}_live".to_sym)
+  def ranch_price(measurement)
+    ranch.info_for(animal_type).price(measurement)
   end
 
   def weight_ratio(first, second)
@@ -177,30 +171,21 @@ class Animal < ActiveRecord::Base
   end
 
   def fixed_price
-    ranch_fixed = ranch.send("#{animal_type.downcase}_fixed".to_sym)
-    ranch_fixed ? ranch_fixed : 0
+    ranch_price(:fixed)
   end
 
   def butcher_final_price
     butcher.final_price ? butcher.final_price : 0
   end
 
-  def raw_animal_price
-    if meat_price > 0
-      meat_price * weight_ratio("meat", "live") * weight
-    elsif hanging_price > 0
-      hanging_price * weight_ratio("hanging", "live") * weight
-    else
-      live_price * weight
-    end
-  end
-
-  def total_cost
-    raw_animal_price + fixed_price + butcher_final_price
+  # formerly raw_animal_price
+  # also replaced total_cost
+  def wholesale_cost
+    ranch_price(:meat) * weight_ratio(:meat, :live) * weight + fixed_price + butcher_final_price
   end
 
   def expected_margins 
-    revenue_possible - total_cost
+    revenue_possible - wholesale_cost
   end
 
   def check_for_sold
@@ -223,21 +208,21 @@ class Animal < ActiveRecord::Base
   end
 
   def full_cut_table
-    packages.in_bundles_by_cut
+    PackageBundler.new(packages).in_bundles_by_cut
   end
 
   def list_for_sale
-    packages.by_cut_sale_and_savings
+    PackageBundler.new(packages).by_cut_sale_and_savings
   end
 
   # Array of Open Structs with "bundles" of unique (cut/notes) lines
   def make_sold_list
-    bundles = lines.in_cut_and_note_bundles
+    lines.in_cut_and_note_bundles
   end
 
   # Array of Open Structs with "bundles" of unique (cut/notes) packages
   def sold_bundles 
-    packages.sold_in_line_note_bundles
+    PackageBundler.new(packages).sold_in_line_note_bundles
   end
 
   def sold_out_of?(cut)
@@ -246,7 +231,7 @@ class Animal < ActiveRecord::Base
 
   # Array of Open Structs associating users with the packages they purchase of this animal
   def user_order_list
-    users.map{ |u| OpenStruct.new(user: u, packages: u.associated_packages) }
+    purchasers.map{ |u| OpenStruct.new(user: u, packages: u.associated_packages) }
   end
 
   def hanging_weight
@@ -254,9 +239,9 @@ class Animal < ActiveRecord::Base
   end
 
   # Returns full list of the users who bought from the animal
-  def users
+  def purchasers
     user_ids = orders.pluck(:user_id).uniq
-    User.where(user: user_ids)
+    User.where(id: user_ids)
   end
 
   def mult
@@ -276,19 +261,23 @@ class Animal < ActiveRecord::Base
   end
 
   def downpaid_total
-    packages.downpaid.map(&:expected_revenue).sum
+    packages.with_order_status(:downpaid).map(&:expected_revenue).sum
   end
 
   def downpaid_pounds
-    packages.downpaid.map(&:expected_weight).sum
+    packages.with_order_status(:downpaid).map(&:expected_weight).sum
   end
 
   def paid_total
-    packages.paid.map(&:paid_revenue).sum
+    packages.with_order_status(:paid).map(&:paid_revenue).sum
   end
 
   def paid_pounds
-    packages.paid.map(&:fallback_weight).sum
+    packages.with_order_status(:paid).map(&:fallback_weight).sum
+  end
+
+  def paid_orders
+    orders.paid
   end
 
   def avg_price

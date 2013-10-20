@@ -37,6 +37,10 @@ class RanchAnimal < ActiveRecord::Base
     nil
   end
 
+  def fixed_price
+    fixed_cost
+  end
+
   def has_price_for?(measurement)
     price(measurement).present?
   end

@@ -2,8 +2,11 @@ class AnimalType
 
   attr_accessor :type_string
 
+  class NoSuchAnimalError < Exception; end
+
   def initialize(type_string)
-    @type_string = type_string
+    @type_string = type_string.downcase
+    raise NoSuchAnimalError if !AnimalType.list.include?(@type_string)
   end
 
   def self.list
@@ -15,7 +18,7 @@ class AnimalType
   end
 
   def self.meat_list
-    list.map(&:meat)
+    list.map{ |e| AnimalType.new(e).meat }
   end
 
   def self.active_list
