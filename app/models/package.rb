@@ -60,6 +60,20 @@ class Package < ActiveRecord::Base
     end
   end
 
+  def self.in_bundles_by_cut
+    bundles = group_by{ |p| p.cut }.sort{ |c| c.name }
+    bundles.map do |bundle|
+      OpenStruct.new(
+        cut: bundle[0],
+        sold: bundle[1].select(&:sold).count,
+        unsold: bundle[1].reject(&:sold).count,
+        price: bundle[1].first.price,
+        avg_weight: bundle[1].first.expected_weight,
+        total_lb_sold: bundle[1].select(&:sold).count * bundle[1].first.expected_weight
+      )
+    end
+  end
+
   def incentivized
     cut_ids = animal.cutlist.incentive_priced.pluck(:id)
     where(cut_id: cut_ids)

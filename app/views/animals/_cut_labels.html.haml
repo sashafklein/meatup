@@ -1,30 +1,29 @@
 .row
   .collapse-group
     %h4.normal_links
-      = "#{bundle.first.cut.name} -- #{bundle.first.line.notes} (#{bundle.size} packages) "
+      = "#{bundle.cut_name} -- #{bundle.notes} (#{bundle.packages.count} packages) "
       %a.bundle{:href => "#", :style => "font-size:70%"} (expand)
-    <div class="collapse normal_links" %>
-    <table class="table" %>
-    %thead
-      %tr
-        %th Cut
-        %th Prep Notes
-        %th Package #
-        - if @animal.finalized
-          %th Final Weight (Lbs)
-          %th
-        - else
-          %th Expected Weight (Lbs)
-        %th Label User
-    %tbody
-      - bundle.each do |p|
-        %tr
-          %td= p.cut.name
-          %td= p.line.notes
-          %td= p.cut_siblings.length
-          - if @animal.finalized
-            %td= p.true_weight
-          - else
-            %td= p.expected_weight
-          %td= "#{p.order.user.name.first(3).upcase}-#{p.id}"
-%br/
+    .collapse.normal_links" %>
+      %table.table
+        %thead
+          %tr
+            %th Cut
+            %th Prep Notes
+            %th Package #
+            - if @animal.finalized
+              %th Final Weight (Lbs)
+              %th
+            - else
+              %th Expected Weight (Lbs)
+            %th Label User
+        %tbody
+          - bundle.packages.each do |p|
+            %tr
+              %td= bundle.cut_name
+              %td= bundle.notes
+              %td= bundle.packages.count
+              - if @animal.finalized
+                %td= p.true_weight
+              - else
+                %td= p.expected_weight
+              %td= "#{p.order.user.name.first(3).upcase}-#{p.id}"

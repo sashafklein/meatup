@@ -1,5 +1,3 @@
-- @a = @order.animal
-- status_array = ["Incomplete", "Deposited", "Final Price Paid", "Picked Up"]
 %tr
   %td.divider{:colspan => "4"}
 %tr
@@ -7,23 +5,23 @@
     Customer Name: #{@order.user.name}
 %tr
   %td{:colspan => "4"}
-    Animal Name: #{@a.name}
+    Animal Name: #{@order.animal.name}
 %tr
   %td{:colspan => "4"}
     Order Status:
-    %b{:style => "font-weight:normal;color:#9a393a;"}= status_array[@order.status]
-- if @order.user.apology && !@order.status < 2
+    %b{:style => "font-weight:normal;color:#9a393a;"}= @order.bill_status
+- if @order.user.apology && !@order.not_paid?
   %tr
     %td{:colspan => "4"}
       %strong 10% "Apology Discount" applied to all cuts!
 %tr
   %td.divider2{:colspan => "4"}
-- if @order.status < 2
+- if @order.not_paid?
   %tr
     %th.details Cut
     %th.details Notes
     %th.details{:width => "15%"} Total Lbs
-    - if @order.user.apology && !@a.finalized
+    - if @order.user.apology && !@order.animal.finalized
       %th.details{:width => "15%"} (Discounted) Price
     - else
       %th.details{:width => "15%"} Price

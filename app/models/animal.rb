@@ -52,21 +52,9 @@ class Animal < ActiveRecord::Base
 
   scope :open, -> { where(open: true) }
 
-  def self.types
-    %w( cow pig lamb goat )
-  end
-
-  def self.meat_type(animal_type)
-    case animal_type.to_s.downcase
-      when "cow"  then "beef"
-      when "pig"  then "pork"
-      when "lamb" then "lamb"
-      when "goat" then "goat"
-    end
-  end
 
   def meat_type
-    Animal.meat_type(animal_type)
+    AnimalType.new(animal_type).meat
   end
 
   def cutlist
@@ -101,12 +89,16 @@ class Animal < ActiveRecord::Base
 	 Cut.where(:animal_type => animal_type)
   end
 
+  def best_lb_estimate
+    package.map(&:fallback_weight).inject(:+)
+  end
+
   def pounds_total
     packages.map(&:expected_weight).inject(:+)
   end
 
   def pounds_sold
-    packages.sold.map(&:expected_weight).inject(:+)
+    packages.sold.map(&:fallback_weight).inject(:+)
   end
 
   def pounds_left
@@ -208,7 +200,7 @@ class Animal < ActiveRecord::Base
   end
 
   def expected_margins 
-    margins = revenue_possible - total_cost
+    revenue_possible - total_cost
   end
 
   def check_for_sold
@@ -228,6 +220,10 @@ class Animal < ActiveRecord::Base
     UserMailer.animal_close(self).deliver if !host.user.has_meatup_address?
     User.admins.reject(&:has_meatup_address?).each { |u| UserMailer.animal_overview(self).deliver }
     UserMailer.butcher_specs(self).deliver unless butcher.user.has_meatup_address?
+  end
+
+  def full_cut_table
+    packages.in_bundles_by_cut
   end
 
   def list_for_sale

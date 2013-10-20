@@ -20,6 +20,13 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
   # GET /orders/1.json
   def show
     @order = Order.find(params[:id])
+    @order.apply_apology_discount! if @order.user.apology
+
+    @timer = OpenStruct.new( 
+      start: @order.created_at.to_i,
+      now: Time.now.to_i,
+      url: "new/#{@order.animal.id}"
+    )
 
     respond_to do |format|
       format.html # show.html.erb

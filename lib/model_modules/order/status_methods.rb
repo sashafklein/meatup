@@ -13,6 +13,11 @@ module Order::StatusMethods
     end
   end
 
+  def bill_status
+    array = ["Incomplete", "Deposited", "Final Price Paid", "Picked Up"]
+    array[status]
+  end
+
   def incomplete?
     status == 0
   end
@@ -23,6 +28,10 @@ module Order::StatusMethods
 
   def paid? 
     status == 2
+  end
+
+  def not_paid?
+    status < 2
   end
 
   def complete?

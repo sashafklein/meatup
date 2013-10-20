@@ -56,7 +56,7 @@ class Order < ActiveRecord::Base
     packages.map(&:expected_revenue).sum
   end
 
-  def apology_discount
+  def apply_apology_discount!
     packages.update_all(price: price * 0.9)
   end
 

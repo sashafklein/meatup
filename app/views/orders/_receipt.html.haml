@@ -1,20 +1,10 @@
-- @total = 0
-- @total_weight = 0
-- if @order.status <= 1
+- if @order.not_paid?
   - @order.lines.each do |l|
-    - if l.packages.size > 0
-      - p = l.packages.first
-      - c = l.cut
-      %tr
-        %td= c.name
-        %td= l.notes
-        %td
-          = (p.expected_weight * l.units).round(2)
-          lb
-        - @line_total = p.price * p.expected_weight * l.units
-        %td= number_to_currency(@line_total)
-        - @total_weight += p.expected_weight * l.units
-      - @total += @line_total
+    %tr
+      %td= l.cut.name
+      %td= l.notes
+      %td= present_weight(l.expected_weight)
+      %td= number_to_currency(l.total)
   - if @order.user.apology
     %tr
       %td
@@ -26,36 +16,23 @@
     %td
     %td
     %td
-      %strong
-        = @total_weight.round(2)
-        lb
+      %strong= present_weight(@order.poundage)
     %td
-      %b
-        = "Downpayment: #{number_to_currency(0.8 * @order.total)}"
-        %b/
+      %b= "Downpayment: #{number_to_currency(0.8 * @order.total)}"
 - else
   - @order.lines.each do |l|
-    - if l.units != 0
-      - p = l.packages.first
-      - c = l.cut
-      %tr
-        %td= c.name
-        %td= l.notes
-        %td
-          = l.weight_diff
-          lb
-        - @line_total = p.price * l.weight_diff
-        %td= number_to_currency(@line_total)
-        - @total_weight += l.weight_diff
-      - @total += @line_total
+    %tr
+      %td= l.cut.name
+      %td= l.notes
+      - if l.weight_diff
+        %td= present_weight(l.weight_diff) 
+      - else
+        %td Unknown
+      %td= number_to_currency(l.total)
   %tr
     %td
     %td
     %td
-      %strong
-        = @total_weight.round(2)
-        lb
+      %strong= present_weight(@order.poundage)
     %td
-      %b
-        = "Remaining: #{number_to_currency(@order.get_difference)}"
-        %b/
+      %b= "Remaining: #{number_to_currency(@order.get_difference)}"

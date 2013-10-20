@@ -1,11 +1,21 @@
-- make_list(@animal).sort.each do |p|
-  %tr
-    %td= link_to p.cut.name, p.cut
-    %td= number_to_currency(p.price)
-    %td= @animal.cut_packages(p.cut).length
-    %td= @animal.cut_unsold(p.cut).length
-    %td= @animal.sold(p.cut).length
-    %td
-      = p.expected_weight
-      lb
-    %td= (@animal.sold(p.cut).length * p.expected_weight).round(2)
+.collapse-group
+  %h4.normal_links
+    %a.bundle{:href => "#"} (expand).collapse.normal_links
+    %table.table
+      %tr
+        %th Cut Name
+        %th Price / lb
+        %th Orig #
+        %th # Left
+        %th # Sold
+        %th Lbs/Package
+        %th Pounds Sold
+      - @animal.full_cut_table.each do |bundle|
+        %tr
+          %td= link_to(bundle.cut.name, bundle.cut)
+          %td= bundle.price
+          %td= bundle.sold + bundle.unsold
+          %td= bundle.unsold
+          %td= bundle.sold
+          %td= present_weight(bundle.avg_weight)
+          %td= bundle.total_lb_sold

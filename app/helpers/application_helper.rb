@@ -11,12 +11,12 @@ module ApplicationHelper
   end
 
   # Formats bool answers to display as yes or no.
-  def nice_bool(answer)
-  	if answer == true
-  		"Yes"
-  	else
-  		"No"
-  	end
+  def nice_bool(bool)
+  	bool ? "Yes" : "No"
+  end
+
+  def present_weight(num)
+    "#{num.round(2)}lb"
   end
  
   # Allows for state select menus
@@ -74,18 +74,6 @@ module ApplicationHelper
       ['WV', 'WV'],
       ['WY', 'WY']
     ]
-  end
-
-  def meat_type(animal)
-    if animal.animal_type == "Cow"
-      "beef"
-    elsif animal.animal_type == "Pig"
-      "pork"
-    elsif animal.animal_type == "Lamb"
-      "lamb"
-    elsif animal.animal_type == "Goat"
-      "goat"
-    end  
   end
   
 end

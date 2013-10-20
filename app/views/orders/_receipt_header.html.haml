@@ -1,64 +1,59 @@
-- @a = @order.animal
 %thead
   %tr
-    - if @order.status == 0
-      - start_time = (@order.created_at.to_i)
-      - now_time = Time.now.to_i
-      - meat = @order.animal.animal_type.downcase
-      - url = "new/#{@order.animal.id}"
+    - if @order.incomplete?
       %th{:colspan => "5"}
-        <div class="timer_stamp" id="timer" data-start=#{start_time} data-now=#{now_time} data-url=#{url} >
-        TIME
-        %br>/
-        LEFT TO PAY
+        .timer_stamp#timer{ data: { start: @timer.start, now: @timer.now, url: @timer.url } }
+          TIME
+          %br
+          LEFT TO PAY
         .receipt_stamp
           ORDER
-          %br>/
+          %br
           REVIEW
-        = @a.ranch.address
-        , #{@a.ranch.city}, #{@a.ranch.state},
+        = @order.animal.ranch.address
+        , #{@order.animal.ranch.city}, #{@order.animal.ranch.state},
         %u
           \&nbsp;#{localize(@order.created_at, :format => ("on %d, %B, %Y"))}&nbsp;
-        %br/
+        %br
         %strong{:style => "font-size:150%; font-weight:normal"}
           Pay to order of
           %u{:style => "font-weight:bold;"}
-            \&nbsp;#{@a.ranch.name}&nbsp;,
+            \&nbsp;#{@order.animal.ranch.name}&nbsp;,
           c/o MeatUp
-        %br/
+        %br
         #purveyor_of
           Purveyor of
-          %br/
+          %br
           %b High Class Viandes, Game and Forcemeats
     - else
       %th.header{:colspan => "5"}
         .receipt_stamp
-          - if @order.status == 1
+          - if @order.downpaid?
             DEPOSIT RECEIVED
-            %br>/
+            %br
             WITH THANKS
-          - elsif @order.status == 2
+          - elsif @order.paid?
             FINAL BILL
-            %br>/
+            %br
             FULLY PAID
           - else
             FINAL
-            %br>/
+            %br
             ORDER
-            %br>/
+            %br
             RETREIVED
-        = @a.ranch.address
-        , #{@a.ranch.city}, #{@a.ranch.state},
+        = @order.animal.ranch.address
+        , #{@order.animal.ranch.city}, #{@order.animal.ranch.state},
         %u
           \&nbsp;#{localize(@order.created_at, :format => ("on %d, %B, %Y"))}&nbsp;
-        %br/
+        %br
         %strong{:style => "font-size:150%; font-weight:normal"}
           Pay to order of
           %u{:style => "font-weight:bold;"}
-            \&nbsp;#{@a.ranch.name}&nbsp;,
+            \&nbsp;#{@order.animal.ranch.name}&nbsp;,
           c/o MeatUp
-        %br/
+        %br
         #purveyor_of
           Purveyor of
-          %br/
+          %br
           %b High Class Viandes, Game and Forcemeats

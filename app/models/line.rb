@@ -57,7 +57,7 @@ class Line < ActiveRecord::Base
   end
 
   def weight_diff
-    real_weight ? expected_weight - real_weight : 'Unknown'
+    real_weight ? expected_weight - real_weight : nil
   end
 
   def poundage
