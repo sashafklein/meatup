@@ -6,7 +6,7 @@ FactoryGirl.define do
     package_weight 1
     percent 20
     description "A super fake cut"
-    animal_type "Cow"
+    animal_type "cow"
 
     factory :london do
       name "London Broil"

@@ -23,5 +23,8 @@ class RemoveRanchAnimalColumnsFromRanches < ActiveRecord::Migration
     remove_column :ranches, :pig_fixed
     remove_column :ranches, :lamb_fixed
     remove_column :ranches, :goat_fixed
+
+    Animal.find_each{ |a| a.update_attribute(:animal_type, a.animal_type.downcase) }
+    Cut.find_each{ |c| c.update_attribute(:animal_type, c.animal_type.downcase) }
   end
 end

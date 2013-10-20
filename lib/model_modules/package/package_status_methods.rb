@@ -3,7 +3,7 @@ module Package::PackageStatusMethods
   ## CLASS METHODS
   module ClassMethods
     def with_order_status(status)
-      first.with_order_status(status, first.animal)
+      first.with_order_status(status)
     end
   end
 
@@ -14,7 +14,7 @@ module Package::PackageStatusMethods
 
   ## INSTANCE METHODS
 
-  def with_order_status(status, animal)
+  def with_order_status(status)
     order_ids = animal.orders.send(status).pluck(:id)
     line_item_ids = Line.where(order_id: line_item_ids).pluck(:id)
     Package.where(line_id: line_item_ids)

@@ -3,7 +3,7 @@ FactoryGirl.define do
   factory :animal, class: "Animal" do
     breed         "Cow Breed"
     name          "Mr. Moo"
-    animal_type   "Cow"
+    animal_type   "cow"
     weight        100
     no_sales      true
     opening_sale  false

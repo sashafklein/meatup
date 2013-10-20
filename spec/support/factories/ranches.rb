@@ -11,11 +11,12 @@ FactoryGirl.define do
     delivers_butcher    true
     delivers_drop       true
     delivers_host       false
-    cow                 true
-    cow_live            1.40
-    pig                 false
-    lamb                false
-    goat                false
+
+    factory :miller do
+      after :build do |miller|
+        FactoryGirl.create(:ranch_animal, ranch: miller)
+      end
+    end
   end
 
 end

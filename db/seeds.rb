@@ -5,7 +5,7 @@ begin
 
 	# The Real Paul Ryan
 	london = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "London Broil",
 	  	price: 4,
 	  	package_weight: 2,
@@ -15,7 +15,7 @@ begin
 	  	description: "'London Broil' was first a preparation technique, but became the name for the two cuts -- Flank and, increasingly, Top Round -- that the technique applied to."
   	)
 	ground = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Ground Beef",
 	  	price: 2.63,
 	  	package_weight: 1,
@@ -25,7 +25,7 @@ begin
 	  	description: "Burgers, meatballs, meatloaf and beef moussaka."
   	) 
   	stew = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Beef Stew",
 	  	price: 2.78,
 	  	package_weight: 2.22,
@@ -35,7 +35,7 @@ begin
 	  	description: "Tagine, bourgignon, pot au feu, chili, and a good old fashioned beef stew."
   	)
   	brisket = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Brisket",
 	  	price: 5.35,
 	  	package_weight: 4,
@@ -45,7 +45,7 @@ begin
 	  	description: "The classic roasting/braising/BBQ/Passover cut from just below the chuck at the front of the animal."
   	)
   	cross = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Cross Rib",
 	  	price: 4.5,
 	  	package_weight: 3.38,
@@ -56,7 +56,7 @@ begin
 	  	description: "Similar to the Chuck Roast, a braiser or roaster. Cook long and low."
   	)
   	rump = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Rump Steak",
 	  	price: 5.55,
 	  	package_weight: 3.5,
@@ -66,7 +66,7 @@ begin
 	  	description: "One of Argentina/Brazil's favorites, less known in the states. Great flavor with a nice thick layer of fat. A crazy deal."
   	)
   	short = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Short Ribs",
 	  	price: 5.55,
 	  	package_weight: 3.33,
@@ -76,7 +76,7 @@ begin
 	  	description: "A braising staple from the lower portions of the ribs. Undercook and they'll be unpleasantly chewy. Stew low and long to soften and release flavors."
   	)
   	eye = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Eye of Round",
 	  	price: 5.25,
 	  	package_weight: 3.50,
@@ -86,7 +86,7 @@ begin
 	  	description: "A lean but relatively tender cut, the eye of the round is good for rare grilling or delicate braising."
   	)
   	bottom = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Bottom Round",
 	  	price: 6.55,
 	  	package_weight: 4,
@@ -97,7 +97,7 @@ begin
 	  	description: "A lean cut from the outer leg. Stew/braise for a while or grind up."
   	)
   	tri = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Tri Tip",
 	  	price: 8.1,
 	  	package_weight: 2,
@@ -107,7 +107,7 @@ begin
 	  	description: "An increasingly popular cut (in SF particularly), for its rich flavor and thick layer of fat."
   	)
   	flank = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Flank",
 	  	price: 5.55,
 	  	package_weight: 1.5,
@@ -117,7 +117,7 @@ begin
 	  	description: "A thin, tender, and (pleasantly) chewy steak from the abdomen. A favorite for marinated grilling."
   	)
   	chuck = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Chuck Roast",
 	  	price: 7.6,
 	  	package_weight: 3.9,
@@ -127,7 +127,7 @@ begin
 	  	description: "A well-marbled, rich piece of steak best for braising and roasts (but also not bad in steaks)."
   	)
   	hanger = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Hanger Steak",
 	  	price: 7.8,
 	  	package_weight: 0,
@@ -137,7 +137,7 @@ begin
 	  	description: "Used to be called the Butcher's Cut, because butchers would keep it for themselves. One of the most flavorful cuts for grilling/searing. From the inner skirt."
   	)
   	flat = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Flat Iron",
 	  	price: 8.15,
 	  	package_weight: 0,
@@ -147,7 +147,7 @@ begin
 	  	description: "An increasingly popular cut for grilling or roasting. From the shoulder."
   	)
   	top = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Top Sirloin Steak",
 	  	price: 10.9,
 	  	package_weight: 1.56,
@@ -157,7 +157,7 @@ begin
 	  	description: "Bread-and-butter grilling cut, with a nice cap of fat."
   	)
   	skirt = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Skirt",
 	  	price: 13.2,
 	  	package_weight: 1.25,
@@ -167,7 +167,7 @@ begin
 	  	description: "This thin cut from the inner 'plate' is both chewy and tender."
   	)
   	porter = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Porterhouse",
 	  	price: 13.05,
 	  	package_weight: 2.6,
@@ -177,7 +177,7 @@ begin
 	  	description: "A rich and satisfying steakhouse classic, from the short loin, in the lower ribs. A balance of sirloin steak and tenderloin, separated by a bone."
   	)
   	t = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "T-Bone",
 	  	price: 15.05,
 	  	package_weight: 2,
@@ -187,7 +187,7 @@ begin
 	  	description: "Another delicious two-part grilling/roasting cut, with Tenderloin and NY Strip on either side of a T Bone"
   	)
   	ribeye = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Ribeye",
 	  	price: 15.75,
 	  	package_weight: 2,
@@ -197,7 +197,7 @@ begin
 	  	description: "An obscenely delicious steak cut from the upper ribs. Pan sear one of these and throw it in the oven for a handful of minutes."
   	)
   	ny = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "NY Strip",
 	  	price: 15.7,
 	  	package_weight: 0,
@@ -207,7 +207,7 @@ begin
 	  	description: "Can't be blank"
   	)
   	filet = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Filet Mignon Tenderloin",
 	  	price: 20,
 	  	package_weight: 1.5,
@@ -217,7 +217,7 @@ begin
 	  	description: "A muscle that does very little work, tenderloin is an extremely tender steak. Sear briefly."
   	)
   	sirloin = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Sirloin Tip",
 	  	price: 8.1,
 	  	package_weight: 1.1,
@@ -227,7 +227,7 @@ begin
 	  	description: "Peeled off the top sirloin, this cut is great for cooking quick and high."
   	)
   	shank = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Shank",
 	  	price: 3,
 	  	package_weight: 2.64,
@@ -237,7 +237,7 @@ begin
 	  	description: "A ring off of the weight-bearing front or back legs, these shanks are great for stews and braises, and come with a marrow bone."
   	)
   	knuckle = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Bones",
 	  	price: 3,
 	  	package_weight: 1.84,
@@ -248,7 +248,7 @@ begin
 	  	description: "Beef bones, full of flavor. Just roast these for a few minutes to darken them, and throw them in a soup."
   	)
   	fat = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Suet Fat",
 	  	price: 3,
 	  	package_weight: 1.8,
@@ -259,7 +259,7 @@ begin
 	  	description: "Rich, pure suet fat from around the kidneys. Rendered, this makes great cooking fat, with its rich taste and high smoke point."
   	)
   	kidney = Cut.create!(
-			animal_type: "Cow",
+			animal_type: "cow",
 			name: "Kidney",
 	  	price: 3,
 	  	package_weight: 2,
@@ -270,7 +270,7 @@ begin
 	  	description: "Dense and flavorful, sear these up quickly or throw them in a rich stew."
   	)
   	offal = Cut.create!(
-		animal_type: "Cow",
+		animal_type: "cow",
 		name: "Offal",
 	  	price: 3,
 	  	package_weight: 1.31,
@@ -281,7 +281,7 @@ begin
 	  	description: "Heart, tongue, cheek, and everyone's favorite, liver."
   	)
   	flap = Cut.create!(
-		animal_type: "Cow",
+		animal_type: "cow",
 		name: "Flap Meat",
 	  	price: 3,
 	  	package_weight: 1.5,
@@ -292,7 +292,7 @@ begin
 	  	description: "From stringy diaphrams throughout the cow, this layered meat is chewy as hell when undercooked, but becomes unbelievably moist and soft when slow-roasted."
   	)
   	neck = Cut.create!(
-		animal_type: "Cow",
+		animal_type: "cow",
 		name: "Neck",
 	  	price: 3,
 	  	package_weight: 4.75,
@@ -304,7 +304,7 @@ begin
 
   	#The Real Donald Trump
    # 	suet = Cut.create!(
-		 # 	animal_type: "Pig",
+		 # 	animal_type: "pig",
 		 # 	name: "Bacon",
 	  #  	price: 7,
 	  #  	package_weight: 1,
@@ -314,7 +314,7 @@ begin
 	  #  	description: "Yum."
   	# )
 		leaf = Cut.create!(
-			animal_type: "Pig",
+			animal_type: "pig",
 			name: "Leaf Lard",
 			package_weight: 0.94,
 	  	percent: 3,
@@ -324,7 +324,7 @@ begin
 	  	description: "Fat from around the kidneys, leaf lard (the equivalent of beef/mutton suet) is clean tasting and great for frying and even baking."
   	)
   	leg_steak = Cut.create!(
-			animal_type: "Pig",
+			animal_type: "pig",
 			name: "Fresh Ham Steak",
 			package_weight: 3.97,
 	  	percent: 9.52,
@@ -334,7 +334,7 @@ begin
 	  	description: "Fat from around the kidneys, leaf lard (the equivalent of beef/mutton suet) is clean tasting and great for frying and even baking."
   	) 
   	Cut.create!(
-			animal_type: "Pig",
+			animal_type: "pig",
 			name: "Bacon",
 	  	price: 7,
 	  	package_weight: 1,
@@ -344,7 +344,7 @@ begin
 	  	description: "Yum."
   	)
   	Cut.create!(
-			animal_type: "Pig",
+			animal_type: "pig",
 			name: "Pork Chop",
 	  	price: 10,
 	  	package_weight: 2,
@@ -355,8 +355,8 @@ begin
   	# Other Cuts
 
   	Cut.create!(
-			animal_type: "Goat",
-			name: "Goat Stew",
+			animal_type: "goat",
+			name: "goat Stew",
 	  	price: 7,
 	  	package_weight: 2,
 	  	percent: 3, 
@@ -678,7 +678,7 @@ begin
 		breed: "Black Angus", 
 		name: "Paul Ryan", 
 		photo: "Animals/PaulRyan.jpg", 
-		animal_type: "Cow",  
+		animal_type: "cow",  
     weight: 1216, 
     ranch_id: miller_ranch.id, 
     butcher_id: sanders.id,

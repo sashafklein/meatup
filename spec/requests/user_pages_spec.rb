@@ -41,9 +41,7 @@ describe "User pages" do
 			        fill_in "Password",     with: 'password'
 			        fill_in "Confirmation", with: 'password'
 			        fill_in "Zip Code", 		with: 94114
-			        assert User.count == 0
-			        click_button submit
-			        assert User.count == 1
+			        expect{ click_button submit }.to change{ User.count }.by 1
 			      end
 
 		        it { should have_selector('.alert', text: "MeatUp is still in private Beta.") }

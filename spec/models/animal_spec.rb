@@ -27,11 +27,11 @@ describe Animal do
     end
   end
 
-  describe "#total_cost" do
+  describe "#wholesale_cost" do
     it "chooses the right cost" do
       @paul.create_packages
 
-      @paul.total_cost.to_i.should == 140
+      @paul.wholesale_cost.ceil.to_i.should == 140
     end
   end
 
@@ -69,7 +69,7 @@ describe Animal do
   def create_connected_paul_ryan
     @sasha = FactoryGirl.create(:sasha)
     @host = FactoryGirl.create(:host)
-    @miller = FactoryGirl.create(:ranch, user: @sasha)
+    @miller = FactoryGirl.create(:miller, user: @sasha)
     @sanders = FactoryGirl.create(:butcher)
     @paul = FactoryGirl.create(:paul_ryan, host: @host, ranch: @miller, butcher: @sanders)
   end

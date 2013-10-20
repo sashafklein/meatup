@@ -178,8 +178,6 @@ class Animal < ActiveRecord::Base
     butcher.final_price ? butcher.final_price : 0
   end
 
-  # formerly raw_animal_price
-  # also replaced total_cost
   def wholesale_cost
     ranch_price(:meat) * weight_ratio(:meat, :live) * weight + fixed_price + butcher_final_price
   end
@@ -208,21 +206,21 @@ class Animal < ActiveRecord::Base
   end
 
   def full_cut_table
-    PackageBundler.new(packages).in_bundles_by_cut
+    ItemBundler.new(packages).in_bundles_by_cut
   end
 
   def list_for_sale
-    PackageBundler.new(packages).by_cut_sale_and_savings
+    ItemBundler.new(packages).by_cut_sale_and_savings
   end
 
   # Array of Open Structs with "bundles" of unique (cut/notes) lines
   def make_sold_list
-    lines.in_cut_and_note_bundles
+    ItemBundler.new(lines).in_cut_and_note_bundles
   end
 
   # Array of Open Structs with "bundles" of unique (cut/notes) packages
   def sold_bundles 
-    PackageBundler.new(packages).sold_in_line_note_bundles
+    ItemBundler.new(packages).sold_in_line_note_bundles
   end
 
   def sold_out_of?(cut)

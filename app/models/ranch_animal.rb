@@ -1,7 +1,7 @@
 class RanchAnimal < ActiveRecord::Base
   attr_accessible :animal_type, :fixed_cost, :hanging_price, :live_price, :meat_price, :ranch_id
 
-  validates :animal_type, :ranch_id, presence: true
+  validates :animal_type, presence: true
 
   belongs_to :ranch
 
