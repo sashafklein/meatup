@@ -1,0 +1,11 @@
+- make_list(@animal).sort.each do |p|
+  %tr
+    %td= link_to p.cut.name, p.cut
+    %td= number_to_currency(p.price)
+    %td= @animal.cut_packages(p.cut).length
+    %td= @animal.cut_unsold(p.cut).length
+    %td= @animal.sold(p.cut).length
+    %td
+      = p.expected_weight
+      lb
+    %td= (@animal.sold(p.cut).length * p.expected_weight).round(2)

@@ -1,0 +1,61 @@
+- @total = 0
+- @total_weight = 0
+- if @order.status <= 1
+  - @order.lines.each do |l|
+    - if l.packages.size > 0
+      - p = l.packages.first
+      - c = l.cut
+      %tr
+        %td= c.name
+        %td= l.notes
+        %td
+          = (p.expected_weight * l.units).round(2)
+          lb
+        - @line_total = p.price * p.expected_weight * l.units
+        %td= number_to_currency(@line_total)
+        - @total_weight += p.expected_weight * l.units
+      - @total += @line_total
+  - if @order.user.apology
+    %tr
+      %td
+      %td
+      %td Saved by Discount:
+      %td
+        %em= "- #{number_to_currency(@order.discounted)}!"
+  %tr
+    %td
+    %td
+    %td
+      %strong
+        = @total_weight.round(2)
+        lb
+    %td
+      %b
+        = "Downpayment: #{number_to_currency(0.8 * @order.total)}"
+        %b/
+- else
+  - @order.lines.each do |l|
+    - if l.units != 0
+      - p = l.packages.first
+      - c = l.cut
+      %tr
+        %td= c.name
+        %td= l.notes
+        %td
+          = l.weight_diff
+          lb
+        - @line_total = p.price * l.weight_diff
+        %td= number_to_currency(@line_total)
+        - @total_weight += l.weight_diff
+      - @total += @line_total
+  %tr
+    %td
+    %td
+    %td
+      %strong
+        = @total_weight.round(2)
+        lb
+    %td
+      %b
+        = "Remaining: #{number_to_currency(@order.get_difference)}"
+        %b/

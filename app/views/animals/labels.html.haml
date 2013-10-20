@@ -1,0 +1,6 @@
+%h2 Ordered by Cut and Notes
+- @animal.sold_bundles.each do |bundle|
+  = render partial: 'cut_labels', locals: {bundle: bundle}
+%h2 Ordered by Purchaser
+- @animal.user_order_list.each do |bundle|
+  = render partial: 'user_labels', locals: {bundle: bundle}

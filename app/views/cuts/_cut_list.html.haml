@@ -1,0 +1,17 @@
+%table.table
+  %tr
+    %th Cut Name
+    %th Price/LB
+    %th Package Weight
+    %th
+    %th
+    %th
+  - @given_type = Cut.where(:animal_type => @type)
+  - @given_type.each do |cut|
+    %tr
+      %td= cut.name
+      %td= number_to_currency(cut.price)
+      %td= cut.package_weight
+      %td= link_to 'Show', cut
+      %td= link_to 'Edit', edit_cut_path(cut)
+      %td= link_to 'Destroy', cut, method: :delete, data: { confirm: 'Are you sure?' }

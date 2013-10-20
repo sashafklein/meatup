@@ -1,0 +1,18 @@
+- provide(:title, 'Animal Dashboard')
+#page_title_float Admin Animal Dashboard
+= link_to 'Add New Animal', new_animal_path, :class => "btn image-button", :style => "float:right;"
+%br/
+%table.animal_table
+  %thead
+    %tr.animal_table_header
+      %th Type
+      %th ID
+      %th Name of Animal
+      %th Breed
+      %th Live Weight
+      %th Farm / Ranch
+      %th Host
+      %th{:colspan => "3"} Admin Controls
+  %tbody
+    = render :partial => "animal_list"
+%br/

@@ -1,0 +1,26 @@
+= form_for(@host) do |f|
+  - if @host.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@host.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @host.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :address
+    = f.text_field :address
+  .field
+    = f.label :city
+    = f.text_field :city
+  .field
+    = f.label :zip
+    = f.text_field :zip, :value => current_user.zip
+  .field
+    = f.label "Phone Number"
+    = f.text_field :phone
+  .field
+    = f.label "State"
+    = f.select :state, us_states
+  .actions
+    = f.submit @string, class: "btn image-button", style: "float:right;margin-top:15px;"

@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %title= full_title(yield(:title))
+    %link{:href => "http://fonts.googleapis.com/css?family=Kreon", :rel => "stylesheet", :type => "text/css"}/
+    = favicon_link_tag 'favicon.ico'
+    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    %meta{:content => "idIPkgRBikSL9PCS4rVkkZfRjxYbPxNbyF6tVymBWbc", :name => "google-site-verification"}/
+    = render 'layouts/shim'
+  %body.butcher
+    = render 'layouts/header'
+    .container
+    .container.transp01
+      .margin-it
+        - flash.each do |key, value|
+          = content_tag(:div, value, class: "alert alert-#{key}")
+        = yield
+    = debug(params) if Rails.env.development?
+    = render 'layouts/footer'

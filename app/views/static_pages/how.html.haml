@@ -1,0 +1,123 @@
+- provide(:title, 'How It Works')
+%h1 How MeatUp Works
+%p.normal_links
+  MeatUp exists to foster a community of
+  = succeed "," do
+    %strong Consumers
+  = succeed "," do
+    %strong Ranchers
+  and
+  = succeed "," do
+    %strong Butchers
+  and to streamline the process of bringing sustainably raised, healthy, local meat from the farm directly to your table.
+  %br/
+  %br/
+  The process is simple: A volunteer "
+  %strong> hosts
+  " an animal, choosing the ranch and butcher. Then consumers order the precise cuts they want from a specific animal, which they pick up after butchery from the
+  = succeed "." do
+    %strong host
+%br/
+%h2 Consumers
+%p.normal_links
+  For
+  = succeed "," do
+    %strong consumers
+  MeatUp is a simple online retail experience. You just #{link_to "pick the meat type", orders_purchase_path} you're interested in, choose between available animals being hosted, and then select the exact cuts you want and pay for them on site, using the simple and secure Stripe API.
+  %br/
+  %br/
+  Because exactly how much meat is in one 1.5"-thick ribeye is inherently unpredictable, MeatUp uses a straightforward two-charge approach: You just put down an 80% "downpayment" for your meat, and when we get the exact weights back from the butcher, (#{link_to "usually after about a week or two", '#long'}), you pay the remainder.
+  %br/
+  %br/
+  When the meat is ready, you just head over to your local
+  %strong host
+  and pick it up.
+%br/
+%h2 Hosts
+%p.normal_links
+  Hosting through MeatUp is easy and smart. If you're interested in buying meat at an additional hosting discount, you can choose to
+  %strong host
+  an animal and then choose from our cost-ordered list of available
+  %strong ranches
+  and
+  %strong butchers
+  in your area. When your animal is ready, you just arrange with the butcher to retrieve it, and bring it back to your place for the #{link_to "pickup date", '#'}, when everyone who bought part of the animal you hosted drops by to pick their meat up.
+  %br/
+  %br/
+  Hosting is both a great way to get to know your local
+  %strong ranchers
+  and fellow meat lovers, and a way to save even more money: Hosts save 10% on up to 20% of the weight of the animal they host! To get started, just sign in as a regular user and then tick the "
+  %strong> host
+  " box and access the host dashboard from your user page.
+%br/
+%h2 Ranchers
+%p.normal_links
+  For
+  = succeed "," do
+    %strong ranchers
+  MeatUp provides a unique tool for interacting directly with customers who care about where their meat comes from. Just sign up, checking yourself off as a "rancher", and follow the link on your profile page to enter your ranch's info -- including the animals you raise and how you charge for them. Then, when
+  %strong hosts
+  are looking for meat, they can find your ranch and order from you directly without worrying about buying the whole or half animal themselves.
+  %br/
+  %br/
+  In other words, MeatUp greatly lowers the threshold of demand for getting consumers involved in direct meat purchasing, which means more sales to more customers who are excited about buying high-quality, cared-for meat.
+%br/
+%h2 Butchers
+%p.normal_links
+  %strong Butchers
+  are a key piece in the MeatUp model. The increase in direct-from-farmer meat purchases through MeatUp means more business for butchers. Just sign up and fill in your butchery details (including costs and preferences), and
+  %strong hosts
+  will have access to your information, so they can choose your butchery for their animal with the click of a button.
+  %br/
+  %br/
+  When a host chooses your butcher shop, you'll be notified, and then when the meat is ordered, you'll be sent an order specification sheet with all the butchery instructions neatly laid out. Just cut up the meat, log the actual weights, label the packages, and let the host know when to pick it up.
+%br/
+%h1 Frequently Asked Questions
+%ol.normal_links
+  .row
+    .collapse-group
+  %li#long
+    %a.bundle{:href => "#"} Why does it take so long?
+  %p.collapse
+    Timing's an issue we hope to work on as MeatUp grows. Almost unavoidably, though, if you're ordering a specific animal while it's still at pasture, it's going to have to take some time. There's scheduling the slaughter, then transporting to the butcher, then aging. Even leaner grass-fed beef, for instance, takes a solid 1.5-2 weeks to age properly. Finally, butchering a whole animal isn't an instantaneous process. In the future, we hope to be able to predict orders sooner and short-circuit the process, but for now, a short wait is one of the costs of getting local, sustainably-raised meat directly from the farmer.
+  .row
+    .collapse-group
+  %li
+    %a.bundle{:href => "#"} When are you guys going to have kangaroo?
+  %p.collapse Hopefully, soon. We hope to make MeatUp a forum for anyone who has meat to sell it to anyone who wants it. Hunt venison or boar? Raise bison? Get in touch with us, and we'll try to provide a marketplace for you as soon as possible.
+  .row
+    .collapse-group
+  %li
+    %a.bundle{:href => "#"} What's up with this "variance" thing?
+  %p.collapse Animals are inherently unpredictable things. One angus cow could weigh just as much as another and have a bigger rump or a smaller shank. When you bring other breeds and varying animal weights and ages into the calculation, things quickly become much less simple. Rather than tear our hair out trying to come up with an impossible method to predict the exact ounces of tenderloin in each animal, we do our best, then only charge you for what you really get.
+  .row
+    .collapse-group
+  %li
+    %a.bundle{:href => "#"} I can't make the pickup. What do I do?
+  %p.collapse Phone a friend. It's important that pickups happen quickly and when they're scheduled, so that our hosts don't end up having to try and store 400 lbs of cow meat for a week. Make sure before you order that you can make the scheduled pickup date, and if something comes up, get in touch with the host or a friend and see what you can work out.
+  .row
+    .collapse-group
+  %li
+    %a.bundle{:href => "#"} How's it so cheap?
+  %p.collapse We're trying to translate as much of the money savings of CSA wholesale to the MeatUp retail process as possible. As a consumer, you're benefiting from bulk purchasing and the lack of a middleman, without any of the hassles of coordinating the process and trying to fit all the meat from a half-ton animal in your refrigerator. For us, MeatUp is more about creating something we want than making money, so we only take enough of a percentile cut to keep this operation going and pay for the labor that went into it.
+  .row
+    .collapse-group
+  %li
+    %a.bundle{:href => "#"} What is Cross Rib? What do I do with it?
+  %p.collapse
+    Whole-animal purchasing makes you confront all sorts of cuts you'd never heard of before. If you're uncertain how to cook them, check out #{link_to "our blog", "http://blog.meatup.in"} for recipes and other resources. We'll try to fill that out with good ideas as quickly as possible.
+  .row
+    .collapse-group
+  %li
+    %a.bundle{:href => "#"} Where are the sausages?
+  %p.collapse We're working on it. In order to keep infrastructure as small as possible, we've avoided working with curers, sausage-makers, etc. As you should be able to specify a select few preparations for the butcher when you order -- like turning pork belly into bacon -- and in the future we'll try to find some really great meat preparers to collaborate with in your area.
+  .row
+    .collapse-group
+  %li
+    %a.bundle{:href => "#"} What's up with all the sales?
+  %p.collapse Selling the whole animal is both environmentally responsible and key to making the MeatUp model feasible. To encourage quick purchasing of an entire animal, we put opening sales on the less well-known cuts and push through the last 20% of the animal with a final sale. Finally, if your previous order was way off of expectations, we tack an "apology" discount onto your next one.
+  .row
+    .collapse-group
+  %li
+    %a.bundle{:href => "#"} Why is skirt steak not as cheap as it should be?
+  %p.collapse Cause that's what makes the stew meat so darn cheap. There's almost 50 times as much unavoidable ground meat in a cow as there is hanger steak. We price by availability and demand to best ensure that the whole animal gets sold. That means cross rib is a much better deal, relative to Whole Foods, than tenderloin.

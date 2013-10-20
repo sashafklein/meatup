@@ -1,0 +1,103 @@
+= form_for(@ranch) do |f|
+  - if @ranch.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@ranch.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @ranch.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label "Ranch Name"
+    %br/
+    = f.text_field :name
+  .field
+    = f.label "State"
+    %br/
+    = f.select :state, us_states
+  .field
+    = f.label :city
+    %br/
+    = f.text_field :city
+  .field
+    = f.label "Zip Code"
+    %br/
+    = f.text_field :zip
+  .field
+    = f.label "Address"
+    %br/
+    = f.text_field :address
+  .field
+    = f.label "Phone Number"
+    %br/
+    = f.text_field :phone
+  / Associates ranch with current user (unless user id already exists)
+  - if current_user
+    - unless @ranch.user_id
+      = f.hidden_field :user_id, value: current_user.id
+  .field
+    = f.label "Have Cows?"
+    %br/
+    = f.check_box :cow
+  .field
+    = f.label "Have Pigs?"
+    %br/
+    = f.check_box :pig
+  .field
+    = f.label "Have Lambs?"
+    %br/
+    = f.check_box :lamb
+  .field
+    = f.label "Have Goats?"
+    %br/
+    = f.check_box :goat
+  .field
+    = f.label "Cow Price per Live LB"
+    %br/
+    = f.text_field :cow_live
+  .field
+    = f.label "Cow Price per Meat LB"
+    %br/
+    = f.text_field :cow_meat
+  .field
+    = f.label "Cow Price per Hanging LB"
+    %br/
+    = f.text_field :cow_hanging
+  .field
+    = f.label "Pig Price per Live LB"
+    %br/
+    = f.text_field :pig_live
+  .field
+    = f.label "Pig Price per Meat LB"
+    %br/
+    = f.text_field :pig_meat
+  .field
+    = f.label "Pig Price per Hanging LB"
+    %br/
+    = f.text_field :pig_hanging
+  .field
+    = f.label "Lamb Price per Live LB"
+    %br/
+    = f.text_field :lamb_live
+  .field
+    = f.label "Lamb Price per Meat LB"
+    %br/
+    = f.text_field :lamb_meat
+  .field
+    = f.label "Lamb Price per Hanging LB"
+    %br/
+    = f.text_field :lamb_hanging
+  .field
+    = f.label "Goat Price per Live LB"
+    %br/
+    = f.text_field :goat_live
+  .field
+    = f.label "Goat Price per Meat LB"
+    %br/
+    = f.text_field :goat_meat
+  .field
+    = f.label "Goat Price per Hanging LB"
+    %br/
+    = f.text_field :goat_hanging
+  .actions
+    = f.submit

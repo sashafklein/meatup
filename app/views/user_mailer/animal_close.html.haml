@@ -1,0 +1,36 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %div{:style => "width:720px;"}
+      = link_to (image_tag(attachments['meatup_logo_white.png'].url)), @url
+      .normal_links{:style => "padding: 0 35px 0 35px;"}
+        %h1
+          = @animal.name
+          is all sold!
+        %h4
+          All #{@animal.pounds_sold} lbs of #{@animal.name}'s meat have been sold and will be ready shortly for pickup (after #{"aging and " if @animal.animal_type == "Cow"}butchery. The full list of packages you bought -- with the labels they'll be listed by for more organized pickup -- is below.
+        <table class="table" %>
+        %thead
+          %tr
+            %th Cut
+            %th Prep Notes
+            %th Average Exp. Lbs
+            %th Label
+        %tbody
+          - @user.package_list.each do |p|
+            %tr
+              %td= p.cut.name
+              %td= p.line.processed_notes
+              %td= p.expected_weight
+              %td= "#{@user.name.first(3).upcase}-#{p.id}"
+        %h4
+          Again, if you have any questions about the pickup, get in touch with your host (#{link_to @animal.host.user.name, @animal.host}), and if you have any other questions, comments or suggestions, please don't hesitate to get in touch with me by email (sasha@meatup.in) or phone (415-420-3232).
+          
+          Thanks so much for taking part in the MeatUp community, and please let us know if there's anything you think we could do better.
+          
+          Best,
+          
+          Sasha and Niko
+      = image_tag attachments['grassy_knoll_white_sm.png'].url

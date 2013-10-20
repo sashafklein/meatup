@@ -1,0 +1,51 @@
+%header.topbar.navbar-fixed-top
+.topnav
+  %nav
+    %ul.nav.pull-left{:style => "margin:0px;"}
+      = link_to " ", root_path, :id => "header_logo"
+  %nav
+    %ul.nav.pull-right
+      - if signed_in?
+        - if current_user.admin?
+          %li.spaced &nbsp;
+          %li.top_spaced= link_to "My Dashboard", animals_path
+          %li.dropdown
+            %a.btn.image-button{"data-toggle" => "dropdown", :href => "#", :style => "margin-right:4px;"}
+              = image_tag('icon-login.png')
+              = current_user.name
+              \&nbsp;
+              %b.caret
+            %ul.dropdown-menu
+              %li.dr= link_to "Animals Overview", animals_path
+              %li.dr= link_to "Cuts Overview", cuts_path
+              %li.dr= link_to "Users Overview", users_path
+              %li.dr= link_to "Ranches Overview", ranches_path
+              %li.dr= link_to "Butchers Overview", butchers_path
+              %li.line_divider{:style => "margin-top:4px;margin-bottom:4px;"}
+              %li.dr= link_to "My Profile & History", current_user
+              %li.line_divider{:style => "margin-top:4px;margin-bottom:4px;"}
+              %li.dr= link_to "Sign out", signout_path, method: "delete"
+        - else
+          %li.spaced &nbsp;
+          %li.top_spaced= link_to "What's Cooking?", "http://blog.meatup.in"
+          %li.dropdown
+            %a.btn.image-button{"data-toggle" => "dropdown", :href => "#"}
+              = image_tag('icon-login.png')
+              = current_user.name
+              \&nbsp;
+              %b.caret
+            %ul.dropdown-menu
+              / <li class="dr"><haml:loud> link_to &amp;quot;My Community&amp;quot;, orders_purchase_path </haml:loud></li>
+              %li.dr= link_to "Browse Ranches", ranches_path
+              %li.dr{:style => "font-weight:bold;"}= link_to "Open Auctions", orders_purchase_path
+              %li.line_divider{:style => "margin-top:4px;margin-bottom:4px;"}
+              %li.dr= link_to "View Profile & History", current_user
+              %li.line_divider{:style => "margin-top:4px;margin-bottom:4px;"}
+              %li.dr= link_to "Sign out", signout_path, method: "delete"
+      - else
+        %li.spaced &nbsp;
+        %li.top_spaced= link_to "What's Cooking?", "http://blog.meatup.in"
+        %li.dropdown
+          %a.btn.image-button{"data-toggle" => "dropdown", :href => signin_path}
+            = image_tag('icon-login.png')
+            Sign In

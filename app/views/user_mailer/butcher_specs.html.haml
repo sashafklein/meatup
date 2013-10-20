@@ -1,0 +1,45 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %div{:style => "width:720px;"}
+      = link_to (image_tag(attachments['meatup_logo_white.png'].url)), @url
+      .normal_links{:style => "padding: 0 35px 0 35px;"}
+        %h1
+          = @animal.name
+          is coming your way!
+        %h4
+          MeatUp has sold off an expected #{@animal.pounds_sold.round(2)} of #{@animal.name}'s meat. It should arrive to you as roughly #{@animal.to_hanging.round(2)} lbs of hanging weight, and should be ready for pickup at PICK-UP DATE.
+          
+          Simpified specs for butchery (how much of what cut, prepped in what way) are below the main body of the email.
+          %strong Each package should be labeled with that package's weight and both parts of the identification label -- Name and Package Number.
+        %h3
+          Please find that labeling info #{link_to "here", @label_url}.
+        We understand that animals vary in size and offerings, and that our calculations may not be entirely accurate, so we'll take responsibility for any discrepancies between our predictions and reality. Please just log the final numbers -- packages and pounds -- on #{link_to "your butchery record", @log_url} for this animal, and we'll take care of the rest.
+        
+        If you have any questions, suggestions, or concerns about procedure, the butchery specs, or how the site works, please get in touch with MeatUp, either by email (sasha@meatup.in) or phone (415-420-3232). If you need to get in touch with the host in charge of pick up, you can find their contact info #{link_to "here", @animal.host.user}.
+        
+        The butchery specs for #{@animal.name}:
+        <table class="table" %>
+        %thead
+          %tr
+            %th Cut
+            %th Prep Notes *
+            %th Number of Packages
+            %th Average Exp. Lbs
+        %tbody
+          - @animal.make_sold_list.each do |p|
+            %tr
+              %td= p.cut.name
+              %td= p.line.notes
+              %td= p.cut_siblings
+              %td= p.expected_weight
+        %h4
+          %span{:style => "font-size:70%"} * Unless otherwise stated, roasts are to be boneless and steaks should be cut to 1.5 inches. MeatUp is dedicated to using the whole animal, so if any extra bones or offal are about to be tossed out, we'll take it!
+          Thanks so much for being part of the MeatUp community, and please let us know if there's anything you think we could do better.
+          
+          Best,
+          
+          Sasha and Niko
+      = image_tag attachments['grassy_knoll_white_sm.png'].url

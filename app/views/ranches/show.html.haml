@@ -1,0 +1,56 @@
+- provide(:title, @ranch.name)
+%p#notice= notice
+.pull-left
+  %h2
+    %span{:style => "font-size:100%; font-weight:bold"} Ranch Name:
+    %span{:style => "font-size:120%; font-weight:bold"}= @ranch.name
+%br/
+%br/
+%h2 Basic Info
+%table.table
+  %tr
+    %th Address
+    %th Phone Number
+    %th Has Cows
+    %th Has Pigs
+    %th Has Lambs
+    %th Has Goats
+    %th Associated User
+  %tr
+    %td= @ranch.address
+    %td= @ranch.phone
+    %td= nice_bool(@ranch.cow)
+    %td= nice_bool(@ranch.pig)
+    %td= nice_bool(@ranch.lamb)
+    %td= nice_bool(@ranch.goat)
+    %td= @ranch.user_id
+%h2 Pricing
+%table.table
+  %tr
+    %th Animal Type
+    %th Live $/LB
+    %th Hanging $/LB
+    %th Yielded Meat $/LB
+  %tr
+    %th Cow
+    %td= @ranch.cow_live
+    %td= @ranch.cow_hanging
+    %td= @ranch.cow_meat
+  %tr
+    %th Pig
+    %td= @ranch.pig_live
+    %td= @ranch.pig_hanging
+    %td= @ranch.pig_meat
+  %tr
+    %th Lamb
+    %td= @ranch.lamb_live
+    %td= @ranch.lamb_hanging
+    %td= @ranch.lamb_meat
+  %tr
+    %th Goat
+    %td= @ranch.goat_live
+    %td= @ranch.goat_hanging
+    %td= @ranch.goat_meat
+= link_to 'Edit', edit_ranch_path(@ranch)
+|
+\#{link_to 'Back', ranches_path}

@@ -1,0 +1,20 @@
+%h1 Package List
+%table.table
+  %tr
+    %th Cut
+    %th Estimated Packages
+    %th Packages Remaining
+    %th
+    %th
+    %th
+  - @packages.each do |package|
+    %tr
+      - @c = Cut.find(package.cut_id)
+      %td= @c.name
+      %td= package.original
+      %td= package.left
+      %td= link_to 'Show', package
+      %td= link_to 'Edit', edit_package_path(package)
+      %td= link_to 'Destroy', package, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Package', new_package_path

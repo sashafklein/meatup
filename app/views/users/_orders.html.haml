@@ -1,0 +1,20 @@
+- if @user.orders.length > 0
+  %table.table
+    %thead
+      %tr
+        %th{:width => "25%"} Date
+        %th{:width => "25%"} Meat Type
+        %th{:width => "25%"} Amount
+        %th{:width => "25%"} Charge
+    %tbody
+      - @user.orders.last(5).each do |o|
+        %tr
+          %td.normal_links= link_to (localize(o.created_at, :format => ("%d/%b/%Y"))), order_path(o)
+          %td= o.animal.animal_type
+          %td
+            = o.poundage.round(2)
+            lbs
+          %td= number_to_currency(o.total_calc)
+- else
+  %h3
+    No orders? #{link_to 'Get Started!', orders_purchase_path}

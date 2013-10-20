@@ -1,0 +1,21 @@
+%h2
+  Open #{@animal_type}s in Your Area
+- unless @animals.empty?
+  %table.table.normal_links
+    %thead
+      %tr
+        %th Name
+        %th Ranch
+        %th Lbs Left
+        %th Harvest Date
+        %th Pickup Date
+        %th Host
+    %tbody
+      - @animals.each do |a|
+        %tr
+          %td= link_to a.name, "/orders/new/#{a.id}"
+          %td= a.ranch.name
+          %td= a.pounds_left.round(2)
+          %td= a.harvest_date
+          %td= a.pickup_date
+          %td= link_to a.host.name, a.host

@@ -1,0 +1,32 @@
+.row
+  .collapse-group
+    %h4.normal_links
+      = "#{bundle.first.user.name}"
+      %a.bundle{:href => "#", :style => "font-size:70%"} (expand)
+    <div class="collapse normal_links" %>
+    
+    <table class="table" %>
+    %thead
+      %tr
+        %th Cut
+        %th Prep Notes
+        %th Package #
+        - if @animal.finalized
+          %th Final Weight (Lbs)
+          %th
+        - else
+          %th Expected Weight (Lbs)
+        %th Label
+        %th
+    %tbody
+      - bundle.each do |p|
+        %tr
+          %td= p.cut.name
+          %td= p.line.notes
+          %td= p.cut_siblings.length
+          - if p.true_weight
+            %td= p.true_weight
+          - else
+            %td= p.expected_weight
+          %td= "#{p.order.user.name.first(3).upcase}-#{p.id}"
+%br/

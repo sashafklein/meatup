@@ -1,0 +1,31 @@
+- provide(:title, 'Hosts')
+%h1 Host List
+%p{:style => "text-align:center"}
+  (#{link_to 'Add New', new_host_path})
+%br/
+%h2 Host Info
+%table.table
+  %tr
+    %th Address
+    %th City
+    %th State
+    %th Phone
+    %th
+    - if current_user.admin?
+      %th
+      %th
+  - if @hosts
+    - @hosts.each do |b|
+      %tr
+        %td= b.address
+        %td= b.phone
+        %td= b.final_price
+        %td= b.wrap_price
+        %td= b.vacuum_price
+        %td= nice_bool(b.ground)
+        %td= nice_bool(b.stew)
+        %td= nice_bool(b.boneless)
+        %td= link_to 'Show', b
+        - if current_user.admin?
+          %td= link_to 'Edit', edit_host_path(b)
+          %td= link_to 'Destroy', b, method: :delete, data: { confirm: 'Are you sure?' }

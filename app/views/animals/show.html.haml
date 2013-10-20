@@ -1,0 +1,66 @@
+- provide(:title, @animal.name)
+%p#notice= notice
+%h2{:style => "text-align:left"}
+  %span{:style => "font-size:120%; font-weight:none"}
+    = @animal.animal_type
+    Name:
+  %span{:style => "font-size:120%; font-weight:bold"}= @animal.name
+= render partial: "charts"
+.line_divider
+%h2{:style => "text-align:center"} Sales Data
+%table.table
+  %tr
+    %th Meat Weight (Est)
+    %th LBs Sold
+    %th LBs Left
+    %th Revenue Made
+    %th Expected Revenue
+    %th Expected Margins
+  %tr
+    %td= @animal.pounds_total.round(2)
+    %td= @animal.pounds_sold.round(2)
+    %td= @animal.pounds_left.round(2)
+    %td= number_to_currency(@animal.revenue_made)
+    %td= number_to_currency(@animal.revenue_possible)
+    %td= number_to_currency(@animal.expected_margins)
+%br/
+%h2 Animal Info
+%table.table
+  %tr
+    %th Type of Animal
+    %th Live Weight
+    %th Breed
+    %th Farm
+    %th Host
+    %th Photo
+  %tr
+    %td= @animal.animal_type
+    %td= @animal.weight
+    %td= @animal.breed
+    %td= @animal.ranch.name
+    %td= @animal.host.user.name
+    %td= @animal.photo
+%h2 Associated Cuts
+.row{:style => "text-align:center"}
+  .collapse-group
+    %h4.normal_links
+      %a.bundle{:href => "#"} (expand)
+    %br/
+    <div class="collapse normal_links" %>
+    %table.table
+      %tr
+        %th Cut Name
+        %th Price / lb
+        %th Orig #
+        %th # Left
+        %th # Sold
+        %th Lbs/Package
+        %th Pounds Sold
+      = render 'cutlist'
+%br/
+%h2 Associated Orders
+= render 'orderlist'
+%br/
+= link_to 'Edit', edit_animal_path(@animal)
+|
+\#{link_to 'Back', animals_path}

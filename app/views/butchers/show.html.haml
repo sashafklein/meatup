@@ -1,0 +1,30 @@
+- provide(:title, @butcher.name)
+%p#notice= notice
+.pull-left
+  %h2
+    %span{:style => "font-size:100%; font-weight:bold"} Butcher Name:
+    %span{:style => "font-size:120%; font-weight:bold"}= @butcher.name
+%br/
+%br/
+%table.table
+  %tr
+    %th Address
+    %th Phone Number
+    %th $/LB Meat
+    %th Wrap Price
+    %th Vacuum Price
+    %th Grind Requests
+    %th Stew Requests
+    %th Deboning
+  %tr
+    %td= @butcher.address
+    %td= @butcher.phone
+    %td= @butcher.final_price
+    %td= @butcher.wrap_price
+    %td= @butcher.vacuum_price
+    %td= nice_bool(@butcher.ground)
+    %td= nice_bool(@butcher.stew)
+    %td= nice_bool(@butcher.boneless)
+= link_to 'Edit', edit_butcher_path(@butcher)
+|
+\#{link_to 'Back', butchers_path}

@@ -1,0 +1,9 @@
+- provide(:title, "Sign In")
+%table.signinup_table
+  %tr
+    %td.signinup_left Sign In
+    %td.signinup_right
+      - @string = "Sign In"
+      = render :partial => 'form', :object => @string
+      .signinup_links{:style => "margin-top:120px;"}
+        New user? #{link_to "Sign up now!", signup_path}

@@ -1,0 +1,7 @@
+- provide(:title, "Edit #{@ranch.name}")
+%h1
+  Update #{@ranch.name}
+= render 'form'
+= link_to 'Show', @ranch
+|
+\#{link_to 'Back', ranches_path}

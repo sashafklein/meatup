@@ -1,0 +1,9 @@
+- if @user.is_host
+  %h4
+    View or edit your host info, #{link_to @user.name, host_path(@user.host.id), class: "normal_links"}
+- elsif @user.is_butcher
+  %h4
+    View or edit your butcher info, #{link_to @user.name, butcher_path(@user.butcher)}
+- elsif @user.is_rancher
+  %h4
+    View or edit your ranch info, #{link_to @user.name, ranch_path(@user.ranch.id), class: "normal_links"}

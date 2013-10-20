@@ -1,0 +1,70 @@
+= form_for(@butcher) do |f|
+  - if @butcher.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@butcher.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @butcher.errors.full_messages.each do |msg|
+          %li= msg
+  %h2 Basics
+  .field
+    = f.label "Butcher Name"
+    %br/
+    = f.text_field :name
+  .field
+    = f.label "State"
+    %br/
+    = f.select :state, us_states
+  .field
+    = f.label :city
+    %br/
+    = f.text_field :city
+  .field
+    = f.label "Zip Code"
+    %br/
+    = f.text_field :zip
+  .field
+    = f.label "Address"
+    %br/
+    = f.text_field :address
+  .field
+    = f.label "Phone Number"
+    %br/
+    = f.text_field :phone
+  %h2 Prices
+  .field
+    = f.label "Hanging Price"
+    %br/
+    = f.text_field :hanging_price
+  .field
+    = f.label "Price / LB Final Meat"
+    %br/
+    = f.text_field :final_price
+  .field
+    = f.label "Paper Wrap Price"
+    %br/
+    = f.text_field :wrap_price
+  .field
+    = f.label "Vacuum Seal Price"
+    %br/
+    = f.text_field :vacuum_price
+  %h2 Accepts requests to turn cut into:
+  .field
+    = f.label "Ground"
+    %br/
+    = f.check_box :ground
+  .field
+    = f.label "Stew"
+    %br/
+    = f.check_box :stew
+  .field
+    = f.label "Ground"
+    %br/
+    = f.check_box :boneless
+  / Associates butcher with current user (unless user id already exists)
+  - if current_user
+    - unless @butcher.user_id
+      = f.hidden_field :user_id, value: current_user.id
+  .actions
+    = f.submit

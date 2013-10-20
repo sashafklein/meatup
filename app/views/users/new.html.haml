@@ -1,0 +1,7 @@
+- provide(:title, 'Sign Up')
+%table.signinup_table
+  %tr
+    %td.signinup_left Sign Up
+    %td.signinup_right
+      - @string = "Sign Up"
+      = render :partial => 'form', :object => @string

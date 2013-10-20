@@ -1,0 +1,43 @@
+= form_for(@cut) do |f|
+  - if @cut.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@cut.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @cut.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label "Associated Animal Type"
+    %br/
+    = f.select :animal_type, [["Cow", "Cow"],["Pig","Pig"],["Lamb","Lamb"],["Goat","Goat"]]
+  .field
+    = f.label "Cut Name"
+    %br/
+    = f.text_field :name
+  .field
+    = f.label "Percent of Live Animal"
+    %br/
+    = f.text_field :percent
+  .field
+    = f.label "LBs per Package"
+    %br/
+    = f.text_field :package_weight
+  .field
+    = f.label "Price per LB"
+    %br/
+    = f.text_field :price
+  .field
+    = f.label :comp
+    %br/
+    = f.text_field :comp
+  .field
+    = f.label :savings
+    %br/
+    = f.text_field :savings
+  .field
+    = f.label :description
+    %br/
+    = f.text_field :description
+  .actions
+    = f.submit

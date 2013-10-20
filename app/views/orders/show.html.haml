@@ -1,0 +1,12 @@
+- provide(:title, 'Your Order')
+- if @order.user.apology
+  - @order.apology_discount
+%table.receipt_display
+  = render partial: "receipt_header", object: @order
+  %tbody
+    = render partial: "receipt_basic_info", object: @order
+    = render partial: "receipt", object: @order
+    - if @order.status == 0
+      = render partial: 'stripe', object: @order
+- @a = @order.animal
+= render partial: 'receipt_notes', object: @a

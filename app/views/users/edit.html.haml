@@ -1,0 +1,7 @@
+%table.signinup_table
+  %tr
+    %td.signinup_left Make Edits
+    %td.signinup_right
+      - provide(:title, "Edit user")
+      - @string = "Save Changes"
+      = render :partial => 'form', :object => @string

@@ -1,0 +1,26 @@
+= form_for(@order) do |f|
+  - if @order.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@order.errors.count, "error")
+        prohibited this order from being saved:
+      %ul
+        - @order.errors.full_messages.each do |msg|
+          %li= msg
+  .text-align:center
+    /
+      <div class="order_title">"Life has its own hidden forces which you can only discover by <b style="color:#262220">eating grass-fed beef</b>." -S&amp;oslash;ren Kierkegaard
+      </div>
+    / Assign the Animal and User
+    = f.hidden_field  :animal_id, value: @order_animal.id
+    - if signed_in?
+      = f.hidden_field  :user_id, value: current_user.id
+    - if @order_animal.percent_left < 20
+      - unless @order_animal.final_sale
+        - @order_animal.start_final_sale
+    - @f = f
+    = render :partial => "cut_table", :object => @f
+    - f = @f
+    = f.hidden_field :status, value: 0
+    = link_to 'Back', orders_purchase_path, :class => "order_back"
+    = f.submit "Review Order", :class => "btn image-button right"

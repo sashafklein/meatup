@@ -1,0 +1,17 @@
+%p
+  %b Animal Name / Type
+  - @a = Animal.find(@package.animal_id)
+  = "#{@a.name} -- #{@a.type}"
+%p
+  %b Cut
+  = @package.original
+%p
+  %b Estimated Packages
+  - @c = Cut.find(@package.cut_id)
+  = @c.name
+%p
+  %b Packages Remaining
+  = @package.left
+= link_to 'Edit', edit_package_path(@package)
+|
+\#{link_to 'Back', packages_path}

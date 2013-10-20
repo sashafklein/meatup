@@ -1,0 +1,83 @@
+.persist-area
+  %table#sumtable.table.table-condensed.order-table.sumtable
+    %thead
+      %tr.persist-header
+        %th.cut Cut
+        %th.prep Prep Requests
+        %th.ps Packages
+        %th.p_weight Package Weight
+        %th.price_lb Price/lb
+        %th.lbs Lbs
+        %th.price Price
+        %th.save{:style => "text-align:center;"} Savings
+    %tbody
+      - package_list = make_list(@order_animal)
+      - @b = @order_animal.butcher
+      - package_list.each do |p|
+        = @f.fields_for :lines do |l|
+          %tr
+            = l.hidden_field :cut_id, value: p.cut.id
+            / Sale-Dependent Titling
+            - if !@order_animal.sold_out_of?(p.cut)
+              - if (p.cut.incentive && @order_animal.opening_sale)
+                %td
+                  #on_sale{:title => p.cut.description}
+                    = p.cut.name
+                    %strong.sale_note EXTRA 10% OFF!
+              - elsif @order_animal.final_sale
+                %td
+                  #on_sale{:title => p.cut.description}
+                    = p.cut.name
+                    %strong.sale_note EXTRA 15% OFF!
+              - else
+                %td
+                  #cut_name{:title => p.cut.description}= p.cut.name
+            - else
+              %td
+                #cut_name{:title => p.cut.description}= p.cut.name
+            / Prep Requests
+            - @prep_array = [["None", ""]]
+            - prep_helper(p.cut)
+            - if @prep_array[0] != ""
+              %td= l.select :notes, @prep_array
+            - else
+              %td
+            / Package drop-down with sold-out special case
+            - list = @order_animal.cut_unsold(p.cut).length
+            - dropdown = (0..list).to_a
+            - if dropdown.length <= 1
+              %td
+                .sold_out_item Sold Out
+              = l.hidden_field :units, value: 0
+            - else
+              %td
+                = l.select :units, dropdown, {}, :class => "unit_select js-package"
+            %td
+              <span class="js-weight" data-weight=#{p.expected_weight}>#{p.expected_weight} lb
+            / Price/LB with JS calc functionality
+            %td
+              <span class="js-lb-price" data-lb-price=#{p.price}>
+              \#{number_to_currency(p.price)}
+            / JS-Calculated Totals
+            %td.js-lbs
+            %td.js-price
+            / Package-specific savings
+            - if p.savings > 0.01
+              %td.savings.sav_content{"data-savings" => p.savings, :style => "text-align:center;"}
+                = number_to_percentage((p.savings), :precision => 0)
+            - elsif p.savings == -1
+              %td.sav_content{:style => "text-align:center; background-color:#eaeaea;"}
+                NA
+            - else
+              %td.savings.sav_content{"data-savings" => "0", :style => "text-align:center;"}
+                = number_to_percentage(0, :precision => 0)
+        / End of Lines Block
+      / End of Packages Block
+      %tr.total.order_table_footer
+        %th.order_table_footer{:colspan => "5"}
+        %th.js-lb-total.order_table_footer
+          Total Lbs
+        %th.js-price-total.order_table_footer{:style => "font-weight:bold;"}
+          Total $
+        %th.js-savings-total.order_table_footer{:style => "color: #339933; text-align:center;"}
+          [Saved]

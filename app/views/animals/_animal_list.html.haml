@@ -1,0 +1,18 @@
+- @animal_array.each do |type|
+  - if Animal.where(:animal_type => type).length > 0
+    %tr.animal_table_header2
+      %th.animal_table_header2
+        = type
+      %th.animal_table_header2{:colspan => "9"}
+    - Animal.where(:animal_type => type).each do |animal|
+      %tr.normal_links
+        %td{:style => "color:#ddd;"}= animal.animal_type
+        %td= animal.id
+        %td= animal.name
+        %td= animal.breed
+        %td= animal.weight
+        %td= link_to animal.ranch.name, ranch_path(animal.ranch)
+        %td= link_to animal.host.name, host_path(animal.host)
+        %td= link_to 'Show', animal
+        %td= link_to 'Edit', edit_animal_path(animal)
+        %td= link_to 'Destroy', animal, method: :delete, data: { confirm: 'Are you sure?' }

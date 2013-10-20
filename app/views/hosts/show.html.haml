@@ -1,0 +1,24 @@
+- provide(:title, @host.user.name)
+%p#notice= notice
+.pull-left
+  %h2
+    %span{:style => "font-size:100%; font-weight:bold"} Host Name:
+    %span{:style => "font-size:120%; font-weight:bold"}= @host.user.name
+%br/
+%br/
+%table.table
+  %tr
+    %th Address
+    %th City
+    %th State
+    %th Phone Number
+    %th Email
+  %tr
+    %td= @host.address
+    %td= @host.city
+    %td= @host.state
+    %td= @host.phone
+    %td= @host.user.email
+= link_to 'Edit', edit_host_path(@host)
+|
+\#{link_to 'Back', hosts_path}

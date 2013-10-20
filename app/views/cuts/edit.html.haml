@@ -1,0 +1,6 @@
+- provide(:title, "Edit #{@cut.name}")
+%h1 Editing Cut
+= render 'form'
+= link_to 'Show', @cut
+|
+\#{link_to 'Back', cuts_path}

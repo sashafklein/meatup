@@ -1,9 +1,0 @@
-<h2>Ordered by Cut and Notes</h2>
-<% @animal.sold_bundles.each do |bundle| %>	
-	<%= render partial: 'cut_labels', locals: {bundle: bundle} %>	
-<% end %>
-
-<h2>Ordered by Purchaser</h2>
-<% @animal.user_order_list.each do |bundle| %>
-	<%= render partial: 'user_labels', locals: {bundle: bundle} %>
-<% end %>

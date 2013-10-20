@@ -1,0 +1,21 @@
+- provide(:title, 'Cuts')
+%h1 Cut List
+%p{:style => "text-align:center"}
+  (#{link_to 'Add New', new_cut_path})
+%h2.pull-left Cow Cuts
+- @type = "Cow"
+= render :partial => "cut_list", :object => @type
+%br/
+%h2.pull-left Pig Cuts
+- @type = "Pig"
+= render :partial => "cut_list", :object => @type
+%br/
+%h2.pull-left Lamb Cuts
+- @type = "Lamb"
+= render :partial => "cut_list", :object => @type
+%br/
+%h2.pull-left Goat Cuts
+- @type = "Goat"
+= render :partial => "cut_list", :object => @type
+%br/
+%br/
