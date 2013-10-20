@@ -18,6 +18,15 @@ module ApplicationHelper
   def present_weight(num)
     "#{num.round(2)}lb"
   end
+
+  def present_role(user)
+    user.admin ? "Administrator" : "Meat Lover"
+  end
+
+  def safe_round(num_or_nil, units)
+    return "" if num_or_nil.blank?
+    num_or_nil.round(units)
+  end
  
   # Allows for state select menus
   def us_states

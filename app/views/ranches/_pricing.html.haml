@@ -1,32 +1,7 @@
-- if t == "Cow"
-  - @ranches.each do |ranch|
-    - if ranch.cow
-      %tr
-        %td= ranch.name
-        %td= ranch.cow_live.round(2) if ranch.cow_live
-        %td= ranch.cow_hanging.round(2) if ranch.cow_hanging
-        %td= ranch.cow_meat.round(2) if ranch.cow_meat
-- elsif t == "Pig"
-  - @ranches.each do |ranch|
-    - if ranch.pig
-      %tr
-        %td= ranch.name
-        %td= ranch.pig_live.round(2) if ranch.pig_live
-        %td= ranch.pig_hanging.round(2) if ranch.pig_hanging
-        %td= ranch.pig_meat.round(2) if ranch.pig_meat
-- elsif t == "Lamb"
-  - @ranches.each do |ranch|
-    - if ranch.lamb
-      %tr
-        %td= ranch.name
-        %td= ranch.lamb_live.round(2) if ranch.lamb_live
-        %td= ranch.lamb_hanging.round(2) if ranch.lamb_hanging
-        %td= ranch.lamb_meat.round(2) if ranch.lamb_meat
-- elsif t == "Goat"
-  - @ranches.each do |ranch|
-    - if ranch.goat
-      %tr
-        %td= ranch.name
-        %td= ranch.goat_live.round(2) if ranch.goat_live
-        %td= ranch.goat_hanging.round(2) if ranch.goat_hanging
-        %td= ranch.goat_meat.round(2) if ranch.goat_meat
+- @ranches.each do |ranch|
+  - if ranch.has?(type)
+    %tr
+      %td= ranch.name
+      %td= safe_round( ranch.info_for(type).live_price, 2 )
+      %td= safe_round( ranch.info_for(type).hanging_price, 2 )
+      %td= safe_round( ranch.info_for(type).meat_price, 2 )

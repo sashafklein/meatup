@@ -9,10 +9,6 @@
     %th Ranch Name
     %th Phone Number
     %th Address
-    %th Has Cows
-    %th Has Pigs
-    %th Has Lambs
-    %th Has Goats
     %th
     - if current_user.admin?
       %th
@@ -22,21 +18,17 @@
       %td= ranch.name
       %td= ranch.phone
       %td= ranch.address
-      %td= nice_bool(ranch.cow)
-      %td= nice_bool(ranch.pig)
-      %td= nice_bool(ranch.lamb)
-      %td= nice_bool(ranch.goat)
       %td= link_to 'Show', ranch
       - if current_user.admin?
         %td= link_to 'Edit', edit_ranch_path(ranch)
         %td= link_to 'Destroy', ranch, method: :delete, data: { confirm: 'Are you sure?' }
-- @animal_types.each do |t|
-  %h2= "#{t} Pricing"
+
+- AnimalType.list.each do |type|
+  %h2= "#{type.capitalize} Pricing"
   %table.table
     %tr
       %th Ranch Name
       %th Live $/LB
       %th Hanging $/LB
       %th Meat $/LB
-    = render partial: 'pricing', locals: { t: t }
-%br/
+    = render 'pricing', type: type

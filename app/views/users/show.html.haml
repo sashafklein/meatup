@@ -4,17 +4,17 @@
     %td.signinup_left
       My Profile
     %td.signinup_right
-      %label{:for => "user_info"} User Name
-      %input{:disabled => "disabled", :type => "text", :value => @user.name}/
-      %label{:for => "user_info"} Email
-      %input{:disabled => "disabled", :type => "text", :value => @user.email}/
-      %label{:for => "user_info"} Zip Code
-      %input{:disabled => "disabled", :type => "text", :value => @user.zip}/
-      %label{:for => "user_info"} User Type
-      %input{:disabled => "disabled", :type => "text", :value => "<haml:silent> if @user.admin </haml:silent><haml:block>Administrator</haml:block><haml:silent> else </haml:silent><haml:block>Meat Lover</haml:block>"}/
+      %label{for: "user_info"} User Name
+      %input{disabled: "disabled", type: "text", value: @user.name}/
+      %label{for: "user_info"} Email
+      %input{disabled: "disabled", type: "text", value: @user.email}/
+      %label{for: "user_info"} Zip Code
+      %input{disabled: "disabled", type: "text", value: @user.zip}/
+      %label{for: "user_info"} User Type
+      %input{disabled: "disabled", type: "text", value: present_role(@user) }
       = link_to "Edit Profile", edit_user_path(@user), class: "btn image-button", style: "float:right;margin-top:15px;margin-bottom:35px;"
-      %div{:style => "margin-top:80px;"}
-        %h2.normal_links{:style => "text-align:left"} Recent Orders
+      %div{style: "margin-top:80px;"}
+        %h2.normal_links{style: "text-align:left"} Recent Orders
         = render 'orders'
-      .normal_links{:style => "margin-top:80px;"}
+      .normal_links{style: "margin-top:80px;"}
         = render 'extras'
