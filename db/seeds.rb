@@ -687,6 +687,18 @@ begin
     opening_sale: false
 	)
 
+	donald = Animal.create!(
+		breed: "Herfordshire",
+		name: "Donald Trump",
+		animal_type: "pig",
+		weight: 600,
+		ranch_id: devils_gulch_ranch.id
+		butcher_id: buds_custom.id,
+		host_id: klein.id,
+		no_sales: true,
+		opening_sale: false
+	)
+
 ##################################################################################################################################
 ##################################################################################################################################
 
