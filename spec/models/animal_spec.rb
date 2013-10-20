@@ -60,11 +60,8 @@ describe Animal do
   end
 
   # HELPER METHODS FOR CLARITY
-  def create_some_cuts
-    %w(ground london stew filet).map(&:to_sym).each do |cut_factory|
-      instance_variable_set "@#{cut_factory}", FactoryGirl.create(cut_factory)
-    end
-  end
+
+  # create some cuts is in spec helper
 
   def create_connected_paul_ryan
     @sasha = FactoryGirl.create(:sasha)

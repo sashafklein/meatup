@@ -7,15 +7,15 @@ class ItemBundler
   end
   
   ## PACKAGE BUNDLES
-  
+
   # Array of Open Structs grouping packages by :sold, :savings, and cut name;
   # Sold Out at bottom, then ordered with savings at top.
   def by_cut_sale_and_savings
-    items.unsold.in_savings_bundles + items.sold.in_savings_bundles
+    ItemBundler.new(items.unsold).in_savings_bundles + ItemBundler.new(items.sold).in_savings_bundles
   end
 
   def in_savings_bundles
-    bundles = items.group_by{ |p| [p.savings, p.cut.name] }.sort
+    bundles = items.group_by { |p| [p.savings, p.cut.name] }.sort
     bundles.map do |bundle|
       OpenStruct.new(
         cut_name: bundle[0][1],
@@ -52,7 +52,7 @@ class ItemBundler
 
   ## LINE BUNDLES
 
-  def self.in_cut_and_note_bundles
+  def in_cut_and_note_bundles
     bundles = items.group_by{ |line| [line.cut.name, line.notes] }.sort
     bundles.map do |line_group|
       OpenStruct.new(

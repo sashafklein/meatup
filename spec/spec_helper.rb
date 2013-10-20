@@ -83,3 +83,10 @@ RSpec.configure do |config|
       DatabaseCleaner.clean
     end
 end
+
+def create_some_cuts
+  DatabaseCleaner.clean
+  %w(ground london stew filet).map(&:to_sym).each do |cut_factory|
+    instance_variable_set "@#{cut_factory}", FactoryGirl.create(cut_factory)
+  end
+end
