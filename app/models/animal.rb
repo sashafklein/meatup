@@ -52,6 +52,10 @@ class Animal < ActiveRecord::Base
 
   scope :open, -> { where(open: true) }
 
+  def self.types
+    %w( cow pig lamb goat )
+  end
+
   def self.meat_type(animal_type)
     case animal_type.to_s.downcase
       when "cow"  then "beef"

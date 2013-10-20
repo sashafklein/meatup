@@ -43,64 +43,64 @@
 class Ranch < ActiveRecord::Base
   attr_accessible :address, :city, :state, :zip, 
     :name, :phone, :user_id, :preferred_butcher, :has_csa, 
-    :delivers_butcher, :delivers_drop, :delivers_host,
-    :cow, :cow_meat, :cow_hanging, :cow_live, 
-    :goat, :goat_meat, :goat_hanging, :goat_live, 
-    :lamb, :lamb_meat, :lamb_hanging, :lamb_live, 
-    :pig, :pig_meat, :pig_hanging, :pig_live, 
-    :cow_fixed, :pig_fixed, 
-    :lamb_fixed, :goat_fixed
+    :delivers_butcher, :delivers_drop, :delivers_host
 
   has_many :animals
+  has_many :ranch_animals # Animal types that the ranch offers (and their details)
   belongs_to :user
-  after_create :to_meat
-  after_update :to_meat
 
   validates :zip, presence: true, length: {is: 5}
   validates :address, presence: true
   validates :state, presence: true
   validates :city, presence: true
 
-  def to_meat 
-    animal_types = %w( cow pig lamb goat )
-
-    animal_types.each do |animal_type|
-      replace_meat_price_with_hanging_or_live(animal_type) if !has_price_for?(animal_type, :meat)
+  def self.copy_data_to_ranch_animals
+    find_each do |ranch|
+      Animal.types.each do |animal_type|
+        if ranch.send(animal_type)
+          ranch.copy_animal_data(animal_type)
+        end
+      end
     end
   end
 
-  def replace_meat_price_with_hanging_or_live(animal_type)
-    [:hanging, :live].select{ |meas| has_price_for?(meas) }.each do |measurement| 
-      return convert_from_measurement(measurement, animal_type) # first to have price returns
-    end
-  end 
-
-  def convert_from_measurement(measurement, animal_type)
-    update_attribute "#{animal_type}_meat", meat_from_measurement(measurement, animal_type)
+  def copy_animal_data(animal_type)
+    RanchAnimal.create(
+      ranch_id:       id, 
+      animal_type:    animal_type,
+      meat_price:     price(animal_type, :meat),
+      hanging_price:  price(animal_type, :hanging), 
+      live_price:     price(animal_type, :live),
+      fixed_cost:     fixed(animal_type)
+    )
   end
 
-  def has_price_for?(animal_type, measurement)
-    specific_price = price(animal_type, measurement)
-    specific_price.present? && !specific_price.zero?
+  def has?(animal_type)
+    info_for(animal_type).present?
   end
 
-
-  def meat_from_measurement(measurement, animal_type)
-    price(animal_type, measurement) / WeightRatio.new(animal_type).ratio(:meat, measurement)
+  def info_for(animal_type)
+    ranch_animals.get(animal_type)
   end
 
-  def price(animal_type, measurement)
-    send "#{animal_type}_#{measurement}"
-  rescue
-    nil
+  def cows
+    info_for(:cow)
   end
 
-  def prices_for_animal(animal_type)
-    {
-      meat: price( :meat, animal_type ),
-      hanging: price( :hanging, animal_type ),
-      live: price( :live, animal_type )
-    }
+  def pigs
+    info_for(:pig)
+  end
+
+  def lambs
+    info_for(:lamb)
+  end
+
+  def goats
+    info_for(:goat)
+  end
+
+  def fixed(animal_type)
+    send "#{animal_type}_fixed"
   end
 
 end

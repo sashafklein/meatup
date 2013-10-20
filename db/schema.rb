@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131019052830) do
+ActiveRecord::Schema.define(:version => 20131020000437) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -133,27 +133,22 @@ ActiveRecord::Schema.define(:version => 20131019052830) do
     t.float    "true_weight"
   end
 
+  create_table "ranch_animals", :force => true do |t|
+    t.string   "animal_type"
+    t.float    "meat_price"
+    t.float    "hanging_price"
+    t.float    "live_price"
+    t.float    "fixed_cost",    :default => 0.0
+    t.integer  "ranch_id"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
   create_table "ranches", :force => true do |t|
     t.string   "name"
     t.string   "address"
     t.string   "phone"
     t.integer  "user_id"
-    t.boolean  "cow",               :default => false
-    t.boolean  "pig",               :default => false
-    t.boolean  "lamb",              :default => false
-    t.boolean  "goat",              :default => false
-    t.float    "cow_live"
-    t.float    "pig_live"
-    t.float    "goat_live"
-    t.float    "lamb_live"
-    t.float    "cow_meat"
-    t.float    "pig_meat"
-    t.float    "lamb_meat"
-    t.float    "goat_meat"
-    t.float    "cow_hanging"
-    t.float    "pig_hanging"
-    t.float    "lamb_hanging"
-    t.float    "goat_hanging"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
     t.string   "state"
@@ -164,10 +159,6 @@ ActiveRecord::Schema.define(:version => 20131019052830) do
     t.boolean  "delivers_butcher",  :default => false
     t.boolean  "delivers_drop",     :default => false
     t.boolean  "delivers_host",     :default => false
-    t.integer  "cow_fixed",         :default => 0
-    t.integer  "pig_fixed",         :default => 0
-    t.integer  "lamb_fixed",        :default => 0
-    t.integer  "goat_fixed",        :default => 0
     t.string   "description"
   end
 

@@ -50,7 +50,7 @@ class Package < ActiveRecord::Base
   end
 
   def self.sold_in_line_note_bundles
-    bundles = sold.group_by{ |p| p.cut.name, p.line.notes }.sort
+    bundles = sold.group_by{ |p| [p.cut.name, p.line.notes] }.sort
     bundles.map do |bundle|
       OpenStruct.new(
         cut_name: bundle[0][0],
