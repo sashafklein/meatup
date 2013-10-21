@@ -47,30 +47,13 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
   def new
     @order = Order.new
     @order.lines.build
-    @order_animal = Animal.find(params[:animal])
-    @meat = @order_animal.animal_type
+    @animal = Animal.find(params[:animal_id])
 
-    if @order_animal.opening_sale
-      
-      hours_left = (120 - (Time.now.to_i - @order_animal.created_at.to_i)/60)/60
-      mins_left = (120 - (Time.now.to_i - @order_animal.created_at.to_i)/60)%60
+    @available = AnimalBundler.new(@animal).available_for_order_page
+    @sold_out = AnimalBundler.new(@animal).sold_out_for_order_page
 
-      if hours_left == 1 
-        time_left = "1 hour and #{mins_left} minutes"
-      elsif hours_left > 1
-        time_left = "#{hours_left} hours"
-      else
-        time_left = "#{mins_left} minutes"
-      end
-
-      flash[:notice] = "Opening Sale on select cuts for the next #{time_left}!"
-
-    elsif @order_animal.final_sale
-
-      flash[:notice] = "Final Sale on all cuts until #{@order_animal.name} is sold out!"
-
-    end 
-
+    sale = AnimalSaleCalculator.new(@animal)
+    flash[:notice] = sale.message if sale.any?
   end
 
   # GET /orders/1/edit

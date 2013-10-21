@@ -1,0 +1,19 @@
+- @available.each do |item|
+  = order_form.fields_for :lines do |form|
+    %tr
+      = form.hidden_field :cut_id, value: item.cut_id
+      / Sale-Dependent Titling
+      %td
+        - if item.sales.any?
+          #on_sale{title: item.description}
+            = item.name
+            %strong.sale_note= item.sales.message
+        - else
+          #cut_name{:title => item.description}= item.name
+      %td= form.select :notes, item.prep_options
+      %td= form.select :units, item.availability, {}, :class => "unit_select js-package"
+      %td.js-weight{ data: { weight: item.weight } }= present_weight(item.weight)
+      %td.js-lb-price{ :'data-lb-price' => item.price }= number_to_currency(item.price)
+      %td.js-lbs
+      %td.js-price
+      %td.sav_content{ class: savings_class(item.savings) }= display_savings(item.savings)

@@ -1,0 +1,13 @@
+- @sold_out.each do |item|
+  = order_form.fields_for :lines do |form|
+    = form.hidden_field :units, value: 0
+    %tr.sold_out
+      %td= item.name
+      %td
+      %td
+        .sold_out_item Sold Out
+      %td= item.weight
+      %td= item.price
+      %td
+      %td
+      %td.sav_content NA

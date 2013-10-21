@@ -1,4 +1,22 @@
 module OrdersHelper
+
+	def display_savings(savings)
+		if savings > 0.01
+			number_to_percentage((savings), :precision => 0)
+		elsif savings == -1
+			'NA'
+		elsif savings == 0
+			number_to_percentage(0, :precision => 0)
+		end
+	end
+
+	def savings_class(savings)
+		if savings > -1
+			'savings'
+		else
+			'not_applicable'
+		end
+	end
 	# def package_builder(left, line)
 	# 	string = "["
 	# 	left.each do |p|

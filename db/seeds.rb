@@ -11,7 +11,8 @@ begin
 	  	package_weight: 2,
 	  	percent: 1.67,
 	  	comp: 7.99,
-	  	savings: 50, 
+	  	savings: 50,
+	  	prep_options: "grind stew", 
 	  	description: "'London Broil' was first a preparation technique, but became the name for the two cuts -- Flank and, increasingly, Top Round -- that the technique applied to."
   	)
 	ground = Cut.create!(
@@ -31,7 +32,8 @@ begin
 	  	package_weight: 2.22,
 	  	percent: 4.25,
 	  	comp: 7.99,
-	  	savings: 65, 
+	  	savings: 65,
+	  	prep_options: "grind", 
 	  	description: "Tagine, bourgignon, pot au feu, chili, and a good old fashioned beef stew."
   	)
   	brisket = Cut.create!(
@@ -52,7 +54,8 @@ begin
 	  	percent: 2.25,
 	  	comp: 7.99,
 	  	savings: 44,
-	  	incentive: true, 
+	  	incentive: true,
+	  	prep_options: "grind stew", 
 	  	description: "Similar to the Chuck Roast, a braiser or roaster. Cook long and low."
   	)
   	rump = Cut.create!(
@@ -62,7 +65,8 @@ begin
 	  	package_weight: 3.5,
 	  	percent: 0.58,
 	  	comp: 8.99,
-	  	savings: 38, 
+	  	savings: 38,
+	  	prep_options: "grind stew", 
 	  	description: "One of Argentina/Brazil's favorites, less known in the states. Great flavor with a nice thick layer of fat. A crazy deal."
   	)
   	short = Cut.create!(
@@ -72,7 +76,8 @@ begin
 	  	package_weight: 3.33,
 	  	percent: 1.67,
 	  	comp: 8.99,
-	  	savings: 38, 
+	  	savings: 38,
+	  	prep_options: 'debone', 
 	  	description: "A braising staple from the lower portions of the ribs. Undercook and they'll be unpleasantly chewy. Stew low and long to soften and release flavors."
   	)
   	eye = Cut.create!(
@@ -82,7 +87,8 @@ begin
 	  	package_weight: 3.50,
 	  	percent: 0.58,
 	  	comp: 9.99,
-	  	savings: 47, 
+	  	savings: 47,
+	  	prep_options: "grind stew", 
 	  	description: "A lean but relatively tender cut, the eye of the round is good for rare grilling or delicate braising."
   	)
   	bottom = Cut.create!(
@@ -93,7 +99,8 @@ begin
 	  	percent: 0.67,
 	  	comp: 8.99,
 	  	savings: 27,
-	  	incentive: true, 
+	  	incentive: true,
+	  	prep_options: "grind stew", 
 	  	description: "A lean cut from the outer leg. Stew/braise for a while or grind up."
   	)
   	tri = Cut.create!(
@@ -123,7 +130,8 @@ begin
 	  	package_weight: 3.9,
 	  	percent: 3.25,
 	  	comp: 9.99,
-	  	savings: 24, 
+	  	savings: 24,
+	  	prep_options: "grind stew", 
 	  	description: "A well-marbled, rich piece of steak best for braising and roasts (but also not bad in steaks)."
   	)
   	hanger = Cut.create!(
@@ -153,7 +161,8 @@ begin
 	  	package_weight: 1.56,
 	  	percent: 1.17,
 	  	comp: 11.99,
-	  	savings: 9, 
+	  	savings: 9,
+	  	prep_options: "grind stew" 
 	  	description: "Bread-and-butter grilling cut, with a nice cap of fat."
   	)
   	skirt = Cut.create!(
@@ -173,7 +182,8 @@ begin
 	  	package_weight: 2.6,
 	  	percent: 2.78,
 	  	comp: 17.99,
-	  	savings: 27, 
+	  	savings: 27,
+	  	prep_options: 'debone', 
 	  	description: "A rich and satisfying steakhouse classic, from the short loin, in the lower ribs. A balance of sirloin steak and tenderloin, separated by a bone."
   	)
   	t = Cut.create!(
@@ -193,7 +203,8 @@ begin
 	  	package_weight: 2,
 	  	percent: 1.83,
 	  	comp: 20.99,
-	  	savings: 25, 
+	  	savings: 25,
+	  	prep_options: 'debone', 
 	  	description: "An obscenely delicious steak cut from the upper ribs. Pan sear one of these and throw it in the oven for a handful of minutes."
   	)
   	ny = Cut.create!(
@@ -223,7 +234,8 @@ begin
 	  	package_weight: 1.1,
 	  	percent: 1.99,
 	  	comp: 9.99,
-	  	savings: 19, 
+	  	savings: 19,
+	  	prep_options: "grind stew", 
 	  	description: "Peeled off the top sirloin, this cut is great for cooking quick and high."
   	)
   	shank = Cut.create!(
@@ -233,7 +245,9 @@ begin
 	  	package_weight: 2.64,
 	  	percent: 2.42,
 	  	comp: 3,
-	  	savings: 0, 
+	  	savings: 0,
+	  	prep_options: 'debone',
+	  	prep_options: "grind stew", 
 	  	description: "A ring off of the weight-bearing front or back legs, these shanks are great for stews and braises, and come with a marrow bone."
   	)
   	knuckle = Cut.create!(

@@ -14,6 +14,8 @@ FactoryGirl.define do
       package_weight 4
       percent 15
       description "'London Broil' was first a preparation technique, but became the name for the two cuts -- Flank and, increasingly, Top Round -- that the technique applied to."
+      savings 50
+      prep_options 'grind stew'
     end
 
     factory :ground do
@@ -22,6 +24,7 @@ FactoryGirl.define do
       package_weight 1
       percent 50
       description "Burgers, meatballs, meatloaf and beef moussaka."
+      savings 62
     end
 
     factory :stew do
@@ -30,6 +33,8 @@ FactoryGirl.define do
       percent 25
       package_weight 2
       description "Tagine, bourgignon, pot au feu, chili, and a good old fashioned beef stew."
+      savings 32
+      prep_options 'grind'
     end
 
     factory :filet do
@@ -38,6 +43,7 @@ FactoryGirl.define do
       package_weight 3
       percent 10
       description "The classic roasting/braising/BBQ/Passover cut from just below the chuck at the front of the animal."
+      savings 5
     end
   end
 end

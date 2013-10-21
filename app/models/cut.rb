@@ -20,7 +20,7 @@
 class Cut < ActiveRecord::Base
   attr_accessible :name, :package_weight, :percent, 
                   :price, :animal_type, :comp, :savings, 
-                  :incentive, :description
+                  :incentive, :description, :prep_options
 
   scope :cow, where(:animal_type == "Cow")
   scope :pig, where(:animal_type == "Pig")
@@ -43,5 +43,13 @@ class Cut < ActiveRecord::Base
 
   def retail_price_benchmark
     comp
+  end
+
+  def order_preparations
+    PrepOption.new(self).order_list
+  end
+
+  def packages_for_animal(animal)
+    Package.where(cut_id: id, animal_id: animal.id).unsold
   end
 end

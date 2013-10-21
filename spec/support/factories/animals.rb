@@ -25,8 +25,12 @@ FactoryGirl.define do
       breed "Black Angus"
     end
 
-    factory :tiny do
-      weight 10
+    factory :tiny do 
+      weight  10 
+    end
+
+    factory :small do
+      weight 100
     end
 
   end

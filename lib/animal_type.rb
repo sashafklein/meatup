@@ -4,29 +4,37 @@ class AnimalType
 
   class NoSuchAnimalError < Exception; end
 
-  def initialize(type_string)
+  def initialize(type_string = '')
     @type_string = type_string.downcase
-    raise NoSuchAnimalError if !AnimalType.list.include?(@type_string)
+    raise NoSuchAnimalError if invalid_type_string
   end
 
   def self.list
-    %w( cow pig lamb goat )
+    AnimalType.new.list
   end
 
   def self.instance_list
-    list.map{ |type| AnimalType.new(type) }
+    AnimalType.new.instance_list
   end
 
-  def self.capitalized_list
+  def instance_list
+    list.map{ |item| AnimalType.new(item.type) }
+  end
+
+  def list
+    %w( cow pig lamb goat )
+  end
+
+  def capitalized_list
     list.map(&:capitalize)
   end
 
-  def self.meat_list
+  def meat_list
     list.map{ |e| AnimalType.new(e).meat }
   end
 
-  def self.active_list
-    list.select{ |animal_type| AnimalType.new(animal_type).real_animals.any? }
+  def active_list
+    list.select{ |animal| real_animals.map(&:animal_type).uniq.include?(animal) }
   end
 
   def real_animals
@@ -60,6 +68,18 @@ class AnimalType
 
   def name
     type
+  end
+
+  def cuts
+    Cut.where(animal_type: type)
+  end
+
+  def others
+    list.reject(&:type)
+  end
+
+  def invalid_type_string
+    type_string.present? && !list.include?(type_string)
   end
 
 end

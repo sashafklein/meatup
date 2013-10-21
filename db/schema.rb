@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131020000437) do
+ActiveRecord::Schema.define(:version => 20131021011047) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20131020000437) do
     t.integer  "savings"
     t.boolean  "incentive",      :default => false
     t.text     "description"
+    t.string   "prep_options"
   end
 
   add_index "cuts", ["line_id"], :name => "index_cuts_on_line_id"

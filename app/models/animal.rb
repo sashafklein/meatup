@@ -59,11 +59,39 @@ class Animal < ActiveRecord::Base
   end
 
   def cutlist
-    Cut.where(animal_type: animal_type).weighted
+    cuts
+  end
+
+  def cuts
+    AnimalType.new(animal_type).cuts.weighted
+  end
+
+  def sold_out_cuts
+    Cut.where(id: sold_out_cut_ids)
+  end
+
+  def sold_out_cut_ids
+    sold_cut_ids - remaining_cut_ids
+  end
+
+  def available_cuts
+    Cut.where(id: remaining_cut_ids)
+  end
+
+  def sold_cut_ids
+    packages.sold.pluck(:cut_id).uniq
+  end
+
+  def remaining_cut_ids
+    packages.unsold.pluck(:cut_id).uniq
+  end
+
+  def sold_out_of?(cut)
+    Animal.cuts.include?(cut)
   end
 
   def create_packages
-  	cutlist.each{ |cut| create_cut_packages(cut) }
+  	cuts.each{ |cut| create_cut_packages(cut) }
   end
 
   def package_price(cut)
@@ -80,14 +108,10 @@ class Animal < ActiveRecord::Base
     Package.create!(
       animal_id: id,
       cut_id: cut.id,
-      price: cut.package_price,
+      price: PackagePricer.new(cut, self).normal,
       sold: false,
       savings: cut.savings
     )
-  end
-
-  def cut_find
-	 Cut.where(:animal_type => animal_type)
   end
 
   def best_lb_estimate
@@ -124,7 +148,7 @@ class Animal < ActiveRecord::Base
     update_attribute(:opening_sale, false)
   end
 
-  def start_final_sale
+  def start_final_sale!
     return false if no_sales
     end_opening_sale if opening_sale
 
