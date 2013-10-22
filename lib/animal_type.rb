@@ -18,7 +18,7 @@ class AnimalType
   end
 
   def instance_list
-    list.map{ |item| AnimalType.new(item.type) }
+    list.map{ |item| AnimalType.new(item) }
   end
 
   def list
@@ -31,6 +31,10 @@ class AnimalType
 
   def meat_list
     list.map{ |e| AnimalType.new(e).meat }
+  end
+
+  def list_path
+    { id: type }
   end
 
   def active_list

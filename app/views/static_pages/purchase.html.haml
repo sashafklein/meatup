@@ -1,0 +1,10 @@
+- provide(:title, 'Choose Your Meat Type')
+.float-over
+  %h1{:style => "text-align:center"} Choose Your Meat Type:
+
+.animal-buttons
+  - @types.each do |type|
+    - if type.any_real_open?
+      = link_to image_tag("#{type.meat}_button.png"), animal_list_path(type.list_path)
+
+

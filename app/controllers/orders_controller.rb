@@ -34,14 +34,6 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
     end
   end
 
-  def list
-    @type = AnimalType.new(params[:type])
-  end
-
-  def purchase
-    @types = AnimalType.instance_list
-  end
-
   # GET /orders/new/:animal_id
   # GET /orders/new/:animal_id.json
   def new

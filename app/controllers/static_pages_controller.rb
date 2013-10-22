@@ -14,16 +14,14 @@ class StaticPagesController < ApplicationController
   def contact
   end
 
-  def welcome_email
-  end
-
-  def order_email
-  	@order = Order.first
-  end
-
-  def google
-  end
-
   def incubation
+  end
+
+  def purchase
+    @types = AnimalType.instance_list
+  end
+
+  def list
+    @type = AnimalType.new(params[:id])
   end
 end

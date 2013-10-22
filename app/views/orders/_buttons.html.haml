@@ -1,4 +1,0 @@
-.animal-buttons
-  - @types.each do |type|
-    - if type.any_real_open?
-      = link_to image_tag("#{type.meat}_button.png"), "/orders/list/#{type.name}"
