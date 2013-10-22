@@ -45,11 +45,11 @@ class Cut < ActiveRecord::Base
     comp
   end
 
-  def order_preparations
-    PrepOption.new(self).order_list
+  def order_preparations(animal)
+    PrepOption.new(self, animal).order_list
   end
 
   def packages_for_animal(animal)
-    Package.where(cut_id: id, animal_id: animal.id).unsold
+    Package.where(cut_id: id, animal_id: animal.id)
   end
 end

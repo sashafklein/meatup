@@ -49,8 +49,8 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
     @order.lines.build
     @animal = Animal.find(params[:animal_id])
 
-    @available = AnimalBundler.new(@animal).available_for_order_page
-    @sold_out = AnimalBundler.new(@animal).sold_out_for_order_page
+    @available = @animal.available_cuts.order('savings DESC').map{ |cut| AnimalCut.new(cut, @animal) }
+    @sold_out = @animal.sold_out_cuts.map{ |cut| AnimalCut.new(cut, @animal) }
 
     sale = AnimalSaleCalculator.new(@animal)
     flash[:notice] = sale.message if sale.any?

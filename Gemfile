@@ -6,6 +6,7 @@ gem 'unicorn'
 gem 'newrelic_rpm'
 gem "pry"
 gem 'pg'
+gem 'draper'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

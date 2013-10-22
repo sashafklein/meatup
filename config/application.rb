@@ -48,7 +48,8 @@ module Meatup2
         request_specs: false,
         routing_specs: false,
         controller_specs: false,
-        helper_specs: false
+        helper_specs: false,
+        decorator_specs: false
 
       g.stylesheets = false
       g.helper = false

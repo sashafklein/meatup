@@ -247,10 +247,6 @@ class Animal < ActiveRecord::Base
     ItemBundler.new(packages).sold_in_line_note_bundles
   end
 
-  def sold_out_of?(cut)
-    cut_packages.all?(&:sold)
-  end
-
   # Array of Open Structs associating users with the packages they purchase of this animal
   def user_order_list
     purchasers.map{ |u| OpenStruct.new(user: u, packages: u.associated_packages) }
