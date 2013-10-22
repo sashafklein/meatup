@@ -27,11 +27,26 @@ FactoryGirl.define do
 
     factory :tiny do 
       weight  10 
+
+      factory :butchered_tiny do
+        after(:build) do |tiny|
+          butcher = FactoryGirl.create(:butcher)
+          tiny.butcher_id = butcher.id
+        end
+      end
     end
 
     factory :small do
       weight 100
+
+      factory :butchered_small do
+        after(:build) do |small|
+          butcher = FactoryGirl.create(:butcher)
+          small.butcher_id = butcher.id
+        end
+      end
     end
+
 
   end
 end

@@ -12,7 +12,7 @@ FactoryGirl.define do
     wrap_price      0
     vacuum_price    0.00
     ground          true
-    stew            true
+    stew            false
     boneless        true
   end
 

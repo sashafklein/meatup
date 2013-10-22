@@ -5,7 +5,7 @@ class PackageSaleCalculator
   def initialize(package)
     @package = package
     @cut = package.cut
-    @animal_sale = AnimalSaleCalculator.new(package.animal)
+    @animal_sale = AnimalSale.new(package.animal).sale
     @type = determine_sale_type
   end
 

@@ -28,9 +28,7 @@ Meatup2::Application.routes.draw do
   # match '/animals/:animal_id/labels' => "animals#labels"
   # match '/animals/:animal_id/log' => "animals#log", as: :log
 
-  resources :sessions, only: [:new, :create, :destroy] do
-    post: :signout, on: :member, to: :destroy, via: :delete
-  end
+  resources :sessions, only: [:new, :create, :destroy]
   resources :users, :cuts, :ranches, :butchers, :charges, :lines, :packages
 
   root to: 'static_pages#purchase'

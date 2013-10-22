@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'factory_girl'
 FactoryGirl.find_definitions
 
 # Loading more in this block will cause your tests to run faster. However, 

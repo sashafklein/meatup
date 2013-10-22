@@ -103,11 +103,4 @@ class Package < ActiveRecord::Base
       savings: get_savings_from_benchmark(price / 0.9)
     )
   end
-
-  def start_final_sale
-    update_attributes!(
-      price: price * 0.85,
-      savings: get_savings_from_benchmark(price * 0.85)
-    )
-  end
 end

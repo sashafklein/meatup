@@ -108,52 +108,34 @@ class Animal < ActiveRecord::Base
     Package.create!(
       animal_id: id,
       cut_id: cut.id,
-      price: PackagePricer.new(cut, self).normal,
+      price: PackagePricer.new(cut: cut, animal: self).normal,
       sold: false,
       savings: cut.savings
     )
   end
 
   def best_lb_estimate
-    packages.map(&:fallback_weight).inject(:+)
+    packages.map(&:fallback_weight).sum
   end
 
   def pounds_total
-    packages.map(&:expected_weight).inject(:+)
+    packages.map(&:expected_weight).sum
   end
 
   def pounds_sold
-    packages.sold.map(&:fallback_weight).inject(:+)
+    packages.sold.map(&:fallback_weight).sum
   end
 
   def pounds_left
-    pounds_total - pounds_sold
+    packages.unsold.map(&:fallback_weight).sum
   end 
-
 
   def percent_left
     (100 * pounds_left) / pounds_total
   end  
 
-  def start_opening_sale
-    if !no_sales && opening_sale
-      delay(:run_at => 120.minutes.from_now).end_opening_sale
-    end
-  end
-
-  def end_opening_sale
-    return false unless opening_sale
-
-    packages.unsold.incentivized.each { |package| package.remove_from_opening_sale }
-    update_attribute(:opening_sale, false)
-  end
-
   def start_final_sale!
-    return false if no_sales
-    end_opening_sale if opening_sale
-
-    packages.unsold.each { |package| package.start_final_sale }
-    update_attribute(:final_sale, true)
+    AnimalSale.new(animal, 'final').start_sale!
   end
 
   def cut_packages(cut)

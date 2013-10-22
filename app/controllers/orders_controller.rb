@@ -44,8 +44,9 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
     @available = @animal.available_cuts.order('savings DESC').map{ |cut| AnimalCut.new(cut, @animal) }
     @sold_out = @animal.sold_out_cuts.map{ |cut| AnimalCut.new(cut, @animal) }
 
-    sale = AnimalSaleCalculator.new(@animal)
-    flash[:notice] = sale.message if sale.any?
+    if sale = AnimalSale.new(@animal).sale
+      flash[:notice] = sale.message
+    end
   end
 
   # GET /orders/1/edit

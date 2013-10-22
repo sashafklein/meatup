@@ -63,47 +63,6 @@ describe ItemBundler do
           bundle.last.total_lb_sold.should == 3.0
         end
       end
-    end
-
-    describe "methods that need more cuts" do
-
-      before(:all) do
-        @small = FactoryGirl.create(:small)
-        create_some_cuts
-        @small.create_packages
-        order = Order.create(animal_id: @small.id)
-        order.lines.create(units: 12, cut_id: @stew.id) # Sell out of stew
-        order.lines.create(units: 2, cut_id: @ground.id)
-      end
-
-      describe '#in_lines_for_sale' do
-        
-        before do
-          @bundle = ItemBundler.new(@small.packages).in_lines_for_sale
-        end
-
-        it "creates a full list of cuts with accurate" do
-          @bundle.count.should == @small.cuts.count
-
-          @bundle[3].name.should == "Beef Stew"
-          @bundle[3].availability.should == 0
-          @bundle[3].savings.should == 32
-
-          ground_packages = Package.where(cut_id: @ground.id)
-          @bundle[0].availability.should == ground_packages.count - 2
-        end
-
-        it "orders the items by savings (above sold out)" do
-          # Ordered by savings, but overridden by sold-out (at bottom)
-          @bundle.map{ |cut| cut.name }.should == ["Ground Beef", "London Broil", "Filet Mignon", "Beef Stew"]
-        end
-
-        it "includes prep options" do
-          @bundle[0].prep_options.should == ["None"] # ground
-          @bundle[1].prep_options.should == ["None", "Grind", "Turn to stew"] #london
-          @bundle[3].prep_options.should == ["None", "Grind"] # stew
-        end
-      end
 
     end
   end
