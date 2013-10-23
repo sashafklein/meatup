@@ -10,10 +10,10 @@ class PackageSaleCalculator
   end
 
   def message
-    case type
-    when 'incentive' then "EXTRA 10% OFF!"
-    when 'final' then "EXTRA 15% OFF!"
-    else ""
+    if type == 'incentive' || type == 'final'
+      "EXTRA #{animal_sale.percent_discounted}% OFF!"
+    else
+      ""
     end
   end
 
@@ -26,7 +26,7 @@ class PackageSaleCalculator
   end
 
   def determine_sale_type
-    return 'incentive' if cut.incentive? && animal_sale.opening_sale?
-    return 'final' if animal_sale.final_sale?
+    return 'incentive' if cut.incentive? && animal_sale.type == 'opening_sale'
+    return 'final' if animal_sale.type == 'final_sale'
   end
 end

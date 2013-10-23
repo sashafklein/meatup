@@ -86,7 +86,7 @@ RSpec.configure do |config|
 end
 
 def create_some_cuts
-  DatabaseCleaner.clean
+  return false if  @ground.present?
   %w(ground london stew filet).map(&:to_sym).each do |cut_factory|
     instance_variable_set "@#{cut_factory}", FactoryGirl.create(cut_factory)
   end

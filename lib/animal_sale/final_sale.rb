@@ -1,28 +1,39 @@
-class FinalSale < AnimalSale
+class AnimalSale::FinalSale
 
   attr_reader :animal
 
-  DISCOUNT = 0.85
-  PERCENT_LEFT = 20
+  PRICE_MULTIPLE = 0.85
 
   def initialize(animal)
     @animal = animal
   end
 
-  def start!
-    return false unless should_start?
-
-    update_packages!
-    animal.update_attribute(:final_sale, true)
-  end
-
-  def should_start?
-    # in this case, percent left is less than 20; otherwise this object wouldn't be created
-    !animal.final_sale? 
-  end
-
   def message
     "Final Sale on all cuts until #{animal.name} is sold out!"
+  end
+
+  def move!
+    false
+  end
+
+  def move?
+    false
+  end
+
+  def price_multiple
+    PRICE_MULTIPLE
+  end
+
+  def type
+    'final'
+  end
+
+
+  private
+
+  def transfer!
+    update_packages!(price_multiple / AnimalSale::NoSale::PRICE_MULTIPLE)
+    animal.update_attribute(:on_opening_sale, false)
   end
 
 end

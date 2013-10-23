@@ -4,13 +4,49 @@ class AnimalCut
 
   delegate :id, :description, :name, :package_weight, to: :cut
 
-  def initialize(cut, animal)
+  def initialize(cut=nil, animal)
     @cut = cut
     @animal = animal
   end
 
+  ## Cut-Free Methods
+
+  def all
+    AnimalType.new(animal.animal_type).cuts.weighted
+  end
+  
+  def sold_out
+    Cut.where(id: sold_out_cut_ids)
+  end
+
+  def available
+    Cut.where(id: remaining_cut_ids)
+  end
+
+  ## 
+
+  def packages
+    Package.where(:animal_id => animal.id).where(:cut_id => cut.id)
+  end
+
+  def sold_out?
+    sold_out.include? cut
+  end
+
+  def starting_price
+    sale_multiple = AnimalSale.new(animal).sale.price_multiple
+
+    flat_price = animal.mult * cut.price
+
+    cut.incentive? ? flat_price * sale_multiple : cut.price
+  end
+  
+  def normal_price
+    animal.mult * cut.price
+  end
+
   def sold_out_price
-    PackagePricer.new(cut: cut, animal: animal).normal
+    normal_price
   end
 
   def available_price
@@ -23,6 +59,10 @@ class AnimalCut
 
   def representative_package
     packages.unsold.first
+  end
+
+  def generate_savings(package_price)
+    1 - (package_price / cut.retail_price_benchmark)
   end
 
   def savings
@@ -39,6 +79,21 @@ class AnimalCut
 
   def availability
     (0..packages.count).to_a
+  end
+
+  private
+
+  # The below don't require a cut
+  def sold_out_cut_ids
+    sold_cut_ids - remaining_cut_ids
+  end
+
+  def sold_cut_ids
+    animal.packages.sold.pluck(:cut_id).uniq
+  end
+
+  def remaining_cut_ids
+    animal.packages.unsold.pluck(:cut_id).uniq
   end
 
 end

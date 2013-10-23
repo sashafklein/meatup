@@ -37,10 +37,6 @@ class Cut < ActiveRecord::Base
     (weight * (percent / 100) / package_weight).to_i
   end
 
-  def package_price
-    incentive ? price * 0.9 : price
-  end
-
   def retail_price_benchmark
     comp
   end
@@ -51,5 +47,13 @@ class Cut < ActiveRecord::Base
 
   def packages_for_animal(animal)
     Package.where(cut_id: id, animal_id: animal.id)
+  end
+
+  def starting_price_for(animal)
+    AnimalCut.new(self, animal).starting_price
+  end
+
+  def normal_price_for(animal)
+    AnimalCut.new(self, animal).normal_price
   end
 end

@@ -35,4 +35,8 @@ class Butcher < ActiveRecord::Base
   def wrapping_price
     vacuum_price > wrap_price ? vaccuum_price : wrap_price
   end
+
+  def real_final_price
+    final_price ? final_price : 0
+  end
 end

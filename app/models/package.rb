@@ -33,7 +33,7 @@ class Package < ActiveRecord::Base
   scope :unsold, -> { where(:sold => false) }
 
   def incentivized
-    cut_ids = animal.cutlist.incentive_priced.pluck(:id)
+    cut_ids = animal.cuts.incentive_priced.pluck(:id)
     where(cut_id: cut_ids)
   end
 

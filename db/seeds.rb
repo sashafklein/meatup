@@ -698,7 +698,7 @@ begin
     butcher_id: sanders.id,
     host_id: klein.id,
     no_sales: true,
-    opening_sale: false
+    conduct_opening_sale: false
 	)
 
 	donald = Animal.create!(
@@ -710,7 +710,7 @@ begin
 		butcher_id: buds_custom.id,
 		host_id: klein.id,
 		no_sales: true,
-		opening_sale: false
+		conduct_opening_sale: false
 	)
 
 ##################################################################################################################################

@@ -31,7 +31,7 @@
       %span{:style => "font-size:120%;font-weight:bold"}
         Fill in individual package weights below:
 / Create an expandable table for each package type (cut and notes)
-- @animal.sold_bundles.each do |bundle|
+- @animal.bundle_for.log.each do |bundle|
   = render partial: 'package_bundle',    |
     locals: {:bundle => bundle, :f => f} |
   %br/

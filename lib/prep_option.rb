@@ -18,7 +18,7 @@ class PrepOption
       when :stew then "stew"
       when :boneless then "debone"
       end
-    end.unshift "none"
+    end.unshift("none")
   end
 
   def cut_list

@@ -6,7 +6,7 @@ describe "Integrated Purchase methods" do
     @user = FactoryGirl.create(:user)
     @tiny = FactoryGirl.create(:tiny)
     @ground = FactoryGirl.create(:ground)
-    @tiny.create_packages
+    @tiny.create_packages!
     @order = @tiny.orders.create(user_id: @user.id)
     @order.lines.create(units: 5, cut_id: @ground.id)
   end

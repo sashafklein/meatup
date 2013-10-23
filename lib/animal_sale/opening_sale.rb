@@ -1,34 +1,44 @@
-class OpeningSale < AnimalSale
+class AnimalSale::OpeningSale
   
   attr_reader :animal
 
-  DISCOUNT = 0.9
   PERCENT_LEFT = 80
   HOURS_INTO = 2
   TIME_INTO = HOURS_INTO * 60 * 60
+  PRICE_MULTIPLE = 0.9
 
   def initialize(animal)
     @animal = animal
   end
-
-  def should_end?
-    animal.percent_left < PERCENT_LEFT || time_into > TIME_INTO
-  end
-
-  def end!
-    return false unless should_end?
-
-    update_packages!
-    animal.update_attribute(:final_sale, true)
-  end
-
-  def should_start?
-    # in this case, percent left is less than 20; otherwise this object wouldn't be created
-    !animal.final_sale? 
-  end
-
+  
   def message
     "Opening Sale on select cuts for the next #{display_time_left}!"
+  end
+
+  def move!
+    move_to! AnimalSale::NoSale.new( animal )
+  end
+
+  def move?
+    time_out? || over_bought?
+  end
+
+  def price_multiple
+    PRICE_MULTIPLE
+  end
+
+  def type
+    'opening'
+  end
+
+  private
+
+  def time_out?
+    seconds_left <= 0
+  end
+
+  def over_bought?
+    animal.percent_left <= PERCENT_LEFT
   end
 
 
@@ -43,7 +53,7 @@ class OpeningSale < AnimalSale
   end
 
   def seconds_left
-    Time.now - time_since_creation
+    TIME_INTO - time_since_creation
   end
 
   def hours_left

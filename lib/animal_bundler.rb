@@ -1,40 +1,35 @@
 class AnimalBundler
 
   attr_reader :animal
+
+  delegate :purchasers, :packages, :lines, to: :animal
   
   def initialize(animal)
     @animal = animal
   end
 
-  def available_for_order_page
-    animal.available_cuts.order('savings DESC').map do |cut|
-
-      packages = cut.packages_for_animal(animal).unsold
-      representative_package = packages.first
-      
-      OpenStruct.new(
-        name: cut.name,
-        cut_id: cut.id,
-        description: cut.description,
-        savings: representative_package.savings,
-        weight: cut.package_weight,
-        price: representative_package.price,
-        prep_options: cut.order_preparations,
-        availability: (0..packages.count).to_a,
-        sales: PackageSaleCalculator.new(representative_package)
-      )
-    end
+  def admin_overview
+    ItemBundler.new(packages).in_bundles_by_cut
   end
 
-  def sold_out_for_order_page
-    animal.sold_out_cuts.map do |cut|
-      OpenStruct.new(
-        name: cut.name,
-        cut_id: cut.id,
-        description: cut.description,
-        weight: cut.package_weight,
-        price: PackagePricer.new(cut: cut, animal: animal).normal
-      )
-    end
+  def sale
+    ItemBundler.new(packages).by_cut_sale_and_savings
+  end
+
+  # Array of Open Structs with "bundles" of unique (cut/notes) lines
+  def sale_email
+    ItemBundler.new(lines).in_cut_and_note_bundles
+  end
+
+  def labels_by_cut
+    ItemBundler.new(packages).sold_in_line_note_bundles
+  end
+
+  def log
+    labels_by_cut
+  end
+
+  def labels_by_user
+    purchasers.map{ |u| OpenStruct.new(user: u, packages: u.associated_packages) }
   end
 end

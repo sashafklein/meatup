@@ -9,7 +9,7 @@ describe ItemBundler do
       before(:all) do
         @tiny = FactoryGirl.create(:tiny)
         create_some_cuts
-        @tiny.create_packages
+        @tiny.create_packages!
         order = Order.create(animal_id: @tiny.id)
         order.lines.create(units: 1, cut_id: @ground.id, notes: "C")
         order.lines.create(units: 1, cut_id: @ground.id, notes: "A")

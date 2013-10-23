@@ -31,11 +31,11 @@ class Line < ActiveRecord::Base
   end
 
   def decrement_packages
-    if !Rails.env.production?
+    if Rails.env.test? || Rails.env.development?
       target_packages.unsold.first(units).each do |package|
         package.update_attributes!(line_id: id, sold: true, true_weight: package.expected_weight)
       end
-    else
+    else # Production
       target_packages.unsold.first(units).each do |package|
         package.update_attributes!(line_id: id, sold: true)
       end

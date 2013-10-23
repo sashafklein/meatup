@@ -17,8 +17,6 @@
 #  lamb_mult      :float
 #  goat_mult      :float
 #  host_id        :integer
-#  final_sale     :boolean          default(FALSE)
-#  opening_sale   :boolean          default(TRUE)
 #  open           :boolean          default(TRUE)
 #  finalized      :boolean          default(FALSE)
 #  hanging_weight :float
@@ -29,7 +27,9 @@
 class Animal < ActiveRecord::Base
   attr_accessible :breed, :name, :photo, :animal_type, :hanging_weight, :meat_weight,  
                   :weight, :ranch_id, :butcher_id, :cow_mult, :pig_mult, :packages_attributes,
-                  :lamb_mult, :goat_mult, :host_id, :final_sale, :opening_sale, :open, :no_sales
+                  :lamb_mult, :goat_mult, :host_id, :open, :no_sales, :conduct_opening_sale,
+                  :conduct_final_sale, :on_opening_sale, :on_final_sale
+                  
   has_many :orders
   has_many :packages
   has_many :lines, through: :orders
@@ -39,10 +39,15 @@ class Animal < ActiveRecord::Base
   
   after_create do 
     if !Rails.env.test?
-      create_packages
-      start_opening_sale
+      create_packages!
     end
   end
+
+  delegate  :downpaid_total, :downpaid_pounds, :paid_total, :paid_pounds, :paid_orders, :revenue_made, 
+            :revenue_possible, :wholesale_cost, :profit, :left_to_make, :avg_price, :avg_weight, :pounds_total, 
+            :pounds_sold, :pounds_left, :percent_left , :best_lb_estimate, :expected_margins , :ranch_price, 
+            :weight_ratio, :fixed_price, :butcher_final_price, 
+            to: :calculator
 
   before_create { animal_type.downcase! }
 
@@ -52,149 +57,40 @@ class Animal < ActiveRecord::Base
   validates :breed, presence: true
   validates :animal_type, presence: true
 
-  scope :open, -> { where(open: true) }
+  scope :on_sale, -> { where(open: true) }
 
-  def meat_type
-    AnimalType.new(animal_type).meat
-  end
+  ## Major Action Methods
+  #################
 
-  def cutlist
-    cuts
-  end
+  def create_cut_packages!(cut)
+    animal_cut = AnimalCut.new(cut, self)
+    cut_price = animal_cut.starting_price
+    cut_savings = animal_cut.generate_savings(cut_price)
 
-  def cuts
-    AnimalType.new(animal_type).cuts.weighted
-  end
-
-  def sold_out_cuts
-    Cut.where(id: sold_out_cut_ids)
-  end
-
-  def sold_out_cut_ids
-    sold_cut_ids - remaining_cut_ids
-  end
-
-  def available_cuts
-    Cut.where(id: remaining_cut_ids)
-  end
-
-  def sold_cut_ids
-    packages.sold.pluck(:cut_id).uniq
-  end
-
-  def remaining_cut_ids
-    packages.unsold.pluck(:cut_id).uniq
-  end
-
-  def sold_out_of?(cut)
-    Animal.cuts.include?(cut)
-  end
-
-  def create_packages
-  	cuts.each{ |cut| create_cut_packages(cut) }
-  end
-
-  def package_price(cut)
-    cut.incentive ? cut.price * 0.9 : cut.price
-  end
-
-  def create_cut_packages(cut)
     cut.number_of_packages_for_animal(weight).times do 
-      create_package_for_cut(cut)
+      create_package_for_cut!(cut: cut, cut_price: cut_price, cut_savings: cut_savings)
     end
   end
 
-  def create_package_for_cut(cut)
+  def create_package_for_cut!(hash={})
     Package.create!(
       animal_id: id,
-      cut_id: cut.id,
-      price: PackagePricer.new(cut: cut, animal: self).normal,
+      cut_id: hash[:cut].id,
+      price: hash[:cut_price],
       sold: false,
-      savings: cut.savings
+      savings: hash[:cut_savings]
     )
   end
 
-  def best_lb_estimate
-    packages.map(&:fallback_weight).sum
+  def create_packages!
+    cuts.each{ |cut| create_cut_packages!(cut) }
+    
+    sale = AnimalSale.new(self).sale
+    sale.move! if sale.move?
   end
 
-  def pounds_total
-    packages.map(&:expected_weight).sum
-  end
-
-  def pounds_sold
-    packages.sold.map(&:fallback_weight).sum
-  end
-
-  def pounds_left
-    packages.unsold.map(&:fallback_weight).sum
-  end 
-
-  def percent_left
-    (100 * pounds_left) / pounds_total
-  end  
-
-  def start_final_sale!
-    AnimalSale.new(animal, 'final').start_sale!
-  end
-
-  def cut_packages(cut)
-    Package.where(:animal_id => id).where(:cut_id => cut.id)
-  end
-
-  def sold(cut)
-    cut_packages(cut).where(:sold => true)
-  end
-
-  def cut_unsold(cut)
-    cut_packages(cut).where(:sold => false)
-  end
-
-  def revenue_made
-    packages.sold.map(&:real_revenue).sum || 0
-  end
-
-  def revenue_possible
-    packages.map(&:expected_revenue).sum
-  end
-
-  def profit
-    revenue_made - wholesale_cost
-  end
-
-  def left_to_make
-    revenue_possible - revenue_made
-  end
-
-  # Returns total cost (for meat, butchery, and fixed, for the given animal)
-
-  def ranch_price(measurement)
-    ranch.info_for(animal_type).price(measurement)
-  end
-
-  def weight_ratio(first, second)
-    WeightRatio.new(animal_type).ratio(first, second)
-  end
-
-  def fixed_price
-    ranch_price(:fixed)
-  end
-
-  def butcher_final_price
-    butcher.final_price ? butcher.final_price : 0
-  end
-
-  def wholesale_cost
-    ranch_price(:meat) * weight_ratio(:meat, :live) * weight + fixed_price + butcher_final_price
-  end
-
-  def expected_margins 
-    revenue_possible - wholesale_cost
-  end
-
-  def check_for_sold
-    close_animal if all_sold?
-  end
+  ## Minor Action Methods
+  ######################
 
   def all_sold?
     packges.unsold.size == 0
@@ -211,37 +107,67 @@ class Animal < ActiveRecord::Base
     UserMailer.butcher_specs(self).deliver unless butcher.user.has_meatup_address?
   end
 
-  def full_cut_table
-    ItemBundler.new(packages).in_bundles_by_cut
+  def start_final_sale!
+    AnimalSale.new(animal, 'final').start_sale!
   end
 
-  def list_for_sale
-    ItemBundler.new(packages).by_cut_sale_and_savings
+  def finalize
+    return false if finalized?
+    update_attribute(:finalized, true)
   end
 
-  # Array of Open Structs with "bundles" of unique (cut/notes) lines
-  def make_sold_list
-    ItemBundler.new(lines).in_cut_and_note_bundles
+  
+  ## Bundler
+  ################
+
+  def bundle_for
+    AnimalBundler.new(animal)
   end
 
-  # Array of Open Structs with "bundles" of unique (cut/notes) packages
-  def sold_bundles 
-    ItemBundler.new(packages).sold_in_line_note_bundles
+
+  ## Cut Methods
+  ##############
+  def cuts
+    AnimalCut.new(nil, self).all
   end
 
-  # Array of Open Structs associating users with the packages they purchase of this animal
-  def user_order_list
-    purchasers.map{ |u| OpenStruct.new(user: u, packages: u.associated_packages) }
+  def sold_out_cuts
+    AnimalCut.new(nil, self).sold_out
+  end
+
+  def available_cuts
+    AnimalCut.new(nil, self).available
+  end
+
+  def sold_out_of?(cut)
+    AnimalCut.new(cut, self).sold_out?
+  end 
+
+
+  ## Package Methods
+  ##################
+
+  def packages_for(cut)
+    AnimalCut.new(cut, self).packages
+  end
+
+  def sold(cut)
+    packages_for(cut).where(:sold => true)
+  end
+
+  def check_for_sold
+    close_animal if all_sold?
+  end
+
+  ## User Methods
+  ###################
+
+  def purchasers
+    User.where(id: purchaser_ids)
   end
 
   def hanging_weight
     weight * weight_ratio("hanging", "meat")
-  end
-
-  # Returns full list of the users who bought from the animal
-  def purchasers
-    user_ids = orders.pluck(:user_id).uniq
-    User.where(id: user_ids)
   end
 
   def mult
@@ -260,41 +186,22 @@ class Animal < ActiveRecord::Base
     name == "Donald Trump" ? "January 12th" : "TBD"
   end
 
-  def downpaid_total
-    packages.with_order_status(:downpaid).map(&:expected_revenue).sum
-  end
-
-  def downpaid_pounds
-    packages.with_order_status(:downpaid).map(&:expected_weight).sum
-  end
-
-  def paid_total
-    packages.with_order_status(:paid).map(&:paid_revenue).sum
-  end
-
-  def paid_pounds
-    packages.with_order_status(:paid).map(&:fallback_weight).sum
-  end
-
-  def paid_orders
-    orders.paid
-  end
-
-  def avg_price
-    revenue_possible / pounds_total
-  end
-
-  def avg_weight
-    pounds_total / packages.size
+  def calculator
+    AnimalCalc.new(self)
   end
 
   def all_finalized
     packages.count == packages.complete.count + packages.paid.count
   end
 
-  def finalize
-    return false if finalized?
-    update_attribute(:finalized, true)
+  def meat_type
+    AnimalType.new(animal_type).meat
+  end
+
+  private
+
+  def purchaser_ids
+    orders.pluck(:user_id).uniq
   end
 
 end

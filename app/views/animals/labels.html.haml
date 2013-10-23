@@ -1,5 +1,5 @@
 %h2 Ordered by Cut and Notes
-  = render 'cut_labels', bundles: @animal.sold_bundles
+  = render 'cut_labels', bundles: @animal.bundle_for.labels_by_cut
 %h2 Ordered by Purchaser
-- @animal.user_order_list.each do |bundle|
+- @animal.bundle_for.labels_by_user.each do |bundle|
   = render 'user_labels', bundle: bundle

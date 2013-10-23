@@ -83,6 +83,10 @@ class Ranch < ActiveRecord::Base
     ranch_animals.get(animal_type)
   end
 
+  def price_for(animal_type, measurement)
+    info_for(animal_type).price(measurement)
+  end
+
   def cows
     info_for(:cow)
   end

@@ -25,7 +25,7 @@ module Package::WeightAndPriceMethods
     end
 
     def expected_weight
-      cut.package_weight
+      cut.package_weight * animal.mult
     end
 
     def weight_diff

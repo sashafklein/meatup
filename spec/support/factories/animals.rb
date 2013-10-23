@@ -6,7 +6,8 @@ FactoryGirl.define do
     animal_type   "cow"
     weight        100
     no_sales      true
-    opening_sale  false
+    conduct_opening_sale  false
+    cow_mult      1
 
     trait :with_host do
       # host host
@@ -30,6 +31,7 @@ FactoryGirl.define do
 
       factory :butchered_tiny do
         after(:build) do |tiny|
+          name = 'Tiny the Cow'
           butcher = FactoryGirl.create(:butcher)
           tiny.butcher_id = butcher.id
         end

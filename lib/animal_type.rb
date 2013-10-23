@@ -46,7 +46,7 @@ class AnimalType
   end
 
   def real_open
-    real_animals.open
+    real_animals.on_sale
   end
 
   def any_real_open?
