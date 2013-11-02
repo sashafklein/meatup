@@ -12,7 +12,7 @@
         %th # Sold
         %th Lbs/Package
         %th Pounds Sold
-      - @animal.full_cut_table.each do |bundle|
+      - @animal.bundle_for.admin_overview.each do |bundle|
         %tr
           %td= link_to(bundle.cut.name, bundle.cut)
           %td= bundle.price

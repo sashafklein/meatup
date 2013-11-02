@@ -10,11 +10,11 @@
       %th Pickup Date
       %th Host
   %tbody
-    - @type.real_open.each do |a|
+    - @type.real_open.each do |animal|
       %tr
-        %td= link_to a.name, "/orders/new/#{a.id}"
-        %td= a.ranch.name
-        %td= a.pounds_left.round(2)
-        %td= a.harvest_date
-        %td= a.pickup_date
-        %td= link_to a.host.name, a.host
+        %td= link_to animal.name, new_animal_order_path(animal)
+        %td= animal.ranch.name
+        %td= animal.pounds_left.round(2)
+        %td= animal.harvest_date
+        %td= animal.pickup_date
+        %td= link_to animal.host.name, animal.host

@@ -28,7 +28,7 @@ class Animal < ActiveRecord::Base
   attr_accessible :breed, :name, :photo, :animal_type, :hanging_weight, :meat_weight,  
                   :weight, :ranch_id, :butcher_id, :cow_mult, :pig_mult, :packages_attributes,
                   :lamb_mult, :goat_mult, :host_id, :open, :no_sales, :conduct_opening_sale,
-                  :conduct_final_sale, :on_opening_sale, :on_final_sale
+                  :conduct_final_sale, :on_opening_sale, :on_final_sale, :price_multiplier
                   
   has_many :orders
   has_many :packages
@@ -121,7 +121,7 @@ class Animal < ActiveRecord::Base
   ################
 
   def bundle_for
-    AnimalBundler.new(animal)
+    AnimalBundler.new(self)
   end
 
 
@@ -171,7 +171,7 @@ class Animal < ActiveRecord::Base
   end
 
   def mult
-    send("#{animal_type.downcase}_mult".to_sym)
+    price_multiplier
   end
 
   def harvest_date

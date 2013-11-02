@@ -14,8 +14,9 @@
     .container
     .container.transp01
       .margin-it
-        - flash.each do |key, value|
-          = content_tag(:div, value, class: "alert alert-#{key}")
+        - if flash.any?
+          - flash.each do |key, value|
+            = content_tag(:div, value, class: "alert alert-#{key}")
         = yield
     = debug(params) if Rails.env.development?
     = render 'layouts/footer'

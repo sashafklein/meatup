@@ -56,7 +56,7 @@ class Ranch < ActiveRecord::Base
 
   def self.copy_data_to_ranch_animals
     find_each do |ranch|
-      Animal.types.each do |animal_type|
+      AnimalType.new.list.each do |animal_type|
         if ranch.send(animal_type)
           ranch.copy_animal_data(animal_type)
         end
@@ -68,9 +68,9 @@ class Ranch < ActiveRecord::Base
     RanchAnimal.create(
       ranch_id:       id, 
       animal_type:    animal_type,
-      meat_price:     price(animal_type, :meat),
-      hanging_price:  price(animal_type, :hanging), 
-      live_price:     price(animal_type, :live),
+      meat_price:     price_for(animal_type, :meat),
+      hanging_price:  price_for(animal_type, :hanging), 
+      live_price:     price_for(animal_type, :live),
       fixed_cost:     fixed(animal_type)
     )
   end

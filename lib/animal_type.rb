@@ -38,7 +38,7 @@ class AnimalType
   end
 
   def active_list
-    list.select{ |animal| real_animals.map(&:animal_type).uniq.include?(animal) }
+    list.select{ |animal| AnimalType.new(animal).real_animals.present? }
   end
 
   def real_animals
@@ -81,6 +81,8 @@ class AnimalType
   def others
     list.reject(&:type)
   end
+
+  private
 
   def invalid_type_string
     type_string.present? && !list.include?(type_string)

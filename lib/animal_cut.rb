@@ -2,7 +2,7 @@ class AnimalCut
 
   attr_reader :cut, :animal
 
-  delegate :id, :description, :name, :price :package_weight, to: :cut
+  delegate :id, :description, :name, :package_weight, to: :cut
 
   def initialize(cut=nil, animal)
     @cut = cut

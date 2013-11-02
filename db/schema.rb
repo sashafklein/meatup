@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131024045829) do
+ActiveRecord::Schema.define(:version => 20131102214535) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -23,10 +23,6 @@ ActiveRecord::Schema.define(:version => 20131024045829) do
     t.datetime "updated_at",                              :null => false
     t.integer  "ranch_id"
     t.integer  "butcher_id"
-    t.float    "cow_mult"
-    t.float    "pig_mult"
-    t.float    "lamb_mult"
-    t.float    "goat_mult"
     t.integer  "host_id"
     t.boolean  "open",                 :default => true
     t.boolean  "finalized",            :default => false
@@ -37,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20131024045829) do
     t.boolean  "conduct_final_sale",   :default => false
     t.boolean  "on_opening_sale",      :default => false
     t.boolean  "on_final_sale",        :default => false
+    t.float    "price_multiplier",     :default => 1.0
   end
 
   create_table "butchers", :force => true do |t|

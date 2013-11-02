@@ -17,7 +17,7 @@ class AnimalCalc
   end
 
   def paid_total
-    packages.paid.map(&:paid_revenue).sum
+    packages.paid.map(&:real_revenue).sum
   end
 
   def paid_pounds
@@ -29,7 +29,7 @@ class AnimalCalc
   end
 
   def revenue_made
-    packages.sold.map(&:real_revenue).sum || 0
+    packages.sold.map(&:fallback_revenue).sum || 0
   end
 
   def revenue_possible
