@@ -37,7 +37,7 @@ class AnimalCalc
   end
 
   def wholesale_cost
-    ranch_price(:meat) * weight_ratio(:meat, :live) * weight + fixed_price + butcher_final_price
+    ranch_price(:live) * weight + fixed_price + butcher_final_price
   end
 
   def profit

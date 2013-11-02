@@ -15,7 +15,7 @@ describe AnimalCut do
 
   it "provides accurate information for sold-out cuts" do
     animal_cut = AnimalCut.new(@london, @small)
-    animal_cut.price.should == (@london.package_price * 0.9) # 0.9 mult
+    animal_cut.normal_price.should == (@london.package_price * 0.9) # 0.9 mult
     animal_cut.package_weight.should == @london.package_weight / 20 # The cow is 1/20th the average size
     animal_cut.prep_options.should == ["None", "Grind"] # Butcher doesn't cut stew meat
     @london.prep_options.should == "grind stew"

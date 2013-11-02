@@ -64,6 +64,10 @@ describe Animal do
   describe 'AnimalCalc methods' do
     before do
      @tiny = FactoryGirl.create(:tiny)
+     
+     @tiny.ranch = @miller
+     @tiny.stub(:butcher).and_return(OpenStruct.new({ real_final_price: 0 }))
+
      create_some_cuts
      @tiny.create_packages!
     end
@@ -120,12 +124,36 @@ describe Animal do
       end
 
       describe 'wholesale_cost' do
+        
         before do
-          @tiny.stub(:butcher).and_return(OpenStruct.new({ wrapping_price: 0.5 }))
+          @tiny.stub(:butcher).and_return(OpenStruct.new({ real_final_price: 0 }))
         end
-        xit "returns the expected cost of the animal, based on ranch and butcher details" do
-          #ranch_price(:meat) * weight_ratio(:meat, :live) * weight + fixed_price + butcher_final_price
-          #live_price = 1.4, weight_ratio = 0.387, weight = 10, fixed = 0, butcher_final = 0
+        
+        it "returns the expected cost of the animal, based on ranch and butcher details" do
+          ranch_live_price = 1.4 # live price per lb
+          live_weight = @tiny.weight
+          fixed_price = 0
+          butcher_final_price = 0
+
+          predicted_value = (ranch_live_price * live_weight) + fixed_price + butcher_final_price
+          @tiny.wholesale_cost.should == predicted_value
+        end
+      end
+
+      describe "pounds_left" do
+        it "calculates accurately" do
+          @tiny.pounds_left.should == @tiny.packages.map(&:expected_weight).sum - @tiny.packages.sold.map(&:expected_weight).sum
+        end
+
+        it "is the opposite of pounds_sold" do
+          @tiny.pounds_left.should == @tiny.pounds_total - @tiny.pounds_sold
+        end
+      end
+
+      describe "expected_margins" do
+        it "calculates the difference between cost and sale, given expectations" do
+          expected_revenue = @tiny.packages.map{ |p| p.expected_weight * p.price }.sum
+          @tiny.expected_margins.should == expected_revenue - @tiny.wholesale_cost
         end
       end
 
