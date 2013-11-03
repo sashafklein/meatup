@@ -2,7 +2,7 @@
   %tr
     - if @order.incomplete?
       %th{:colspan => "5"}
-        .timer_stamp#timer{ data: { start: @timer.start, now: @timer.now, url: @timer.url } }
+        .timer_stamp#timer{ @timer_params }
           TIME
           %br
           LEFT TO PAY

@@ -1,10 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
-  # before_filter :incubate
 
   def beta_block
-  	if current_user.beta == false
+  	if !current_user.beta
   		redirect_to root_path, error: "MeatUp is still in private beta. We'll let you know when we're accepting new users!"
   	end
   end

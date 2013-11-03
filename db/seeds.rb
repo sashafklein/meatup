@@ -162,7 +162,7 @@ begin
 	  	percent: 1.17,
 	  	comp: 11.99,
 	  	savings: 9,
-	  	prep_options: "grind stew" 
+	  	prep_options: "grind stew",
 	  	description: "Bread-and-butter grilling cut, with a nice cap of fat."
   	)
   	skirt = Cut.create!(
@@ -363,6 +363,8 @@ begin
 	  	price: 10,
 	  	package_weight: 2,
 	  	percent: 5, 
+	  	comp: 14, 
+	  	savings: 0,
 	  	description: "Can't be blank"
   	)
 
@@ -700,18 +702,20 @@ begin
     no_sales: true,
     conduct_opening_sale: false
 	)
+	@log << "Paul seeded"
 
 	donald = Animal.create!(
-		breed: "Herfordshire",
-		name: "Donald Trump",
-		animal_type: "pig",
-		weight: 600,
-		ranch_id: devils_gulch_ranch.id
-		butcher_id: buds_custom.id,
-		host_id: klein.id,
-		no_sales: true,
-		conduct_opening_sale: false
+		breed: "Herfordshire", 
+		name: "Donald Trump", 
+		animal_type: "pig",  
+    weight: 600, 
+    ranch_id: devils_gulch_ranch.id, 
+    butcher_id: buds_custom.id,
+    host_id: klein.id,
+    no_sales: true,
+    conduct_opening_sale: false
 	)
+	@log << "Donald seeded"
 
 ##################################################################################################################################
 ##################################################################################################################################
@@ -1365,8 +1369,9 @@ begin
 			laura_1.update_attribute(:total, laura_1.to_total)
 			@log << "< Laura done"
 
-rescue
+rescue Exception => e
 	full_mgs = ["SEED FAILED", "SUCCESSFUL SECTIONS BELOW:"] + @log
+	raise e
 ensure
 	full_mgs ||= ["SEED SUCCESSFUL:"] + @log + ["DONE"]
 	puts full_mgs.split("\n") 

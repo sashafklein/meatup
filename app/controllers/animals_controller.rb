@@ -26,7 +26,7 @@ before_filter :right_butcher, only: [:labels, :log]
   end
 
   def labels
-    @animal = Animal.find(params[:animal_id])
+    @animal = Animal.find(params[:id])
   end
 
   # POST /animals

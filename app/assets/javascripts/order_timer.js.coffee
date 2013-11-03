@@ -1,15 +1,16 @@
-$(document).ready ->
+$ ->
 
-  now = $("#timer").attr('data-now')
-  start = $("#timer").attr('data-start')
-  url = $("#timer").attr('data-url')
+  now = $("#timer").data 'now'
+  start = $("#timer").data 'start'
+  redirect = $("#timer").data 'redirect'
+  path = $('#timer').data 'path'
   left = 300 - (now - start)
 
   if (left < 1)
     clearInterval clock
     $("#timer").html("TIME OUT")
     alert "You ran out of time to pay. Please place your order again."
-    location = url
+    location = redirect
 
   seconds = left % 60
   minutes = (left - (seconds)) / 60
@@ -25,9 +26,9 @@ $(document).ready ->
       if minutes < 0
         clearInterval clock 
         $("#timer").html "TIME OUT"
-        alert "You ran out of time to pay, and your order has been rolled back. Please place your order again."
-        window.location.href = url
-        return
+        $.post path , ->
+          window.location.href = redirect
+          return
       
     if seconds < 10
       $("#timer").html "#{minutes} : 0 #{seconds} <br> LEFT TO PAY"

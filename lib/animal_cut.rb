@@ -2,8 +2,11 @@ class AnimalCut
 
   attr_reader :cut, :animal
 
-  delegate :id, :description, :name, :package_weight, to: :cut
+  delegate :id, :description, :name, :percent, :package_weight, to: :cut
+  delegate :weight, :animal_type, to: :animal
 
+  class AnimalCutError < StandardError; end
+  
   def initialize(cut=nil, animal)
     @cut = cut
     @animal = animal
@@ -34,11 +37,7 @@ class AnimalCut
   end
 
   def starting_price
-    sale_multiple = AnimalSale.new(animal).sale.price_multiple
-
-    flat_price = animal.mult * cut.price
-
-    cut.incentive? ? flat_price * sale_multiple : cut.price
+    starting = cut.incentive? ? flat_price * sale_multiple : cut.price
   end
   
   def normal_price
@@ -61,7 +60,7 @@ class AnimalCut
     packages.unsold.first
   end
 
-  def generate_savings(package_price)
+  def generate_savings(package_price=starting_price)
     1 - (package_price / cut.retail_price_benchmark)
   end
 
@@ -81,6 +80,10 @@ class AnimalCut
     (0..packages.count).to_a
   end
 
+  def number_of_packages
+    (weight * (percent / 100) / package_weight).to_i
+  end
+
   private
 
   # The below don't require a cut
@@ -94,6 +97,16 @@ class AnimalCut
 
   def remaining_cut_ids
     animal.packages.unsold.pluck(:cut_id).uniq
+  end
+
+  def sale_multiple
+    sale_mult = AnimalSale.new(animal).sale.price_multiple
+    raise AnimalCutError.new("Nil sale multiple! Animal: #{animal}, cut: #{cut}") if sale_mult.nil?
+    sale_mult
+  end
+
+  def flat_price
+    animal.mult * cut.price
   end
 
 end

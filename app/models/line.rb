@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  units      :integer
-#  notes      :string(255)
+#  notes      :string(255)      default("")
 #  order_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

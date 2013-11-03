@@ -1,3 +1,30 @@
+# == Schema Information
+#
+# Table name: animals
+#
+#  id                   :integer          not null, primary key
+#  animal_type          :string(255)
+#  name                 :string(255)
+#  breed                :string(255)
+#  weight               :integer
+#  photo                :string(255)
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  ranch_id             :integer
+#  butcher_id           :integer
+#  host_id              :integer
+#  open                 :boolean          default(TRUE)
+#  finalized            :boolean          default(FALSE)
+#  hanging_weight       :float
+#  meat_weight          :float
+#  no_sales             :boolean          default(FALSE)
+#  conduct_opening_sale :boolean          default(FALSE)
+#  conduct_final_sale   :boolean          default(FALSE)
+#  on_opening_sale      :boolean          default(FALSE)
+#  on_final_sale        :boolean          default(FALSE)
+#  price_multiplier     :float            default(1.0)
+#
+
 require 'spec_helper'
 
 describe Animal do
@@ -101,11 +128,20 @@ describe Animal do
       end
 
       describe 'revenue_made' do
-        it "returns calculates unknown true_weights as 0" do
+        it "returns calculates unknown true_weights as expected_weight" do
           @tiny.packages.sold.count.should == 5
           @tiny.revenue_made.should == 10.0
-          @tiny.packages.sold.first.update_attribute(:true_weight, nil)
-          @tiny.revenue_made.should == 8.0 
+
+          variable_package = @tiny.packages.sold.first
+
+          variable_package.update_attributes(expected_weight: 1)
+          @tiny.revenue_made.should == 10.0 # true_weight has precedence
+          
+          variable_package.update_attributes(true_weight: nil)
+          @tiny.revenue_made.should == 9.0 # falls back to expeted
+
+          variable_package.update_attributes(expected_weight: 4.0)
+          @tiny.revenue_made.should == 12.0 # another example of the above
         end
 
         it "returns total revenue if all weights are updated" do

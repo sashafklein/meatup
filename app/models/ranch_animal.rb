@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: ranch_animals
+#
+#  id            :integer          not null, primary key
+#  animal_type   :string(255)
+#  meat_price    :float
+#  hanging_price :float
+#  live_price    :float
+#  fixed_cost    :float            default(0.0)
+#  ranch_id      :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
 class RanchAnimal < ActiveRecord::Base
   attr_accessible :animal_type, :fixed_cost, :hanging_price, :live_price, :meat_price, :ranch_id
 

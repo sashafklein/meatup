@@ -15,6 +15,7 @@
 #  savings        :integer
 #  incentive      :boolean          default(FALSE)
 #  description    :text
+#  prep_options   :string(255)
 #
 
 class Cut < ActiveRecord::Base
@@ -32,10 +33,6 @@ class Cut < ActiveRecord::Base
   validates :price, :percent, :package_weight, 
             :name, :description, :animal_type,
             presence: true
-
-  def number_of_packages_for_animal(weight)
-    (weight * (percent / 100) / package_weight).to_i
-  end
 
   def retail_price_benchmark
     comp
@@ -55,5 +52,9 @@ class Cut < ActiveRecord::Base
 
   def normal_price_for(animal)
     AnimalCut.new(self, animal).normal_price
+  end
+
+  def incomplete?
+    !(price.present? && percent.present? && savings.present? && comp.present? && package_weight.present? && name.present? && description.present?)
   end
 end

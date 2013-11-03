@@ -1,12 +1,9 @@
 class OrdersController < ApplicationController
 
 before_filter :signed_in_user
-before_filter :beta_block
 before_filter :admin_user,     only: [:index, :edit, :update, :destroy]
 before_filter :correct_user, only: [:show, :edit, :update, :destroy]
 
-  # GET /orders
-  # GET /orders.json
   def index
     @orders = Order.all
 
@@ -16,17 +13,18 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
     end
   end
 
-  # GET /orders/1
-  # GET /orders/1.json
   def show
     @order = Order.find(params[:id])
     @order.apply_apology_discount! if @order.user.apology
 
-    @timer = OpenStruct.new( 
-      start: @order.created_at.to_i,
-      now: Time.now.to_i,
-      url: "new/#{@order.animal.id}"
-    )
+    @timer_params = { 
+      data: {
+        start: @order.created_at.to_i, 
+        now: Time.now.to_i, 
+        path: rollback_order_path(@order), 
+        redirect: new_animal_order_path(@order.animal, rolled: true)
+      }
+    }
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,8 +32,6 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
     end
   end
 
-  # GET /orders/new/:animal_id
-  # GET /orders/new/:animal_id.json
   def new
     @order = Order.new
     @order.lines.build
@@ -44,19 +40,15 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
     @available = @animal.available_cuts.order('savings DESC').map{ |cut| AnimalCut.new(cut, @animal) }
     @sold_out = @animal.sold_out_cuts.map{ |cut| AnimalCut.new(cut, @animal) }
 
-    if sale = AnimalSale.new(@animal).sale
-      flash[:notice] = sale.message
-    end
+    sale = AnimalSale.new(@animal).sale
+    flash[:notice] = sale.message if sale.message.present?
+    flash[:error] = "You ran out of time, and your order has been rolled back." if params[:rolled]
   end
 
-  # GET /orders/1/edit
-  def edit
-    @order = Order.find(params[:id])
-  end
 
-  # POST /orders
-  # POST /orders.json
   def create
+    # To not save lines without any associated packages
+    params[:order][:lines_attributes] = Order.strip_empty_lines(params)
     @order = Order.new(params[:order])
 
     respond_to do |format|
@@ -72,33 +64,14 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
     end
   end
 
-  # PUT /orders/1
-  # PUT /orders/1.json
-  def update
-    @order = Order.find(params[:id])
-
-    respond_to do |format|
-      if @order.update_attributes(params[:order])
-        format.html { redirect_to @order, notice: 'Order was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
+  def rollback
+    @order = Order.find params[:id]
+    if @order.rollback!
+      flash[:error] = "You ran out of time, and your order's been rolled back."
+      render json: { success: true }
+    else
+      render json: { success: false }
     end
-  end
-
-  # DELETE /orders/1
-  # DELETE /orders/1.json
-  def destroy
-    @order = Order.find(params[:id])
-    @order.destroy
-
-    respond_to do |format|
-      format.html { redirect_to orders_url }
-      format.json { head :no_content }
-    end
-    
   end
 
    private
@@ -114,12 +87,11 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
     end
 
     def correct_user
-      @user_id = Order.find(params[:id]).user_id
-      @user = User.find_by_id(@user_id)
-      unless current_user.admin?
-         unless current_user?(@user)
-          redirect_to root_path, notice: "Specific order-page unavailable to this user."
-         end
+      redirect_to(root_path) unless params[:id]
+      
+      @user = Order.find(params[:id]).user
+      unless current_user.admin? || current_user?(@user)
+        redirect_to root_path, notice: "Specific order-page unavailable to this user."
       end
     end
 

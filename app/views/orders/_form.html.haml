@@ -14,8 +14,9 @@
       %b{ style: "color:#262220" } eating grass-fed beef
       = ".\" -Soren Kierkegaard"
 
-    = form.hidden_field  :user_id, value: current_user.id if signed_in?
-    = form.hidden_field :status, value: 0
+    = form.hidden_field   :user_id,   value: current_user.id if signed_in?
+    = form.hidden_field   :status,    value: 0
+    = form.hidden_field   :animal_id, value: @animal.id
 
     = render "cut_table", form: form
     = link_to 'Back', purchase_path, :class => "order_back"

@@ -21,8 +21,6 @@ class Order < ActiveRecord::Base
   has_many :lines, :dependent => :destroy
   has_many :packages, through: :lines
 
-  after_create :schedule_check_payment
-
   accepts_nested_attributes_for :lines
   accepts_nested_attributes_for :cuts
 
@@ -34,17 +32,26 @@ class Order < ActiveRecord::Base
 
   include StatusMethods
 
-  def schedule_check_payment
-    self.delay(:run_at => 5.minutes.from_now).check_payment
+  class OrderError < StandardError; end
+
+  def self.strip_empty_lines(params)
+    stripped = params[:order][:lines_attributes].to_a.reject{ |l| l.second[:units] == '0' }
+    
+    reordered = {}
+    stripped.each_with_index do |e, i| 
+      reordered[i.to_s] = e.last
+    end
+    reordered
   end
 
-  def check_payment
-    rollback if incomplete?
-  end
+  def rollback!
+    unless packages.update_all(sold: false, line_id: nil) 
+      raise OrderError.new("The packages were not successfully updated!")
+    end
 
-  def rollback
-    packages.update_all!(sold: false, line_id: nil) 
-    self.destroy
+    unless self.destroy
+      raise OrderError.new("The order was not destroyed!")
+    end
   end
 
   def poundage
