@@ -1,12 +1,3 @@
-@import bootstrap
-
-/* mixins, variables, etc.
-
-$grayMediumLight: #eaeaea
-$skyBlue: #3d5c99
-$lightNavy: #0029a3
-$navy: #001452
-
 =box_sizing
   -moz-box-sizing: border-box
   -webkit-box-sizing: border-box
@@ -165,6 +156,7 @@ input, textarea, select, .uneditable-input
   background-color: #ffffff
   margin-bottom: 120px
   margin-top: 15px
+  padding: 25px
 
 .margin-it
   margin: 40px
@@ -191,6 +183,7 @@ input, textarea, select, .uneditable-input
   background-color: #000000
   width: 100%
   height: 7px
+  margin-bottom: 40px
 
 .topnav
   background-image: url("trans.png")
@@ -341,11 +334,11 @@ input, textarea, select, .uneditable-input
   color: white
   font-family: calibri, verdana, 'trebuchet ms'
   border: 1px solid #3C3932
-  background-color: #9a393a
-  background-image: -webkit-linear-gradient(top, #9a393a, #8a3333)
-  background-image: -o-linear-gradient(top, #9a393a, #8a3333)
-  background-image: linear-gradient(top, #9a393a, #8a3333)
-  background-image: -moz-linear-gradient(top, #9a393a, #8a3333)
+  background-color: $dusty-red
+  background-image: -webkit-linear-gradient(top, $dusty-red, #8a3333)
+  background-image: -o-linear-gradient(top, $dusty-red, #8a3333)
+  background-image: linear-gradient(top, $dusty-red, #8a3333)
+  background-image: -moz-linear-gradient(top, $dusty-red, #8a3333)
   text-shadow: none
   margin: 0px
   padding: 6px 12px
@@ -388,7 +381,7 @@ input, textarea, select, .uneditable-input
 
 .signinup_links
   a:link, a:active, a:visited
-    color: #9a393a
+    color: $dusty-red
   a:hover
     background: transparent
     text-decoration: underline
@@ -468,10 +461,10 @@ input, textarea, select, .uneditable-input
       &:hover
         color: #ffffff
         background-color: #8a3333
-        background-image: -webkit-linear-gradient(top, #9a393a, #8a3333)
-        background-image: -o-linear-gradient(top, #9a393a, #8a3333)
-        background-image: linear-gradient(top, #9a393a, #8a3333)
-        background-image: -moz-linear-gradient(top, #9a393a, #8a3333)
+        background-image: -webkit-linear-gradient(top, $dusty-red, #8a3333)
+        background-image: -o-linear-gradient(top, $dusty-red, #8a3333)
+        background-image: linear-gradient(top, $dusty-red, #8a3333)
+        background-image: -moz-linear-gradient(top, $dusty-red, #8a3333)
     vertical-align: middle
 
 .order_table_footer
@@ -509,10 +502,10 @@ tr.sold_out
     font-size: 90%
     text-align: center
     background-color: #8a3333
-    background-image: -webkit-linear-gradient(top, #9a393a, #8a3333)
-    background-image: -o-linear-gradient(top, #9a393a, #8a3333)
-    background-image: linear-gradient(top, #9a393a, #8a3333)
-    background-image: -moz-linear-gradient(top, #9a393a, #8a3333)
+    background-image: -webkit-linear-gradient(top, $dusty-red, #8a3333)
+    background-image: -o-linear-gradient(top, $dusty-red, #8a3333)
+    background-image: linear-gradient(top, $dusty-red, #8a3333)
+    background-image: -moz-linear-gradient(top, $dusty-red, #8a3333)
     &:hover
       background-image: none
       background-color: #B64343
@@ -652,11 +645,11 @@ tr.sold_out
   position: absolute
   top: 25px
   left: 25px
-  border: 2px solid #9a393a
+  border: 2px solid $dusty-red
   line-height: 110%
   font-size: 100%
   font-weight: normal
-  color: #9a393a
+  color: $dusty-red
   padding: 5px
 
 .receipt_notes
@@ -665,7 +658,7 @@ tr.sold_out
   font-size: 90%
   font-family: calibri
   a:link, a:active, a:visited
-    color: #9a393a
+    color: $dusty-red
   a:hover
     background: transparent
     text-decoration: underline
@@ -734,7 +727,7 @@ tr.sold_out
 // Formatting for regular-size text links on meatup
 .normal_links
   a:link, a:active, a:visited
-    color: #9a393a
+    color: $dusty-red
   a:hover
     background: transparent
     text-decoration: underline

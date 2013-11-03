@@ -2,10 +2,18 @@ class AnimalBundler
 
   attr_reader :animal
 
-  delegate :purchasers, :packages, :lines, to: :animal
+  delegate :purchasers, :packages, :lines, :available_cuts, :sold_out_cuts, to: :animal
   
   def initialize(animal)
     @animal = animal
+  end
+
+  def available_for_sale
+    available_cuts.order('savings DESC').map{ |cut| AnimalCut.new(cut, animal) }
+  end
+
+  def sold_out_for_sale
+    sold_out_cuts.map{ |cut| AnimalCut.new(cut, animal) }
   end
 
   def admin_overview

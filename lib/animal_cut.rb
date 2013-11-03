@@ -60,8 +60,9 @@ class AnimalCut
     packages.unsold.first
   end
 
-  def generate_savings(package_price=starting_price)
-    1 - (package_price / cut.retail_price_benchmark)
+  def generate_savings(package_price = nil)
+    package_price ||= starting_price
+    (1 - (package_price / cut.retail_price_benchmark)) * 100
   end
 
   def savings

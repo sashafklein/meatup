@@ -1,4 +1,4 @@
-class AnimalSale::NoSale
+class NoSale < AnimalSale
 
   attr_reader :animal
 
@@ -28,8 +28,6 @@ class AnimalSale::NoSale
   def type
     'none'
   end
-
-  private
 
   def transfer!
     update_packages!(price_multiple / AnimalSale::OpeningSale::PRICE_MULTIPLE)

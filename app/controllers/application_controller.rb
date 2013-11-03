@@ -34,4 +34,7 @@ class ApplicationController < ActionController::Base
     redirect_to incubation_path
   end
 
+  def signed_in?
+    current_user && User.find_by_id(current_user.id)
+  end
 end

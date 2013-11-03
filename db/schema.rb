@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131102214535) do
+ActiveRecord::Schema.define(:version => 20131103192457) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -60,7 +60,6 @@ ActiveRecord::Schema.define(:version => 20131102214535) do
     t.float    "price"
     t.float    "percent"
     t.float    "package_weight"
-    t.integer  "line_id"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
     t.string   "animal_type"
@@ -70,8 +69,6 @@ ActiveRecord::Schema.define(:version => 20131102214535) do
     t.text     "description"
     t.string   "prep_options"
   end
-
-  add_index "cuts", ["line_id"], :name => "index_cuts_on_line_id"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0

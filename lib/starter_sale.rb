@@ -1,4 +1,4 @@
-class AnimalSale::StarterSale
+class StarterSale < AnimalSale
 
   attr_reader :animal
 

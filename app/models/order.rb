@@ -88,7 +88,7 @@ class Order < ActiveRecord::Base
   end
   
   def make_total
-    packages.map(&:expected_revenue).sum
+    packages.map(&:fallback_revenue).sum
   end
 
 end

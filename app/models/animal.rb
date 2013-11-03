@@ -52,7 +52,9 @@ class Animal < ActiveRecord::Base
             :weight_ratio, :fixed_price, :butcher_final_price, 
             to: :calculator
 
-  # before_create { animal_type.downcase! }
+  delegate :available_for_sale, :sold_out_for_sale, to: :bundle_for
+
+  before_create { animal_type.downcase! }
 
   accepts_nested_attributes_for :packages
 
@@ -64,20 +66,6 @@ class Animal < ActiveRecord::Base
 
   ## Major Action Methods
   #################
-
-  def self.create_donald!
-    Animal.create!(
-      breed: "Herfordshire", 
-      name: "Donald Trump", 
-      animal_type: "pig",  
-      weight: 600, 
-      ranch_id: 1, 
-      butcher_id: 2,
-      host_id: 3,
-      no_sales: true,
-      conduct_opening_sale: false
-    )
-  end
 
   def create_packages!
     cuts.each{ |cut| create_cut_packages!(cut) }
@@ -95,22 +83,14 @@ class Animal < ActiveRecord::Base
     raise AnimalError.new("AnimalCut has failed to calculate!") unless cut_price && cut_savings
 
     animal_cut.number_of_packages.times do 
-      create_package_for_cut!(cut_id: cut.id, cut_price: cut_price, cut_savings: cut_savings)
+      create_package_for_cut!(animal_id: id, cut_id: cut.id, price: cut_price, savings: cut_savings, sold: false)
     end
   end
 
   def create_package_for_cut!(hash={})
-    if Package.create!(
-            animal_id: id,
-            cut_id: hash[:cut_id],
-            price: hash[:cut_price],
-            sold: false,
-            savings: hash[:cut_savings]
-            )
-      return true
-    else
-      raise AnimalError.new("Package failed to save! Attributes passed: #{hash}")
-    end
+    return true if Package.create!(hash)
+      
+    raise AnimalError.new("Package failed to save! Attributes passed: #{hash}")
   end
 
   ## Minor Action Methods
@@ -226,25 +206,29 @@ class Animal < ActiveRecord::Base
   end
 
   def cow?
-    animal_type == "cow"
+    type? "cow"
   end
 
   def pig?
-    animal_type == "pig"
+    type? "pig"
   end
 
   def lamb?
-    animal_type == "lamb"
+    type? "lamb"
   end
 
   def goat?
-    animal_type == "goat"
+    type? "goat"
   end
 
   private
 
   def purchaser_ids
     orders.pluck(:user_id).uniq
+  end
+
+  def type?(string)
+    animal_type == string
   end
 
 end

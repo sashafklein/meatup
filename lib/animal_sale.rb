@@ -1,15 +1,22 @@
 class AnimalSale
-  attr_accessor :animal, :type
+  attr_accessor :animal
 
   def initialize(animal)
     return false if animal.nil?
     @animal = animal
-    @type = determine_sale_type
+  end
+
+  def type
+    @type || determine_sale_type
   end
 
   def sale
     return false unless type
     send type
+  end
+
+  def onward!
+    move! if move?
   end
 
   def move_to!(sale_object)
@@ -58,7 +65,7 @@ class AnimalSale
     unsold_package_bundles.each do |bundle|
       new_price = bundle.first.price * price_multiple
       new_savings = bundle.first.get_savings_from_benchmark(new_price)
-      bundle.update_all!(price: new_price, savings: new_savings)
+      bundle.update_all(price: new_price, savings: new_savings)
     end
   end
 

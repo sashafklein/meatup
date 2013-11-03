@@ -1,4 +1,6 @@
-class AnimalSale::OpeningSale
+class OpeningSale < AnimalSale
+
+  include ActionView::Helpers::TextHelper
   
   attr_reader :animal
 
@@ -69,11 +71,11 @@ class AnimalSale::OpeningSale
   end
 
   def hours_left_string
-    hours_left > 0 ? "#{hours_left} #{pluralize(hours_left, 'hour')}" : nil
+    hours_left > 0 ? "#{pluralize(hours_left, 'hour')}" : nil
   end
 
   def mins_left_string
-    mins_left > 0 ? "#{mins_left} #{pluralize(remainder_mins_left, 'minute')}" : nil
+    mins_left > 0 ? "#{pluralize(remainder_mins_left, 'minute')}" : nil
   end
 
   def time_since_creation

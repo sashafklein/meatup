@@ -1,4 +1,4 @@
-class AnimalSale::FinalSale
+class FinalSale < AnimalSale
 
   attr_reader :animal
 

@@ -2,8 +2,12 @@ module Package::WeightAndPriceMethods
 
   ## CLASS METHODS
   module ClassMethods
-    def self.weighed
+    def weighed
       where('true_weight IS DISTINCT FROM NULL')
+    end
+
+    def unweighed
+      where(true_weight: nil)
     end
   end
 

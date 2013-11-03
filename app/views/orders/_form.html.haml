@@ -18,6 +18,6 @@
     = form.hidden_field   :status,    value: 0
     = form.hidden_field   :animal_id, value: @animal.id
 
-    = render "cut_table", form: form
+    = render "cut_table", order_form: form
     = link_to 'Back', purchase_path, :class => "order_back"
     = form.submit "Review Order", :class => "btn image-button right"

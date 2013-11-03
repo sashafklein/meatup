@@ -11,6 +11,12 @@
         %th.price Price
         %th.save{:style => "text-align:center;"} Savings
     %tbody
-      = render('item_on_sale',  { order_form: form })
-      = render('sold_out_item', { order_form: form })
+
+      - @animal.available_for_sale.each do |item|
+        = order_form.fields_for :lines do |form|
+          = render 'item_on_sale',  { form: form, item: item }
+    
+      - @animal.sold_out_for_sale.each do |item|
+        = render 'sold_out_item', cut: item # for display only
+      
       = render 'order_table_footer'

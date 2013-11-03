@@ -6,30 +6,13 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
 
   def index
     @orders = Order.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @orders }
-    end
   end
 
   def show
     @order = Order.find(params[:id])
     @order.apply_apology_discount! if @order.user.apology
 
-    @timer_params = { 
-      data: {
-        start: @order.created_at.to_i, 
-        now: Time.now.to_i, 
-        path: rollback_order_path(@order), 
-        redirect: new_animal_order_path(@order.animal, rolled: true)
-      }
-    }
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @order }
-    end
+    @timer_params = generate_timer_params
   end
 
   def new
@@ -37,11 +20,7 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
     @order.lines.build
     @animal = Animal.find(params[:animal_id])
 
-    @available = @animal.available_cuts.order('savings DESC').map{ |cut| AnimalCut.new(cut, @animal) }
-    @sold_out = @animal.sold_out_cuts.map{ |cut| AnimalCut.new(cut, @animal) }
-
-    sale = AnimalSale.new(@animal).sale
-    flash[:notice] = sale.message if sale.message.present?
+    build_sale_messaging
     flash[:error] = "You ran out of time, and your order has been rolled back." if params[:rolled]
   end
 
@@ -93,6 +72,23 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
       unless current_user.admin? || current_user?(@user)
         redirect_to root_path, notice: "Specific order-page unavailable to this user."
       end
+    end
+
+    def generate_timer_params
+      { 
+        data: {
+          start: @order.created_at.to_i, 
+          now: Time.now.to_i, 
+          path: rollback_order_path(@order), 
+          redirect: new_animal_order_path(@order.animal, rolled: true)
+        }
+      }
+    end
+
+    def build_sale_messaging
+      sale = AnimalSale.new(@animal).sale
+      sale.onward!
+      flash[:sale] = sale.message if sale.message.present?
     end
 
 end

@@ -1,42 +1,58 @@
 = form_for(@animal) do |f|
   - if @animal.errors.any?
     #error_explanation
-      %h2
-        = pluralize(@animal.errors.count, "error")
-        prohibited this user from being saved:
+      %h2= "#{pluralize(@animal.errors.count, 'error')} prohibited this user from being saved:"
       %ul
         - @animal.errors.full_messages.each do |msg|
           %li= msg
+  
+  %h4 Animal Details
   .field
-    = f.label "Type of Animal"
-    %br/
-    = f.select :animal_type, [["Cow", "Cow"],["Pig","Pig"],["Lamb","Lamb"],["Goat","Goat"]]
+    = f.label :animal_type, "Type of Animal"
+    = f.select :animal_type, animal_type_select
+  
   .field
-    = f.label "Name"
-    %br/
+    = f.label :name
     = f.text_field :name
+  
   .field
-    = f.label "Breed"
-    %br/
+    = f.label :breed
     = f.text_field :breed
+  
   .field
-    = f.label "Live Weight"
-    %br/
+    = f.label :weight, "Live Weight"
     = f.text_field :weight
+  
+  %h4 Relevant People
   .field
-    = f.label "Ranch"
-    %br/
+    = f.label :ranch
     = f.collection_select(:ranch_id, Ranch.all, :id, :name)
+  
   .field
-    = f.label "Butcher"
-    %br/
+    = f.label :butcher
     = f.collection_select(:butcher_id, Butcher.all, :id, :name)
-  - if current_user
-    - unless @animal.host_id
-      = f.hidden_field  :host_id, value: current_user.id
+  
+  - if @animal.host.blank?
+    .field
+      = f.label :host
+      = f.select :host_id, host_select
+    
   .field
-    = f.label "Photo"
-    %br/
+    = f.label :photo
     = f.text_field :photo
+
+  %h4 Sale Options
+
+  .field
+    = f.label :no_sales, "Block all sales for animal?"
+    = f.select :no_sales, bool_select
+  .field
+    = f.label :conduct_opening_sale, "Put on Opening Sale?"
+    = f.select :conduct_opening_sale, bool_select
+
+  .field
+    = f.label :conduct_final_sale, "Put on Final Sale?"
+    = f.select :conduct_final_sale, bool_select
+  
   .actions
     = f.submit

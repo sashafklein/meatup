@@ -1,4 +1,7 @@
-%header.topbar.navbar-fixed-top
+- flash.each do |key, value|
+  .top_alert{ class: "#{key}_banner" }
+    %p= value
+%header.topbar
 .topnav
   %nav
     %ul.nav.pull-left{:style => "margin:0px;"}
