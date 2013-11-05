@@ -69,21 +69,13 @@ class Animal < ActiveRecord::Base
 
   def create_packages!
     cuts.each{ |cut| create_cut_packages!(cut) }
-    sale = AnimalSale.new(self).sale
-    sale.move! if sale.move?
   end
 
   def create_cut_packages!(cut)
     raise AnimalError.new("Incomplete cut information! Cut: #{cut.inspect}") if cut.incomplete?
 
-    animal_cut = AnimalCut.new(cut, self)
-    cut_price = animal_cut.starting_price
-    cut_savings = animal_cut.generate_savings
-
-    raise AnimalError.new("AnimalCut has failed to calculate!") unless cut_price && cut_savings
-
-    animal_cut.number_of_packages.times do 
-      create_package_for_cut!(animal_id: id, cut_id: cut.id, price: cut_price, savings: cut_savings, sold: false)
+    AnimalCut.new(cut, self).number_of_packages.times do 
+      create_package_for_cut!(animal_id: id, cut_id: cut.id, sold: false)
     end
   end
 

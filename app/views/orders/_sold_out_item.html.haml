@@ -3,8 +3,8 @@
   %td
   %td
     .sold_out_item Sold Out
-  %td= cut.package_weight
-  %td= cut.sold_out_price
+  %td= present_weight(cut.package_weight)
+  %td= number_to_currency(cut.sold_out_price)
   %td
   %td
   %td.sav_content NA

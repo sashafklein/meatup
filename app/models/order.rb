@@ -34,23 +34,23 @@ class Order < ActiveRecord::Base
 
   class OrderError < StandardError; end
 
-  def self.strip_empty_lines(params)
-    stripped = params[:order][:lines_attributes].to_a.reject{ |l| l.second[:units] == '0' }
-    
-    reordered = {}
-    stripped.each_with_index do |e, i| 
-      reordered[i.to_s] = e.last
+  def save_with_lines(new_lines)
+    if save!
+      cleaned_new_lines = new_lines.map(&:last).reject{ |l| l[:units].to_i == 0 }
+      Line.create_lines_and_decrement_packages(cleaned_new_lines, self)
+    else
+      raise OrderError.new "Order failed to save! Order: #{self.inspect}"
     end
-    reordered
+    update_attribute(:total, make_total)
   end
 
   def rollback!
-    unless packages.update_all(sold: false, line_id: nil) 
-      raise OrderError.new("The packages were not successfully updated!")
+    unless packages.update_all(sold: false, line_id: nil, price: nil, savings: nil) 
+      raise OrderError.new("The packages were not successfully updated! Order: #{inspect}")
     end
 
     unless self.destroy
-      raise OrderError.new("The order was not destroyed!")
+      raise OrderError.new("The order was not destroyed! Order: #{id}")
     end
   end
 

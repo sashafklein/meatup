@@ -7,9 +7,41 @@ class AnimalCut
 
   class AnimalCutError < StandardError; end
   
-  def initialize(cut=nil, animal)
+  def initialize(cut, animal)
     @cut = cut
     @animal = animal
+  end
+
+  def packages
+    Package.where(:animal_id => animal.id).where(:cut_id => cut.id)
+  end
+
+  def sold_out?
+    sold_out.include? cut
+  end
+
+  def starting_price
+    starting = cut.incentive? ? flat_price * sale_multiple : cut.price
+  end
+
+  def list_price
+    flat_price * incentive_multiplier
+  end
+
+  def sold_out_price
+    flat_price
+  end
+
+  def savings
+    (1 - (list_price / cut.retail_price_benchmark)) * 100
+  end
+
+  def prep_options
+    cut.order_preparations(animal)
+  end
+
+  def packages
+    cut.packages_for_animal(animal).unsold
   end
 
   ## Cut-Free Methods
@@ -26,63 +58,28 @@ class AnimalCut
     Cut.where(id: remaining_cut_ids)
   end
 
-  ## 
-
-  def packages
-    Package.where(:animal_id => animal.id).where(:cut_id => cut.id)
-  end
-
-  def sold_out?
-    sold_out.include? cut
-  end
-
-  def starting_price
-    starting = cut.incentive? ? flat_price * sale_multiple : cut.price
-  end
-  
-  def normal_price
-    animal.mult * cut.price
-  end
-
-  def sold_out_price
-    normal_price
-  end
-
-  def available_price
-    representative_package.price
-  end
-
-  def sales
-    PackageSaleCalculator.new representative_package
-  end
-
-  def representative_package
-    packages.unsold.first
-  end
-
-  def generate_savings(package_price = nil)
-    package_price ||= starting_price
-    (1 - (package_price / cut.retail_price_benchmark)) * 100
-  end
-
-  def savings
-    representative_package.savings
-  end
-
-  def prep_options
-    cut.order_preparations(animal)
-  end
-
-  def packages
-    cut.packages_for_animal(animal).unsold
-  end
-
   def availability
     (0..packages.count).to_a
   end
 
   def number_of_packages
     (weight * (percent / 100) / package_weight).to_i
+  end
+
+  def expected_weight
+    number_of_packages * package_weight
+  end
+
+  def expected_revenue
+    expected_weight * flat_price
+  end
+
+  def discounted?
+    sale.active? && cut.incentive?
+  end
+
+  def sale_message
+    "EXTRA #{sale.percent_discounted}% OFF!"
   end
 
   private
@@ -101,9 +98,16 @@ class AnimalCut
   end
 
   def sale_multiple
-    sale_mult = AnimalSale.new(animal).sale.price_multiple
-    raise AnimalCutError.new("Nil sale multiple! Animal: #{animal}, cut: #{cut}") if sale_mult.nil?
-    sale_mult
+    raise AnimalCutError.new("Nil sale multiple! Animal: #{animal}, cut: #{cut}") if sale.price_multiple.nil?
+    sale.price_multiple
+  end
+
+  def incentive_multiplier
+    cut.incentive? && sale.opening? ? sale_multiple : 1
+  end
+
+  def sale
+    AnimalSale.new(animal).sale
   end
 
   def flat_price

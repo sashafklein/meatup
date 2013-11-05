@@ -2,7 +2,7 @@ class AnimalCalc
 
   attr_reader :animal
 
-  delegate :packages, :orders, :ranch, :butcher, :animal_type, :weight, to: :animal
+  delegate :packages, :orders, :cuts, :ranch, :butcher, :animal_type, :weight, to: :animal
 
   def initialize(animal)
     @animal = animal
@@ -33,7 +33,7 @@ class AnimalCalc
   end
 
   def revenue_possible
-    packages.map(&:expected_revenue).sum
+    cuts.map{ |c| AnimalCut.new(c, animal).expected_revenue }.sum
   end
 
   def wholesale_cost

@@ -20,19 +20,22 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
     @order.lines.build
     @animal = Animal.find(params[:animal_id])
 
-    build_sale_messaging
-    flash[:error] = "You ran out of time, and your order has been rolled back." if params[:rolled]
+    @sale = AnimalSale.new(@animal).sale
+    if params[:rolled]
+      flash[:error] = "You ran out of time, and your order has been rolled back." 
+    elsif @sale.message.present?
+      flash[:sale] = @sale.message
+    end
   end
 
 
   def create
     # To not save lines without any associated packages
-    params[:order][:lines_attributes] = Order.strip_empty_lines(params)
+    lines = params[:order].delete :lines_attributes
     @order = Order.new(params[:order])
 
     respond_to do |format|
-      if @order.save
-        @order.update_attribute(:total, @order.make_total)
+      if @order.save_with_lines(lines)
       
         format.html { redirect_to @order}
         format.json { render json: @order, status: :created, location: @order }
@@ -83,12 +86,6 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
           redirect: new_animal_order_path(@order.animal, rolled: true)
         }
       }
-    end
-
-    def build_sale_messaging
-      sale = AnimalSale.new(@animal).sale
-      sale.onward!
-      flash[:sale] = sale.message if sale.message.present?
     end
 
 end
