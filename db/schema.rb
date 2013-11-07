@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131103192457) do
+ActiveRecord::Schema.define(:version => 20131107043941) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -119,16 +119,19 @@ ActiveRecord::Schema.define(:version => 20131103192457) do
   add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
 
   create_table "packages", :force => true do |t|
-    t.integer  "cut_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.integer  "animal_id"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.float    "price"
     t.integer  "line_id"
-    t.boolean  "sold"
     t.integer  "savings"
     t.float    "true_weight"
+    t.boolean  "sold",        :default => false
+    t.integer  "animal_id"
+    t.integer  "cut_id"
+    t.integer  "real_cut_id"
   end
+
+  add_index "packages", ["real_cut_id"], :name => "index_packages_on_real_cut_id"
 
   create_table "ranch_animals", :force => true do |t|
     t.string   "animal_type"
@@ -158,6 +161,20 @@ ActiveRecord::Schema.define(:version => 20131103192457) do
     t.boolean  "delivers_host",     :default => false
     t.string   "description"
   end
+
+  create_table "real_cuts", :force => true do |t|
+    t.integer  "animal_id"
+    t.integer  "cut_id"
+    t.integer  "flat_price"
+    t.float    "weight"
+    t.integer  "expected_units"
+    t.integer  "sold_units"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "real_cuts", ["animal_id"], :name => "index_real_cuts_on_animal_id"
+  add_index "real_cuts", ["cut_id"], :name => "index_real_cuts_on_cut_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

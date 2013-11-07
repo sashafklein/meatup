@@ -47,7 +47,7 @@ class AnimalCut
   ## Cut-Free Methods
 
   def all
-    AnimalType.new(animal.animal_type).cuts.weighted
+    AnimalType.new(animal.animal_type).cuts
   end
   
   def sold_out

@@ -213,6 +213,10 @@ class Animal < ActiveRecord::Base
     type? "goat"
   end
 
+  def calculate_meat_weight
+    meat_weight ||= weight * weight_ratio(:meat, :live)
+  end
+
   private
 
   def purchaser_ids
