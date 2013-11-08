@@ -33,7 +33,7 @@ class Package < ActiveRecord::Base
   scope :sold, -> { where(:sold => true) }
   scope :unsold, -> { where(:sold => false) }
 
-  validates :animal_id, :cut_id, presence: :true
+  validates :real_cut_id, presence: :true
 
   def incentivized
     cut_ids = animal.cuts.incentive_priced.pluck(:id)

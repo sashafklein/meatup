@@ -35,3 +35,25 @@ task sold_into_real_cuts: :environment do
     Package.where(sold: true).destroy_all
   end
 end
+
+task recreate_sold_packages: :environment do
+  Line.find_each do |l|
+    real_cut = l.real_cut
+    weight = real_cut.cut.package_weight
+    puts "Creating #{real_cut.sold_units} sold packages for #{real_cut.name}"
+    l.units.times do 
+      l.packages.create!(
+        sold: true,
+        true_weight: weight,
+        real_cut_id: real_cut.id
+      )
+    end
+  end
+
+  puts "All created"
+
+  if Line.first(20).map{ |l| l.packages.count == l.units }.all?
+    Package.where(sold: false).destroy_all
+    puts "All unsold destroyed"
+  end
+end
