@@ -3,6 +3,7 @@ class RealCut < ActiveRecord::Base
 
   belongs_to :cut
   belongs_to :animal
+  has_many :packages
 
   delegate :name, to: :cut
 end

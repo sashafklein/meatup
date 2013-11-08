@@ -19,14 +19,15 @@ class Package < ActiveRecord::Base
   include PackageStatusMethods
   include WeightAndPriceMethods
 
-  attr_accessible :animal_id, :cut_id, :price, :line_id, :sold, :savings, :actual_lbs, :actual_oz, :true_weight
+  attr_accessible :real_cut_id, :price, :line_id, :sold, :savings, :actual_lbs, :actual_oz, :true_weight
   attr_reader :actual_lbs, :actual_oz
 
-  belongs_to :animal
-  belongs_to :cut
+  belongs_to :real_cut
   belongs_to :line
 
-  delegate   :order, to: :line, :allow_nil => true
+  delegate   :order, :notes, to: :line
+  delegate   :animal, :cut, to: :real_cut
+
   before_update :to_true
 
   scope :sold, -> { where(:sold => true) }

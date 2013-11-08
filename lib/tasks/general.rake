@@ -21,3 +21,17 @@ task create_first_real_cuts: :environment do
     end
   end
 end
+
+task sold_into_real_cuts: :environment do
+  Animal.find_each do |a|
+    a.real_cuts.each do |cut|
+      sold_packages = cut.packages.where(sold: true)
+      puts "Updating #{cut.name} sold_units"
+      cut.update_attribute(:sold_units, sold_packages.count)
+    end
+  end
+
+  if RealCut.where(sold_units: 0).count != RealCut.count
+    Package.where(sold: true).destroy_all
+  end
+end

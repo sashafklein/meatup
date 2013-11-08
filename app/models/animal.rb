@@ -33,6 +33,7 @@ class Animal < ActiveRecord::Base
                   
   has_many :orders
   has_many :packages
+  has_many :real_cuts
   has_many :lines, through: :orders
   belongs_to :butcher
   belongs_to :ranch

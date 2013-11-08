@@ -13,10 +13,10 @@
 
 class Line < ActiveRecord::Base
 
-  attr_accessible :notes, :units, :order_id, :cut_id, :dependent => :destroy
+  attr_accessible :notes, :units, :order_id, :real_cut_id, :dependent => :destroy
   
   belongs_to :order
-  belongs_to :cut
+  belongs_to :real_cut
   has_many   :packages
   delegate   :animal, to: :order, :allow_nil => true
 
