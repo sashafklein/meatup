@@ -1,6 +1,6 @@
 task create_first_real_cuts: :environment do 
   Animal.find_each do |a|
-    a.cuts.each do |c|
+    a.cuts.where('package_weight != 0').each do |c|
       mult = a.mult || 1
       weight_mult = 1
       packages = a.packages_for(c)
@@ -10,7 +10,7 @@ task create_first_real_cuts: :environment do
         cut_id: c.id,
         flat_price: c.price * mult * 100,
         weight: c.package_weight * weight_mult,
-        expected_units: c.percent * a.calculate_meat_weight / 100,
+        expected_units: c.percent * a.weight / 100 / c.package_weight,
         sold_units: packages.where(sold: true).count
       )
       puts "New Real Cut: c_id \##{new_real_cut.cut_id}, animal #{a.name}"
