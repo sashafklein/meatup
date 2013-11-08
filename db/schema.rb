@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131108033619) do
+ActiveRecord::Schema.define(:version => 20131108060011) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(:version => 20131108033619) do
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
     t.integer  "real_cut_id"
+    t.integer  "sale_price"
   end
 
   add_index "lines", ["real_cut_id"], :name => "index_lines_on_real_cut_id"
@@ -170,9 +171,9 @@ ActiveRecord::Schema.define(:version => 20131108033619) do
     t.integer  "flat_price"
     t.float    "weight"
     t.integer  "expected_units"
-    t.integer  "sold_units"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.integer  "sold_units",     :default => 0
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   add_index "real_cuts", ["animal_id"], :name => "index_real_cuts_on_animal_id"

@@ -84,7 +84,7 @@ class Order < ActiveRecord::Base
   end
 
   def to_total
-    total ? total : packages.map(&:expected_revenue).sum
+    total ? total : lines.map(&:revenue).sum
   end
   
   def make_total

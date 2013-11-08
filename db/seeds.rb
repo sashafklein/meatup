@@ -138,7 +138,7 @@ begin
 			animal_type: "cow",
 			name: "Hanger Steak",
 	  	price: 7.8,
-	  	package_weight: 0,
+	  	package_weight: 1.2,
 	  	percent: 0,
 	  	comp: 10.99,
 	  	savings: 0, 
@@ -148,7 +148,7 @@ begin
 			animal_type: "cow",
 			name: "Flat Iron",
 	  	price: 8.15,
-	  	package_weight: 0,
+	  	package_weight: 1,
 	  	percent: 0,
 	  	comp: 13.99,
 	  	savings: 0, 
@@ -211,7 +211,7 @@ begin
 			animal_type: "cow",
 			name: "NY Strip",
 	  	price: 15.7,
-	  	package_weight: 0,
+	  	package_weight: 1,
 	  	percent: 0,
 	  	comp: 19.99,
 	  	savings: 0, 
@@ -330,7 +330,7 @@ begin
 		leaf = Cut.create!(
 			animal_type: "pig",
 			name: "Leaf Lard",
-			package_weight: 0.94,
+			package_weight: 1.94,
 	  	percent: 3,
 	  	price: 2,
 	  	comp: 6, 
@@ -736,35 +736,47 @@ begin
 			animal_id: paul.id,
 			user_id: jasper.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(stew.id, paul.id)
 			Line.create!(
 				order_id: jasper_1.id,
-				cut_id: stew.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(ribeye.id, paul.id)
 			Line.create!(
 				order_id: jasper_1.id,
-				cut_id: ribeye.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(ground.id, paul.id)
 			Line.create!(
 				order_id: jasper_1.id,
-				cut_id: ground.id,
-				units: 4
+				real_cut_id: real_cut.id,
+				units: 4,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(sirloin.id, paul.id)
 			Line.create!(
 				order_id: jasper_1.id,
-				cut_id: sirloin.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(short.id, paul.id)
 			Line.create!(
 				order_id: jasper_1.id,
-				cut_id: short.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(top.id, paul.id)
 			Line.create!(
 				order_id: jasper_1.id,
-				cut_id: top.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 
 			jasper_1.update_attribute(:total, jasper_1.to_total)
@@ -782,26 +794,34 @@ begin
 			animal_id: paul.id,
 			user_id: angelo.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(sirloin.id, paul.id)
 			Line.create!(
 				order_id: angelo_1.id,
-				cut_id: sirloin.id,
+				real_cut_id: real_cut.id,
 				notes: "Ground",
+				sale_price: real_cut.flat_price,
 				units: 11
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(ground.id, paul.id)
 			Line.create!(
 				order_id: angelo_1.id,
-				cut_id: ground.id,
-				units: 15
+				real_cut_id: real_cut.id,
+				units: 15,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(shank.id, paul.id)
 			Line.create!(
 				order_id: angelo_1.id,
-				cut_id: shank.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(offal.id, paul.id)
 			Line.create!(
 				order_id: angelo_1.id,
-				cut_id: offal.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 			angelo_1.update_attribute(:total, angelo_1.to_total)
 
@@ -810,30 +830,40 @@ begin
 			animal_id: paul.id,
 			user_id: angelo.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(porter.id, paul.id)
 			Line.create!(
 				order_id: angelo_2.id,
-				cut_id: porter.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(top.id, paul.id)
 			Line.create!(
 				order_id: angelo_2.id,
-				cut_id: top.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(chuck.id, paul.id)
 			Line.create!(
 				order_id: angelo_2.id,
-				cut_id: chuck.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(shank.id, paul.id)
 			Line.create!(
 				order_id: angelo_2.id,
-				cut_id: shank.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(offal.id, paul.id)
 			Line.create!(
 				order_id: angelo_2.id,
-				cut_id: offal.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 			angelo_2.update_attribute(:total, angelo_2.to_total)
 			@log << "< Angelo 1 & 2 done"
@@ -850,25 +880,33 @@ begin
 			animal_id: paul.id,
 			user_id: thea.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(cross.id, paul.id)
 			Line.create!(
 				order_id: thea_1.id,
-				cut_id: cross.id,
-				units: 3
+				real_cut_id: real_cut.id,
+				units: 3,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(shank.id, paul.id)
 			Line.create!(
 				order_id: thea_1.id,
-				cut_id: shank.id,
-				units: 3
+				real_cut_id: real_cut.id,
+				units: 3,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(offal.id, paul.id)
 			Line.create!(
 				order_id: thea_1.id,
-				cut_id: offal.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(skirt.id, paul.id)
 			Line.create!(
 				order_id: thea_1.id,
-				cut_id: skirt.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 			thea_1.update_attribute(:total, thea_1.to_total)
 			@log << "< Thea done"
@@ -885,30 +923,40 @@ begin
 			animal_id: paul.id,
 			user_id: pim.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(london.id, paul.id)
 			Line.create!(
 				order_id: pim_1.id,
-				cut_id: london.id,
-				units: 10
+				real_cut_id: real_cut.id,
+				units: 10,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(ground.id, paul.id)
 			Line.create!(
 				order_id: pim_1.id,
-				cut_id: ground.id,
-				units: 60
+				real_cut_id: real_cut.id,
+				units: 60,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(stew.id, paul.id)
 			Line.create!(
 				order_id: pim_1.id,
-				cut_id: stew.id,
-				units: 15
+				real_cut_id: real_cut.id,
+				units: 15,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(chuck.id, paul.id)
 			Line.create!(
 				order_id: pim_1.id,
-				cut_id: chuck.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(top.id, paul.id)
 			Line.create!(
 				order_id: pim_1.id,
-				cut_id: top.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
 			pim_1.update_attribute(:total, pim_1.to_total)
 		pim_2 = Order.create!(
@@ -916,25 +964,33 @@ begin
 			animal_id: paul.id,
 			user_id: pim.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(chuck.id, paul.id)
 			Line.create!(
 				order_id: pim_2.id,
-				cut_id: chuck.id,
-				units: 6
+				real_cut_id: real_cut.id,
+				units: 6,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(eye.id, paul.id)
 			Line.create!(
 				order_id: pim_2.id,
-				cut_id: eye.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(bottom.id, paul.id)
 			Line.create!(
 				order_id: pim_2.id,
-				cut_id: bottom.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(flank.id, paul.id)
 			Line.create!(
 				order_id: pim_2.id,
-				cut_id: flank.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
 			pim_2.update_attribute(:total, pim_2.to_total)
 			@log << "< Pim done"
@@ -951,10 +1007,12 @@ begin
 			animal_id: paul.id,
 			user_id: virginia.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(filet.id, paul.id)
 			Line.create!(
 				order_id: virginia_1.id,
-				cut_id: filet.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
 			virginia_1.update_attribute(:total, virginia_1.to_total)
 			@log << "< Virginia done"
@@ -971,10 +1029,12 @@ begin
 			animal_id: paul.id,
 			user_id: andrea.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(sirloin.id, paul.id)
 			Line.create!(
 				order_id: andrea_1.id,
-				cut_id: sirloin.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 			andrea_1.update_attribute(:total, andrea_1.to_total)
 			@log << "< Andrea done"
@@ -991,20 +1051,26 @@ begin
 			animal_id: paul.id,
 			user_id: james.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(eye.id, paul.id)
 			Line.create!(
 				order_id: james_1.id,
-				cut_id: eye.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(chuck.id, paul.id)
 			Line.create!(
 				order_id: james_1.id,
-				cut_id: chuck.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(offal.id, paul.id)
 			Line.create!(
 				order_id: james_1.id,
-				cut_id: offal.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 			james_1.update_attribute(:total, james_1.to_total)
 			@log << "< James done"
@@ -1021,25 +1087,33 @@ begin
 			animal_id: paul.id,
 			user_id: maura.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(stew.id, paul.id)
 			Line.create!(
 				order_id: maura_1.id,
-				cut_id: stew.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(brisket.id, paul.id)
 			Line.create!(
 				order_id: maura_1.id,
-				cut_id: brisket.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(ground.id, paul.id)
 			Line.create!(
 				order_id: maura_1.id,
-				cut_id: ground.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(top.id, paul.id)
 			Line.create!(
 				order_id: maura_1.id,
-				cut_id: top.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 			maura_1.update_attribute(:total, maura_1.to_total)
 			@log << "< Maura done"
@@ -1049,80 +1123,110 @@ begin
 			animal_id: paul.id,
 			user_id: sasha.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(flap.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: flap.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(ground.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: ground.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(porter.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: porter.id,
-				units: 3
+				real_cut_id: real_cut.id,
+				units: 3,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(ribeye.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: ribeye.id,
-				units: 3
+				real_cut_id: real_cut.id,
+				units: 3,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(cross.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: cross.id,
-				units: 4
+				real_cut_id: real_cut.id,
+				units: 4,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(offal.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: offal.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(t.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: t.id,
-				units: 3
+				real_cut_id: real_cut.id,
+				units: 3,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(stew.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: stew.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(shank.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: shank.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(fat.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: fat.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(top.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: top.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(rump.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: rump.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(sirloin.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: sirloin.id,
-				units: 4
+				real_cut_id: real_cut.id,
+				units: 4,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(porter.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: porter.id,
-				units: 7
+				real_cut_id: real_cut.id,
+				units: 7,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(tri.id, paul.id)
 			Line.create!(
 				order_id: sasha_1.id,
-				cut_id: tri.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
 			sasha_1.update_attribute(:total, sasha_1.to_total)
 			@log << "< Sasha done"
@@ -1139,15 +1243,19 @@ begin
 			animal_id: paul.id,
 			user_id: loren.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(skirt.id, paul.id)
 			Line.create!(
 				order_id: loren_1.id,
-				cut_id: skirt.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(offal.id, paul.id)
 			Line.create!(
 				order_id: loren_1.id,
-				cut_id: offal.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 			loren_1.update_attribute(:total, loren_1.to_total)
 
@@ -1156,15 +1264,19 @@ begin
 			animal_id: paul.id,
 			user_id: loren.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(ground.id, paul.id)
 			Line.create!(
 				order_id: loren_2.id,
-				cut_id: ground.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(tri.id, paul.id)
 			Line.create!(
 				order_id: loren_2.id,
-				cut_id: tri.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 			loren_2.update_attribute(:total, loren_2.to_total)
 			@log << "< Loren done"
@@ -1181,25 +1293,33 @@ begin
 			animal_id: paul.id,
 			user_id: vincent.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(ground.id, paul.id)
 			Line.create!(
 				order_id: vincent_1.id,
-				cut_id: ground.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(stew.id, paul.id)
 			Line.create!(
 				order_id: vincent_1.id,
-				cut_id: stew.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(ribeye.id, paul.id)
 			Line.create!(
 				order_id: vincent_1.id,
-				cut_id: ribeye.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(t.id, paul.id)
 			Line.create!(
 				order_id: vincent_1.id,
-				cut_id: t.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 			vincent_1.update_attribute(:total, vincent_1.to_total)
 			@log << "< Vinny done"
@@ -1216,10 +1336,12 @@ begin
 			animal_id: paul.id,
 			user_id: amy.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(top.id, paul.id)
 			Line.create!(
 				order_id: amy_1.id,
-				cut_id: top.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 			amy_1.update_attribute(:total, amy_1.to_total)
 			@log << "< Amy done"
@@ -1236,25 +1358,33 @@ begin
 			animal_id: paul.id,
 			user_id: lyra.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(ground.id, paul.id)
 			Line.create!(
 				order_id: lyra_1.id,
-				cut_id: ground.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(stew.id, paul.id)
 			Line.create!(
 				order_id: lyra_1.id,
-				cut_id: stew.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(top.id, paul.id)
 			Line.create!(
 				order_id: lyra_1.id,
-				cut_id: top.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(offal.id, paul.id)
 			Line.create!(
 				order_id: lyra_1.id,
-				cut_id: offal.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
 			lyra_1.update_attribute(:total, lyra_1.to_total)
 			@log << "< Lyra done"
@@ -1271,10 +1401,12 @@ begin
 			animal_id: paul.id,
 			user_id: ted.id
 		)
+		real_cut = RealCut.find_by_cut_id_and_animal_id(stew.id, paul.id)
 			Line.create!(
 				order_id: ted_1.id,
-				cut_id: stew.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 			ted_1.update_attribute(:total, ted_1.to_total)
 			@log << "< Ted done"
@@ -1291,10 +1423,12 @@ begin
 			animal_id: paul.id,
 			user_id: eli.id
 		) 
+		real_cut = RealCut.find_by_cut_id_and_animal_id(ribeye.id, paul.id)
 			Line.create!(
 				order_id: eli_1.id,
-				cut_id: ribeye.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 			eli_1.update_attribute(:total, eli_1.to_total)
 			@log << "< Eli done"
@@ -1311,15 +1445,19 @@ begin
 			animal_id: paul.id,
 			user_id: ashley.id
 		) 
+		real_cut = RealCut.find_by_cut_id_and_animal_id(ground.id, paul.id)
 			Line.create!(
 				order_id: ashley_1.id,
-				cut_id: ground.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(skirt.id, paul.id)
 			Line.create!(
 				order_id: ashley_1.id,
-				cut_id: skirt.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
 			ashley_1.update_attribute(:total, ashley_1.to_total)
 			@log << "< Ashley done"
@@ -1336,35 +1474,47 @@ begin
 			animal_id: paul.id,
 			user_id: laura.id
 		) 
+		real_cut = RealCut.find_by_cut_id_and_animal_id(brisket.id, paul.id)
 			Line.create!(
 				order_id: laura_1.id,
-				cut_id: brisket.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(short.id, paul.id)
 			Line.create!(
 				order_id: laura_1.id,
-				cut_id: short.id,
-				units: 2
+				real_cut_id: real_cut.id,
+				units: 2,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(porter.id, paul.id)
 			Line.create!(
 				order_id: laura_1.id,
-				cut_id: porter.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(ribeye.id, paul.id)
 			Line.create!(
 				order_id: laura_1.id,
-				cut_id: ribeye.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(skirt.id, paul.id)
 			Line.create!(
 				order_id: laura_1.id,
-				cut_id: skirt.id,
-				units: 1
+				real_cut_id: real_cut.id,
+				units: 1,
+				sale_price: real_cut.flat_price
 			)
+			real_cut = RealCut.find_by_cut_id_and_animal_id(ground.id, paul.id)
 			Line.create!(
 				order_id: laura_1.id,
-				cut_id: ground.id,
-				units: 3
+				real_cut_id: real_cut.id,
+				units: 3,
+				sale_price: real_cut.flat_price
 			)
 			laura_1.update_attribute(:total, laura_1.to_total)
 			@log << "< Laura done"

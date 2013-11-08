@@ -39,7 +39,7 @@ module Package::WeightAndPriceMethods
   # REVENUE
 
     def expected_revenue
-      price * expected_weight
+      line.sale_price * expected_weight
     end
 
     def real_revenue

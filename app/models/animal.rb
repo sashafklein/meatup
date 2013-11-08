@@ -32,7 +32,7 @@ class Animal < ActiveRecord::Base
                   :on_final_sale, :price_multiplier
                   
   has_many :orders
-  has_many :packages
+  has_many :packages, through: :lines
   has_many :real_cuts
   has_many :lines, through: :orders
   belongs_to :butcher
@@ -41,7 +41,7 @@ class Animal < ActiveRecord::Base
   
   after_create do 
     if !Rails.env.test?
-      create_packages!
+      create_real_cuts!
     end
   end
 
@@ -68,22 +68,10 @@ class Animal < ActiveRecord::Base
   ## Major Action Methods
   #################
 
-  def create_packages!
-    cuts.each{ |cut| create_cut_packages!(cut) }
-  end
-
-  def create_cut_packages!(cut)
-    raise AnimalError.new("Incomplete cut information! Cut: #{cut.inspect}") if cut.incomplete?
-
-    AnimalCut.new(cut, self).number_of_packages.times do 
-      create_package_for_cut!(animal_id: id, cut_id: cut.id, sold: false)
+  def create_real_cuts!
+    platonic_cuts.each do |cut|
+      RealCut.create_from(self, cut)
     end
-  end
-
-  def create_package_for_cut!(hash={})
-    return true if Package.create!(hash)
-      
-    raise AnimalError.new("Package failed to save! Attributes passed: #{hash}")
   end
 
   ## Minor Action Methods
@@ -126,6 +114,10 @@ class Animal < ActiveRecord::Base
   ##############
   def cuts
     AnimalCut.new(nil, self).all
+  end
+
+  def platonic_cuts
+    cuts
   end
 
   def sold_out_cuts
@@ -218,6 +210,10 @@ class Animal < ActiveRecord::Base
     meat_weight ||= weight * weight_ratio(:meat, :live)
   end
 
+  def weight_multiplier
+    1
+  end
+
   private
 
   def purchaser_ids
@@ -226,6 +222,10 @@ class Animal < ActiveRecord::Base
 
   def type?(string)
     animal_type == string
+  end
+
+  def sale
+    AnimalSale.new(self).sale
   end
 
 end
