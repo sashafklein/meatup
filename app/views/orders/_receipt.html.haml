@@ -1,38 +1,39 @@
-- if @order.not_paid?
-  - @order.lines.each do |l|
-    %tr
-      %td= l.cut.name
-      %td= l.notes
-      %td= present_weight(l.expected_weight)
-      %td= number_to_currency(l.total)
-  - if @order.user.apology
-    %tr
-      %td
-      %td
-      %td Saved by Discount:
-      %td
-        %em= "- #{number_to_currency(@order.discounted)}!"
+// Header
+%tr
+  %th{:colspan => "6"}
+    = @order.timer_stamp(@timer_params)
+    = @order.receipt_stamp
+    = render 'pay_to'
+
+// Informational Rows
+= @order.header_row('')
+= @order.customer_name_row
+= @order.animal_name_row
+= @order.bill_status_row
+= @order.apology_discount_row
+= @order.header_row('')
+
+// Table
+%tr
+  %th.details Cut
+  %th.details Notes
+  %th.details Discounted
+  %th.details{:width => "15%"}= @order.weight_kind
+  %th.details{:width => "15%"}= @order.price_note
+
+- @order.lines.each do |l|
   %tr
-    %td
-    %td
-    %td
-      %strong= present_weight(@order.poundage)
-    %td
-      %b= "Downpayment: #{number_to_currency(0.8 * @order.total)}"
-- else
-  - @order.lines.each do |l|
-    %tr
-      %td= l.cut.name
-      %td= l.notes
-      - if l.weight_diff
-        %td= present_weight(l.weight_diff) 
-      - else
-        %td Unknown
-      %td= number_to_currency(l.total)
-  %tr
-    %td
-    %td
-    %td
-      %strong= present_weight(@order.poundage)
-    %td
-      %b= "Remaining: #{number_to_currency(@order.get_difference)}"
+    %td= l.cut.name
+    %td= l.notes
+    %td= l.discounted
+    %td= l.weight
+    %td= l.to_pay
+
+// Total
+%tr
+  %td
+  %td
+  %td
+  %td
+    %strong= present_weight(@order.poundage)
+  %td= @order.to_pay

@@ -1,0 +1,10 @@
+%strong{ style: "font-size:150%; font-weight:normal" }
+  Pay to the order of
+  %br
+  %u{ style: "font-weight:bold;" }= "#{@order.ranch.name}, c/o MeatUp"
+  #purveyor_of
+    Purveyor of
+  %b High Class Viandes, Game and Forcemeats
+  %br
+= @order.ranch.full_address
+%u= localize(@order.created_at, :format => ("on %d, %B, %Y") )

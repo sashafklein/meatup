@@ -70,7 +70,7 @@ class Animal < ActiveRecord::Base
 
   def create_real_cuts!
     platonic_cuts.each do |cut|
-      RealCut.create_from(self, cut)
+      RealCut.create_from!(self, cut)
     end
   end
 
@@ -78,7 +78,7 @@ class Animal < ActiveRecord::Base
   ######################
 
   def all_sold?
-    packages.unsold.size == 0
+    real_cuts.sum(:expected_units) <= real_cuts.sum(:sold_units)
   end
 
   def close_animal
@@ -113,7 +113,7 @@ class Animal < ActiveRecord::Base
   ## Cut Methods
   ##############
   def cuts
-    AnimalCut.new(nil, self).all
+    Cut.where(animal_type: animal_type)
   end
 
   def platonic_cuts
@@ -121,27 +121,32 @@ class Animal < ActiveRecord::Base
   end
 
   def sold_out_cuts
-    AnimalCut.new(nil, self).sold_out
+    real_cuts.sold_out
   end
 
   def available_cuts
-    AnimalCut.new(nil, self).available
+    real_cuts.available
   end
 
   def sold_out_of?(cut)
-    AnimalCut.new(cut, self).sold_out?
+    real = real(cut)
+    real.expected_units <= real.sold_units
   end 
+
+  def real(cut)
+    real_cuts.find_by_cut_id(cut.id)
+  end
+
+  def real_by_name(name)
+    real(Cut.find_by_name(name))
+  end
 
 
   ## Package Methods
   ##################
 
   def packages_for(cut)
-    AnimalCut.new(cut, self).packages
-  end
-
-  def sold(cut)
-    packages_for(cut).where(:sold => true)
+    real(cut).packages
   end
 
   def check_for_sold

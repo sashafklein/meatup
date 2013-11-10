@@ -19,12 +19,20 @@ class AnimalSale
     (100 - (100 * price_multiple)).to_i
   end
 
+  def incentive_message
+    "#{incentive_type}: EXTRA #{percent_discounted}% OFF!"
+  end
+
+  def incentive_type
+    type.split("_").map(&:upcase).join(" ")
+  end
+
   def opening?
     type == 'opening_sale'
   end
 
   def active?
-    type != 'no_sale'
+    type != 'none'
   end
 
   private

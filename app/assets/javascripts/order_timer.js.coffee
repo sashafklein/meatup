@@ -6,12 +6,6 @@ $ ->
   path = $('#timer').data 'path'
   left = 300 - (now - start)
 
-  if (left < 1)
-    clearInterval clock
-    $("#timer").html("TIME OUT")
-    alert "You ran out of time to pay. Please place your order again."
-    location = redirect
-
   seconds = left % 60
   minutes = (left - (seconds)) / 60
   clock = self.setInterval(->

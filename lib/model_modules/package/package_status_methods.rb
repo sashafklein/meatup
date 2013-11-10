@@ -3,6 +3,7 @@ module Package::PackageStatusMethods
   ## CLASS METHODS
   module ClassMethods
     def with_order_status(status)
+      return [] unless first
       first.with_order_status(status)
     end
 

@@ -9,19 +9,19 @@ class AnimalCalc
   end
 
   def downpaid_total
-    packages.downpaid.map(&:expected_revenue).sum
+    packages.downpaid.sum(&:expected_revenue)
   end
 
   def downpaid_pounds
-    packages.downpaid.map(&:expected_weight).sum
+    packages.downpaid.sum(&:expected_weight)
   end
 
   def paid_total
-    packages.paid.map(&:real_revenue).sum
+    packages.paid.sum(&:real_revenue)
   end
 
   def paid_pounds
-    packages.paid.map(&:fallback_weight).sum
+    packages.paid.sum(&:fallback_weight)
   end
 
   def paid_orders
@@ -29,7 +29,7 @@ class AnimalCalc
   end
 
   def revenue_made
-    packages.sold.map(&:fallback_revenue).sum || 0
+    packages.sold.sum(&:fallback_revenue) || 0
   end
 
   def revenue_possible
@@ -57,15 +57,15 @@ class AnimalCalc
   end
 
   def pounds_total
-    packages.map(&:expected_weight).sum
+    meat_weight
   end
 
   def pounds_sold
-    packages.sold.map(&:fallback_weight).sum
+    packages.sum(&:fallback_weight)
   end
 
   def pounds_left
-    packages.unsold.map(&:fallback_weight).sum
+    meat_weight - pounds_sold
   end 
 
   def percent_left
@@ -73,11 +73,15 @@ class AnimalCalc
   end  
 
   def best_lb_estimate
-    packages.map(&:fallback_weight).sum
+    packages.sum(&:fallback_weight)
   end
 
   def expected_margins 
     revenue_possible - wholesale_cost
+  end
+
+  def meat_weight
+    weight * weight_ratio(:meat, :live)
   end
 
   ## External logic accessors

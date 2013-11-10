@@ -9,7 +9,7 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
   end
 
   def show
-    @order = Order.find(params[:id])
+    @order = Order.find(params[:id]).decorate
     @order.apply_apology_discount! if @order.user.apology
 
     @timer_params = generate_timer_params
@@ -20,7 +20,10 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
     @order.lines.build
     @animal = Animal.find(params[:animal_id])
 
+    @available = RealCutDecorator.decorate_collection @animal.available_cuts.sort_by(&:savings).reverse
+    @sold_out  = RealCutDecorator.decorate_collection @animal.sold_out_cuts
     @sale = AnimalSale.new(@animal).sale
+    
     if params[:rolled]
       flash[:error] = "You ran out of time, and your order has been rolled back." 
     elsif @sale.message.present?
@@ -79,12 +82,10 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
 
     def generate_timer_params
       { 
-        data: {
-          start: @order.created_at.to_i, 
-          now: Time.now.to_i, 
-          path: rollback_order_path(@order), 
-          redirect: new_animal_order_path(@order.animal, rolled: true)
-        }
+        start: @order.created_at.to_i, 
+        now: Time.now.to_i, 
+        path: rollback_order_path(@order), 
+        redirect: new_animal_order_path(@order.animal, rolled: true)
       }
     end
 

@@ -27,11 +27,14 @@ class Package < ActiveRecord::Base
 
   delegate   :order, :notes, to: :line
   delegate   :animal, :cut, to: :real_cut
+  delegate   :user, to: :order
 
   before_update :to_true
 
   scope :sold, -> { where(:sold => true) }
   scope :unsold, -> { where(:sold => false) }
+  scope :weighed, -> { where('true_weight IS DISTINCT FROM NULL') }
+  scope :unweighed, -> { where(true_weight: nil) }
 
   validates :real_cut_id, presence: :true
 
@@ -41,7 +44,11 @@ class Package < ActiveRecord::Base
   end
 
   def cut_siblings
-    animal.packages.where(:cut_id => cut.id)
+    real_cut.packages
+  end
+
+  def expected_weight
+    real_cut.weight
   end
 
   def line_siblings
@@ -52,13 +59,9 @@ class Package < ActiveRecord::Base
   	line_siblings.to_a
   end
 
-  def user
-    order.user
-  end
-
   def identical_sold
-    line_item_ids = animal.lines.where(notes: p.notes).pluck(:id)
-    animal.packages.sold.where(line_id: line_item_ids)
+    line_item_ids = real_cut.lines.where(notes: line.notes).pluck(:id)
+    cut_siblings.where(line_id: line_item_ids)
   end
 
   def to_true

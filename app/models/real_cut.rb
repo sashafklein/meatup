@@ -4,13 +4,26 @@ class RealCut < ActiveRecord::Base
   belongs_to :cut
   belongs_to :animal
   has_many :packages
+  has_many :lines
 
-  delegate :name, :comp, to: :cut
-  delegate :sale, to: :animal
+  scope :sold_out,  -> { where('expected_units <= sold_units') }
+  scope :available, -> { where('expected_units > sold_units') }
+  scope :touched,   -> { where('sold_units > ?', 0) }
+
+  delegate :name, :comp, :description,
+           to: :cut
+
+  delegate :sale, 
+           to: :animal
+
+  delegate :units_left, :units_total, 
+           :pounds_left, :pounds_total, :pounds_expected, :pounds_sold,
+           :revenue_left, :revenue_total, :revenue_expected, :revenue_sold,
+           to: :calculator
 
   class RealCutError < StandardError; end
 
-  def self.create_from(a, c)
+  def self.create_from!(a, c)
     raise RealCutError.new("Cut #{c.name} has a 0 package weight") if c.package_weight.zero?
     create!(
       animal_id: a.id,
@@ -21,6 +34,14 @@ class RealCut < ActiveRecord::Base
     )
   end
 
+  def discounted?
+    sale.active? && cut.incentive?
+  end
+
+  def sale_message
+    sale.incentive_message
+  end
+
   def list_price
     flat_price * sale_mult
   end
@@ -29,32 +50,16 @@ class RealCut < ActiveRecord::Base
     raw_savings > 0 ? raw_savings : 0
   end
 
-  def units_left
-    units_expected - units_sold
+  def calculator
+    CutCalc.new(self)
   end
 
-  def pounds_expected
-    weight * units_expected
+  def prep_options
+    PrepOption.new(cut, animal).order_list
   end
 
-  def revenue_expected
-    weight * flat_price * units_expected
-  end
-
-  def pounds_sold
-    lines.map(&:pounds).sum
-  end
-
-  def revenue_sold
-    lines.map(&:revenue).sum
-  end
-
-  def pounds_left
-    weight * units_left
-  end
-
-  def revenue_left
-    pounds_left * flat_price
+  def available
+    (0..units_left).to_a
   end
 
   private
@@ -64,31 +69,10 @@ class RealCut < ActiveRecord::Base
   end
 
   def raw_savings
-    1 - (list_price/comp_cents)
+    1 - (list_price / comp_cents)
   end
 
   def comp_cents
     100 * comp
   end
-
-  def lbs
-    weight
-  end
-
-  def units_sold
-    sold_units
-  end
-
-  def units_expected
-    expected_units
-  end
-
-  def units_total
-    units_expected
-  end
-
-  def lines
-    Line.where(real_cut_id: id)
-  end
-
 end

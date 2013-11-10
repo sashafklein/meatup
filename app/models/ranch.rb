@@ -87,4 +87,8 @@ class Ranch < ActiveRecord::Base
     send "#{animal_type}_fixed"
   end
 
+  def full_address
+    [address, city, state].join(", ")
+  end
+
 end

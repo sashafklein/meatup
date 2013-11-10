@@ -1,9 +1,6 @@
 - provide(:title, 'Your Order')
 
 %table.receipt_display
-  = render "receipt_header"
-  %tbody
-    = render "receipt_basic_info"
-    = render "receipt"
-    = render 'stripe' if @order.incomplete?
+  = render "receipt"
+  = render 'stripe' if @order.status < 2
 = render 'receipt_notes'

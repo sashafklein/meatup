@@ -1,17 +1,11 @@
 %tr
-  %td
-    = form.hidden_field :cut_id, value: item.id
-    = form.hidden_field :sale_price, value: item.list_price
-    - if item.discounted?
-      #on_sale{ title: item.description }
-        = item.name
-        %strong.sale_note= item.sale_message
-    - else
-      #cut_name{ title: item.description }= item.name
-  %td= form.select :notes, item.prep_options
-  %td= form.select :units, item.availability, {}, :class => "unit_select js-package"
-  %td.js-weight{ data: { weight: item.package_weight } }= present_weight(item.package_weight)
-  %td.js-lb-price{ :'data-lb-price' => item.list_price }= number_to_currency(item.list_price)
+  = form.hidden_field :real_cut_id, value: item.id
+  = form.hidden_field :sale_price, value: item.list_price
+  %td= item.name_cell
+  %td= item.prep_select(form)
+  %td= form.select :units, item.available, {}, :class => "unit_select js-package"
+  %td.js-weight{ data: { weight: item.weight } }= item.d_weight
+  %td.js-lb-price{ :'data-lb-price' => item.d_list_price }= item.list_price_money
   %td.js-lbs
   %td.js-price
-  %td.sav_content{ class: savings_class(item.savings) }= display_savings(item.savings)
+  %td.sav_content{ class: item.d_savings_class }= item.d_savings

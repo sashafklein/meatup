@@ -23,7 +23,24 @@ class Line < ActiveRecord::Base
 
   after_create :create_packages!
 
+  scope :weighed, -> { merge(Package.weighed) }
+  scope :unweighed, -> { merge(Package.unweighed) }
+
   class LineError < StandardError; end
+
+  def self.create_from_cleaned!(new_lines, order)
+    new_lines.each{ |l| order.lines.create!(l) }
+  end
+
+  def rollback!
+    unless real_cut.update_attributes!(sold_units: real_cut.sold_units - units)
+      raise LineError.new("The real cut failed to update sold units! RealCut: #{real_cut.inspect}")
+    end
+
+    unless packages.destroy_all
+      raise LineError.new("The packages were not successfully destroyed! Line: #{inspect}")
+    end
+  end
 
   def create_packages!
     units.times do
@@ -53,12 +70,28 @@ class Line < ActiveRecord::Base
     real_weight ? expected_weight - real_weight : nil
   end
 
+  def revenue
+    weighed? ? weighed_revenue : unweighed_revenue
+  end
+
   def pounds
+    weighed? ? weighed_pounds : unweighed_pounds
+  end
+
+  def unweighed_pounds
     units * real_cut.weight
   end
 
-  def revenue
-    sale_price * units * real_cut.weight
+  def weighed_pounds
+    packages.sum(:true_weight)
+  end
+
+  def unweighed_revenue
+    sale_price * unweighed_pounds
+  end
+
+  def weighed_revenue
+    sale_price * weighed_pounds
   end
 
   def price
@@ -72,5 +105,9 @@ class Line < ActiveRecord::Base
 
   def has_same_cut_and_notes_as(item)
     cut == item.cut && notes == item.notes
+  end
+
+  def weighed?
+    packages.pluck(:true_weight).all?
   end
 end
