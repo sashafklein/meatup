@@ -34,11 +34,13 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
 
   def create
     # To not save lines without any associated packages
-    lines = params[:order].delete :lines_attributes
+    line_attrs = params[:order].delete(:lines_attributes)
+    lines = Line.from_attrs(line_attrs)
+
     @order = Order.new(params[:order])
 
     respond_to do |format|
-      if @order.save_with_lines(lines)
+      if @order.save_with_lines!(lines)
       
         format.html { redirect_to @order}
         format.json { render json: @order, status: :created, location: @order }

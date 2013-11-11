@@ -17,7 +17,7 @@ class AnimalCalc
   end
 
   def paid_total
-    packages.paid.sum(&:real_revenue)
+    packages.paid.sum(&:fallback_revenue)
   end
 
   def paid_pounds
@@ -29,7 +29,7 @@ class AnimalCalc
   end
 
   def revenue_made
-    packages.sold.sum(&:fallback_revenue) || 0
+    orders.sum(:total)
   end
 
   def revenue_possible

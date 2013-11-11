@@ -36,14 +36,18 @@ class Order < ActiveRecord::Base
 
   class OrderError < StandardError; end
 
-  def save_with_lines(new_lines)
+  def save_with_lines!(new_lines)
     if save!
-      cleaned_new_lines = new_lines.map(&:last).reject{ |l| l[:units].to_i == 0 }
+      cleaned_new_lines = new_lines.reject{ |l| l.units == 0 }
       Line.create_from_cleaned!(cleaned_new_lines, self)
     else
       raise OrderError.new "Order failed to save! Order: #{self.inspect}"
     end
-    update_attribute(:total, make_total)
+  end
+
+  def self.create_from_lines!(user_id, animal_id, lines)
+    order = Order.new(user_id: user_id, animal_id: animal_id)
+    order.save_with_lines!(lines)
   end
 
   def rollback!
@@ -106,6 +110,10 @@ class Order < ActiveRecord::Base
 
   def increment_status!
     update_attribute(:status, status + 1)
+  end
+
+  def update_total!
+    update_attribute(:total, make_total)
   end
 
 end

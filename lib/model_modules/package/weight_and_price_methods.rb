@@ -43,7 +43,7 @@ module Package::WeightAndPriceMethods
     end
 
     def real_revenue
-      weighed? ? price * true_weight : 0
+      price * true_weight
     end
 
     def fallback_revenue

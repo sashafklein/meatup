@@ -87,7 +87,7 @@ end
 
 def create_some_cuts
   return false if  @ground.present?
-  %w(ground london stew filet).map(&:to_sym).each do |cut_factory|
+  %w(ground london stew filet bacon).map(&:to_sym).each do |cut_factory|
     instance_variable_set "@#{cut_factory}", FactoryGirl.create(cut_factory)
   end
 end

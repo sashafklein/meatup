@@ -30,121 +30,117 @@ require 'spec_helper'
 describe Animal do
 
   before(:all) do
-    create_connected_paul_ryan
     create_some_cuts
+    create_connected_small
   end
 
-  describe "create_packages" do
+  describe "real_cut creation" do
 
-    it "creates the appropriate number of packages" do
-      expect { @paul.create_packages! }.to change{ Package.count }.by(68)
+    it "builds one real_cut per associated cut" do
+      RealCut.count.should == Cut.count - 1
+      @small.real_cuts.count.should == AnimalType.new('cow').cuts.count
     end
 
-    it "prices the packages appropriately" do
-      @paul.create_packages!
+    it "accurately builds out attributes" do
+      real_ground = @small.real_by_name('Ground Beef')
+      real_ground.weight.should == 1
+      real_ground.flat_price.should == 300 #cents, $2 * 1.5 price multiple
+      real_ground.list_price.should == OpeningSale::PRICE_MULTIPLE * real_ground.flat_price
+      
+      @small.update_attribute(:conduct_opening_sale, false)
+      real_ground.reload.list_price.should == real_ground.flat_price
+      
+      real_ground.expected_units.should == 50
+      real_ground.sold_units.should == 0
+      real_ground.packages.should == []
+    end
 
-      ground_packages = Package.where(cut_id: @ground.id)
-      london_packages = Package.where(cut_id: @london.id)
-
-      Package.where(cut_id: @filet.id).size.should == 3
-      Package.where(cut_id: @stew.id).size.should == 12
-      london_packages.size.should == 3
-      ground_packages.size.should == 50
-
-      ground_packages.reject{ |p| p.price == 2 }.size.should == 0
-      london_packages.first.price.should == 4
+    it "does not create packages" do
+      @small.packages.count.should == 0
     end
   end
 
   describe "#wholesale_cost" do
     it "chooses the right cost" do
-      @paul.create_packages!
-
-      @paul.wholesale_cost.ceil.to_i.should == 140
+      @small.wholesale_cost.ceil.to_i.should == 140
     end
   end
 
   describe '#total_revenue' do
     it "calculates correctly" do
-      @paul.create_packages!
-      @paul.packages.where(cut_id: @filet.id).update_all(sold: true, true_weight: @filet.package_weight)
+      order = @small.orders.create(user_id: @sasha.id)
+      
+      real_filet = @small.real_by_name("Filet Mignon")
+      real_filet.sold_units.should == 0
+      real_filet.packages.should == []
 
-      @paul.reload.revenue_made.should == 180
+      total_units = real_filet.expected_units
+      sale_price = real_filet.list_price
 
-      Package.any_instance.stub(:weighted?).and_return(true)
-      @paul.packages.unsold.update_all(sold: true)
-      @paul.reload.revenue_made.should == 180
+      line = Line.new(real_cut_id: real_filet.id, sale_price: sale_price, units: total_units)
+      order.save_with_lines!([line])
+
+      real_filet.reload.sold_units.should == total_units
+      real_filet.packages.count.should == total_units
+
+      order.update_attribute(:total, order.make_total)
+
+      @small.reload.revenue_made.should == total_units * sale_price * real_filet.weight
+      real_filet.list_price.should == sale_price * (1 / OpeningSale::PRICE_MULTIPLE) # The animal is more than 20% sold
     end
   end
 
   describe "finer-grain money calcs" do
     describe '#profit' do
       it "subtracts revenue from total cost" do
-        @paul.create_packages!
-        @paul.profit.floor.to_i.should == -140.0
-        @paul.packages.where(cut_id: @filet.id).update_all(sold: true, true_weight: @filet.package_weight)
-        @paul.reload.profit.to_i.should == 40
+        @small.profit.floor.to_i.should == -140.0
+        real_filet = @small.real(@filet)
+        new_line = Line.new(real_cut_id: real_filet.id, units: 1)
+        Order.create_from_lines!(@sasha.id, @small.id, [new_line])
+        
+        @small.reload.profit.to_i.should == -140.0 + (real_filet.weight * real_filet.list_price)
       end
     end
   end
 
   describe 'AnimalCalc methods' do
     before do
-     @tiny = FactoryGirl.create(:tiny)
-     
-     @tiny.ranch = @miller
-     @tiny.stub(:butcher).and_return(OpenStruct.new({ real_final_price: 0 }))
-
-     create_some_cuts
-     @tiny.create_packages!
+     @small.stub(:butcher).and_return(OpenStruct.new({ real_final_price: 0 }))
     end
 
     describe 'status-dependent methods' do
       before do
-        order = @tiny.orders.create(status: 1)
-        order.lines.create(units: 2, cut_id: @ground.id)
-        order2 = @tiny.orders.create(status: 2)
-        order2.lines.create(units: 3, cut_id: @ground.id)
+        @real_ground = @small.real(@ground)
+        @starting_list = @real_ground.list_price
+        order = @small.orders.create(status: 1)
+        order.lines.create(units: 2, real_cut_id: @real_ground.id)
+        order2 = @small.orders.create(status: 2)
+        order2.lines.create(units: 3, real_cut_id: @real_ground.id)
       end
 
       describe 'downpaid_total' do
         it 'calculates the total of downpaid orders only' do
-          expected_total = 2 * @ground.package_weight * @ground.price
-          @tiny.downpaid_total.should == expected_total
+          expected_total = 2 * @real_ground.list_price * @real_ground.weight
+          @small.downpaid_total.should == expected_total
         end
       end
 
       describe 'paid_total' do
         it 'calculates the total of paid orders only' do
-          expected_total = 3 * @ground.package_weight * @ground.price
+          expected_total = 3 * @real_ground.list_price * @real_ground.weight
+          @small.paid_total.should == expected_total
         end
       end
 
       describe 'paid_orders' do
         it 'returns a collection of only the orders with paid status' do
-          @tiny.paid_orders.count.should == 1
-          @tiny.paid_orders.first.lines.first.units.should == 3
+          @small.paid_orders.count.should == 1
+          @small.paid_orders.first.lines.first.units.should == 3
         end
       end
 
       describe 'revenue_made' do
-        it "returns calculates unknown true_weights as expected_weight" do
-          @tiny.packages.sold.count.should == 5
-          @tiny.revenue_made.should == 10.0
-
-          variable_package = @tiny.packages.sold.first
-
-          variable_package.update_attributes(expected_weight: 1)
-          @tiny.revenue_made.should == 10.0 # true_weight has precedence
-          
-          variable_package.update_attributes(true_weight: nil)
-          @tiny.revenue_made.should == 9.0 # falls back to expeted
-
-          variable_package.update_attributes(expected_weight: 4.0)
-          @tiny.revenue_made.should == 12.0 # another example of the above
-        end
-
-        it "returns total revenue if all weights are updated" do
+        xit "returns total revenue if all weights are updated" do
           @tiny.packages.sold.update_all(true_weight: @ground.package_weight)
           @tiny.revenue_made.should == 5 * @ground.package_weight * @ground.price
         end
@@ -200,12 +196,12 @@ describe Animal do
 
   # create some cuts is in spec helper
 
-  def create_connected_paul_ryan
+  def create_connected_small
     @sasha = FactoryGirl.create(:sasha)
     @host = FactoryGirl.create(:host)
     @miller = FactoryGirl.create(:miller, user: @sasha)
     @sanders = FactoryGirl.create(:butcher)
-    @paul = FactoryGirl.create(:paul_ryan, host: @host, ranch: @miller, butcher: @sanders)
+    @small = FactoryGirl.create(:small, host: @host, ranch: @miller, butcher: @sanders, price_multiplier: 1.5, conduct_opening_sale: true)
   end
 
 end

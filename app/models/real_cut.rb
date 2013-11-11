@@ -62,6 +62,10 @@ class RealCut < ActiveRecord::Base
     (0..units_left).to_a
   end
 
+  def individual_total
+    weight * flat_price
+  end
+
   private
 
   def sale_mult

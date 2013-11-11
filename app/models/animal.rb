@@ -40,9 +40,7 @@ class Animal < ActiveRecord::Base
   belongs_to :host
   
   after_create do 
-    if !Rails.env.test?
-      create_real_cuts!
-    end
+    create_real_cuts!
   end
 
   class AnimalError < StandardError; end

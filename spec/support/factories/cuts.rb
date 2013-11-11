@@ -50,5 +50,15 @@ FactoryGirl.define do
       description "The classic roasting/braising/BBQ/Passover cut from just below the chuck at the front of the animal."
       savings 5
     end
+
+    factory :bacon do
+      name "Bacon"
+      price 9
+      animal_type "pig"
+      comp 12
+      package_weight 1
+      percent 10
+      description "You know it. You love it."
+    end
   end
 end

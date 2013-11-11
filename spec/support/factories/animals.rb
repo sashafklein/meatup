@@ -7,7 +7,7 @@ FactoryGirl.define do
     weight        100
     no_sales      true
     conduct_opening_sale  false
-    cow_mult      1
+    price_multiplier  1
 
     trait :with_host do
       # host host
