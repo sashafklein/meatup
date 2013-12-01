@@ -28,7 +28,7 @@ class Butcher < ActiveRecord::Base
   include Locatable
   
   validates :name, presence: true
-  validate :location_complete
+  validate :location_sufficient
 
   def create!(opts={})
     binding.pry

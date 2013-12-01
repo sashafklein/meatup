@@ -31,7 +31,7 @@ class Ranch < ActiveRecord::Base
 
   include Locatable
 
-  validate :location_complete
+  validate :location_sufficient
 
   def has?(animal_type)
     info_for(animal_type).present?

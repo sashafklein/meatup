@@ -20,7 +20,7 @@ class Host < ActiveRecord::Base
 
   include Locatable
 
-  validate :location_complete
+  validate :location_sufficient
   
   def name
   	user.name

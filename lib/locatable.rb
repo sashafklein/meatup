@@ -1,8 +1,8 @@
 module Locatable
   
-  delegate :street_address, :phone_number, :zip, :city, :state,
-           :phone, :address,
-           to: :location
+  # delegate :street_address, :phone_number, :zip, :city, :state,
+           # :phone, :address,
+           # to: :location
 
   def location
     Location.find_by_id(self.location_id)
@@ -14,8 +14,8 @@ module Locatable
 
   private
 
-  def location_complete
-    unless location.complete?
+  def location_sufficient
+    unless location.sufficient?
       errors[:location] << "Location is incomplete for #{self.inspect}!"
     end
   end

@@ -16,6 +16,10 @@ class Location < ActiveRecord::Base
     attrs.all?{ |a| send("#{a}_valid?") }
   end
 
+  def sufficient?
+    some_attribute_present?
+  end
+
   private
 
   def street_address_valid?
