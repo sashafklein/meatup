@@ -45,13 +45,10 @@ class Animal < ActiveRecord::Base
 
   class AnimalError < StandardError; end
 
-  delegate  :downpaid_total, :downpaid_pounds, :paid_total, :paid_pounds, :paid_orders, :revenue_made, 
-            :revenue_possible, :wholesale_cost, :profit, :left_to_make, :avg_price, :avg_weight, :pounds_total, 
-            :pounds_sold, :pounds_left, :percent_left , :best_lb_estimate, :expected_margins , :ranch_price, 
-            :weight_ratio, :fixed_price, :butcher_final_price, 
+  delegate  :downpaid_total, :downpaid_pounds, :paid_total, :paid_pounds, :paid_orders, 
+            :revenue_made, :revenue_possible, :profit, :best_lb_estimate, :expected_margins, 
+            :pounds_sold, :pounds_left, :percent_left, :weight_ratio, :butcher_final_price, 
             to: :calculator
-
-  delegate :available_for_sale, :sold_out_for_sale, to: :bundle_for
 
   before_create { animal_type.downcase! }
 
@@ -75,30 +72,10 @@ class Animal < ActiveRecord::Base
   ## Minor Action Methods
   ######################
 
-  def all_sold?
-    real_cuts.sum(:expected_units) <= real_cuts.sum(:sold_units)
-  end
-
-  def close_animal
+  def close_animal!
     update_attribute(:open, false)
     notify_users_of_animal_close
   end
-
-  def notify_users_of_animal_close
-    UserMailer.animal_close(self).deliver if !host.user.has_meatup_address?
-    User.admins.reject(&:has_meatup_address?).each { |u| UserMailer.animal_overview(self).deliver }
-    UserMailer.butcher_specs(self).deliver unless butcher.user.has_meatup_address?
-  end
-
-  def start_final_sale!
-    AnimalSale.new(animal, 'final').start_sale!
-  end
-
-  def finalize
-    return false if finalized?
-    update_attribute(:finalized, true)
-  end
-
   
   ## Bundler
   ################
@@ -110,12 +87,8 @@ class Animal < ActiveRecord::Base
 
   ## Cut Methods
   ##############
-  def cuts
-    Cut.where(animal_type: animal_type)
-  end
-
   def platonic_cuts
-    cuts
+    Cut.where(animal_type: animal_type)
   end
 
   def sold_out_cuts
@@ -139,27 +112,22 @@ class Animal < ActiveRecord::Base
     real(Cut.find_by_name(name))
   end
 
+  def sold_cuts
+    real_cuts.touched
+  end
 
   ## Package Methods
   ##################
 
-  def packages_for(cut)
-    real(cut).packages
-  end
-
-  def check_for_sold
-    close_animal if all_sold?
+  def check_for_sold!
+    close_animal! if all_sold?
   end
 
   ## User Methods
   ###################
 
-  def purchasers
-    User.where(id: purchaser_ids)
-  end
-
-  def hanging_weight
-    weight * weight_ratio("hanging", "meat")
+  def unweighed?
+    !hanging_weight || !meat_weight
   end
 
   def mult
@@ -167,10 +135,6 @@ class Animal < ActiveRecord::Base
   end
 
   def harvest_date
-    "TBD"
-  end
-
-  def butchery_date
     "TBD"
   end
 
@@ -182,35 +146,11 @@ class Animal < ActiveRecord::Base
     AnimalCalc.new(self)
   end
 
-  def all_finalized
-    packages.count == packages.complete.count + packages.paid.count
-  end
-
   ## MISC
   #######################
 
   def meat_type
     AnimalType.new(animal_type).meat
-  end
-
-  def cow?
-    type? "cow"
-  end
-
-  def pig?
-    type? "pig"
-  end
-
-  def lamb?
-    type? "lamb"
-  end
-
-  def goat?
-    type? "goat"
-  end
-
-  def calculate_meat_weight
-    meat_weight ||= weight * weight_ratio(:meat, :live)
   end
 
   def weight_multiplier
@@ -230,5 +170,19 @@ class Animal < ActiveRecord::Base
   def sale
     AnimalSale.new(self).sale
   end
+  
+  def all_sold?
+    real_cuts.sum(:expected_units) <= real_cuts.sum(:sold_units)
+  end
 
+  def notify_users_of_animal_close
+    UserMailer.animal_close(self).deliver if !host.user.has_meatup_address?
+    User.admins.reject(&:has_meatup_address?).each { |u| UserMailer.animal_overview(self).deliver }
+    UserMailer.butcher_specs(self).deliver unless butcher.user.has_meatup_address?
+  end
+
+
+  def hanging_weight
+    weight * weight_ratio("hanging", "live")
+  end
 end

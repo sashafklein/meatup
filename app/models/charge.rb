@@ -20,7 +20,6 @@ class Charge
 
   def update_order_status!
     order.increment_status!
-    user.end_apology
     if order.paid?
       order.update_attribute(:total, amount)
     end
@@ -47,7 +46,7 @@ class Charge
   private
 
   def close_animal_if_done!
-    animal.check_for_sold if animal.open
+    animal.check_for_sold! if animal.open
   end
 
   def description

@@ -11,7 +11,6 @@
 #  remember_token  :string(255)
 #  admin           :boolean          default(FALSE)
 #  zip             :string(255)
-#  apology         :boolean
 #  is_host         :boolean          default(FALSE)
 #  is_rancher      :boolean          default(FALSE)
 #  is_butcher      :boolean          default(FALSE)

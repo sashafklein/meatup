@@ -10,7 +10,6 @@ before_filter :correct_user, only: [:show, :edit, :update, :destroy]
 
   def show
     @order = Order.find(params[:id]).decorate
-    @order.apply_apology_discount! if @order.user.apology
 
     @timer_params = generate_timer_params
   end

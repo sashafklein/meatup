@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: real_cuts
+#
+#  id             :integer          not null, primary key
+#  animal_id      :integer
+#  cut_id         :integer
+#  flat_price     :integer
+#  weight         :float
+#  expected_units :integer
+#  sold_units     :integer          default(0)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
+
 class RealCut < ActiveRecord::Base
   attr_accessible :animal_id, :cut_id, :flat_price, :weight, :expected_units, :sold_units
 
@@ -16,9 +31,7 @@ class RealCut < ActiveRecord::Base
   delegate :sale, 
            to: :animal
 
-  delegate :units_left, :units_total, 
-           :pounds_left, :pounds_total, :pounds_expected, :pounds_sold,
-           :revenue_left, :revenue_total, :revenue_expected, :revenue_sold,
+  delegate :units_left, :units_total, :revenue_expected, :pounds_sold,
            to: :calculator
 
   class RealCutError < StandardError; end
@@ -50,20 +63,8 @@ class RealCut < ActiveRecord::Base
     raw_savings > 0 ? raw_savings : 0
   end
 
-  def calculator
-    CutCalc.new(self)
-  end
-
   def prep_options
     PrepOption.new(cut, animal).order_list
-  end
-
-  def available
-    (0..units_left).to_a
-  end
-
-  def individual_total
-    weight * flat_price
   end
 
   private
@@ -78,5 +79,9 @@ class RealCut < ActiveRecord::Base
 
   def comp_cents
     100 * comp
+  end
+
+  def calculator
+    CutCalc.new(self)
   end
 end

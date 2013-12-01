@@ -59,16 +59,4 @@ class AnimalSale
     NoSale.new(animal)
   end
 
-  # def unsold_package_bundles
-  #   animal.available_cuts.map{ |cut| animal.packages_for(cut).unsold }
-  # end
-
-  # def update_packages!(price_multiple)
-  #   unsold_package_bundles.each do |bundle|
-  #     new_price = bundle.first.price * price_multiple
-  #     new_savings = bundle.first.get_savings_from_benchmark(new_price)
-  #     bundle.update_all(price: new_price, savings: new_savings)
-  #   end
-  # end
-
 end

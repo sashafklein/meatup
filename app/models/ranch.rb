@@ -26,7 +26,7 @@ class Ranch < ActiveRecord::Base
     :delivers_butcher, :delivers_drop, :delivers_host
 
   has_many :animals
-  has_many :ranch_animals # Animal types that the ranch offers (and their details)
+  has_many :ranch_animals
   belongs_to :user
 
   validates :zip, presence: true, length: {is: 5}
@@ -34,61 +34,21 @@ class Ranch < ActiveRecord::Base
   validates :state, presence: true
   validates :city, presence: true
 
-  def self.copy_data_to_ranch_animals
-    find_each do |ranch|
-      AnimalType.new.list.each do |animal_type|
-        if ranch.send(animal_type)
-          ranch.copy_animal_data(animal_type)
-        end
-      end
-    end
-  end
-
-  def copy_animal_data(animal_type)
-    RanchAnimal.create(
-      ranch_id:       id, 
-      animal_type:    animal_type,
-      meat_price:     price_for(animal_type, :meat),
-      hanging_price:  price_for(animal_type, :hanging), 
-      live_price:     price_for(animal_type, :live),
-      fixed_cost:     fixed(animal_type)
-    )
-  end
-
   def has?(animal_type)
     info_for(animal_type).present?
-  end
-
-  def info_for(animal_type)
-    ranch_animals.get(animal_type)
   end
 
   def price_for(animal_type, measurement)
     info_for(animal_type).price(measurement)
   end
 
-  def cows
-    info_for(:cow)
-  end
-
-  def pigs
-    info_for(:pig)
-  end
-
-  def lambs
-    info_for(:lamb)
-  end
-
-  def goats
-    info_for(:goat)
-  end
-
-  def fixed(animal_type)
-    send "#{animal_type}_fixed"
-  end
-
   def full_address
     [address, city, state].join(", ")
   end
 
+  private
+
+  def info_for(animal_type)
+    ranch_animals.get(animal_type)
+  end
 end

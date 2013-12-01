@@ -83,7 +83,7 @@ describe Animal do
       real_filet.reload.sold_units.should == total_units
       real_filet.packages.count.should == total_units
 
-      order.update_attribute(:total, order.make_total)
+      order.update_total!
 
       @small.reload.revenue_made.should == total_units * sale_price * real_filet.weight
       real_filet.list_price.should == sale_price * (1 / OpeningSale::PRICE_MULTIPLE) # The animal is more than 20% sold
@@ -141,16 +141,16 @@ describe Animal do
 
       describe 'revenue_made' do
         xit "returns total revenue if all weights are updated" do
-          @tiny.packages.sold.update_all(true_weight: @ground.package_weight)
-          @tiny.revenue_made.should == 5 * @ground.package_weight * @ground.price
+          @small.packages.sold.update_all(true_weight: @ground.package_weight)
+          @small.revenue_made.should == 5 * @ground.package_weight * @ground.price
         end
       end
 
       describe 'revenue_possible' do
         it 'returns the cut-calculated revenue of the animal' do
-          cuts = Cut.where(id: @tiny.packages.pluck(:cut_id).uniq)
-          expected_revenue = cuts.map do |cut|
-            @tiny.packages_for(cut).count * cut.price * cut.package_weight
+          real_cuts = RealCut.where(id: @small.lines.pluck(:real_cut_id).uniq)
+          expected_revenue = real_cuts.map do |cut|
+            cut.sold_units * cut.flat_price * cut.weight
           end.sum
         end
       end
@@ -158,23 +158,23 @@ describe Animal do
       describe 'wholesale_cost' do
         
         before do
-          @tiny.stub(:butcher).and_return(OpenStruct.new({ real_final_price: 0 }))
+          @small.stub(:butcher).and_return OpenStruct.new({ real_final_price: 0 })
         end
         
         it "returns the expected cost of the animal, based on ranch and butcher details" do
           ranch_live_price = 1.4 # live price per lb
-          live_weight = @tiny.weight
+          live_weight = @small.weight
           fixed_price = 0
           butcher_final_price = 0
 
           predicted_value = (ranch_live_price * live_weight) + fixed_price + butcher_final_price
-          @tiny.wholesale_cost.should == predicted_value
+          @small.wholesale_cost.should == predicted_value
         end
       end
 
       describe "pounds_left" do
         it "calculates accurately" do
-          @tiny.pounds_left.should == @tiny.packages.map(&:expected_weight).sum - @tiny.packages.sold.map(&:expected_weight).sum
+          @small.pounds_left.should == @small.real_cuts.sum{ |rc| rc.units_left * rc.weight }
         end
 
         it "is the opposite of pounds_sold" do

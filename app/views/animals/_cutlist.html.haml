@@ -12,12 +12,12 @@
         %th # Sold
         %th Lbs/Package
         %th Pounds Sold
-      - @animal.bundle_for.admin_overview.each do |bundle|
+      - @real_cuts.each do |rc|
         %tr
-          %td= link_to(bundle.cut.name, bundle.cut)
-          %td= bundle.price
-          %td= bundle.sold + bundle.unsold
-          %td= bundle.unsold
-          %td= bundle.sold
-          %td= present_weight(bundle.avg_weight)
-          %td= bundle.total_lb_sold
+          %td= link_to(rc.name, rc)
+          %td= rc.flat_dollars
+          %td= rc.units_total
+          %td= rc.units_left
+          %td= rc.units_sold
+          %td= rc.display_weight
+          %td= rc.display_lbs_sold

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131108060011) do
+ActiveRecord::Schema.define(:version => 20131201163936) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -188,7 +188,6 @@ ActiveRecord::Schema.define(:version => 20131108060011) do
     t.string   "remember_token"
     t.boolean  "admin",           :default => false
     t.string   "zip"
-    t.boolean  "apology"
     t.boolean  "is_host",         :default => false
     t.boolean  "is_rancher",      :default => false
     t.boolean  "is_butcher",      :default => false

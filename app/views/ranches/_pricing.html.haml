@@ -2,6 +2,6 @@
   - if ranch.has?(type)
     %tr
       %td= ranch.name
-      %td= safe_round( ranch.info_for(type).live_price, 2 )
-      %td= safe_round( ranch.info_for(type).hanging_price, 2 )
-      %td= safe_round( ranch.info_for(type).meat_price, 2 )
+      %td= safe_round( ranch.price_for(type, :live), 2 )
+      %td= safe_round( ranch.price_for(type, :hanging), 2 )
+      %td= safe_round( ranch.price_for(type, :meat), 2 )

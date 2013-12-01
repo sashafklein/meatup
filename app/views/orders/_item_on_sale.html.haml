@@ -4,8 +4,8 @@
   %td= item.name_cell
   %td= item.prep_select(form)
   %td= form.select :units, item.available, {}, :class => "unit_select js-package"
-  %td.js-weight{ data: { weight: item.weight } }= item.d_weight
-  %td.js-lb-price{ :'data-lb-price' => item.d_list_price }= item.list_price_money
+  %td.js-weight{ data: { weight: item.weight } }= item.display_weight
+  %td.js-lb-price{ :'data-lb-price' => (item.list_price / 100) }= item.list_dollars
   %td.js-lbs
   %td.js-price
-  %td.sav_content{ class: item.d_savings_class }= item.d_savings
+  %td.sav_content{ class: item.savings_class }= item.display_savings

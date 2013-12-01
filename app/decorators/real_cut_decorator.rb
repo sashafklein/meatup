@@ -5,31 +5,23 @@ class RealCutDecorator < Draper::Decorator
     (0..units_left).to_a
   end
 
-  def d_list_price
-    list_price / 100
+  def list_dollars
+    h.number_to_currency(list_price / 100)
   end
 
-  def list_price_money
-    h.number_to_currency d_list_price 
+  def flat_dollars
+    h.number_to_currency (flat_price / 100)
   end
 
-  def d_flat_price
-    flat_price / 100
-  end
-
-  def flat_price_money
-    h.number_to_currency d_flat_price
-  end
-
-  def d_weight
+  def display_weight
     h.present_weight weight
   end
 
-  def d_savings
+  def display_savings
     h.display_savings (savings * 100)
   end
 
-  def d_savings_class
+  def savings_class
     h.savings_class (savings * 100)
   end
 
@@ -55,6 +47,10 @@ class RealCutDecorator < Draper::Decorator
     if model.prep_options.length > 1
       form.select :notes, model.prep_options
     end
+  end
+
+  def display_lbs_sold
+    h.present_weight pounds_sold
   end
 
 end

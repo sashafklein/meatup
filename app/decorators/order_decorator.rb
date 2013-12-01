@@ -24,11 +24,7 @@ class OrderDecorator < Draper::Decorator
   end
 
   def price_note
-    if model.apology_priced?
-      "(Discounted) Price"
-    else
-      "Price"
-    end
+    "Price"
   end
 
   def timer_stamp(params)
@@ -79,12 +75,6 @@ class OrderDecorator < Draper::Decorator
 
   def bill_status_row
     header_row h.raw("Order Status: <b style='font-weight:normal;color:#9a393a;'>#{model.bill_status}</b>")
-  end
-
-  def apology_discount_row
-    if model.apology_priced?
-      header_row h.raw('<strong>10% "Apology Discount" applied to all cuts!')
-    end
   end
 
   def stripe_data

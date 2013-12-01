@@ -25,6 +25,6 @@ class Host < ActiveRecord::Base
   validates :zip, presence: true, length: { is: 5 }
 
   def name
-  	self.user.name
+  	user.name
   end
 end

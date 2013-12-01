@@ -28,6 +28,22 @@ class RanchAnimal < ActiveRecord::Base
     nil
   end
 
+  def price(measurement)
+    send "#{measurement}_price"
+  rescue
+    nil
+  end
+
+  private
+
+  def convert_from_measurement(measurement)
+    update_attribute :meat_price, meat_from_measurement(measurement)
+  end
+
+  def meat_from_measurement(measurement)
+    price(measurement) / WeightRatio.new(animal_type).ratio(:meat, measurement)
+  end
+
   def to_meat 
     replace_meat_price_with_hanging_or_live if !has_price_for?(:meat)
   end
@@ -38,34 +54,11 @@ class RanchAnimal < ActiveRecord::Base
     end
   end 
 
-  def convert_from_measurement(measurement)
-    update_attribute :meat_price, meat_from_measurement(measurement)
-  end
-
-  def meat_from_measurement(measurement)
-    price(measurement) / WeightRatio.new(animal_type).ratio(:meat, measurement)
-  end
-
-  def price(measurement)
-    send "#{measurement}_price"
-  rescue
-    nil
-  end
-
-  def fixed_price
-    fixed_cost
-  end
-
   def has_price_for?(measurement)
     price(measurement).present?
   end
 
-  def price_list
-    {
-      meat: meat_price,
-      hanging: hanging_price,
-      live: live_price,
-      fixed: fixed_price
-    }
+  def fixed_price
+    fixed_cost
   end
 end

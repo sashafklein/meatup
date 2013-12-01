@@ -13,6 +13,7 @@ before_filter :right_butcher, only: [:labels, :log]
    # GET /animals/1
   def show
   	@animal = Animal.find(params[:id])
+    @real_cuts = RealCutDecorator.decorate_collection @animal.real_cuts
   end
 
   # GET /animals/new

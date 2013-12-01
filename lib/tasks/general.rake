@@ -1,6 +1,6 @@
 task create_first_real_cuts: :environment do 
   Animal.find_each do |a|
-    a.cuts.where('package_weight != 0').each do |c|
+    a.platonic_cuts.where('package_weight != 0').each do |c|
       mult = a.mult || 1
       weight_mult = 1
       packages = a.packages_for(c)

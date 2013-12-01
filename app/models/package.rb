@@ -3,15 +3,16 @@
 # Table name: packages
 #
 #  id          :integer          not null, primary key
-#  cut_id      :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  animal_id   :integer
 #  price       :float
 #  line_id     :integer
-#  sold        :boolean
 #  savings     :integer
 #  true_weight :float
+#  sold        :boolean          default(FALSE)
+#  animal_id   :integer
+#  cut_id      :integer
+#  real_cut_id :integer
 #
 
 class Package < ActiveRecord::Base
@@ -38,11 +39,6 @@ class Package < ActiveRecord::Base
 
   validates :real_cut_id, presence: :true
 
-  def incentivized
-    cut_ids = animal.cuts.incentive_priced.pluck(:id)
-    where(cut_id: cut_ids)
-  end
-
   def cut_siblings
     real_cut.packages
   end
@@ -51,39 +47,12 @@ class Package < ActiveRecord::Base
     real_cut.weight
   end
 
-  def line_siblings
-    line.packages
-  end
-
-  def label_list
-  	line_siblings.to_a
-  end
-
-  def identical_sold
-    line_item_ids = real_cut.lines.where(notes: line.notes).pluck(:id)
-    cut_siblings.where(line_id: line_item_ids)
-  end
+  private
 
   def to_true
     if ready_to_weigh && new_weight_present?
       true_weight =  actual_lbs + actual_oz
     end
-  end
-
-  def new_weight_present?
-    actual_lbs && actual_oz && actual_lbs + actual_oz > 0
-  end
-
-  def ready_to_weigh
-    sold && downpaid && true_weight.blank?
-  end
-
-  def notes
-    line.notes if sold
-  end
-
-  def finalized
-    order.status > 2
   end
 
   def actual_lbs=(val)
@@ -94,19 +63,7 @@ class Package < ActiveRecord::Base
     @actual_oz = val.to_f
   end
 
-  def incentive_priced?
-    cut.incentive
-  end
-
-  def get_savings_from_benchmark(new_price = nil)
-    new_price ||= price
-    1 - (new_price / cut.retail_price_benchmark)
-  end
-
-  def remove_from_opening_sale
-    update_attributes!(
-      price: price / 0.9,
-      savings: get_savings_from_benchmark(price / 0.9)
-    )
+  def new_weight_present?
+    actual_lbs && actual_oz && actual_lbs + actual_oz > 0
   end
 end

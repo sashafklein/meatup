@@ -17,10 +17,6 @@ class AnimalType
     AnimalType.new.instance_list
   end
 
-  def instance_list
-    list.map{ |item| AnimalType.new(item) }
-  end
-
   def list
     %w( cow pig lamb goat )
   end
@@ -88,4 +84,7 @@ class AnimalType
     type_string.present? && !list.include?(type_string)
   end
 
+  def instance_list
+    list.map{ |item| AnimalType.new(item) }
+  end
 end

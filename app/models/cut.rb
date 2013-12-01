@@ -37,23 +37,4 @@ class Cut < ActiveRecord::Base
     comp
   end
 
-  def order_preparations(animal)
-    PrepOption.new(self, animal).order_list
-  end
-
-  def packages_for_animal(animal)
-    Package.where(cut_id: id, animal_id: animal.id)
-  end
-
-  def starting_price_for(animal)
-    AnimalCut.new(self, animal).starting_price
-  end
-
-  def normal_price_for(animal)
-    AnimalCut.new(self, animal).normal_price
-  end
-
-  def incomplete?
-    !(price.present? && percent.present? && savings.present? && comp.present? && package_weight.present? && name.present? && description.present?)
-  end
 end

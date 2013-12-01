@@ -2,13 +2,14 @@
 #
 # Table name: lines
 #
-#  id         :integer          not null, primary key
-#  units      :integer
-#  notes      :string(255)      default("")
-#  order_id   :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  cut_id     :integer
+#  id          :integer          not null, primary key
+#  units       :integer
+#  notes       :string(255)      default("")
+#  order_id    :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  real_cut_id :integer
+#  sale_price  :integer
 #
 
 class Line < ActiveRecord::Base
@@ -19,7 +20,7 @@ class Line < ActiveRecord::Base
   belongs_to :real_cut
   has_many   :packages
   delegate   :animal, to: :order, :allow_nil => true
-  delegate   :cut_id, to: :real_cut
+  delegate   :cut_id, :cut, to: :real_cut
 
   before_save  :ensure_sale_price!
   after_create :create_packages!
@@ -60,29 +61,13 @@ class Line < ActiveRecord::Base
     real_cut.update_attributes!(sold_units: real_cut.sold_units + units)
   end
 
-  def without_purchase
-    units == 0
-  end
-
-  def cut
-  	Cut.find(cut_id)
-  end
-
-  def target_packages
-    animal.packages.where(cut_id: cut_id)
-  end
-
   def expected_weight
-    self.cut.package_weight
-  end
-
-  def real_weight
-    return nil if packages.pluck(:true_weight).include?(nil)
-    packages.pluck(:true_weight).sum
+    cut.package_weight
   end
 
   def weight_diff
-    real_weight ? expected_weight - real_weight : nil
+    return nil unless real_weight
+    expected_weight - real_weight
   end
 
   def revenue
@@ -91,10 +76,6 @@ class Line < ActiveRecord::Base
 
   def pounds
     weighed? ? weighed_pounds : unweighed_pounds
-  end
-
-  def unweighed_pounds
-    units * real_cut.weight
   end
 
   def weighed_pounds
@@ -109,17 +90,8 @@ class Line < ActiveRecord::Base
     sale_price * weighed_pounds
   end
 
-  def price
-    return packages.first.price if packages.any?
-    1000
-  end
-
   def processed_notes
     notes.blank? ? "None" : notes
-  end
-
-  def has_same_cut_and_notes_as(item)
-    cut == item.cut && notes == item.notes
   end
 
   def weighed?
@@ -134,5 +106,14 @@ class Line < ActiveRecord::Base
 
   def update_order_total!
     order.update_total!
+  end
+
+  def real_weight
+    return nil if packages.pluck(:true_weight).include?(nil)
+    packages.pluck(:true_weight).sum
+  end
+
+  def unweighed_pounds
+    units * real_cut.weight
   end
 end

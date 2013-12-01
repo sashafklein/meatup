@@ -68,17 +68,13 @@ class Order < ActiveRecord::Base
     packages.sum(&:expected_revenue)
   end
 
-  def apply_apology_discount!
-    packages.update_all(price: price * 0.9)
-  end
-
-  def discounted
-    packages.map{ |p| p.expected_revenue / 10}.sum
-  end
-
   def get_difference
     packages.sum(&:revenue_diff)
   end  
+
+  def fallback_weight
+    real ? true_weight : poundage
+  end
 
   def true_weight
     packages.weighed.sum(&:true_weight)
@@ -99,14 +95,6 @@ class Order < ActiveRecord::Base
   def to_total
     total ? total : lines.sum(&:revenue)
   end
-  
-  def make_total
-    packages.sum(&:fallback_revenue)
-  end
-
-  def apology_priced?
-    user.apology && !animal.finalized
-  end
 
   def increment_status!
     update_attribute(:status, status + 1)
@@ -116,4 +104,9 @@ class Order < ActiveRecord::Base
     update_attribute(:total, make_total)
   end
 
+  private
+
+  def make_total
+    packages.sum(&:fallback_revenue)
+  end
 end

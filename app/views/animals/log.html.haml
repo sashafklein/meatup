@@ -3,7 +3,7 @@
 .row.inset
   / Macro Weight Formatting
   %h4
-    - if !@animal.hanging_weight || !@animal.meat_weight
+    - if @animal.unweighed?
       %span{:style => "font-size:120%;font-weight:bold"}= "Enter #{@animal.name}'s actual weight:"
     - else
       %span{:style => "font-size:120%;font-weight:bold"}= "#{@animal.name}'s Final Weight:"

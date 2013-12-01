@@ -2,35 +2,20 @@ class AnimalBundler
 
   attr_reader :animal
 
-  delegate :purchasers, :packages, :lines, :available_cuts, :sold_out_cuts, to: :animal
+  delegate :purchasers, :packages, :lines, :available_cuts, :sold_out_cuts, :sold_cuts, to: :animal
   
   def initialize(animal)
     @animal = animal
   end
 
-  def available_for_sale
-    available_cuts.order('savings DESC').map{ |cut| AnimalCut.new(cut, animal) }
-  end
-
-  def sold_out_for_sale
-    sold_out_cuts.map{ |cut| AnimalCut.new(cut, animal) }
-  end
-
-  def admin_overview
-    ItemBundler.new(packages).in_bundles_by_cut
-  end
-
-  def sale
-    ItemBundler.new(packages).by_cut_sale_and_savings
-  end
-
-  # Array of Open Structs with "bundles" of unique (cut/notes) lines
-  def sale_email
-    ItemBundler.new(lines).in_cut_and_note_bundles
-  end
-
   def labels_by_cut
-    ItemBundler.new(packages).sold_in_line_note_bundles
+    bundle_array = []
+    sold_cuts.each do |rc|
+      rc.lines.group_by{ |l| l.notes }.each do |line_bundle|
+        bundle_array << OpenStruct.new(cut_name: rc.name, notes: line_bundle[0], packages: line_bundle[1].length)
+      end
+    end
+    bundle_array
   end
 
   def log

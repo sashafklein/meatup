@@ -4,8 +4,5 @@
 - elsif @order.status == 2
   .receipt_notes
     This order now represents a specific hold of size
-    - if @order.real
-      = present_weight(@order.true_weight) 
-    - else
-      = present_weight(@order.poundage)
+    = present_weight(@order.fallback_weight) 
     , placed on #{@order.animal.name}, a #{@order.animal.weight} lb #{@order.animal.breed} #{@order.animal.animal_type}, raised sustainably on #{@order.animal.ranch.name}, in #{@order.animal.ranch.city}, #{@order.animal.ranch.state}.  All that remains is to pick the meat up at #{link_to "your host", host_path(@order.animal.host)}'s.  As a customer, you are responsible for organizing a timely pick-up of your order, and if you are not personally able to retrieve your order during the pickup window, please contact your host, #{@order.animal.host.user.name}, to make special arrangements.  Neither MeatUp, nor #{@order.animal.ranch.name}, nor #{@order.animal.host.user.name} is responsible for any damage that may occur to the contents of your order if it is retrieved outside of the established pickup window.
