@@ -463,16 +463,77 @@ begin
 		is_rancher: true
 	)
 
-# Butchers
+# Locations
 @log << "Seeded Users"
-
-	sanders = Butcher.create!(
-		name: "Sanders Meat Co",
-		address: "Turlock St.",
+	sanders_location = Location.create!(
+		street_address: "Turlock St.",
 		city: "Turlock",
 		state: "CA",
 		zip: "94114",
-		phone: "999-999-9999",
+		phone_number: "999-999-9999"
+	)
+
+	buds_location = Location.create!(
+		street_address: "Turlock St.",
+		city: "Turlock",
+		state: "CA",
+		zip: "94114",
+		phone_number: "999-999-9999",
+	)
+
+	gleason_location = Location.create!(
+		street_address: "Turlock St.",
+		city: "Turlock",
+		state: "CA",
+		zip: "94114",
+		phone_number: "999-999-9999",
+	)
+
+	miller_location = Location.create!(
+		street_address: "Ranch Road",
+		phone_number: "999-999-9999",
+		state: "CA",
+		city: "Oakdale",
+		zip: "94114",
+	)
+
+	clark_summit_location = Location.create!(
+		street_address: "30201 Shoreline Highway",
+		phone_number: "707-876-3516",
+		state: "CA",
+		city: "Tomales",
+		zip: "94971",
+	)
+
+	godfrey_location = Location.create!(
+		street_address: "can't be blank",
+		phone_number: "7074770879",
+		state: "CA",
+		city: "Meridian",
+		zip: "94971",
+	)
+
+	devils_gulch_location = Location.create!(
+		street_address: "fake address",
+		phone_number: "707-953-0923",
+		state: "CA",
+		city: "Marin",
+		zip: "94971",
+	)
+
+	klein_location = Location.create!(
+		state: "CA",
+		phone_number: "999-999-9999",
+		city: "San Francisco",
+		zip: "94114",
+		street_address: "3976 23rd St.",
+	)
+
+# Butchers
+@log << "Seeded Locations"
+
+	sanders = Butcher.create!(
+		name: "Sanders Meat Co",
 		hanging_price: 0.55,
 		final_price: 0,
 		wrap_price: 0,
@@ -481,16 +542,12 @@ begin
 		stew: true,
 		boneless: true,
 		user_id: sanders_user.id,
+		location_id: sanders_location.id
 	)
 	sanders_user.update_attribute(:butcher_id, sanders.id)
 
 	buds_custom = Butcher.create!(
 		name: "Bud's Custom Meats",
-		address: "Turlock St.",
-		city: "Turlock",
-		state: "CA",
-		zip: "94114",
-		phone: "999-999-9999",
 		hanging_price: 0.80,
 		final_price: 0,
 		wrap_price: 0,
@@ -498,17 +555,14 @@ begin
 		ground: true,
 		stew: true,
 		boneless: true,
-		user_id: buds_custom_user.id
+		user_id: buds_custom_user.id,
+		location_id: buds_location.id
+
 	)
 	buds_custom_user.update_attribute(:butcher_id, buds_custom.id)
 
 	gleason_butcher = Butcher.create!(
 		name: "FIX NAME",
-		address: "Turlock St.",
-		city: "Turlock",
-		state: "CA",
-		zip: "94114",
-		phone: "999-999-9999",
 		hanging_price: 0.75,
 		final_price: 0,
 		wrap_price: 0,
@@ -517,41 +571,22 @@ begin
 		stew: true,
 		boneless: true,
 		user_id: gleason_user.id,
+		location_id: gleason_location.id
 	)
 	gleason_user.update_attribute(:butcher_id, gleason_butcher.id)
 
 # Ranches
 @log << "Seeded Butchers"
 
-
-	# blank_ranch = Ranch.create!(
-	# 	name: "Blank",
-	# 	address: "Address",
-	# 	phone: "Number",
-	# 	state: "CA",
-	# 	city: "Tomales",
-	# 	zip: "94971",
-	# 	has_csa: true,
-	# 	delivers_butcher: true,  
-	# 	delivers_drop: true,  # Let's set this to ~50 mi radius from "city center"? Translates to delivery cost estimate
-	# 	delivers_host: true,  # Eliminates delivery cost estimate add-on
-	# 	preferred_butcher: blank_butcher.id,
-	# 	user_id: blank_ranch_user.id
-	# )
-
 	miller_ranch = Ranch.create!(
 		user_id: miller_ranch_user.id,
 		name: "Miller Ranch",
-		address: "Ranch Road",
-		phone: "999-999-9999",
-		state: "CA",
-		city: "Oakdale",
-		zip: "94114",
 		has_csa: true,
 		preferred_butcher: sanders.id,
 		delivers_butcher: true,
 		delivers_drop: true,
-		delivers_host: false
+		delivers_host: false,
+		location_id: miller_location.id
 	)
 	miller_ranch_user.update_attribute(:ranch_id, miller_ranch.id)
 	@log << "< Miller Ranch seeded"
@@ -565,16 +600,12 @@ begin
 
 	clark_summit = Ranch.create!(
 		name: "Clark Summit Farm",
-		address: "30201 Shoreline Highway",
-		phone: "707-876-3516",
-		state: "CA",
-		city: "Tomales",
-		zip: "94971",
 		has_csa: true,
 		delivers_butcher: true,
 		delivers_drop: false,
 		delivers_host: true,
-		user_id: clark_summit_user.id
+		user_id: clark_summit_user.id,
+		location_id: clark_summit_location.id
 	)
 	clark_summit_user.update_attribute(:ranch_id, clark_summit.id)
 	@log << "< Clark Summit seeded"
@@ -595,16 +626,12 @@ begin
 
 	gleason_ranch = Ranch.create!(
 		name: "Gleason Ranch",
-		address: "fake",
-		phone: "7074770879",
-		state: "CA",
-		city: "Bodega, Sonoma",
-		zip: "94971",
 		has_csa: true,
 		delivers_butcher: true,  
 		delivers_drop: true,  # Let's set this to ~50 mi radius from "city center"? Translates to delivery cost estimate
 		delivers_host: false,  # Eliminates delivery cost estimate add-on
-		user_id: gleason_user.id
+		user_id: gleason_user.id,
+		location_id: gleason_location.id
 	)
 	gleason_user.update_attribute(:ranch_id, gleason_ranch.id)
 	@log << "< Gleason Ranch seeded"
@@ -629,16 +656,12 @@ begin
 	# These guys have veal!!
 	godfrey_ranch = Ranch.create!(
 		name: "Godfrey Family Farms",
-		address: "can't be blank",
-		phone: "7074770879",
-		state: "CA",
-		city: "Meridian",
-		zip: "94971",
 		has_csa: true,
 		delivers_butcher: true,  
 		delivers_drop: true,  # Let's set this to ~50 mi radius from "city center"? Translates to delivery cost estimate
 		delivers_host: false,  # Eliminates delivery cost estimate add-on
-		user_id: godfrey_user.id
+		user_id: godfrey_user.id,
+		location_id: godfrey_location.id
 	)
 	godfrey_user.update_attribute(:ranch_id, godfrey_ranch.id)
 	@log << "Godfrey Farms seeded"
@@ -652,14 +675,10 @@ begin
 
 	devils_gulch_ranch = Ranch.create!(
 		name: "Devil's Gulch Ranch",
-		address: "fake address",
-		phone: "707-953-0923",
-		state: "CA",
-		city: "Marin",
-		zip: "94971",
 		has_csa: false,
 		preferred_butcher: buds_custom.id,
-		user_id: devils_gulch_user.id
+		user_id: devils_gulch_user.id,
+		location_id: devils_gulch_location.id
 	)
 	devils_gulch_user.update_attribute(:ranch_id, devils_gulch_ranch.id)
 	@log << "< Devil's Gulch seeded"
@@ -678,12 +697,8 @@ begin
 @log << "Seeded Ranches"
 
 	klein = Host.create!(
-		state: "CA",
-		phone: "later",
-		city: "San Francisco",
-		zip: "94114",
-		address: "3976 23rd St.",
-		user_id: niko.id
+		user_id: niko.id,
+		location_id: klein_location.id
 	)
 	niko.update_attribute(:host_id, klein.id)
 

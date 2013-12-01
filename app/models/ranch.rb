@@ -23,16 +23,15 @@
 class Ranch < ActiveRecord::Base
   attr_accessible :address, :city, :state, :zip, 
     :name, :phone, :user_id, :preferred_butcher, :has_csa, 
-    :delivers_butcher, :delivers_drop, :delivers_host
+    :delivers_butcher, :delivers_drop, :delivers_host, :location_id
 
   has_many :animals
   has_many :ranch_animals
   belongs_to :user
 
-  validates :zip, presence: true, length: {is: 5}
-  validates :address, presence: true
-  validates :state, presence: true
-  validates :city, presence: true
+  include Locatable
+
+  validate :location_complete
 
   def has?(animal_type)
     info_for(animal_type).present?
@@ -40,10 +39,6 @@ class Ranch < ActiveRecord::Base
 
   def price_for(animal_type, measurement)
     info_for(animal_type).price(measurement)
-  end
-
-  def full_address
-    [address, city, state].join(", ")
   end
 
   private

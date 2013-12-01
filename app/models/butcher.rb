@@ -22,15 +22,17 @@
 #
 
 class Butcher < ActiveRecord::Base
-  attr_accessible :address, :city, :state, :zip, :boneless, :final_price, :ground, :hanging_price, :name, :phone, :stew, :user_id, :vacuum_price, :wrap_price  
+  attr_accessible :address, :city, :state, :zip, :boneless, :final_price, :ground, :hanging_price, :name, :phone, :stew, :user_id, :vacuum_price, :wrap_price, :location_id  
   has_many :animals
 
-  validates :address, presence: true
-  validates :city, presence: true
-  validates :state, presence: true
-  validates :phone, presence: true
+  include Locatable
+  
   validates :name, presence: true
-  validates :zip, presence: true, length: { is: 5 }
+  validate :location_complete
+
+  def create!(opts={})
+    binding.pry
+  end
 
   def wrapping_price
     vacuum_price > wrap_price ? vaccuum_price : wrap_price

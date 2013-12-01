@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131201163936) do
+ActiveRecord::Schema.define(:version => 20131201180347) do
 
   create_table "animals", :force => true do |t|
     t.string   "animal_type"
@@ -53,7 +53,10 @@ ActiveRecord::Schema.define(:version => 20131201163936) do
     t.string   "state"
     t.string   "zip"
     t.string   "city"
+    t.integer  "location_id"
   end
+
+  add_index "butchers", ["location_id"], :name => "index_butchers_on_location_id"
 
   create_table "cuts", :force => true do |t|
     t.string   "name"
@@ -91,11 +94,14 @@ ActiveRecord::Schema.define(:version => 20131201163936) do
     t.string   "city"
     t.string   "state"
     t.string   "phone"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "zip"
     t.integer  "user_id"
+    t.integer  "location_id"
   end
+
+  add_index "hosts", ["location_id"], :name => "index_hosts_on_location_id"
 
   create_table "lines", :force => true do |t|
     t.integer  "units"
@@ -108,6 +114,16 @@ ActiveRecord::Schema.define(:version => 20131201163936) do
   end
 
   add_index "lines", ["real_cut_id"], :name => "index_lines_on_real_cut_id"
+
+  create_table "locations", :force => true do |t|
+    t.string   "zip"
+    t.string   "street_address"
+    t.string   "phone_number"
+    t.string   "state"
+    t.string   "city"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "orders", :force => true do |t|
     t.integer  "status"
@@ -163,7 +179,10 @@ ActiveRecord::Schema.define(:version => 20131201163936) do
     t.boolean  "delivers_drop",     :default => false
     t.boolean  "delivers_host",     :default => false
     t.string   "description"
+    t.integer  "location_id"
   end
+
+  add_index "ranches", ["location_id"], :name => "index_ranches_on_location_id"
 
   create_table "real_cuts", :force => true do |t|
     t.integer  "animal_id"

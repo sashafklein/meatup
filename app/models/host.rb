@@ -14,16 +14,14 @@
 #
 
 class Host < ActiveRecord::Base
-  attr_accessible :address, :city, :phone, :state, :zip, :user_id
+  attr_accessible :address, :city, :phone, :state, :zip, :user_id, :location_id
   belongs_to :user
   has_many :animals
 
-  validates :address, presence: true
-  validates :city, presence: true
-  validates :phone, presence: true
-  validates :state, presence: true
-  validates :zip, presence: true, length: { is: 5 }
+  include Locatable
 
+  validate :location_complete
+  
   def name
   	user.name
   end
