@@ -4,7 +4,7 @@ FactoryGirl.define do
     breed         "Cow Breed"
     name          "Mr. Moo"
     animal_type   "cow"
-    weight        100
+    live_weight        100
     no_sales      true
     conduct_opening_sale  false
     price_multiplier  1
@@ -27,7 +27,7 @@ FactoryGirl.define do
     end
 
     factory :tiny do 
-      weight  10 
+      live_weight  10 
 
       factory :butchered_tiny do
         after(:build) do |tiny|
@@ -39,7 +39,7 @@ FactoryGirl.define do
     end
 
     factory :small do
-      weight 100
+      live_weight 100
 
       factory :butchered_small do
         after(:build) do |small|

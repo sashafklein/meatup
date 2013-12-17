@@ -51,7 +51,6 @@ class AnimalCalc < ActiveRecord::Base
   end 
 
   def percent_left
-    binding.pry
     (100 * pounds_left) / pounds_total
   end  
 

@@ -84,7 +84,6 @@ describe Animal do
       real_filet.packages.count.should == total_units
       
       @small.reload.revenue_made.should == total_units * sale_price * real_filet.weight
-      binding.pry
       real_filet.list_price.should == sale_price * (1 / OpeningSale::PRICE_MULTIPLE) # The animal is more than 20% sold
     end
   end
