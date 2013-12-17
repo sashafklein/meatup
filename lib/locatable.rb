@@ -1,8 +1,10 @@
 module Locatable
   
-  # delegate :street_address, :phone_number, :zip, :city, :state,
-           # :phone, :address,
-           # to: :location
+  delegate :street_address, :phone_number, :zip, :city, :state,
+           :phone, :address,
+           to: :location
+
+  class LocationError < StandardError; end
 
   def location
     Location.find_by_id(self.location_id)
@@ -16,7 +18,7 @@ module Locatable
 
   def location_sufficient
     unless location.sufficient?
-      errors[:location] << "Location is incomplete for #{self.inspect}!"
+      raise LocationError.new "Location is incomplete for #{self.inspect}!"
     end
   end
   

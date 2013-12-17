@@ -82,10 +82,9 @@ describe Animal do
 
       real_filet.reload.sold_units.should == total_units
       real_filet.packages.count.should == total_units
-
-      order.update_total!
-
+      
       @small.reload.revenue_made.should == total_units * sale_price * real_filet.weight
+      binding.pry
       real_filet.list_price.should == sale_price * (1 / OpeningSale::PRICE_MULTIPLE) # The animal is more than 20% sold
     end
   end
@@ -163,7 +162,7 @@ describe Animal do
         
         it "returns the expected cost of the animal, based on ranch and butcher details" do
           ranch_live_price = 1.4 # live price per lb
-          live_weight = @small.weight
+          live_weight = @small.live_weight
           fixed_price = 0
           butcher_final_price = 0
 

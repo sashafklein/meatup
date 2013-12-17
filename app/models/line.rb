@@ -26,8 +26,8 @@ class Line < ActiveRecord::Base
   after_create :create_packages!
   after_create :update_order_total!
 
-  scope :weighed, -> { merge(Package.weighed) }
-  scope :unweighed, -> { merge(Package.unweighed) }
+  scope :weighed, -> { joins(:packages).merge(Package.weighed) }
+  scope :unweighed, -> { joins(:packages).merge(Package.unweighed) }
 
   validate :real_cut_id, :sale_price, presence: true
 
@@ -82,6 +82,10 @@ class Line < ActiveRecord::Base
     packages.sum(:true_weight)
   end
 
+  def unweighed_pounds
+    units * real_cut.weight
+  end
+
   def unweighed_revenue
     sale_price * unweighed_pounds
   end
@@ -98,6 +102,10 @@ class Line < ActiveRecord::Base
     packages.pluck(:true_weight).all?
   end
 
+  def price
+    real_cut.list_price
+  end
+
   private
 
   def ensure_sale_price!
@@ -111,9 +119,5 @@ class Line < ActiveRecord::Base
   def real_weight
     return nil if packages.pluck(:true_weight).include?(nil)
     packages.pluck(:true_weight).sum
-  end
-
-  def unweighed_pounds
-    units * real_cut.weight
   end
 end

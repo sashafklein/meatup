@@ -27,7 +27,7 @@
 
 class Animal < ActiveRecord::Base
   attr_accessible :breed, :name, :photo, :animal_type, :hanging_weight, :meat_weight,  
-                  :weight, :ranch_id, :butcher_id, :packages_attributes, :host_id, :open, 
+                  :live_weight, :ranch_id, :butcher_id, :packages_attributes, :host_id, :open, 
                   :no_sales, :conduct_opening_sale, :conduct_final_sale, :on_opening_sale, 
                   :on_final_sale, :price_multiplier
                   
@@ -48,13 +48,14 @@ class Animal < ActiveRecord::Base
   delegate  :downpaid_total, :downpaid_pounds, :paid_total, :paid_pounds, :paid_orders, 
             :revenue_made, :revenue_possible, :profit, :best_lb_estimate, :expected_margins, 
             :pounds_sold, :pounds_left, :percent_left, :weight_ratio, :butcher_final_price, 
+            :wholesale_cost,
             to: :calculator
 
   before_create { animal_type.downcase! }
 
   accepts_nested_attributes_for :packages
 
-  validates :weight, presence: true
+  validates :live_weight, presence: true
   validates :breed, presence: true
   validates :animal_type, presence: true
 
@@ -153,6 +154,10 @@ class Animal < ActiveRecord::Base
     AnimalType.new(animal_type).meat
   end
 
+  def meat_weight
+   @meat_weight || live_weight * weight_ratio(:meat, :live)
+  end
+
   def weight_multiplier
     1
   end
@@ -183,6 +188,6 @@ class Animal < ActiveRecord::Base
 
 
   def hanging_weight
-    weight * weight_ratio("hanging", "live")
+    live_weight * weight_ratio("hanging", "live")
   end
 end

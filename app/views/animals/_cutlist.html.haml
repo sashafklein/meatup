@@ -14,7 +14,7 @@
         %th Pounds Sold
       - @real_cuts.each do |rc|
         %tr
-          %td= link_to(rc.name, rc)
+          %td= link_to(rc.name, rc.cut)
           %td= rc.flat_dollars
           %td= rc.units_total
           %td= rc.units_left

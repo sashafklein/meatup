@@ -27,11 +27,12 @@ class Ranch < ActiveRecord::Base
 
   has_many :animals
   has_many :ranch_animals
+  belongs_to :location
   belongs_to :user
 
   include Locatable
 
-  validate :location_sufficient
+  after_create :location_sufficient
 
   def has?(animal_type)
     info_for(animal_type).present?

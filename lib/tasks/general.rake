@@ -10,7 +10,7 @@ task create_first_real_cuts: :environment do
         cut_id: c.id,
         flat_price: c.price * mult * 100,
         weight: c.package_weight * weight_mult,
-        expected_units: c.percent * a.weight / 100 / c.package_weight,
+        expected_units: c.percent * a.live_weight / 100 / c.package_weight,
         sold_units: packages.where(sold: true).count
       )
       puts "New Real Cut: c_id \##{new_real_cut.cut_id}, animal #{a.name}"

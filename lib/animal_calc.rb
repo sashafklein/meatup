@@ -1,9 +1,9 @@
-class AnimalCalc
+class AnimalCalc < ActiveRecord::Base
 
   attr_reader :animal
 
   delegate :packages, :real_cuts, :orders, :cuts, :ranch, 
-           :butcher, :animal_type, :weight, 
+           :butcher, :animal_type, :live_weight, :meat_weight,
            to: :animal
 
   def initialize(animal)
@@ -31,11 +31,11 @@ class AnimalCalc
   end
 
   def revenue_made
-    orders.sum(:total)
+    orders.sum(&:total)
   end
 
   def revenue_possible
-    real_cuts.sum(:revenue_expected)
+    real_cuts.sum(&:revenue_expected)
   end
 
   def profit
@@ -51,6 +51,7 @@ class AnimalCalc
   end 
 
   def percent_left
+    binding.pry
     (100 * pounds_left) / pounds_total
   end  
 
@@ -62,22 +63,18 @@ class AnimalCalc
     revenue_possible - wholesale_cost
   end
 
-  def meat_weight
-    weight * weight_ratio(:meat, :live)
-  end
-
   def weight_ratio(first, second)
     WeightRatio.new(animal_type).ratio(first, second)
+  end
+
+  def wholesale_cost
+    ranch_price(:live) * weight + fixed_price + butcher_final_price
   end
 
   private
 
   def fixed_price
     ranch_price(:fixed)
-  end
-
-  def wholesale_cost
-    ranch_price(:live) * weight + fixed_price + butcher_final_price
   end
 
   def pounds_total

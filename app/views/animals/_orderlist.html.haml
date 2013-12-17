@@ -1,75 +1,23 @@
 .row{:style => "text-align:center"}
   %h2 Associated Orders
-  %h4.normal_links
-    %a.collapse_trigger{ href: "#", data: { target: 'downpaid' } } (Downpaid)
-  .collapse.normal_links#downpaid
-    %table.table
-      %tr
-        %th User
-        %th Date
-        %th Line Item
-        %th # Packages
-        %th Cut Notes
-        %th Package Weight
-        %th Price
-        %th Line Total
-      - @animal.orders.downpaid.each do |o|
-        %tr.info
-          %td= link_to o.user.name, o.user
-          %td= link_to localize(o.created_at, :format => ("%d, %B, %Y")), o
-          %td
-          %td
-          %td
-          %td
-          %td
-          %td
-        - o.lines.each do |l|
-          %tr
-            %td
-            %td
-            %td= l.cut.name
-            %td= l.units
-            %td= l.notes
-            %td= present_weight(l.expected_weight)
-            %td= number_to_currency(l.price)
-            %td= number_to_currency(l.total)
+  - order_statuses = %w( downpaid finalized )
+  - order_statuses.each do |order_status|
+    %h4.normal_links
+      %a.collapse_trigger{ href: "#", data: { target: order_status } }= "(#{order_status.capitalize})"
+    .collapse.normal_links{ id: order_status }
+      %table.table
         %tr
-          %td
-          %td
-          %td
-          %td
-          %th Order Total:
-          %th= present_weight(o.poundage)
-          %th
-          %th= number_to_currency(o.total)
-        %tr
-          %td
-          %td
-          %td
-          %td
-          %td
-          %td{:style => "font-size:130%; font-weight:bold"} Total Deposited:
-          %td{:style => "font-size:130%; font-weight:bold"}= present_weight(@animal.downpaid_pounds)
-          %td{:style => "font-size:130%; font-weight:bold"}
-            = number_to_currency(@animal.downpaid_total)
-
-  %h4.normal_links
-    %a.collapse_trigger{href: "#", data: { target: 'finalized' } } (Finalized)
-  .collapse.normal_links#finalized
-    %table.table
-      %tr
-        %th User
-        %th Date
-        %th Line Item
-        %th # Packages
-        %th Cut Notes
-        %th Package Weight
-        %th Price
-        %th Line Total
-      %tr
-        - @animal.paid_orders.each do |o|
+          %th User
+          %th Date
+          %th Line Item
+          %th # Packages
+          %th Cut Notes
+          %th Package Weight
+          %th Price
+          %th Line Total
+        - @animal.orders.send(order_status).each do |o|
           %tr.info
-            %td= link_to o.user.name, user_path(o.user.id)
+            %td= link_to o.user.name, o.user
             %td= link_to localize(o.created_at, :format => ("%d, %B, %Y")), o
             %td
             %td
@@ -86,7 +34,7 @@
               %td= l.notes
               %td= present_weight(l.expected_weight)
               %td= number_to_currency(l.price)
-              %td= number_to_currency(l.total)
+              %td= number_to_currency(l.revenue)
           %tr
             %td
             %td
@@ -96,13 +44,13 @@
             %th= present_weight(o.poundage)
             %th
             %th= number_to_currency(o.total)
-      %tr
-        %td
-        %td
-        %td
-        %td
-        %td
-        %td{:style => "font-size:130%; font-weight:bold"} Total Finalized:
-        %td{:style => "font-size:130%; font-weight:bold"}= present_weight(@animal.paid_pounds)
-        %td{:style => "font-size:130%; font-weight:bold"}
-          = number_to_currency(@animal.paid_total)
+          %tr
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td{:style => "font-size:130%; font-weight:bold"}= "#{order_status.capitalize} Total:"
+            %td{:style => "font-size:130%; font-weight:bold"}= present_weight(@animal.send("#{order_status}_pounds"))
+            %td{:style => "font-size:130%; font-weight:bold"}
+              = number_to_currency(@animal.send("#{order_status}_total"))

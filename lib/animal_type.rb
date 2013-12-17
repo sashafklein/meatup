@@ -78,13 +78,13 @@ class AnimalType
     list.reject(&:type)
   end
 
+  def instance_list
+    list.map{ |item| AnimalType.new(item) }
+  end
+  
   private
 
   def invalid_type_string
     type_string.present? && !list.include?(type_string)
-  end
-
-  def instance_list
-    list.map{ |item| AnimalType.new(item) }
   end
 end

@@ -35,11 +35,11 @@ class CutCalc < ActiveRecord::Base
   private
 
   def weighed_pounds
-    lines.weighed.sum(:weighed_pounds)
+    lines.weighed.sum(&:weighed_pounds)
   end
 
   def unweighed_pounds
-    lines.unweighed.sum(:unweighed_pounds)
+    lines.unweighed.sum(&:unweighed_pounds)
   end
 
   def units_expected

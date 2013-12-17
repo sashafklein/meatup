@@ -20,7 +20,7 @@
         %td= animal.id
         %td= link_to animal.name, animal
         %td= animal.breed
-        %td= animal.weight
+        %td= animal.live_weight
         %td= link_to animal.ranch.name, ranch_path(animal.ranch)
         %td= link_to animal.host.name, host_path(animal.host)
         %td= link_to 'Edit', edit_animal_path(animal)

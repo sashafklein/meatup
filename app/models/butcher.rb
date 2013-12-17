@@ -24,11 +24,12 @@
 class Butcher < ActiveRecord::Base
   attr_accessible :address, :city, :state, :zip, :boneless, :final_price, :ground, :hanging_price, :name, :phone, :stew, :user_id, :vacuum_price, :wrap_price, :location_id  
   has_many :animals
+  belongs_to :location
 
   include Locatable
   
   validates :name, presence: true
-  validate :location_sufficient
+  after_create :location_sufficient
 
   def create!(opts={})
     binding.pry

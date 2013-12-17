@@ -58,6 +58,9 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
       xpath (~> 0.1.4)
+    capybara-webkit (0.13.1)
+      capybara (>= 1.0.0, < 1.2)
+      json
     childprocess (0.3.6)
       ffi (~> 1.0, >= 1.0.6)
     coderay (1.0.8)
@@ -262,6 +265,7 @@ DEPENDENCIES
   bootstrap-sass (= 2.0.4)
   bootstrap-will_paginate (= 0.0.6)
   capybara (= 1.1.2)
+  capybara-webkit
   coffee-rails (~> 3.2.1)
   daemons
   database_cleaner
@@ -282,6 +286,7 @@ DEPENDENCIES
   rails (= 3.2.11)
   rb-fsevent (= 0.9.1)
   roadie
+  rspec
   rspec-rails (= 2.11.0)
   sass-rails (~> 3.2.3)
   stripe!

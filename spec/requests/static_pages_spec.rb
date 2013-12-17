@@ -9,7 +9,7 @@ describe "Static Pages" do
 		before { visit how_path }
 
 		it { should have_selector('h1', text: 'How MeatUp Works') }
-	    it { should have_selector('title', text: full_title('How It Works')) } 
+	  it { should have_selector('title', text: full_title('How It Works')) } 
 		it { should have_content('Consumers') }
 		it { should have_content('Hosts') }
 		it { should have_content('Ranchers') }

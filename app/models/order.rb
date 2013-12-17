@@ -85,7 +85,7 @@ class Order < ActiveRecord::Base
   end
 
   def total
-    lines.sum(&:revenue)
+    @total || to_total
   end
 
   def downpay_total
@@ -93,20 +93,16 @@ class Order < ActiveRecord::Base
   end
 
   def to_total
-    total ? total : lines.sum(&:revenue)
+    lines.sum(&:revenue)
+  end
+
+  def update_total!
+    @total = to_total
+    save!
   end
 
   def increment_status!
     update_attribute(:status, status + 1)
   end
 
-  def update_total!
-    update_attribute(:total, make_total)
-  end
-
-  private
-
-  def make_total
-    packages.sum(&:fallback_revenue)
-  end
 end

@@ -5,6 +5,6 @@
 .animal-buttons
   - @types.each do |type|
     - if type.any_real_open?
-      = link_to image_tag("#{type.meat}_button.png"), animal_list_path(type.list_path)
+      = link_to image_tag("#{type.meat}_button.png"), animal_list_path(type.list_path), id: type.type_string
 
 

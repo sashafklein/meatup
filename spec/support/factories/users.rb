@@ -7,6 +7,7 @@ FactoryGirl.define do
     password "password"
     password_confirmation "password"
     zip 94114
+    beta false
 
     factory :sasha do
       name "Sasha Klein"

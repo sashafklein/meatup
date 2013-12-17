@@ -1,5 +1,8 @@
 require 'rubygems'
 require 'factory_girl'
+require 'capybara'
+require 'capybara-webkit'
+
 FactoryGirl.find_definitions
 
 # Loading more in this block will cause your tests to run faster. However, 
@@ -15,8 +18,16 @@ require 'rspec/autorun'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+end
+
+Capybara.javascript_driver = :webkit
+Capybara.default_wait_time = 10
+
 RSpec.configure do |config|
-  
+  config.include Capybara::DSL
+  config.treat_symbols_as_metadata_keys_with_true_values = true
   # == Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -42,47 +53,47 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   # memory settings
-    config.before(:all) do
-      DeferredGarbageCollection.start
-    end
+  config.before(:all) do
+    DeferredGarbageCollection.start
+  end
 
-    config.after(:all) do
-      DeferredGarbageCollection.reconsider
-    end
+  config.after(:all) do
+    DeferredGarbageCollection.reconsider
+  end
 
-    config.before(:selenium => true) do
-      Capybara.current_driver = :chrome
-      DatabaseCleaner.strategy = :truncation
-    end
+  config.before(:selenium => true) do
+    Capybara.current_driver = :chrome
+    DatabaseCleaner.strategy = :truncation
+  end
 
-    config.after(:selenium => true) do
-      Capybara.current_driver = :webkit
-      DatabaseCleaner.strategy = :transaction
-    end
+  config.after(:selenium => true) do
+    Capybara.current_driver = :webkit
+    DatabaseCleaner.strategy = :transaction
+  end
 
-    # Database Cleaner
-    config.before(:suite) do
-      DatabaseCleaner.strategy = :transaction
-      DatabaseCleaner.clean_with(:truncation) #clean once with truncation
-    end
+  # Database Cleaner
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation) #clean once with truncation
+  end
 
-    # Use truncation strategy for JS tests
-    config.before(:js => true) do
-      DatabaseCleaner.strategy = :truncation
-    end
+  # Use truncation strategy for JS tests
+  config.before(:js => true) do
+    DatabaseCleaner.strategy = :truncation
+  end
 
-    # Switch back to transaction
-    config.after(:js => true) do
-      DatabaseCleaner.strategy = :transaction
-    end
+  # Switch back to transaction
+  config.after(:js => true) do
+    DatabaseCleaner.strategy = :transaction
+  end
 
-    config.before(:each) do
-      DatabaseCleaner.start
-    end
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
 
-    config.after(:each) do
-      DatabaseCleaner.clean
-    end
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 end
 
 def create_some_cuts

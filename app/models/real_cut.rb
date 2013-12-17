@@ -31,7 +31,7 @@ class RealCut < ActiveRecord::Base
   delegate :sale, 
            to: :animal
 
-  delegate :units_left, :units_total, :revenue_expected, :pounds_sold,
+  delegate :units_left, :units_total, :revenue_expected, :pounds_sold, :units_sold,
            to: :calculator
 
   class RealCutError < StandardError; end
@@ -43,7 +43,7 @@ class RealCut < ActiveRecord::Base
       cut_id: c.id,
       flat_price: c.price * a.price_multiplier * 100,
       weight: c.package_weight * a.weight_multiplier,
-      expected_units: c.percent * a.weight / 100 / c.package_weight
+      expected_units: c.percent * a.meat_weight / 100 / c.package_weight
     )
   end
 

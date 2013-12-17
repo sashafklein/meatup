@@ -2,11 +2,7 @@ FactoryGirl.define do
 
   factory :ranch, class: "Ranch" do
     name                "Miller Ranch"
-    address             "Ranch Road"
-    phone               "999-999-9999"
-    state               "CA"
-    city                "Oakdale"
-    zip                 "94114"
+    location
     has_csa             true
     delivers_butcher    true
     delivers_drop       true
